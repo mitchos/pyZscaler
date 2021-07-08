@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.trusted_networks``
 
 .. _zpa-trusted_networks:
 
-.. automodule:: zscaler.zpa.trusted_networks
+.. automodule:: pyzscaler.zpa.trusted_networks
     :members:

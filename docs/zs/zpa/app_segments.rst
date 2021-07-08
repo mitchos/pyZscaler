@@ -6,5 +6,5 @@ Application Segments API endpoints.
 
 .. _zpa-app_segments:
 
-.. automodule:: zscaler.zpa.app_segments
+.. automodule:: pyzscaler.zpa.app_segments
     :members:

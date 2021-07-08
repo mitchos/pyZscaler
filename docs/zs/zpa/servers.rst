@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.servers``
 
 .. _zpa-app_servers:
 
-.. automodule:: zscaler.zpa.servers
+.. automodule:: pyzscaler.zpa.servers
     :members:

@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.scim_groups``
 
 .. _zpa-scim_groups:
 
-.. automodule:: zscaler.zpa.scim_groups
+.. automodule:: pyzscaler.zpa.scim_groups
     :members:

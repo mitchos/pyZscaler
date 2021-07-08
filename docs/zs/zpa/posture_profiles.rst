@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.posture_profiles``
 
 .. _zpa-posture_profiles:
 
-.. automodule:: zscaler.zpa.posture_profiles
+.. automodule:: pyzscaler.zpa.posture_profiles
     :members:

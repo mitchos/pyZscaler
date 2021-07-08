@@ -11,5 +11,5 @@ Browser Access is the only ZPA API endpoint for certificates provided by Zscaler
 
 .. _zpa-certificates:
 
-.. automodule:: zscaler.zpa.certificates
+.. automodule:: pyzscaler.zpa.certificates
     :members:
