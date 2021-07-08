@@ -8,6 +8,7 @@ from .cloud_connector_groups import CloudConnectorGroupsAPI
 from .connector_groups import ConnectorGroupsAPI
 from .idp import IDPControllerAPI
 from .machine_groups import MachineGroupsAPI
+from .policies import PolicySetsAPI
 from .posture_profiles import PostureProfilesAPI
 from .saml_attributes import SAMLAttributesAPI
 from .scim_attributes import SCIMAttributesAPI
@@ -112,6 +113,13 @@ class ZPA(APISession):
 
         """
         return CloudConnectorGroupsAPI(self)
+
+    def policies(self):
+        """
+        The interface object for the :ref:`ZPA Policy Sets interface <zpa-policies>`.
+
+        """
+        return PolicySetsAPI(self)
 
     @property
     def posture_profiles(self):
