@@ -54,7 +54,7 @@ For ZPA, you will need the ``CLIENT_ID``, ``CLIENT_SECRET`` and ``CUSTOMER_ID``.
 
 .. code-block:: python
 
-    from pyzscaler import ZPA
+    from pyzscaler.zpa import ZPA
     zpa = ZPA('CLIENT_ID', 'CLIENT_SECRET', 'CUSTOMER_ID')
     for app_segment in zpa.app_segments.list():
         pprint(app_segment)
