@@ -9,5 +9,5 @@ This package covers the ZPA interface.
 
     *
 
-.. automodule:: zscaler.zpa
+.. automodule:: pyzscaler.zpa
     :members:

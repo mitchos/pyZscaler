@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.idp``
 
 .. _zpa-idp:
 
-.. automodule:: zscaler.zpa.idp
+.. automodule:: pyzscaler.zpa.idp
     :members:

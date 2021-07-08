@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.machine_groups``
 
 .. _zpa-machine_groups:
 
-.. automodule:: zscaler.zpa.machine_groups
+.. automodule:: pyzscaler.zpa.machine_groups
     :members:
