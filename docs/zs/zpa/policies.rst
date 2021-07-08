@@ -8,5 +8,5 @@ Methods are accessible via ``zpa.policies``
 
 .. _zpa-policies:
 
-.. automodule:: zscaler.zpa.policies
+.. automodule:: pyzscaler.zpa.policies
     :members:
