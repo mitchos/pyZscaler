@@ -114,6 +114,7 @@ class ZPA(APISession):
         """
         return CloudConnectorGroupsAPI(self)
 
+    @property
     def policies(self):
         """
         The interface object for the :ref:`ZPA Policy Sets interface <zpa-policies>`.
