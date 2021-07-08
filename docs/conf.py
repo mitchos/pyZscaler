@@ -42,8 +42,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.githubpages',
-    'sphinx.ext.napoleon',
-    'sphinx_autodoc_typehints'
+    'sphinx.ext.napoleon'
 ]
 # autodoc_typehints = "description"
 add_module_names = False
