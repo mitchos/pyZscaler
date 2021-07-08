@@ -1,10 +1,3 @@
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-   :caption: Contents
-
-   zs/zpa/index
-
 pyZscaler is an unofficial SDK for interacting with Zscaler APIs
 =====================================================================
 pyZscaler aims to provide a uniform and easy-to-use interface for each of the Zscaler product APIs.
@@ -35,7 +28,7 @@ Features
 
 Products
 ---------
-- :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
+- Zscaler Private Access (ZPA)
 - Zscaler Internet Access (ZIA) - (work in progress)
 - Cloud Security Posture Management (CSPM) - (work in progress)
 
@@ -66,8 +59,6 @@ For ZPA, you will need the ``CLIENT_ID``, ``CLIENT_SECRET`` and ``CUSTOMER_ID``.
     for app_segment in zpa.app_segments.list():
         pprint(app_segment)
 
-.. automodule:: zscaler
-   :members:
 
 License
 =========
