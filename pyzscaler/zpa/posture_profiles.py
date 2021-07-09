@@ -1,4 +1,5 @@
 from restfly.endpoint import APIEndpoint
+from box import BoxList
 
 
 class PostureProfilesAPI(APIEndpoint):
@@ -15,7 +16,7 @@ class PostureProfilesAPI(APIEndpoint):
             ...    pprint(posture_profile)
 
         """
-        return self._get('posture').list
+        return self._get('posture', box=BoxList)
 
     def details(self, id: str):
         """

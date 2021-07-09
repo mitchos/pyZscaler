@@ -1,4 +1,5 @@
 from restfly.endpoint import APIEndpoint
+from box import BoxList
 
 
 class IDPControllerAPI(APIEndpoint):
@@ -15,7 +16,7 @@ class IDPControllerAPI(APIEndpoint):
             ...    pprint(idp)
 
         """
-        return self._get('idp').list
+        return self._get('idp', box=BoxList)
 
     def details(self, id: str):
         """

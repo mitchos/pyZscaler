@@ -1,4 +1,5 @@
 from restfly.endpoint import APIEndpoint
+from box import BoxList
 
 
 class SAMLAttributesAPI(APIEndpoint):
@@ -15,7 +16,7 @@ class SAMLAttributesAPI(APIEndpoint):
             ...    pprint(saml_attribute)
 
         """
-        return self._get('samlAttribute').list
+        return self._get('samlAttribute', box=BoxList)
 
     def details(self, id: str):
         """
