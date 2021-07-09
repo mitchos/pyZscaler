@@ -1,5 +1,5 @@
 from restfly.endpoint import APIEndpoint
-
+from box import BoxList
 
 class TrustedNetworksAPI(APIEndpoint):
 
@@ -15,7 +15,7 @@ class TrustedNetworksAPI(APIEndpoint):
             ...    pprint(trusted_network)
 
         """
-        return self._get('network').list
+        return self._get('network', box=BoxList).list
 
     def details(self, id: str):
         """
