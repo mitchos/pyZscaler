@@ -15,7 +15,7 @@ class TrustedNetworksAPI(APIEndpoint):
             ...    pprint(trusted_network)
 
         """
-        return self._get('network', box=BoxList).list
+        return self._get('network', box=BoxList)
 
     def details(self, id: str):
         """
