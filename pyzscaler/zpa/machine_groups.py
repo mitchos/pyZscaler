@@ -15,7 +15,7 @@ class MachineGroupsAPI(APIEndpoint):
             ...    pprint(machine_group)
 
         """
-        return self._get('machine_groups').list
+        return self._get('machineGroups').list
 
     def details(self, id: str):
         """
@@ -33,4 +33,4 @@ class MachineGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f'machine_groups/{id}')
+        return self._get(f'machineGroups/{id}')
