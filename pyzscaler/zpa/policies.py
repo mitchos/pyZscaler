@@ -3,32 +3,29 @@ from restfly.endpoint import APIEndpoint
 
 class PolicySetsAPI(APIEndpoint):
 
-    def list_client_forward(self):
-        """Returns a list of all configured Client Forwarding policies.
+    def list(self, policy_type: str = None):
+        """Returns the policy and rule sets for the given policy type.
 
-        Returns:
-            :obj:`dict`: Resource record of configured Client Forwarding policies.
+                Returns:
+                    :obj:`dict`: Resource record of the specified policy.
 
-        Examples:
-            >>> for client_forward_policy in zpa.policies.list_client_forward():
-            ...    pprint(client_forward_policy)
+                Examples:
+                    Request the configured Access Policy.
 
-        """
-        return self._get('policySet/bypass')
+                    >>> pprint(zpa.policies.list('access'))
 
-    def list_timeout(self):
-        """Returns a list of all configured Timeout policies.
+                """
+        _policy_url = None
 
-        Returns:
-            :obj:`dict`: A resource record of all configured timeout policies.
+        if policy_type == 'access':
+            _policy_url = 'global'
+        elif policy_type == 'timeout':
+            _policy_url = 'reauth'
+        elif policy_type == 'client_forwarding':
+            _policy_url = 'bypass'
 
-        Examples:
-            >>> for timeout_policy in zpa.policies.list_timeout():
-            ...    pprint(timeout_policy)
+        return self._get(f'policySet/{_policy_url}')
 
-        """
-
-        return self._get('policySet/reauth')
 
     def get_rule(self, policy_id: str, rule_id: str):
         """Returns the specified policy rule.
@@ -50,20 +47,6 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._get(f'policySet/{policy_id}/rule/{rule_id}')
 
-    def list_access(self):
-        """Returns all configured access policies.
-
-        'Access Policy' in the ZPA UI is referred to as 'Global Policy' in the API documentation.
-
-        Returns:
-            :obj:`dict`: The resource record for the Access policy.
-
-        Examples:
-            >>> global_policy = zpa.policies.get_global()
-
-        """
-
-        return self._get('policySet/global')
 
     def list_type(self, policy_type: str):
         """Returns policy rules for a given policy type.
@@ -105,51 +88,31 @@ class PolicySetsAPI(APIEndpoint):
         """
         return self._delete(f'policySet/{policy_id}/rule/{rule_id}')
 
-    def add_rule(self, policy_type: str, name: str, action: str = None, **kwargs):
-        """Add a new policy rule.
+    def add_access_rule(self, name: str, action: str = None, **kwargs):
+        """Add a new Access Policy rule.
 
-        See the `ZPA API reference <https://help.zscaler.com/zpa/api-reference#/policy-set-controller/addRuleToPolicySet>`_
+        See the `ZPA API reference <https://help.zscaler.com/zpa/access-policy-use-cases>`_
         for further detail on optional keyword parameter structures.
 
         Args:
-            policy_type (str):
-                The policy type for the new rule. Accepted values are 'access', 'timeout' and 'client_forward'.
             name (str):
                 The name of the new rule.
             action (str, optional):
                 The action for the policy. Accepted values are:
-                 Access Policy: 'ALLOW' (default) or 'DENY'.
-                 Timeout Policy: 'RE_AUTH' (default)
-                 Client Forwarding Policy: 'INTERCEPT' (default), 'INTERCEPT_ACCESSIBLE' and 'BYPASS'.
+                'ALLOW' (default) or 'DENY'.
             **kwargs:
                 Optional parameters.
 
         Keyword Args:
-            appServerGroups (list):
-                List of application server groups.
-            appConnectorGroups (list):
-                List of application connector groups.
             conditions (list:
                 List of conditions.
             customMsg (str):
                 A custom message.
             description (str):
                 A description for the rule.
-            operator (str):
-                The operator for a rule. Accepted values are 'AND' or 'OR'.
-            priority (int):
-                The rule priority.
-            re_auth_idle_timeout (int):
-                The re-authentication idle timeout value in seconds.
-            re_auth_timeout (int):
-                The re-authentication timeout value in seconds.
-            ruleOrder (int):
-                The rule order.
-            zpnCbiProfileId (str):
-                The CBI profile ID.
 
         Returns:
-            :obj:`dict`: The resource record of the newly created policy rule.
+            :obj:`dict`: The resource record of the newly created access policy rule.
 
         """
 
@@ -159,18 +122,151 @@ class PolicySetsAPI(APIEndpoint):
         }
 
         # Get the policy id for the provided policy type and configure payload accordingly.
-        if policy_type == 'access':
-            _policy_id = self.list_access().id
-            payload['action'] = kwargs.get('action', 'ALLOW')
-        elif policy_type == 'timeout':
-            _policy_id = self.list_timeout().id
-            payload['action'] = 'RE_AUTH'
-            payload['reauthTimeout'] = kwargs.get('re_auth_timeout', 172800)  # Default value in ZPA UI
-            payload['reauthIdleTimeout'] = kwargs.get('re_auth_idle_timeout', 600)  # Default value in ZPA UI
-        elif policy_type == 'client_forward':
-            _policy_id = self.list_client_forward().id
-            payload['action'] = kwargs.get('action', 'INTERCEPT')
-        else:
-            _policy_id = None
+
+        _policy_id = self.list('access').id
+        payload['action'] = kwargs.get('action', 'ALLOW')
+
+        for key, value in kwargs.items():
+            payload[key] = value
 
         return self._post(f'policySet/{_policy_id}/rule', json=payload)
+
+    def add_timeout_rule(self, name: str, **kwargs):
+        """Add a new Timeout Policy rule.
+
+        See the `ZPA Timeout Policy API reference <https://help.zscaler.com/zpa/timeout-policy-use-cases>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            name (str):
+                The name of the new rule.
+            **kwargs:
+                Optional parameters.
+
+        Keyword Args:
+            conditions (list:
+                List of conditions.
+            customMsg (str):
+                A custom message.
+            description (str):
+                A description for the rule.
+            re_auth_idle_timeout (int):
+                The re-authentication idle timeout value in seconds.
+            re_auth_timeout (int):
+                The re-authentication timeout value in seconds.
+
+        Returns:
+            :obj:`dict`: The resource record of the newly created Timeout Policy rule.
+
+        """
+
+        # Initialise the payload
+        payload = {
+            'name': name,
+        }
+
+        # Get the policy id for the provided policy type and configure payload accordingly.
+        _policy_id = self.list('timeout').id
+        payload['action'] = 'RE_AUTH'
+        payload['reauthTimeout'] = kwargs.get('re_auth_timeout', 172800)  # Default value in ZPA UI
+        payload['reauthIdleTimeout'] = kwargs.get('re_auth_idle_timeout', 600)  # Default value in ZPA UI
+
+        for key, value in kwargs.items():
+            payload[key] = value
+
+        return self._post(f'policySet/{_policy_id}/rule', json=payload)
+
+    def add_client_forwarding_rule(self, name: str, action: str = None, **kwargs):
+        """Add a new Client Forwarding Policy rule.
+
+        See the `ZPA API reference <https://help.zscaler.com/zpa/client-forwarding-policy-use-cases>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            name (str):
+                The name of the new rule.
+            action (str, optional):
+                The action for the policy. Accepted values are:
+                'INTERCEPT' (default), 'INTERCEPT_ACCESSIBLE' and 'BYPASS'.
+            **kwargs:
+                Optional parameters.
+
+        Keyword Args:
+            conditions (list:
+                List of conditions.
+            customMsg (str):
+                A custom message.
+            description (str):
+                A description for the rule.
+
+        Returns:
+            :obj:`dict`: The resource record of the newly created Client Forwarding Policy rule.
+
+        """
+
+        # Initialise the payload
+        payload = {
+            'name': name,
+        }
+
+        # Get the policy id for the provided policy type and configure payload accordingly.
+        _policy_id = self.list('client_forwarding').id
+        payload['action'] = kwargs.get('action', 'INTERCEPT')
+
+        for key, value in kwargs.items():
+            payload[key] = value
+
+        return self._post(f'policySet/{_policy_id}/rule', json=payload)
+
+    def update(self, policy_type: str, rule_id: str = None, name: str = None, action: str = None, **kwargs):
+        """Update an existing policy rule
+
+        Passing only the policy_type and rule_id will result in a successful operation with no changes to the rule
+        record. All other supplied params will result in a change.
+
+        Args:
+            policy_type:
+                The policy type. Accepted values are 'access', 'timeout' and 'client_forwarding'
+            rule_id:
+                The unique identifier for the rule to be updated.
+            name:
+                The name of the rule. Defaults to existing name if omitted.
+            action:
+                The action of the rule. Defaults to existing action if omitted.
+            **kwargs:
+
+        Returns:
+            :obj:`str`: The response code for the operation.
+
+        Examples:
+
+            Updates the name only for an Access Policy rule:
+            >>> zpa.policies.update('access', '72057615512764594', name='new_rule_name')
+
+            Updates the action only for a Client Forwarding Policy rule:
+            >>> zpa.policies.update('client_forwarding', '72057615512764595', action='BYPASS')
+
+        """
+
+        # Get the policy id for the supplied policy_type
+        _policy_id = self.list(policy_type).id
+
+        # Name required so use existing name from rule if not specified
+        if not name:
+            name = self.get_rule(_policy_id, rule_id).name
+
+        # Action required so use existing action from rule if not specified
+        if not action:
+            action = self.get_rule(_policy_id, rule_id).action
+
+        # Initialise payload
+        payload = {
+            'name': name,
+            'action': action
+        }
+
+        # Add optional params to payload
+        for key, value in kwargs.items():
+            payload[key] = value
+
+        return self._put(f'policySet/{_policy_id}/rule/{rule_id}', json=payload, box=False).status_code
