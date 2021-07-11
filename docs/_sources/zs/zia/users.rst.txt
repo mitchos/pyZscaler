@@ -1,0 +1,10 @@
+users
+------
+
+The following methods allow for interaction with the ZIA
+User Management API endpoints.
+
+.. _zia-users:
+
+.. automodule:: zscaler.zia.users
+    :members:
