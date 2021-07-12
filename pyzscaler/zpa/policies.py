@@ -6,15 +6,19 @@ class PolicySetsAPI(APIEndpoint):
     def list(self, policy_type: str = None):
         """Returns the policy and rule sets for the given policy type.
 
-                Returns:
-                    :obj:`dict`: Resource record of the specified policy.
+        Args:
+            policy_type (str):
+                The type of policy to be returned. Accepted values are 'access', 'timeout' and 'client_forwarding'.
 
-                Examples:
-                    Request the configured Access Policy.
+        Returns:
+            :obj:`dict`: Resource record of the specified policy.
 
-                    >>> pprint(zpa.policies.list('access'))
+        Examples:
+            Request the specified Policy.
 
-                """
+            >>> pprint(zpa.policies.list('access'))
+
+        """
         _policy_url = None
 
         if policy_type == 'access':
@@ -25,7 +29,6 @@ class PolicySetsAPI(APIEndpoint):
             _policy_url = 'bypass'
 
         return self._get(f'policySet/{_policy_url}')
-
 
     def get_rule(self, policy_id: str, rule_id: str):
         """Returns the specified policy rule.
@@ -47,8 +50,7 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._get(f'policySet/{policy_id}/rule/{rule_id}')
 
-
-    def list_type(self, policy_type: str):
+    def list_rules(self, policy_type: str):
         """Returns policy rules for a given policy type.
 
         Args:
@@ -122,7 +124,6 @@ class PolicySetsAPI(APIEndpoint):
         }
 
         # Get the policy id for the provided policy type and configure payload accordingly.
-
         _policy_id = self.list('access').id
         payload['action'] = kwargs.get('action', 'ALLOW')
 
@@ -144,7 +145,7 @@ class PolicySetsAPI(APIEndpoint):
                 Optional parameters.
 
         Keyword Args:
-            conditions (list:
+            conditions (list):
                 List of conditions.
             customMsg (str):
                 A custom message.
