@@ -93,7 +93,7 @@ class PolicySetsAPI(APIEndpoint):
     def add_access_rule(self, name: str, action: str = None, **kwargs):
         """Add a new Access Policy rule.
 
-        See the `ZPA API reference <https://help.zscaler.com/zpa/access-policy-use-cases>`_
+        See the `ZPA Access Policy API reference <https://help.zscaler.com/zpa/access-policy-use-cases>`_
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -180,7 +180,7 @@ class PolicySetsAPI(APIEndpoint):
     def add_client_forwarding_rule(self, name: str, action: str = None, **kwargs):
         """Add a new Client Forwarding Policy rule.
 
-        See the `ZPA API reference <https://help.zscaler.com/zpa/client-forwarding-policy-use-cases>`_
+        See the `ZPA Client Forwarding Policy API reference <https://help.zscaler.com/zpa/client-forwarding-policy-use-cases>`_
         for further detail on optional keyword parameter structures.
 
         Args:
@@ -242,9 +242,11 @@ class PolicySetsAPI(APIEndpoint):
         Examples:
 
             Updates the name only for an Access Policy rule:
+
             >>> zpa.policies.update('access', '72057615512764594', name='new_rule_name')
 
             Updates the action only for a Client Forwarding Policy rule:
+
             >>> zpa.policies.update('client_forwarding', '72057615512764595', action='BYPASS')
 
         """
