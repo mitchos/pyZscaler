@@ -71,12 +71,12 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._get(f'policySet/rules/policyType/{policy_type}').list
 
-    def delete_rule(self, policy_id: str, rule_id: str):
+    def delete_rule(self, policy_type: str, rule_id: str):
         """Deletes the specified policy rule.
 
         Args:
-            policy_id (str):
-                The unique identifier for the policy.
+            policy_type (str):
+                The type of policy the rule belongs to. Accepted values are 'access', 'timeout' and 'client_forwarding'.
             rule_id (str):
                 The unique identifier for the policy rule.
 
@@ -88,7 +88,11 @@ class PolicySetsAPI(APIEndpoint):
             ...    rule_id='23322646655778')
 
         """
-        return self._delete(f'policySet/{policy_id}/rule/{rule_id}')
+
+        # Get policy id for specified policy type
+        _policy_id = self.list(policy_type).id
+
+        return self._delete(f'policySet/{_policy_id}/rule/{rule_id}')
 
     def add_access_rule(self, name: str, action: str = None, **kwargs):
         """Add a new Access Policy rule.
