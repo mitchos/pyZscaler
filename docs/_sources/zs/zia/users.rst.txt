@@ -6,5 +6,5 @@ User Management API endpoints.
 
 .. _zia-users:
 
-.. automodule:: zscaler.zia.users
+.. automodule:: pyzscaler.zia.users
     :members:

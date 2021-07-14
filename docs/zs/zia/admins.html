@@ -125,7 +125,180 @@
                             <h1>admins<a class="headerlink" href="#admins" title="Permalink to this headline">¶</a></h1>
                             <p>The following methods allow for interaction with the ZIA
                                 Admin Management API endpoints.</p>
-                            <span class="target" id="zia-admins"></span></div>
+                            <span class="target" id="module-pyzscaler.zia.admins"><span id="zia-admins"></span></span>
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="pyzscaler.zia.admins.AdminManagementAPI">
+                                    <em class="property"><span class="pre">class</span> </em><span
+                                        class="sig-name descname"><span
+                                        class="pre">AdminManagementAPI</span></span><span class="sig-paren">(</span><em
+                                        class="sig-param"><span class="n"><span class="pre">api</span></span><span
+                                        class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">restfly.session.APISession</span></span></em><span
+                                        class="sig-paren">)</span><a class="headerlink"
+                                                                     href="#pyzscaler.zia.admins.AdminManagementAPI"
+                                                                     title="Permalink to this definition">¶</a></dt>
+                                <dd>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.admins.AdminManagementAPI.add">
+                                            <span class="sig-name descname"><span class="pre">add</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">login_name</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">user_name</span></span><span class="p"><span
+                                                    class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">str</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">email</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="o"><span
+                                                    class="pre">**</span></span><span class="n"><span
+                                                    class="pre">kwargs</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.admins.AdminManagementAPI.add"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Adds a new auditor or admin user.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>login_name</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – Admin or
+                                                            auditor’s login name. loginName is in email format and uses
+                                                            the domain name associated to
+                                                            the Zscaler account.</p></li>
+                                                        <li><p><strong>user_name</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Admin or auditor’s username.</p></li>
+                                                        <li><p><strong>email</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                          title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Admin or auditor’s email address.</p></li>
+                                                        <li><p><strong>**kwargs</strong> – Keyword arguments documented
+                                                            below</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even"><p><strong>comments</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – Additional
+                                                    information about the admin or auditor.</p>
+                                                </dd>
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The newly created admin or auditor resource
+                                                    record.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.admins.AdminManagementAPI.delete">
+                                            <span class="sig-name descname"><span class="pre">delete</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span
+                                                class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.admins.AdminManagementAPI.delete"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Delete an admin or auditor user for the specified ID</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the admin or auditor user.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>The operation response code.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.admins.AdminManagementAPI.list">
+                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.admins.AdminManagementAPI.list"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Retrieves all admin and auditor users.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>A list of admin and auditor users.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference internal"
+                                                                             href="#pyzscaler.zia.admins.AdminManagementAPI.list"
+                                                                             title="pyzscaler.zia.admins.AdminManagementAPI.list"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.admins.AdminManagementAPI.list_lite">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_lite</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.admins.AdminManagementAPI.list_lite"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Retrieves only name and ID for all admin and auditor users.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>A list of admin and auditor users.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference internal"
+                                                                             href="#pyzscaler.zia.admins.AdminManagementAPI.list"
+                                                                             title="pyzscaler.zia.admins.AdminManagementAPI.list"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                        </div>
 
 
                     </div>

@@ -6,5 +6,5 @@ Admin Management API endpoints.
 
 .. _zia-admins:
 
-.. automodule:: zscaler.zia.admins
+.. automodule:: pyzscaler.zia.admins
     :members:

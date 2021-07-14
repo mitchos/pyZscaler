@@ -125,7 +125,94 @@
                             <h1>config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h1>
                             <p>The following methods allow for interaction with the ZIA
                                 Activation Management API endpoints.</p>
-                            <span class="target" id="zia-config"></span></div>
+                            <span class="target" id="module-pyzscaler.zia.config"><span id="zia-config"></span></span>
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="pyzscaler.zia.config.ActivationAPI">
+                                    <em class="property"><span class="pre">class</span> </em><span
+                                        class="sig-name descname"><span class="pre">ActivationAPI</span></span><span
+                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                        class="pre">api</span></span><span class="p"><span class="pre">:</span></span>
+                                    <span class="n"><span class="pre">restfly.session.APISession</span></span></em><span
+                                        class="sig-paren">)</span><a class="headerlink"
+                                                                     href="#pyzscaler.zia.config.ActivationAPI"
+                                                                     title="Permalink to this definition">¶</a></dt>
+                                <dd>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.config.ActivationAPI.activate">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">activate</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.config.ActivationAPI.activate"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Activates configuration changes.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>Configuration status object.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">config_activate</span> <span class="o">=</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">config</span><span
+                                                        class="o">.</span><span class="n">activate</span><span
+                                                        class="p">()</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.config.ActivationAPI.status">
+                                            <span class="sig-name descname"><span class="pre">status</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.config.ActivationAPI.status"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Gets the activation status for a configuration change.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>Configuration status object.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">config_status</span> <span class="o">=</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">config</span><span
+                                                        class="o">.</span><span class="n">status</span><span class="p">()</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                        </div>
 
 
                     </div>

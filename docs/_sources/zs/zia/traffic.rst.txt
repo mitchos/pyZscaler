@@ -6,5 +6,5 @@ Traffic Management API endpoints.
 
 .. _zia-traffic:
 
-.. automodule:: zscaler.zia.traffic
+.. automodule:: pyzscaler.zia.traffic
     :members:

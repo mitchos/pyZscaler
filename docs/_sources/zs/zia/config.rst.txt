@@ -6,5 +6,5 @@ Activation Management API endpoints.
 
 .. _zia-config:
 
-.. automodule:: zscaler.zia.config
+.. automodule:: pyzscaler.zia.config
     :members:

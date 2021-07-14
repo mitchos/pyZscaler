@@ -206,6 +206,16 @@
                                               href="https://help.zscaler.com/zpa/about-api-keys">How to generate the
                                         CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID</a></p></li>
                                 </ul>
+                                <p>pyZscaler will also look for the following environment variables in lieu of being
+                                    supplied args:</p>
+                                <ul class="simple">
+                                    <li><p><code class="docutils literal notranslate"><span
+                                            class="pre">ZPA_CLIENT_ID</span></code></p></li>
+                                    <li><p><code class="docutils literal notranslate"><span class="pre">ZPA_CLIENT_SECRET</span></code>
+                                    </p></li>
+                                    <li><p><code class="docutils literal notranslate"><span
+                                            class="pre">ZPA_CUSTOMER_ID</span></code></p></li>
+                                </ul>
                                 <div class="highlight-python notranslate">
                                     <div class="highlight"><pre><span></span><span class="kn">from</span> <span
                                             class="nn">pyzscaler</span> <span class="kn">import</span> <span class="n">ZPA</span>
@@ -220,7 +230,7 @@
 </pre>
                                     </div>
                                 </div>
-                            </div>
+                                <span class="target" id="module-pyzscaler"></span></div>
                         </div>
                         <div class="section" id="license">
                             <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a>

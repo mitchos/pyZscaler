@@ -6,5 +6,5 @@ Location Management API endpoints.
 
 .. _zia-locations:
 
-.. automodule:: zscaler.zia.locations
+.. automodule:: pyzscaler.zia.locations
     :members:

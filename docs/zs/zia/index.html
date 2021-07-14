@@ -140,6 +140,142 @@
                                     </li>
                                 </ul>
                             </div>
+                            <span class="target" id="module-pyzscaler.zia"></span>
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="pyzscaler.zia.ZIA">
+                                    <em class="property"><span class="pre">class</span> </em><span
+                                        class="sig-name descname"><span class="pre">ZIA</span></span><span
+                                        class="sig-paren">(</span><em class="sig-param"><span class="o"><span
+                                        class="pre">**</span></span><span class="n"><span
+                                        class="pre">kw</span></span></em><span class="sig-paren">)</span><a
+                                        class="headerlink" href="#pyzscaler.zia.ZIA"
+                                        title="Permalink to this definition">¶</a></dt>
+                                <dd><p>A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.</p>
+                                    <p>The ZIA object stores the session token and simplifies access to CRUD options
+                                        within the ZIA platform.</p>
+                                    <dl class="py attribute">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.api_key">
+                                            <span class="sig-name descname"><span class="pre">api_key</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.api_key"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The ZIA API key generated from the ZIA console.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)">str</a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py attribute">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.username">
+                                            <span class="sig-name descname"><span class="pre">username</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.username"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The ZIA administrator username.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)">str</a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py attribute">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.password">
+                                            <span class="sig-name descname"><span class="pre">password</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.password"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The ZIA administrator password.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)">str</a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.admins">
+                                            <em class="property"><span class="pre">property</span> </em><span
+                                                class="sig-name descname"><span class="pre">admins</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.admins"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The interface object for the <a class="reference internal"
+                                                                               href="admins.html#zia-admins"><span
+                                                class="std std-ref">ZIA Admin Management interface</span></a>.</p>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.audit_logs">
+                                            <em class="property"><span class="pre">property</span> </em><span
+                                                class="sig-name descname"><span class="pre">audit_logs</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.audit_logs"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The interface object for the <a class="reference internal"
+                                                                               href="audit_logs.html#zia-audit-logs"><span
+                                                class="std std-ref">ZIA Audit Logs interface</span></a>.</p>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.config">
+                                            <em class="property"><span class="pre">property</span> </em><span
+                                                class="sig-name descname"><span class="pre">config</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.config"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The interface object for the <a class="reference internal"
+                                                                               href="config.html#zia-config"><span
+                                                class="std std-ref">ZIA Activation interface</span></a>.</p>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.locations">
+                                            <em class="property"><span class="pre">property</span> </em><span
+                                                class="sig-name descname"><span class="pre">locations</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.locations"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The interface object for the <a class="reference internal"
+                                                                               href="locations.html#zia-locations"><span
+                                                class="std std-ref">ZIA Location Management interface</span></a>.</p>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.traffic">
+                                            <em class="property"><span class="pre">property</span> </em><span
+                                                class="sig-name descname"><span class="pre">traffic</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.traffic"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The interface object for the <a class="reference internal"
+                                                                               href="traffic.html#zia-traffic"><span
+                                                class="std std-ref">ZIA Traffic Management interface</span></a>.</p>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py property">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.ZIA.users">
+                                            <em class="property"><span class="pre">property</span> </em><span
+                                                class="sig-name descname"><span class="pre">users</span></span><a
+                                                class="headerlink" href="#pyzscaler.zia.ZIA.users"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>The interface object for the <a class="reference internal"
+                                                                               href="users.html#zia-users"><span
+                                                class="std std-ref">ZIA User Management interface</span></a>.</p>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
                         </div>
 
 

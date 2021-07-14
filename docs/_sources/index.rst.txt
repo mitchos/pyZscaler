@@ -59,6 +59,12 @@ For ZPA, you will need the ``CLIENT_ID``, ``CLIENT_SECRET`` and ``CUSTOMER_ID``.
 
 - `How to generate the CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID <https://help.zscaler.com/zpa/about-api-keys>`_
 
+pyZscaler will also look for the following environment variables in lieu of being supplied args:
+
+- ``ZPA_CLIENT_ID``
+- ``ZPA_CLIENT_SECRET``
+- ``ZPA_CUSTOMER_ID``
+
 .. code-block:: python
 
     from pyzscaler import ZPA
@@ -66,7 +72,7 @@ For ZPA, you will need the ``CLIENT_ID``, ``CLIENT_SECRET`` and ``CUSTOMER_ID``.
     for app_segment in zpa.app_segments.list():
         pprint(app_segment)
 
-.. automodule:: zscaler
+.. automodule:: pyzscaler
    :members:
 
 License

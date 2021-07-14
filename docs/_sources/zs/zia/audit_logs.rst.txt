@@ -6,5 +6,5 @@ Admin Audit Logs API endpoints.
 
 .. _zia-audit_logs:
 
-.. automodule:: zscaler.zia.audit_logs
+.. automodule:: pyzscaler.zia.audit_logs
     :members:

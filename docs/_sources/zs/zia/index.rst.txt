@@ -12,5 +12,5 @@ This package covers the ZIA interface.
     traffic
     users
 
-.. automodule:: zscaler.zia
+.. automodule:: pyzscaler.zia
     :members:

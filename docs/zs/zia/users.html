@@ -125,7 +125,479 @@
                             <h1>users<a class="headerlink" href="#users" title="Permalink to this headline">¶</a></h1>
                             <p>The following methods allow for interaction with the ZIA
                                 User Management API endpoints.</p>
-                            <span class="target" id="zia-users"></span></div>
+                            <span class="target" id="module-pyzscaler.zia.users"><span id="zia-users"></span></span>
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="pyzscaler.zia.users.UserManagementAPI">
+                                    <em class="property"><span class="pre">class</span> </em><span
+                                        class="sig-name descname"><span class="pre">UserManagementAPI</span></span><span
+                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                        class="pre">api</span></span><span class="p"><span class="pre">:</span></span>
+                                    <span class="n"><span class="pre">restfly.session.APISession</span></span></em><span
+                                        class="sig-paren">)</span><a class="headerlink"
+                                                                     href="#pyzscaler.zia.users.UserManagementAPI"
+                                                                     title="Permalink to this definition">¶</a></dt>
+                                <dd><p>The methods within this section use the ZIA User Management API and are accessed
+                                    via <code class="docutils literal notranslate"><span
+                                            class="pre">ZIA.users</span></code>.</p>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.users.UserManagementAPI.add">
+                                            <span class="sig-name descname"><span class="pre">add</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">name</span></span><span class="p"><span class="pre">:</span></span>
+                                            <span class="n"><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                               title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">email</span></span><span class="p"><span
+                                                    class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">str</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">groups</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference internal"
+                                                href="#pyzscaler.zia.users.UserManagementAPI.list"
+                                                title="pyzscaler.zia.users.UserManagementAPI.list"><span class="pre">pyzscaler.zia.users.UserManagementAPI.list</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">department</span></span><span class="p"><span
+                                                    class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/functions.html#object"
+                                                    title="(in Python v3.9)"><span class="pre">object</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">password</span></span><span class="p"><span class="pre">:</span></span>
+                                                <span class="n"><a class="reference external"
+                                                                   href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                   title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="o"><span
+                                                    class="pre">**</span></span><span class="n"><span
+                                                    class="pre">kwargs</span></span></em><span
+                                                class="sig-paren">)</span> &#x2192; <a class="reference external"
+                                                                                       href="https://docs.python.org/3/library/constants.html#None"
+                                                                                       title="(in Python v3.9)"><span
+                                                class="pre">None</span></a><a class="headerlink"
+                                                                              href="#pyzscaler.zia.users.UserManagementAPI.add"
+                                                                              title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Creates a new ZIA user.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>name</strong> (<a class="reference external"
+                                                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                         title="(in Python v3.9)"><em>str</em></a>)
+                                                            – User name. This appears when choosing users for policies.
+                                                        </p></li>
+                                                        <li><p><strong>email</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                          title="(in Python v3.9)"><em>str</em></a>)
+                                                            – User email consists of a user name and domain name. It
+                                                            does not have to be a valid email address,
+                                                            but it must be unique and its domain must belong to the
+                                                            organization.</p></li>
+                                                        <li><p><strong>groups</strong> (<a class="reference external"
+                                                                                           href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                                           title="(in Python v3.9)"><em>list</em></a>)
+                                                            – List of Groups a user belongs to. Groups are used in
+                                                            policies.</p></li>
+                                                        <li><p><strong>department</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#object"
+                                                                title="(in Python v3.9)"><em>object</em></a>) – </p>
+                                                        </li>
+                                                        <li><p><strong>password</strong> (<a class="reference external"
+                                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                             title="(in Python v3.9)"><em>str</em></a>)
+                                                            – </p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>**comments</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
+                                                            – Additional information about this user.</p></li>
+                                                        <li><p><strong>**tempAuthEmail</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>)
+                                                            – Temporary Authentication Email. If you enabled one-time
+                                                            tokens or links, enter the email address to
+                                                            which the Zscaler service sends the tokens or links. If this
+                                                            is empty, the service will send the email
+                                                            to the User email.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>The resource record for the new user.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.users.UserManagementAPI.bulk_delete">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">bulk_delete</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">ids</span></span><span class="p"><span class="pre">:</span></span>
+                                            <span class="n"><a class="reference internal"
+                                                               href="#pyzscaler.zia.users.UserManagementAPI.list"
+                                                               title="pyzscaler.zia.users.UserManagementAPI.list"><span
+                                                    class="pre">pyzscaler.zia.users.UserManagementAPI.list</span></a></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.users.UserManagementAPI.bulk_delete"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Bulk delete ZIA users.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>ids</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                        title="(in Python v3.9)"><em>list</em></a>) – List containing id
+                                                    int of each user that will be deleted.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>Object containing list of users that were deleted</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">bulk_delete_users</span> <span
+                                                        class="o">=</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">users</span><span
+                                                        class="o">.</span><span class="n">bulk_delete</span><span
+                                                        class="p">([</span><span class="mi">1</span><span
+                                                        class="p">,</span> <span class="mi">2</span><span
+                                                        class="p">,</span> <span class="mi">3</span><span
+                                                        class="p">])</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.users.UserManagementAPI.delete">
+                                            <span class="sig-name descname"><span class="pre">delete</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.users.UserManagementAPI.delete"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Delete the specified user ID.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – </p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>The resource record for the requested user.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Examples</dt>
+                                                <dd>
+                                                    <div class="doctest highlight-default notranslate">
+                                                        <div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span
+                                                                class="n">user</span> <span class="o">=</span> <span
+                                                                class="n">zia</span><span class="o">.</span><span
+                                                                class="n">users</span><span class="o">.</span><span
+                                                                class="n">get</span><span class="p">(</span><span
+                                                                class="s1">&#39;8312&#39;</span><span class="p">)</span>
+</pre>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.users.UserManagementAPI.get">
+                                            <span class="sig-name descname"><span class="pre">get</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.users.UserManagementAPI.get"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Get the user information for the specified ID.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – </p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>The resource record for the requested user.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>Examples</dt>
+                                                <dd>
+                                                    <div class="doctest highlight-default notranslate">
+                                                        <div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span
+                                                                class="n">user</span> <span class="o">=</span> <span
+                                                                class="n">zia</span><span class="o">.</span><span
+                                                                class="n">users</span><span class="o">.</span><span
+                                                                class="n">get</span><span class="p">(</span><span
+                                                                class="s1">&#39;8312&#39;</span><span class="p">)</span>
+</pre>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.users.UserManagementAPI.get_department">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">get_department</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.users.UserManagementAPI.get_department"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Returns the department details for a given department.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the department.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>The department resource record.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">department</span> <span
+                                                        class="o">=</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">users</span><span
+                                                        class="o">.</span><span class="n">get_department</span><span
+                                                        class="p">(</span><span class="nb">id</span><span
+                                                        class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.users.UserManagementAPI.get_group">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">get_group</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.users.UserManagementAPI.get_group"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Returns the user group details for a given user group.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the user group.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>The user group resource record.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">user_group</span> <span
+                                                        class="o">=</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">users</span><span
+                                                        class="o">.</span><span class="n">get_group</span><span
+                                                        class="p">(</span><span class="nb">id</span><span
+                                                        class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.users.UserManagementAPI.list">
+                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.users.UserManagementAPI.list"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Retrieves a list of users.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The list of users configured in ZIA.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference internal"
+                                                                             href="#pyzscaler.zia.users.UserManagementAPI.list"
+                                                                             title="pyzscaler.zia.users.UserManagementAPI.list"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">users</span> <span class="o">=</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">users</span><span
+                                                        class="o">.</span><span class="n">list</span><span
+                                                        class="p">()</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.users.UserManagementAPI.list_departments">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_departments</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.users.UserManagementAPI.list_departments"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Retrieves a list of departments.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The list of departments configured in ZIA.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference internal"
+                                                                             href="#pyzscaler.zia.users.UserManagementAPI.list"
+                                                                             title="pyzscaler.zia.users.UserManagementAPI.list"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">departments</span> <span class="o">=</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">users</span><span
+                                                        class="o">.</span><span class="n">list_departments</span><span
+                                                        class="p">()</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.users.UserManagementAPI.list_groups">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_groups</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.users.UserManagementAPI.list_groups"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Retrieves a list of user groups.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The list of user groups configured in ZIA.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference internal"
+                                                                             href="#pyzscaler.zia.users.UserManagementAPI.list"
+                                                                             title="pyzscaler.zia.users.UserManagementAPI.list"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">user_groups</span> <span class="o">=</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">users</span><span
+                                                        class="o">.</span><span class="n">list_groups</span><span
+                                                        class="p">()</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                        </div>
 
 
                     </div>
