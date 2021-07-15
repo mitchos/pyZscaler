@@ -26,6 +26,7 @@ class ZIA(APISession):
         'camel_killer_box': True
     }
     _env_base = 'ZIA'
+    _env_cloud = 'zscaler'
     _url = 'https://zsapi.zscaler.net/api/v1'
 
     def __init__(self, **kw):
@@ -35,6 +36,9 @@ class ZIA(APISession):
                                 os.getenv(f'{self._env_base}_USERNAME'))
         self._password = kw.get('password',
                                 os.getenv(f'{self._env_base}_PASSWORD'))
+        self._env_cloud = kw.get('cloud',
+                                 os.getenv(f'{self._env_base}_CLOUD'))
+        self._url = f'https://zsapi.{self._env_cloud}.net/api/v1'
         super(ZIA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> None:
@@ -43,6 +47,7 @@ class ZIA(APISession):
         :param kwargs:
         :return:
         """
+        print(self._url)
         super(ZIA, self)._build_session(**kwargs)
         api_obf = obfuscate_api_key(self._api_key)
 
