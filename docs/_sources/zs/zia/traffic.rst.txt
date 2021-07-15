@@ -1,0 +1,10 @@
+traffic
+---------
+
+The following methods allow for interaction with the ZIA
+Traffic Management API endpoints.
+
+.. _zia-traffic:
+
+.. automodule:: pyzscaler.zia.traffic
+    :members:

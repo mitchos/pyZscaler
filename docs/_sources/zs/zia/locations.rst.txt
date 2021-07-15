@@ -1,0 +1,10 @@
+locations
+----------
+
+The following methods allow for interaction with the ZIA
+Location Management API endpoints.
+
+.. _zia-locations:
+
+.. automodule:: pyzscaler.zia.locations
+    :members:

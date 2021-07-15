@@ -4,34 +4,34 @@ from box import BoxList
 
 class SAMLAttributesAPI(APIEndpoint):
 
-    def list(self):
+    def list_attributes(self):
         """
-        Provides a list of all configured SAML attributes.
+        Returns a list of all configured SAML attributes.
 
         Returns:
             :obj:`list`: A list of all configured SAML attributes.
 
         Examples:
-            >>> for saml_attribute in zpa.saml_attributes.list():
+            >>> for saml_attribute in zpa.saml_attributes.list_attributes():
             ...    pprint(saml_attribute)
 
         """
         return self._get('samlAttribute', box=BoxList)
 
-    def details(self, id: str):
+    def get_attribute(self, attribute_id: str):
         """
-        Provides information on the specified SAML attributes.
+        Returns information on the specified SAML attributes.
 
         Args:
-            id (str):
+            attribute_id (str):
                 The unique identifier for the SAML attributes.
 
         Returns:
             :obj:`dict`: The resource record for the SAML attributes.
 
         Examples:
-            >>> pprint(zpa.saml_attributes.details('2342342342344433'))
+            >>> pprint(zpa.saml_attributes.get_attribute('2342342342344433'))
 
         """
 
-        return self._get(f'samlAttribute/{id}')
+        return self._get(f'samlAttribute/{attribute_id}')

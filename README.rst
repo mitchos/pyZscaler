@@ -29,7 +29,7 @@ Features
 Products
 ---------
 - Zscaler Private Access (ZPA)
-- Zscaler Internet Access (ZIA) - (work in progress)
+- Zscaler Internet Access (ZIA)
 - Cloud Security Posture Management (CSPM) - (work in progress)
 
 Installation
@@ -43,19 +43,99 @@ The most recent version can be installed from pypi as per below.
 
 Usage
 ========
-Before you can interact with any of the Zscaler APIs, you will need to generate API keys for each product that you are
-writing code for. Once you have generated the API keys and installed pyZscaler, you're ready to go.
+Before you can interact with any of the Zscaler APIs, you may need to generate API keys or retrieve tenancy information
+for each product that you are interfacing with. Once you have the requirements and you have installed pyZscaler,
+you're ready to go.
 
-Getting started with ZPA
+Getting started with ZIA
 --------------------------
-For ZPA, you will need the ``CLIENT_ID``, ``CLIENT_SECRET`` and ``CUSTOMER_ID``.
+For ZIA, you will need to provide params when instantiating the class or set the environment variables as per the
+table below:
 
-- `How to generate the CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID <https://help.zscaler.com/zpa/about-api-keys>`_
+.. list-table:: ZIA Requirements
+   :header-rows: 1
+
+   * - Param
+     - ENV
+     - Description
+   * - cloud
+     - ``ZIA_CLOUD``
+     - The cloud that your ZIA tenant is provisioned on.
+   * - api_key
+     - ``ZIA_API_KEY``
+     - The API key generated from your ZIA console.
+   * - username
+     - ``ZIA_USERNAME``
+     - The username of your administrator user that will be used for API calls.
+   * - password
+     - ``ZIA_PASSWORD``
+     - The password for the administrator user.
+
+`How to generate the API_KEY <https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey>`_
+
+How to determine the ZIA CLOUD
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can find the name of the cloud in the URL that admins use to log into the Zscaler service. E.g.
+if an organisation logs into admin.zscaler.net, then that organization's cloud name is zscaler.net. You don't
+need to supply the .net suffix with pyZscaler, so the ``CLOUD`` arg would simply be ``zscaler``.
+
+.. list-table:: ZIA Cloud List
+   :header-rows: 1
+
+   * - URL
+     - CLOUD
+   * - admin.zscaler.net
+     - zscaler
+   * - admin.zscalerone.net
+     - zscalerone
+   * - admin.zscalertwo.net
+     - zscalertwo
+   * - admin.zscalerthree.net
+     - zscalerthree
+   * - admin.zscloud.net
+     - zscloud
+   * - admin.zscalerbeta.net
+     - zscalerbeta
+   * - admin.zscalergov.net
+     - zscalergov
+
 
 .. code-block:: python
 
-    from pyzscaler.zpa import ZPA
-    zpa = ZPA('CLIENT_ID', 'CLIENT_SECRET', 'CUSTOMER_ID')
+    from pyzscaler import ZIA
+    zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+    for user in zia.users.list():
+        pprint(user)
+
+Getting started with ZPA
+--------------------------
+For ZPA, you will need to provide params when instantiating the class or set the environment variables as per the
+table below:
+
+.. list-table:: ZPA Requirements
+   :header-rows: 1
+
+   * - Param
+     - ENV
+     - Description
+   * - client_id
+     - ``ZPA_CLIENT_ID``
+     - The client ID that is associated with the client secret.
+   * - client_secret
+     - ``ZPA_CLIENT_SECRET``
+     - The client secret that was generated for the client ID.
+   * - customer_id
+     - ``ZPA_CUSTOMER_ID``
+     - The customer ID for the ZPA tenancy.
+
+- `How to generate the CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID <https://help.zscaler.com/zpa/about-api-keys>`_
+
+
+.. code-block:: python
+
+    from pyzscaler import ZPA
+    zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
     for app_segment in zpa.app_segments.list():
         pprint(app_segment)
 

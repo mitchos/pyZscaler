@@ -1,59 +1,58 @@
 from restfly.endpoint import APIEndpoint
-from restfly.errors import RequiredParameterError
 
 
 class ServerGroupsAPI(APIEndpoint):
 
-    def list(self):
+    def list_groups(self):
         """
-        Provides a list of all configured server groups.
+        Returns a list of all configured server groups.
 
         Returns:
             :obj:`list`: A list of all configured server groups.
 
         Examples:
-            >>> for server_group in zpa.server_groups.list():
+            >>> for server_group in zpa.server_groups.list_groups():
             ...    pprint(server_group)
 
         """
         return self._get('serverGroup').list
 
-    def details(self, id: str):
+    def get_group(self, group_id: str):
         """
         Provides information on the specified server group.
 
         Args:
-            id (str):
+            group_id (str):
                 The unique identifier for the server group.
 
         Returns:
             :obj:`dict`: The resource record for the server group.
 
         Examples:
-            >>> pprint(zpa.server_groups.details('2342342342344433'))
+            >>> pprint(zpa.server_groups.get_group('2342342342344433'))
 
         """
 
-        return self._get(f'serverGroup/{id}')
+        return self._get(f'serverGroup/{group_id}')
 
-    def delete(self, id: str):
+    def delete_group(self, group_id: str):
         """
         Deletes the specified server group.
 
         Args:
-            id (str):
+            group_id (str):
                 The unique identifier for the server group to be deleted.
 
         Returns:
             :obj:`str`: The response code for the operation.
 
         Examples:
-            >>> zpa.server_groups.delete('2342342342343')
+            >>> zpa.server_groups.delete_group('2342342342343')
 
         """
-        return self._delete(f'serverGroup/{id}')
+        return self._delete(f'serverGroup/{group_id}')
 
-    def add(self, name: str, app_connector_ids: list, **kwargs):
+    def add_group(self, name: str, app_connector_ids: list, **kwargs):
         """Adds a server group.
 
         Args:
@@ -79,12 +78,12 @@ class ServerGroupsAPI(APIEndpoint):
         Examples:
             Create a server group with the minimum params:
 
-            >>> zpa.server_groups.add('new_server_group'
+            >>> zpa.server_groups.add_group('new_server_group'
             ...    app_connector_ids['23423423432444'])
 
             Create a server group and define a new server on the fly:
 
-            >>> zpa.server_groups.add('new_server_group',
+            >>> zpa.server_groups.add_group('new_server_group',
             ...    app_connector_ids=['23423423432444'],
             ...    enabled=True,
             ...    servers=[{
@@ -110,7 +109,7 @@ class ServerGroupsAPI(APIEndpoint):
 
         return self._post('serverGroup', json=payload)
 
-    def update(self, id: str, dynamic_discovery: bool = None, servers: list = None, **kwargs):
+    def update_group(self, group_id: str, dynamic_discovery: bool = None, servers: list = None, **kwargs):
         """
         Updates a server group.
 
@@ -118,7 +117,7 @@ class ServerGroupsAPI(APIEndpoint):
             updates.
 
         Args:
-            id (str, required):
+            group_id (str, required):
                 The unique identifier for the server group.
             dynamic_discovery (bool, required):
                 Should Dynamic Discovery be enabled.
@@ -132,7 +131,7 @@ class ServerGroupsAPI(APIEndpoint):
         """
 
         payload = {
-            'id': id,
+            'id': group_id,
         }
         if dynamic_discovery is None:
             payload['dynamicDiscovery'] = dynamic_discovery
@@ -144,6 +143,4 @@ class ServerGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[key] = value
 
-        print(payload)
-
-        return self._put(f'serverGroup/{id}', json=payload, box=False)
+        return self._put(f'serverGroup/{group_id}', json=payload, box=False)

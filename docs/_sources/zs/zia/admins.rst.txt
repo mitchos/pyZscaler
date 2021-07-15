@@ -1,0 +1,10 @@
+admins
+--------
+
+The following methods allow for interaction with the ZIA
+Admin Management API endpoints.
+
+.. _zia-admins:
+
+.. automodule:: pyzscaler.zia.admins
+    :members:

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>audit_logs &mdash; pyZscaler 0.2.0 documentation</title>
+
+
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css"/>
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
+
+
+    <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../../"
+            src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="../../genindex.html"/>
+    <link rel="search" title="Search" href="../../search.html"/>
+</head>
+
+<body class="wy-body-for-nav">
+
+
+<div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+        <div class="wy-side-scroll">
+            <div class="wy-side-nav-search">
+
+
+                <a href="../../index.html" class="icon icon-home"> pyZscaler
+
+
+                </a>
+
+
+                <div class="version">
+                    0.2
+                </div>
+
+
+                <div role="search">
+                    <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+                        <input type="text" name="q" placeholder="Search docs"/>
+                        <input type="hidden" name="check_keywords" value="yes"/>
+                        <input type="hidden" name="area" value="default"/>
+                    </form>
+                </div>
+
+
+            </div>
+
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+                <p class="caption"><span class="caption-text">Contents</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="index.html">ZIA</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
+                </ul>
+
+
+            </div>
+
+        </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+        <nav class="wy-nav-top" aria-label="top navigation">
+
+            <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+            <a href="../../index.html">pyZscaler</a>
+
+        </nav>
+
+
+        <div class="wy-nav-content">
+
+            <div class="rst-content">
+
+
+                <div role="navigation" aria-label="breadcrumbs navigation">
+
+                    <ul class="wy-breadcrumbs">
+
+                        <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+
+                        <li>audit_logs</li>
+
+
+                        <li class="wy-breadcrumbs-aside">
+
+
+                            <a href="../../_sources/zs/zia/audit_logs.rst.txt" rel="nofollow"> View page source</a>
+
+
+                        </li>
+
+                    </ul>
+
+
+                    <hr/>
+                </div>
+                <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                    <div itemprop="articleBody">
+
+                        <div class="section" id="audit-logs">
+                            <h1>audit_logs<a class="headerlink" href="#audit-logs"
+                                             title="Permalink to this headline">¶</a></h1>
+                            <p>The following methods allow for interaction with the ZIA
+                                Admin Audit Logs API endpoints.</p>
+                            <span class="target" id="module-pyzscaler.zia.audit_logs"><span id="zia-audit-logs"></span></span>
+                            <dl class="py class">
+                                <dt class="sig sig-object py" id="pyzscaler.zia.audit_logs.AuditLogsAPI">
+                                    <em class="property"><span class="pre">class</span> </em><span
+                                        class="sig-name descname"><span class="pre">AuditLogsAPI</span></span><span
+                                        class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                        class="pre">api</span></span><span class="p"><span class="pre">:</span></span>
+                                    <span class="n"><span class="pre">restfly.session.APISession</span></span></em><span
+                                        class="sig-paren">)</span><a class="headerlink"
+                                                                     href="#pyzscaler.zia.audit_logs.AuditLogsAPI"
+                                                                     title="Permalink to this definition">¶</a></dt>
+                                <dd>
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.audit_logs.AuditLogsAPI.cancel">
+                                            <span class="sig-name descname"><span class="pre">cancel</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.audit_logs.AuditLogsAPI.cancel"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Cancels the request to create an audit log report.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">str</span></code></a></dt>
+                                                        <dd><p>The operation response code.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.audit_logs.AuditLogsAPI.create">
+                                            <span class="sig-name descname"><span class="pre">create</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">start_time</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/functions.html#int"
+                                                title="(in Python v3.9)"><span class="pre">int</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">end_time</span></span><span class="p"><span class="pre">:</span></span>
+                                                <span class="n"><a class="reference external"
+                                                                   href="https://docs.python.org/3/library/functions.html#int"
+                                                                   title="(in Python v3.9)"><span class="pre">int</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span class="pre">action_types</span></span><span
+                                                    class="p"><span class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">list</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">category</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">sub_categories</span></span><span class="p"><span
+                                                    class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">list</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">action_result</span></span><span
+                                                class="p"><span class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">action_interface</span></span><span class="p"><span
+                                                    class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">str</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">client_ip</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><a
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span
+                                                    class="pre">admin_name</span></span><span class="p"><span
+                                                    class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">str</span></a></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.audit_logs.AuditLogsAPI.create"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Creates an audit log report for the specified time period and saves it as
+                                            a CSV file. The report
+                                            includes audit information for every call made to the cloud service API
+                                            during the specified time period.
+                                            Creating a new audit log report will overwrite a previously-generated
+                                            report.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>start_time</strong> – The timestamp, in epoch, of
+                                                            the admin’s last login.</p></li>
+                                                        <li><p><strong>end_time</strong> – The timestamp, in epoch, of
+                                                            the admin’s last logout.</p></li>
+                                                        <li><p><strong>action_types</strong> – The action performed by
+                                                            the admin in the Zscaler Admin Portal (i.e., Admin UI) or
+                                                            API.</p></li>
+                                                        <li><p><strong>category</strong> – The location in the Zscaler
+                                                            Admin Portal (i.e., Admin UI) where the actionType was
+                                                            performed.</p></li>
+                                                        <li><p><strong>sub_categories</strong> – The area within a
+                                                            category where the actionType was performed.</p></li>
+                                                        <li><p><strong>action_result</strong> – The outcome (i.e.,
+                                                            Failure or Success) of an actionType.</p></li>
+                                                        <li><p><strong>action_interface</strong> – The interface (i.e.,
+                                                            Admin UI or API) where the actionType was performed.</p>
+                                                        </li>
+                                                        <li><p><strong>client_ip</strong> – The source IP address for
+                                                            the admin.</p></li>
+                                                        <li><p><strong>admin_name</strong> – The admin’s login ID.</p>
+                                                        </li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">str</span></code></a></dt>
+                                                        <dd><p>The status code for the operation.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.audit_logs.AuditLogsAPI.download">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">download</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.audit_logs.AuditLogsAPI.download"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Downloads the most recently created audit log report.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/csv.html#module-csv"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">csv</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py" id="pyzscaler.zia.audit_logs.AuditLogsAPI.status">
+                                            <span class="sig-name descname"><span class="pre">status</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink" href="#pyzscaler.zia.audit_logs.AuditLogsAPI.status"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Get the status of a request for an audit log report.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>
+                                                    <dl class="simple">
+                                                        <dt><a class="reference external"
+                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                               title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">dict</span></code></a></dt>
+                                                        <dd><p>Audit log report request status.</p>
+                                                        </dd>
+                                                    </dl>
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+
+                                </dd>
+                            </dl>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <footer>
+
+                    <hr/>
+
+                    <div role="contentinfo">
+                        <p>
+                            &#169; Copyright 2021, Mitch Kelly.
+
+                        </p>
+                    </div>
+
+
+                    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+
+                    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+
+                    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+                </footer>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+
+<script type="text/javascript">
+    jQuery(function () {
+        SphinxRtdTheme.Navigation.enable(true);
+    });
+</script>
+
+
+</body>
+</html>
