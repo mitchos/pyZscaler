@@ -3,7 +3,7 @@ from restfly.endpoint import APIEndpoint
 
 class PolicySetsAPI(APIEndpoint):
 
-    def list(self, policy_type: str = None):
+    def list_policies(self, policy_type: str = None):
         """Returns the policy and rule sets for the given policy type.
 
         Args:
@@ -16,7 +16,7 @@ class PolicySetsAPI(APIEndpoint):
         Examples:
             Request the specified Policy.
 
-            >>> pprint(zpa.policies.list('access'))
+            >>> pprint(zpa.policies.list_policies('access'))
 
         """
         _policy_url = None
@@ -90,7 +90,7 @@ class PolicySetsAPI(APIEndpoint):
         """
 
         # Get policy id for specified policy type
-        _policy_id = self.list(policy_type).id
+        _policy_id = self.list_policies(policy_type).id
 
         return self._delete(f'policySet/{_policy_id}/rule/{rule_id}')
 
@@ -128,7 +128,7 @@ class PolicySetsAPI(APIEndpoint):
         }
 
         # Get the policy id for the provided policy type and configure payload accordingly.
-        _policy_id = self.list('access').id
+        _policy_id = self.list_policies('access').id
         payload['action'] = kwargs.get('action', 'ALLOW')
 
         for key, value in kwargs.items():
@@ -171,7 +171,7 @@ class PolicySetsAPI(APIEndpoint):
         }
 
         # Get the policy id for the provided policy type and configure payload accordingly.
-        _policy_id = self.list('timeout').id
+        _policy_id = self.list_policies('timeout').id
         payload['action'] = 'RE_AUTH'
         payload['reauthTimeout'] = kwargs.get('re_auth_timeout', 172800)  # Default value in ZPA UI
         payload['reauthIdleTimeout'] = kwargs.get('re_auth_idle_timeout', 600)  # Default value in ZPA UI
@@ -215,7 +215,7 @@ class PolicySetsAPI(APIEndpoint):
         }
 
         # Get the policy id for the provided policy type and configure payload accordingly.
-        _policy_id = self.list('client_forwarding').id
+        _policy_id = self.list_policies('client_forwarding').id
         payload['action'] = kwargs.get('action', 'INTERCEPT')
 
         for key, value in kwargs.items():
@@ -223,7 +223,7 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._post(f'policySet/{_policy_id}/rule', json=payload)
 
-    def update(self, policy_type: str, rule_id: str = None, name: str = None, action: str = None, **kwargs):
+    def update_rule(self, policy_type: str, rule_id: str = None, name: str = None, action: str = None, **kwargs):
         """Update an existing policy rule
 
         Passing only the policy_type and rule_id will result in a successful operation with no changes to the rule
@@ -247,16 +247,16 @@ class PolicySetsAPI(APIEndpoint):
 
             Updates the name only for an Access Policy rule:
 
-            >>> zpa.policies.update('access', '72057615512764594', name='new_rule_name')
+            >>> zpa.policies.update_rule('access', '72057615512764594', name='new_rule_name')
 
             Updates the action only for a Client Forwarding Policy rule:
 
-            >>> zpa.policies.update('client_forwarding', '72057615512764595', action='BYPASS')
+            >>> zpa.policies.update_rule('client_forwarding', '72057615512764595', action='BYPASS')
 
         """
 
         # Get the policy id for the supplied policy_type
-        _policy_id = self.list(policy_type).id
+        _policy_id = self.list_policies(policy_type).id
 
         # Name required so use existing name from rule if not specified
         if not name:

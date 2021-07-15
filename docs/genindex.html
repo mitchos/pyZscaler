@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>Index &mdash; pyZscaler 0.1.1 documentation</title>
+    <title>Index &mdash; pyZscaler 0.2.0 documentation</title>
 
 
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css"/>
@@ -50,7 +50,7 @@
 
 
                 <div class="version">
-                    0.1
+                    0.2
                 </div>
 
 
@@ -71,6 +71,7 @@
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="zs/zia/index.html">ZIA</a></li>
                     <li class="toctree-l1"><a class="reference internal" href="zs/zpa/index.html">ZPA</a></li>
                 </ul>
 
@@ -135,7 +136,6 @@
                             | <a href="#S"><strong>S</strong></a>
                             | <a href="#T"><strong>T</strong></a>
                             | <a href="#U"><strong>U</strong></a>
-                            | <a href="#V"><strong>V</strong></a>
                             | <a href="#Z"><strong>Z</strong></a>
 
                         </div>
@@ -178,27 +178,7 @@
 
                                             <ul>
                                                 <li>
-                                                    <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.add">(AppSegmentsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.add">(AppServersAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
                                                     <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.add">(LocationsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.add">(SegmentGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.add">(ServerGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.add">(UserManagementAPI
                                                         method)</a>
                                                 </li>
                                             </ul>
@@ -211,13 +191,32 @@
                                             <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.add_client_forwarding_rule">add_client_forwarding_rule()
                                                 (PolicySetsAPI method)</a>
                                         </li>
+                                        <li>
+                                            <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.add_gre_tunnel">add_gre_tunnel()
+                                                (TrafficForwardingAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.add_group">add_group()
+                                                (SegmentGroupsAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.add_group">(ServerGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.add_segment">add_segment()
+                                                (AppSegmentsAPI method)</a>
+                                        </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
                                         <li>
-                                            <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.add_gre_tunnel">add_gre_tunnel()
-                                                (TrafficForwardingAPI method)</a>
+                                            <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.add_server">add_server()
+                                                (AppServersAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.add_static_ip">add_static_ip()
@@ -227,15 +226,15 @@
                                             <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.add_timeout_rule">add_timeout_rule()
                                                 (PolicySetsAPI method)</a>
                                         </li>
+                                        <li><a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.add_user">add_user()
+                                            (UserManagementAPI method)</a>
+                                        </li>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.add_vpn_credentials">add_vpn_credentials()
                                                 (TrafficForwardingAPI method)</a>
                                         </li>
                                         <li><a href="zs/zia/admins.html#pyzscaler.zia.admins.AdminManagementAPI">AdminManagementAPI
                                             (class in pyzscaler.zia.admins)</a>
-                                        </li>
-                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.admins">admins (ZIA
-                                            property)</a>
                                         </li>
                                         <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.api_key">api_key (ZIA
                                             attribute)</a>
@@ -249,9 +248,6 @@
                                         </li>
                                         <li><a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI">AppServersAPI
                                             (class in pyzscaler.zpa.servers)</a>
-                                        </li>
-                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.audit_logs">audit_logs (ZIA
-                                            property)</a>
                                         </li>
                                         <li><a href="zs/zia/audit_logs.html#pyzscaler.zia.audit_logs.AuditLogsAPI">AuditLogsAPI
                                             (class in pyzscaler.zia.audit_logs)</a>
@@ -270,20 +266,12 @@
                                             <a href="zs/zpa/certificates.html#pyzscaler.zpa.certificates.BACertificatesAPI">BACertificatesAPI
                                                 (class in pyzscaler.zpa.certificates)</a>
                                         </li>
-                                        <li>
-                                            <a href="zs/zpa/certificates.html#pyzscaler.zpa.certificates.BACertificatesAPI.browser_details">browser_details()
-                                                (BACertificatesAPI method)</a>
-                                        </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
                                         <li>
-                                            <a href="zs/zpa/certificates.html#pyzscaler.zpa.certificates.BACertificatesAPI.browser_list">browser_list()
-                                                (BACertificatesAPI method)</a>
-                                        </li>
-                                        <li>
-                                            <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.bulk_delete">bulk_delete()
+                                            <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.bulk_delete_users">bulk_delete_users()
                                                 (UserManagementAPI method)</a>
                                         </li>
                                         <li>
@@ -310,16 +298,13 @@
                                         <li><a href="zs/zpa/index.html#pyzscaler.zpa.ZPA.cloud_connector_groups">cloud_connector_groups
                                             (ZPA property)</a>
                                         </li>
-                                        <li>
-                                            <a href="zs/zpa/cloud_connector_groups.html#pyzscaler.zpa.cloud_connector_groups.CloudConnectorGroupsAPI">CloudConnectorGroupsAPI
-                                                (class in pyzscaler.zpa.cloud_connector_groups)</a>
-                                        </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.config">config (ZIA
-                                            property)</a>
+                                        <li>
+                                            <a href="zs/zpa/cloud_connector_groups.html#pyzscaler.zpa.cloud_connector_groups.CloudConnectorGroupsAPI">CloudConnectorGroupsAPI
+                                                (class in pyzscaler.zpa.cloud_connector_groups)</a>
                                         </li>
                                         <li><a href="zs/zpa/index.html#pyzscaler.zpa.ZPA.connector_groups">connector_groups
                                             (ZPA property)</a>
@@ -347,27 +332,18 @@
 
                                             <ul>
                                                 <li>
-                                                    <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete">(AppSegmentsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.delete">(AppServersAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
                                                     <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.delete">(LocationsAPI
                                                         method)</a>
                                                 </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.delete_group">delete_group()
+                                                (SegmentGroupsAPI method)</a>
+
+                                            <ul>
                                                 <li>
-                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.delete">(SegmentGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.delete">(ServerGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.delete">(UserManagementAPI
+                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.delete_group">(ServerGroupsAPI
                                                         method)</a>
                                                 </li>
                                             </ul>
@@ -375,6 +351,22 @@
                                         <li>
                                             <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.delete_rule">delete_rule()
                                                 (PolicySetsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment">delete_segment()
+                                                (AppSegmentsAPI method)</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li>
+                                            <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.delete_server">delete_server()
+                                                (AppServersAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.delete_user">delete_user()
+                                                (UserManagementAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.delete_vpn_credentials">delete_vpn_credentials()
@@ -386,62 +378,7 @@
                                         <li>
                                             <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.details">details()
                                                 (AppSegmentsAPI method)</a>
-
-                                            <ul>
-                                                <li>
-                                                    <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.details">(AppServersAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/cloud_connector_groups.html#pyzscaler.zpa.cloud_connector_groups.CloudConnectorGroupsAPI.details">(CloudConnectorGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/connector_groups.html#pyzscaler.zpa.connector_groups.ConnectorGroupsAPI.details">(ConnectorGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/idp.html#pyzscaler.zpa.idp.IDPControllerAPI.details">(IDPControllerAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/machine_groups.html#pyzscaler.zpa.machine_groups.MachineGroupsAPI.details">(MachineGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/posture_profiles.html#pyzscaler.zpa.posture_profiles.PostureProfilesAPI.details">(PostureProfilesAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/saml_attributes.html#pyzscaler.zpa.saml_attributes.SAMLAttributesAPI.details">(SAMLAttributesAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/scim_attributes.html#pyzscaler.zpa.scim_attributes.SCIMAttributesAPI.details">(SCIMAttributesAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/scim_groups.html#pyzscaler.zpa.scim_groups.SCIMGroupsAPI.details">(SCIMGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.details">(SegmentGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.details">(ServerGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/trusted_networks.html#pyzscaler.zpa.trusted_networks.TrustedNetworksAPI.details">(TrustedNetworksAPI
-                                                        method)</a>
-                                                </li>
-                                            </ul>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
                                         <li>
                                             <a href="zs/zia/audit_logs.html#pyzscaler.zia.audit_logs.AuditLogsAPI.download">download()
                                                 (AuditLogsAPI method)</a>
@@ -456,24 +393,86 @@
                             <tr>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.get">get()
-                                            (UserManagementAPI method)</a>
+                                        <li>
+                                            <a href="zs/zpa/saml_attributes.html#pyzscaler.zpa.saml_attributes.SAMLAttributesAPI.get_attribute">get_attribute()
+                                                (SAMLAttributesAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/scim_attributes.html#pyzscaler.zpa.scim_attributes.SCIMAttributesAPI.get_attribute">(SCIMAttributesAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/certificates.html#pyzscaler.zpa.certificates.BACertificatesAPI.get_browser_access">get_browser_access()
+                                                (BACertificatesAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.get_department">get_department()
                                                 (UserManagementAPI method)</a>
                                         </li>
-                                        <li><a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.get_group">get_group()
-                                            (UserManagementAPI method)</a>
-                                        </li>
                                         <li>
-                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.get_rule">get_rule()
-                                                (PolicySetsAPI method)</a>
+                                            <a href="zs/zpa/cloud_connector_groups.html#pyzscaler.zpa.cloud_connector_groups.CloudConnectorGroupsAPI.get_group">get_group()
+                                                (CloudConnectorGroupsAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/connector_groups.html#pyzscaler.zpa.connector_groups.ConnectorGroupsAPI.get_group">(ConnectorGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/machine_groups.html#pyzscaler.zpa.machine_groups.MachineGroupsAPI.get_group">(MachineGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/scim_groups.html#pyzscaler.zpa.scim_groups.SCIMGroupsAPI.get_group">(SCIMGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.get_group">(SegmentGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.get_group">(ServerGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.get_group">(UserManagementAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
+                                        <li><a href="zs/zpa/idp.html#pyzscaler.zpa.idp.IDPControllerAPI.get_idp">get_idp()
+                                            (IDPControllerAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/trusted_networks.html#pyzscaler.zpa.trusted_networks.TrustedNetworksAPI.get_network">get_network()
+                                                (TrustedNetworksAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/posture_profiles.html#pyzscaler.zpa.posture_profiles.PostureProfilesAPI.get_profile">get_profile()
+                                                (PostureProfilesAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.get_rule">get_rule()
+                                                (PolicySetsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.get_server">get_server()
+                                                (AppServersAPI method)</a>
+                                        </li>
+                                        <li><a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.get_user">get_user()
+                                            (UserManagementAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/scim_attributes.html#pyzscaler.zpa.scim_attributes.SCIMAttributesAPI.get_values">get_values()
+                                                (SCIMAttributesAPI method)</a>
+                                        </li>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.get_vpn_credentials">get_vpn_credentials()
                                                 (TrafficForwardingAPI method)</a>
@@ -524,74 +523,23 @@
 
                                             <ul>
                                                 <li>
-                                                    <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.list">(AppSegmentsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.list">(AppServersAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/cloud_connector_groups.html#pyzscaler.zpa.cloud_connector_groups.CloudConnectorGroupsAPI.list">(CloudConnectorGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/connector_groups.html#pyzscaler.zpa.connector_groups.ConnectorGroupsAPI.list">(ConnectorGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li><a href="zs/zpa/idp.html#pyzscaler.zpa.idp.IDPControllerAPI.list">(IDPControllerAPI
-                                                    method)</a>
-                                                </li>
-                                                <li>
                                                     <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.list">(LocationsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/machine_groups.html#pyzscaler.zpa.machine_groups.MachineGroupsAPI.list">(MachineGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.list">(PolicySetsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/posture_profiles.html#pyzscaler.zpa.posture_profiles.PostureProfilesAPI.list">(PostureProfilesAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/saml_attributes.html#pyzscaler.zpa.saml_attributes.SAMLAttributesAPI.list">(SAMLAttributesAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/scim_attributes.html#pyzscaler.zpa.scim_attributes.SCIMAttributesAPI.list">(SCIMAttributesAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/scim_groups.html#pyzscaler.zpa.scim_groups.SCIMGroupsAPI.list">(SCIMGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.list">(SegmentGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.list">(ServerGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/trusted_networks.html#pyzscaler.zpa.trusted_networks.TrustedNetworksAPI.list">(TrustedNetworksAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.list">(UserManagementAPI
                                                         method)</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
+                                        <li>
+                                            <a href="zs/zpa/scim_attributes.html#pyzscaler.zpa.scim_attributes.SCIMAttributesAPI.list_attribute">list_attribute()
+                                                (SCIMAttributesAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/saml_attributes.html#pyzscaler.zpa.saml_attributes.SAMLAttributesAPI.list_attributes">list_attributes()
+                                                (SAMLAttributesAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/certificates.html#pyzscaler.zpa.certificates.BACertificatesAPI.list_browser_access">list_browser_access()
+                                                (BACertificatesAPI method)</a>
+                                        </li>
                                         <li>
                                             <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.list_departments">list_departments()
                                                 (UserManagementAPI method)</a>
@@ -601,26 +549,81 @@
                                                 (TrafficForwardingAPI method)</a>
                                         </li>
                                         <li>
-                                            <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.list_groups">list_groups()
-                                                (UserManagementAPI method)</a>
+                                            <a href="zs/zpa/cloud_connector_groups.html#pyzscaler.zpa.cloud_connector_groups.CloudConnectorGroupsAPI.list_groups">list_groups()
+                                                (CloudConnectorGroupsAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/connector_groups.html#pyzscaler.zpa.connector_groups.ConnectorGroupsAPI.list_groups">(ConnectorGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/machine_groups.html#pyzscaler.zpa.machine_groups.MachineGroupsAPI.list_groups">(MachineGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/scim_groups.html#pyzscaler.zpa.scim_groups.SCIMGroupsAPI.list_groups">(SCIMGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.list_groups">(SegmentGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.list_groups">(ServerGroupsAPI
+                                                        method)</a>
+                                                </li>
+                                                <li>
+                                                    <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.list_groups">(UserManagementAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="zs/zpa/idp.html#pyzscaler.zpa.idp.IDPControllerAPI.list_idps">list_idps()
+                                            (IDPControllerAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zia/admins.html#pyzscaler.zia.admins.AdminManagementAPI.list_lite">list_lite()
                                                 (AdminManagementAPI method)</a>
                                         </li>
                                         <li>
+                                            <a href="zs/zpa/trusted_networks.html#pyzscaler.zpa.trusted_networks.TrustedNetworksAPI.list_networks">list_networks()
+                                                (TrustedNetworksAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.list_policies">list_policies()
+                                                (PolicySetsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/posture_profiles.html#pyzscaler.zpa.posture_profiles.PostureProfilesAPI.list_profiles">list_profiles()
+                                                (PostureProfilesAPI method)</a>
+                                        </li>
+                                        <li>
                                             <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.list_rules">list_rules()
                                                 (PolicySetsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.list_segments">list_segments()
+                                                (AppSegmentsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.list_servers">list_servers()
+                                                (AppServersAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.list_static_ips">list_static_ips()
                                                 (TrafficForwardingAPI method)</a>
                                         </li>
+                                        <li>
+                                            <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.list_users">list_users()
+                                                (UserManagementAPI method)</a>
+                                        </li>
                                         <li><a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.lite">lite()
                                             (LocationsAPI method)</a>
-                                        </li>
-                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.locations">locations (ZIA
-                                            property)</a>
                                         </li>
                                         <li><a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI">LocationsAPI
                                             (class in pyzscaler.zia.locations)</a>
@@ -1016,9 +1019,6 @@
                             <tr>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.traffic">traffic (ZIA
-                                            property)</a>
-                                        </li>
                                         <li><a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI">TrafficForwardingAPI
                                             (class in pyzscaler.zia.traffic)</a>
                                         </li>
@@ -1044,32 +1044,36 @@
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
                                         <li>
-                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.update">update()
-                                                (AppSegmentsAPI method)</a>
+                                            <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.update_group">update_group()
+                                                (SegmentGroupsAPI method)</a>
 
                                             <ul>
                                                 <li>
-                                                    <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.update">(AppServersAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.update">(PolicySetsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.update">(SegmentGroupsAPI
-                                                        method)</a>
-                                                </li>
-                                                <li>
-                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.update">(ServerGroupsAPI
+                                                    <a href="zs/zpa/server_groups.html#pyzscaler.zpa.server_groups.ServerGroupsAPI.update_group">(ServerGroupsAPI
                                                         method)</a>
                                                 </li>
                                             </ul>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.update_rule">update_rule()
+                                                (PolicySetsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.update_segment">update_segment()
+                                                (AppSegmentsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.update_server">update_server()
+                                                (AppServersAPI method)</a>
                                         </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
+                                        <li>
+                                            <a href="zs/zia/users.html#pyzscaler.zia.users.UserManagementAPI.update_user">update_user()
+                                                (UserManagementAPI method)</a>
+                                        </li>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.update_vpn_credentials">update_vpn_credentials()
                                                 (TrafficForwardingAPI method)</a>
@@ -1081,20 +1085,6 @@
                                             attribute)</a>
                                         </li>
                                         <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.users">users (ZIA property)</a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <h2 id="V">V</h2>
-                        <table style="width: 100%" class="indextable genindextable">
-                            <tr>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
-                                        <li>
-                                            <a href="zs/zpa/scim_attributes.html#pyzscaler.zpa.scim_attributes.SCIMAttributesAPI.values">values()
-                                                (SCIMAttributesAPI method)</a>
                                         </li>
                                     </ul>
                                 </td>

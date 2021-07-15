@@ -3,23 +3,23 @@ from restfly.endpoint import APIEndpoint
 
 class AppSegmentsAPI(APIEndpoint):
 
-    def list(self):
+    def list_segments(self):
         """Retrieve all configured application segments.
 
         Returns:
             :obj:`list`: List of application segments.
 
         Examples:
-            >>> app_segments = zpa.app_segments.list()
+            >>> app_segments = zpa.app_segments.list_segments()
 
         """
         return self._get('application').list
 
-    def details(self, id: str):
+    def details(self, segment_id: str):
         """Get information for an application segment.
 
         Args:
-            id (str):
+            segment_id (str):
                 The unique identifier for the application segment.
 
         Returns:
@@ -29,13 +29,13 @@ class AppSegmentsAPI(APIEndpoint):
             >>> app_segment = zpa.app_segments.details('234324234324')
 
         """
-        return self._get(f'application/{id}')
+        return self._get(f'application/{segment_id}')
 
-    def delete(self, id: str):
+    def delete_segment(self, segment_id: str):
         """Delete an application segment.
 
         Args:
-            id (str):
+            segment_id (str):
                 The unique identifier for the application segment.
 
         Returns:
@@ -45,10 +45,10 @@ class AppSegmentsAPI(APIEndpoint):
             >>> zpa.app_segments.delete('234324234324')
 
         """
-        return self._delete(f'application/{id}')
+        return self._delete(f'application/{segment_id}')
 
-    def add(self, name: str, domain_names: list, segment_group_id: str, server_groups: list,
-            tcp_ports=None, udp_ports=None, **kwargs):
+    def add_segment(self, name: str, domain_names: list, segment_group_id: str, server_groups: list,
+                    tcp_ports: str = None, udp_ports: str = None, **kwargs):
         """Create an application segment.
 
         Args:
@@ -69,7 +69,7 @@ class AppSegmentsAPI(APIEndpoint):
 
         Keyword Args:
             bypassType (str):
-            clientlessApps (list):
+            clientlessApps (:obj:`list`):
             configSpace (str):
             defaultIdleTimeout (str):
             defaultMaxAge (str):
@@ -88,7 +88,7 @@ class AppSegmentsAPI(APIEndpoint):
         Examples:
             Add a new application segment for example.com, ports 8080-8085.
 
-            >>> zpa.app_segments.add('new_app_segment',
+            >>> zpa.app_segments.add_segment('new_app_segment',
             ...    domain_names=['example.com'],
             ...    segment_group='232356567677776',
             ...    tcp_ports=['8080', '8085'],
@@ -125,13 +125,13 @@ class AppSegmentsAPI(APIEndpoint):
 
         return self._post('application', json=payload)
 
-    def update(self, id: str, domain_names: list, **kwargs):
+    def update_segment(self, segment_id: str, domain_names: list, **kwargs):
         """Update an application segment.
 
         .. note:: The ZPA API requires domain names to be passed for all updates, even if they don't require modification.
 
         Args:
-            id (str):
+            segment_id (str):
                 The unique identifier for the application segment.
             domain_names (:obj:`list` of :obj:`str`):
                 List of domain names or IP addresses for the application segment.
@@ -140,12 +140,11 @@ class AppSegmentsAPI(APIEndpoint):
 
         Keyword Args:
             bypassType (str):
-            clientlessApps (list):
+            clientlessApps (:obj:`list`):
             configSpace (str):
             defaultIdleTimeout (str):
             defaultMaxAge (str):
             description (str):
-            domainNames (list):
             doubleEncrypt (bool):
             enabled (bool):
             healthCheckType (str):
@@ -155,9 +154,9 @@ class AppSegmentsAPI(APIEndpoint):
             name (str):
             passiveHealthEnabled (bool):
             segmentGroupId (str):
-            serverGroups (list):
-            tcpPortRanges (list):
-            udpPortRanges (list):
+            serverGroups (:obj:`list`):
+            tcpPortRanges (:obj:`list`):
+            udpPortRanges (:obj:`list`):
 
         Returns:
             :obj:`dict`: The updated application segment resource record.
@@ -180,4 +179,4 @@ class AppSegmentsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[key] = value
 
-        return self._put(f'application/{id}', json=payload)
+        return self._put(f'application/{segment_id}', json=payload)

@@ -1,36 +1,37 @@
 from restfly.endpoint import APIEndpoint
 from box import BoxList
 
+
 class TrustedNetworksAPI(APIEndpoint):
 
-    def list(self):
+    def list_networks(self):
         """
-        Provides a list of all configured trusted networks.
+        Returns a list of all configured trusted networks.
 
         Returns:
             :obj:`list`: A list of all configured trusted networks.
 
         Examples:
-            >>> for trusted_network in zpa.trusted_networks.list():
+            >>> for trusted_network in zpa.trusted_networks.list_networks():
             ...    pprint(trusted_network)
 
         """
         return self._get('network', box=BoxList)
 
-    def details(self, id: str):
+    def get_network(self, network_id: str):
         """
-        Provides information on the specified trusted network.
+        Returns information on the specified trusted network.
 
         Args:
-            id (str):
+            network_id (str):
                 The unique identifier for the trusted network.
 
         Returns:
             :obj:`dict`: The resource record for the trusted network.
 
         Examples:
-            >>> pprint(zpa.trusted_networks.details('2342342342344433'))
+            >>> pprint(zpa.trusted_networks.get_network('2342342342344433'))
 
         """
 
-        return self._get(f'network/{id}')
+        return self._get(f'network/{network_id}')

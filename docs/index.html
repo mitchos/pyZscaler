@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>pyZscaler is an unofficial SDK for interacting with Zscaler APIs &mdash; pyZscaler 0.1.1
+    <title>pyZscaler is an unofficial SDK for interacting with Zscaler APIs &mdash; pyZscaler 0.2.0
         documentation</title>
 
 
@@ -32,7 +32,7 @@
 
     <link rel="index" title="Index" href="genindex.html"/>
     <link rel="search" title="Search" href="search.html"/>
-    <link rel="next" title="ZPA" href="zs/zpa/index.html"/>
+    <link rel="next" title="ZIA" href="zs/zia/index.html"/>
 </head>
 
 <body class="wy-body-for-nav">
@@ -52,7 +52,7 @@
 
 
                 <div class="version">
-                    0.1
+                    0.2
                 </div>
 
 
@@ -73,6 +73,7 @@
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="zs/zia/index.html">ZIA</a></li>
                     <li class="toctree-l1"><a class="reference internal" href="zs/zpa/index.html">ZPA</a></li>
                 </ul>
 
@@ -172,7 +173,8 @@
                                 <ul class="simple">
                                     <li><p><a class="reference internal" href="zs/zpa/index.html"><span class="doc">Zscaler Private Access (ZPA)</span></a>
                                     </p></li>
-                                    <li><p>Zscaler Internet Access (ZIA) - (work in progress)</p></li>
+                                    <li><p><a class="reference internal" href="zs/zia/index.html"><span class="doc">Zscaler Internet Access (ZIA)</span></a>
+                                    </p></li>
                                     <li><p>Cloud Security Posture Management (CSPM) - (work in progress)</p></li>
                                 </ul>
                             </div>
@@ -189,39 +191,205 @@
                         </div>
                         <div class="section" id="usage">
                             <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
-                            <p>Before you can interact with any of the Zscaler APIs, you will need to generate API keys
-                                for each product that you are
-                                writing code for. Once you have generated the API keys and installed pyZscaler, you’re
-                                ready to go.</p>
+                            <p>Before you can interact with any of the Zscaler APIs, you may need to generate API keys
+                                or retrieve tenancy information
+                                for each product that you are interfacing with. Once you have the requirements and you
+                                have installed pyZscaler,
+                                you’re ready to go.</p>
+                            <div class="section" id="getting-started-with-zia">
+                                <h2>Getting started with ZIA<a class="headerlink" href="#getting-started-with-zia"
+                                                               title="Permalink to this headline">¶</a></h2>
+                                <p>For ZIA, you will need to provide params when instantiating the class or set the
+                                    environment variables as per the
+                                    table below:</p>
+                                <table class="docutils align-default" id="id1">
+                                    <caption><span class="caption-text">ZIA Requirements</span><a class="headerlink"
+                                                                                                  href="#id1"
+                                                                                                  title="Permalink to this table">¶</a>
+                                    </caption>
+                                    <colgroup>
+                                        <col style="width: 33%"/>
+                                        <col style="width: 33%"/>
+                                        <col style="width: 33%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr class="row-odd">
+                                        <th class="head"><p>Param</p></th>
+                                        <th class="head"><p>ENV</p></th>
+                                        <th class="head"><p>Description</p></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="row-even">
+                                        <td><p>cloud</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span
+                                                class="pre">ZIA_CLOUD</span></code></p></td>
+                                        <td><p>The cloud that your ZIA tenant is provisioned on.</p></td>
+                                    </tr>
+                                    <tr class="row-odd">
+                                        <td><p>api_key</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span
+                                                class="pre">ZIA_API_KEY</span></code></p></td>
+                                        <td><p>The API key generated from your ZIA console.</p></td>
+                                    </tr>
+                                    <tr class="row-even">
+                                        <td><p>username</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span
+                                                class="pre">ZIA_USERNAME</span></code></p></td>
+                                        <td><p>The username of your administrator user that will be used for API
+                                            calls.</p></td>
+                                    </tr>
+                                    <tr class="row-odd">
+                                        <td><p>password</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span
+                                                class="pre">ZIA_PASSWORD</span></code></p></td>
+                                        <td><p>The password for the administrator user.</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p><a class="reference external"
+                                      href="https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey">How to
+                                    generate the API_KEY</a></p>
+                                <div class="section" id="how-to-determine-the-zia-cloud">
+                                    <h3>How to determine the ZIA CLOUD<a class="headerlink"
+                                                                         href="#how-to-determine-the-zia-cloud"
+                                                                         title="Permalink to this headline">¶</a></h3>
+                                    <p>You can find the name of the cloud in the URL that admins use to log into the
+                                        Zscaler service. E.g.
+                                        if an organisation logs into admin.zscaler.net, then that organization’s cloud
+                                        name is zscaler.net. You don’t
+                                        need to supply the .net suffix with pyZscaler, so the <code
+                                                class="docutils literal notranslate"><span
+                                                class="pre">CLOUD</span></code> arg would simply be <code
+                                                class="docutils literal notranslate"><span
+                                                class="pre">zscaler</span></code>.</p>
+                                    <table class="docutils align-default" id="id2">
+                                        <caption><span class="caption-text">ZIA Cloud List</span><a class="headerlink"
+                                                                                                    href="#id2"
+                                                                                                    title="Permalink to this table">¶</a>
+                                        </caption>
+                                        <colgroup>
+                                            <col style="width: 50%"/>
+                                            <col style="width: 50%"/>
+                                        </colgroup>
+                                        <thead>
+                                        <tr class="row-odd">
+                                            <th class="head"><p>URL</p></th>
+                                            <th class="head"><p>CLOUD</p></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="row-even">
+                                            <td><p>admin.zscaler.net</p></td>
+                                            <td><p>zscaler</p></td>
+                                        </tr>
+                                        <tr class="row-odd">
+                                            <td><p>admin.zscalerone.net</p></td>
+                                            <td><p>zscalerone</p></td>
+                                        </tr>
+                                        <tr class="row-even">
+                                            <td><p>admin.zscalertwo.net</p></td>
+                                            <td><p>zscalertwo</p></td>
+                                        </tr>
+                                        <tr class="row-odd">
+                                            <td><p>admin.zscalerthree.net</p></td>
+                                            <td><p>zscalerthree</p></td>
+                                        </tr>
+                                        <tr class="row-even">
+                                            <td><p>admin.zscloud.net</p></td>
+                                            <td><p>zscloud</p></td>
+                                        </tr>
+                                        <tr class="row-odd">
+                                            <td><p>admin.zscalerbeta.net</p></td>
+                                            <td><p>zscalerbeta</p></td>
+                                        </tr>
+                                        <tr class="row-even">
+                                            <td><p>admin.zscalergov.net</p></td>
+                                            <td><p>zscalergov</p></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="highlight-python notranslate">
+                                        <div class="highlight"><pre><span></span><span class="kn">from</span> <span
+                                                class="nn">pyzscaler</span> <span class="kn">import</span> <span
+                                                class="n">ZIA</span>
+<span class="n">zia</span> <span class="o">=</span> <span class="n">ZIA</span><span class="p">(</span><span class="n">api_key</span><span
+                                                    class="o">=</span><span class="s1">&#39;API_KEY&#39;</span><span
+                                                    class="p">,</span> <span class="n">cloud</span><span
+                                                    class="o">=</span><span class="s1">&#39;CLOUD&#39;</span><span
+                                                    class="p">,</span> <span class="n">username</span><span
+                                                    class="o">=</span><span class="s1">&#39;USERNAME&#39;</span><span
+                                                    class="p">,</span> <span class="n">password</span><span
+                                                    class="o">=</span><span class="s1">&#39;PASSWORD&#39;</span><span
+                                                    class="p">)</span>
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">zia</span><span
+                                                    class="o">.</span><span class="n">users</span><span
+                                                    class="o">.</span><span class="n">list</span><span
+                                                    class="p">():</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="section" id="getting-started-with-zpa">
                                 <h2>Getting started with ZPA<a class="headerlink" href="#getting-started-with-zpa"
                                                                title="Permalink to this headline">¶</a></h2>
-                                <p>For ZPA, you will need the <code class="docutils literal notranslate"><span
-                                        class="pre">CLIENT_ID</span></code>, <code class="docutils literal notranslate"><span
-                                        class="pre">CLIENT_SECRET</span></code> and <code
-                                        class="docutils literal notranslate"><span class="pre">CUSTOMER_ID</span></code>.
-                                </p>
+                                <p>For ZPA, you will need to provide params when instantiating the class or set the
+                                    environment variables as per the
+                                    table below:</p>
+                                <table class="docutils align-default" id="id3">
+                                    <caption><span class="caption-text">ZPA Requirements</span><a class="headerlink"
+                                                                                                  href="#id3"
+                                                                                                  title="Permalink to this table">¶</a>
+                                    </caption>
+                                    <colgroup>
+                                        <col style="width: 33%"/>
+                                        <col style="width: 33%"/>
+                                        <col style="width: 33%"/>
+                                    </colgroup>
+                                    <thead>
+                                    <tr class="row-odd">
+                                        <th class="head"><p>Param</p></th>
+                                        <th class="head"><p>ENV</p></th>
+                                        <th class="head"><p>Description</p></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="row-even">
+                                        <td><p>client_id</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span class="pre">ZPA_CLIENT_ID</span></code>
+                                        </p></td>
+                                        <td><p>The client ID that is associated with the client secret.</p></td>
+                                    </tr>
+                                    <tr class="row-odd">
+                                        <td><p>client_secret</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span class="pre">ZPA_CLIENT_SECRET</span></code>
+                                        </p></td>
+                                        <td><p>The client secret that was generated for the client ID.</p></td>
+                                    </tr>
+                                    <tr class="row-even">
+                                        <td><p>customer_id</p></td>
+                                        <td><p><code class="docutils literal notranslate"><span class="pre">ZPA_CUSTOMER_ID</span></code>
+                                        </p></td>
+                                        <td><p>The customer ID for the ZPA tenancy.</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                 <ul class="simple">
                                     <li><p><a class="reference external"
                                               href="https://help.zscaler.com/zpa/about-api-keys">How to generate the
                                         CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID</a></p></li>
                                 </ul>
-                                <p>pyZscaler will also look for the following environment variables in lieu of being
-                                    supplied args:</p>
-                                <ul class="simple">
-                                    <li><p><code class="docutils literal notranslate"><span
-                                            class="pre">ZPA_CLIENT_ID</span></code></p></li>
-                                    <li><p><code class="docutils literal notranslate"><span class="pre">ZPA_CLIENT_SECRET</span></code>
-                                    </p></li>
-                                    <li><p><code class="docutils literal notranslate"><span
-                                            class="pre">ZPA_CUSTOMER_ID</span></code></p></li>
-                                </ul>
                                 <div class="highlight-python notranslate">
                                     <div class="highlight"><pre><span></span><span class="kn">from</span> <span
                                             class="nn">pyzscaler</span> <span class="kn">import</span> <span class="n">ZPA</span>
-<span class="n">zpa</span> <span class="o">=</span> <span class="n">ZPA</span><span class="p">(</span><span class="s1">&#39;CLIENT_ID&#39;</span><span
-                                                class="p">,</span> <span class="s1">&#39;CLIENT_SECRET&#39;</span><span
-                                                class="p">,</span> <span class="s1">&#39;CUSTOMER_ID&#39;</span><span
+<span class="n">zpa</span> <span class="o">=</span> <span class="n">ZPA</span><span class="p">(</span><span class="n">client_id</span><span
+                                                class="o">=</span><span class="s1">&#39;CLIENT_ID&#39;</span><span
+                                                class="p">,</span> <span class="n">client_secret</span><span
+                                                class="o">=</span><span class="s1">&#39;CLIENT_SECRET&#39;</span><span
+                                                class="p">,</span> <span class="n">customer_id</span><span
+                                                class="o">=</span><span class="s1">&#39;CUSTOMER_ID&#39;</span><span
                                                 class="p">)</span>
 <span class="k">for</span> <span class="n">app_segment</span> <span class="ow">in</span> <span class="n">zpa</span><span
                                                 class="o">.</span><span class="n">app_segments</span><span
@@ -260,7 +428,7 @@
                 </div>
                 <footer>
                     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-                        <a href="zs/zpa/index.html" class="btn btn-neutral float-right" title="ZPA" accesskey="n"
+                        <a href="zs/zia/index.html" class="btn btn-neutral float-right" title="ZIA" accesskey="n"
                            rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
                     </div>
 

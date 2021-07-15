@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>machine_groups &mdash; pyZscaler 0.1.1 documentation</title>
+    <title>machine_groups &mdash; pyZscaler 0.2.0 documentation</title>
 
 
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
@@ -52,7 +52,7 @@
 
 
                 <div class="version">
-                    0.1
+                    0.2
                 </div>
 
 
@@ -73,6 +73,7 @@
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
                 <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
                     <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZPA</a>
                         <ul class="current">
                             <li class="toctree-l2"><a class="reference internal"
@@ -177,22 +178,23 @@
                                 <dd>
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.machine_groups.MachineGroupsAPI.details">
-                                            <span class="sig-name descname"><span class="pre">details</span></span><span
+                                            id="pyzscaler.zpa.machine_groups.MachineGroupsAPI.get_group">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">get_group</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">group_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                 title="(in Python v3.9)"><span
                                                 class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.machine_groups.MachineGroupsAPI.details"
+                                                href="#pyzscaler.zpa.machine_groups.MachineGroupsAPI.get_group"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Provides information on the specified machine group.</p>
+                                        <dd><p>Returns information on the specified machine group.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>group_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -215,7 +217,8 @@
                                                         class="gp">&gt;&gt;&gt; </span><span
                                                         class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">machine_groups</span><span
-                                                        class="o">.</span><span class="n">details</span><span class="p">(</span><span
+                                                        class="o">.</span><span class="n">get_group</span><span
+                                                        class="p">(</span><span
                                                         class="s1">&#39;2342342342344433&#39;</span><span
                                                         class="p">))</span>
 </pre>
@@ -226,21 +229,22 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.machine_groups.MachineGroupsAPI.list">
-                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                            id="pyzscaler.zpa.machine_groups.MachineGroupsAPI.list_groups">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_groups</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.machine_groups.MachineGroupsAPI.list"
+                                                href="#pyzscaler.zpa.machine_groups.MachineGroupsAPI.list_groups"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Provides a list of all configured machine groups.</p>
+                                        <dd><p>Returns a list of all configured machine groups.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
                                                 <dd class="field-odd"><p>A list of all configured machine groups.</p>
                                                 </dd>
                                                 <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference internal"
-                                                                             href="#pyzscaler.zpa.machine_groups.MachineGroupsAPI.list"
-                                                                             title="pyzscaler.zpa.machine_groups.MachineGroupsAPI.list"><code
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
@@ -251,7 +255,7 @@
                                                         class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
                                                         class="n">machine_group</span> <span class="ow">in</span> <span
                                                         class="n">zpa</span><span class="o">.</span><span class="n">machine_groups</span><span
-                                                        class="o">.</span><span class="n">list</span><span
+                                                        class="o">.</span><span class="n">list_groups</span><span
                                                         class="p">():</span>
 <span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">machine_group</span><span
                                                             class="p">)</span>

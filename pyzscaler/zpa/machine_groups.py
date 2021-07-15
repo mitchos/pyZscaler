@@ -3,34 +3,34 @@ from restfly.endpoint import APIEndpoint
 
 class MachineGroupsAPI(APIEndpoint):
 
-    def list(self):
+    def list_groups(self):
         """
-        Provides a list of all configured machine groups.
+        Returns a list of all configured machine groups.
 
         Returns:
             :obj:`list`: A list of all configured machine groups.
 
         Examples:
-            >>> for machine_group in zpa.machine_groups.list():
+            >>> for machine_group in zpa.machine_groups.list_groups():
             ...    pprint(machine_group)
 
         """
         return self._get('machineGroups').list
 
-    def details(self, id: str):
+    def get_group(self, group_id: str):
         """
-        Provides information on the specified machine group.
+        Returns information on the specified machine group.
 
         Args:
-            id (str):
+            group_id (str):
                 The unique identifier for the machine group.
 
         Returns:
             :obj:`dict`: The resource record for the machine group.
 
         Examples:
-            >>> pprint(zpa.machine_groups.details('2342342342344433'))
+            >>> pprint(zpa.machine_groups.get_group('2342342342344433'))
 
         """
 
-        return self._get(f'machineGroups/{id}')
+        return self._get(f'machineGroups/{group_id}')

@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>server_groups &mdash; pyZscaler 0.1.1 documentation</title>
+    <title>server_groups &mdash; pyZscaler 0.2.0 documentation</title>
 
 
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
@@ -52,7 +52,7 @@
 
 
                 <div class="version">
-                    0.1
+                    0.2
                 </div>
 
 
@@ -73,6 +73,7 @@
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
                 <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
                     <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZPA</a>
                         <ul class="current">
                             <li class="toctree-l2"><a class="reference internal"
@@ -177,8 +178,9 @@
                                 <dd>
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.add">
-                                            <span class="sig-name descname"><span class="pre">add</span></span><span
+                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.add_group">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">add_group</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
                                                 class="pre">name</span></span><span class="p"><span class="pre">:</span></span>
                                             <span class="n"><a class="reference external"
@@ -187,17 +189,15 @@
                                             <em class="sig-param"><span class="n"><span
                                                     class="pre">app_connector_ids</span></span><span class="p"><span
                                                     class="pre">:</span></span> <span class="n"><a
-                                                    class="reference internal"
-                                                    href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                    title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><span
-                                                    class="pre">pyzscaler.zpa.server_groups.ServerGroupsAPI.list</span></a></span></em>,
-                                            <em class="sig-param"><span class="o"><span
-                                                    class="pre">**</span></span><span class="n"><span
-                                                    class="pre">kwargs</span></span></em><span
-                                                class="sig-paren">)</span><a class="headerlink"
-                                                                             href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.add"
-                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">list</span></a></span></em>, <em class="sig-param"><span
+                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.add_group"
+                                                title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Adds a server group.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
@@ -208,9 +208,9 @@
                                                                                          title="(in Python v3.9)"><em>str</em></a>)
                                                             – The name for the server group.</p></li>
                                                         <li><p><strong>app_connector_ids</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                                title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><code
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"
@@ -228,8 +228,8 @@
                                                     <ul class="simple">
                                                         <li><p><strong>applications</strong> (<a
                                                                 class="reference internal"
-                                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                                title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><em>list</em></a>)
+                                                                href="../zia/admins.html#pyzscaler.zia.admins.AdminManagementAPI.list"
+                                                                title="pyzscaler.zia.admins.AdminManagementAPI.list"><em>list</em></a>)
                                                             – </p></li>
                                                         <li><p><strong>configSpace</strong> (<a
                                                                 class="reference external"
@@ -252,8 +252,8 @@
                                                                 href="https://docs.python.org/3/library/functions.html#bool"
                                                                 title="(in Python v3.9)"><em>bool</em></a>) – </p></li>
                                                         <li><p><strong>servers</strong> (<a class="reference internal"
-                                                                                            href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                                                            title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><em>list</em></a>)
+                                                                                            href="../zia/admins.html#pyzscaler.zia.admins.AdminManagementAPI.list"
+                                                                                            title="pyzscaler.zia.admins.AdminManagementAPI.list"><em>list</em></a>)
                                                             – </p></li>
                                                     </ul>
                                                 </dd>
@@ -275,7 +275,7 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">server_groups</span><span
-                                                        class="o">.</span><span class="n">add</span><span
+                                                        class="o">.</span><span class="n">add_group</span><span
                                                         class="p">(</span><span
                                                         class="s1">&#39;new_server_group&#39;</span>
 <span class="gp">... </span>   <span class="n">app_connector_ids</span><span class="p">[</span><span class="s1">&#39;23423423432444&#39;</span><span
@@ -288,7 +288,7 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">server_groups</span><span
-                                                        class="o">.</span><span class="n">add</span><span
+                                                        class="o">.</span><span class="n">add_group</span><span
                                                         class="p">(</span><span
                                                         class="s1">&#39;new_server_group&#39;</span><span
                                                         class="p">,</span>
@@ -313,22 +313,22 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.delete">
-                                            <span class="sig-name descname"><span class="pre">delete</span></span><span
+                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.delete_group">
+                                            <span class="sig-name descname"><span class="pre">delete_group</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">group_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                 title="(in Python v3.9)"><span
                                                 class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.delete"
+                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.delete_group"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Deletes the specified server group.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>group_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -350,7 +350,7 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">server_groups</span><span
-                                                        class="o">.</span><span class="n">delete</span><span
+                                                        class="o">.</span><span class="n">delete_group</span><span
                                                         class="p">(</span><span
                                                         class="s1">&#39;2342342342343&#39;</span><span
                                                         class="p">)</span>
@@ -362,22 +362,23 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.details">
-                                            <span class="sig-name descname"><span class="pre">details</span></span><span
+                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.get_group">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">get_group</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">group_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                 title="(in Python v3.9)"><span
                                                 class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.details"
+                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.get_group"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Provides information on the specified server group.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>group_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -400,7 +401,8 @@
                                                         class="gp">&gt;&gt;&gt; </span><span
                                                         class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">server_groups</span><span
-                                                        class="o">.</span><span class="n">details</span><span class="p">(</span><span
+                                                        class="o">.</span><span class="n">get_group</span><span
+                                                        class="p">(</span><span
                                                         class="s1">&#39;2342342342344433&#39;</span><span
                                                         class="p">))</span>
 </pre>
@@ -411,21 +413,22 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.list">
-                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.list_groups">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_groups</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
+                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list_groups"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Provides a list of all configured server groups.</p>
+                                        <dd><p>Returns a list of all configured server groups.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
                                                 <dd class="field-odd"><p>A list of all configured server groups.</p>
                                                 </dd>
                                                 <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference internal"
-                                                                             href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                                             title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><code
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
@@ -436,7 +439,7 @@
                                                         class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
                                                         class="n">server_group</span> <span class="ow">in</span> <span
                                                         class="n">zpa</span><span class="o">.</span><span class="n">server_groups</span><span
-                                                        class="o">.</span><span class="n">list</span><span
+                                                        class="o">.</span><span class="n">list_groups</span><span
                                                         class="p">():</span>
 <span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span
                                                             class="n">server_group</span><span class="p">)</span>
@@ -448,10 +451,10 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.update">
-                                            <span class="sig-name descname"><span class="pre">update</span></span><span
+                                            id="pyzscaler.zpa.server_groups.ServerGroupsAPI.update_group">
+                                            <span class="sig-name descname"><span class="pre">update_group</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">group_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
@@ -470,17 +473,17 @@
                                                 class="pre">servers</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><span
                                                 class="pre">Optional</span><span class="p"><span
-                                                class="pre">[</span></span><a class="reference internal"
-                                                                              href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                                              title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><span
-                                                class="pre">pyzscaler.zpa.server_groups.ServerGroupsAPI.list</span></a><span
-                                                class="p"><span class="pre">]</span></span></span> <span class="o"><span
+                                                class="pre">[</span></span><a class="reference external"
+                                                                              href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                              title="(in Python v3.9)"><span
+                                                class="pre">list</span></a><span class="p"><span
+                                                class="pre">]</span></span></span> <span class="o"><span
                                                 class="pre">=</span></span> <span class="default_value"><span
                                                 class="pre">None</span></span></em>, <em class="sig-param"><span
                                                 class="o"><span class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.update"
+                                                href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.update_group"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Updates a server group.</p>
                                             <div class="admonition note">
@@ -493,18 +496,18 @@
                                                 <dt class="field-odd">Parameters</dt>
                                                 <dd class="field-odd">
                                                     <ul class="simple">
-                                                        <li><p><strong>id</strong> (<a class="reference external"
-                                                                                       href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                       title="(in Python v3.9)"><em>str</em></a><em>, </em><em>required</em>)
+                                                        <li><p><strong>group_id</strong> (<a class="reference external"
+                                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                             title="(in Python v3.9)"><em>str</em></a><em>, </em><em>required</em>)
                                                             – The unique identifier for the server group.</p></li>
                                                         <li><p><strong>dynamic_discovery</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/functions.html#bool"
                                                                 title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>required</em>)
                                                             – Should Dynamic Discovery be enabled.</p></li>
-                                                        <li><p><strong>servers</strong> (<a class="reference internal"
-                                                                                            href="#pyzscaler.zpa.server_groups.ServerGroupsAPI.list"
-                                                                                            title="pyzscaler.zpa.server_groups.ServerGroupsAPI.list"><code
+                                                        <li><p><strong>servers</strong> (<a class="reference external"
+                                                                                            href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                                            title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"

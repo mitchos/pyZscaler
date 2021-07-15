@@ -37,7 +37,7 @@ Features
 Products
 ---------
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
-- Zscaler Internet Access (ZIA) - (work in progress)
+- :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
 - Cloud Security Posture Management (CSPM) - (work in progress)
 
 Installation

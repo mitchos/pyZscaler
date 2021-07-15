@@ -4,25 +4,25 @@ from box import BoxList
 
 class BACertificatesAPI(APIEndpoint):
 
-    def browser_list(self):
+    def list_browser_access(self):
         """
-        Provides a list of all Browser Access certificates.
+        Returns a list of all Browser Access certificates.
 
         Returns:
             :obj:`list`: List of all Browser Access certificates.
 
         Examples:
-            >>> ba_certificates = zpa.certificates.browser_list()
+            >>> ba_certificates = zpa.certificates.list_browser_access()
 
         """
         return self._get('clientlessCertificate/issued', box=BoxList)
 
-    def browser_details(self, id: str):
+    def get_browser_access(self, certificate_id: str):
         """
-        Get information for a specified Browser Access certificate.
+        Returns information on a specified Browser Access certificate.
 
         Args:
-            id (str):
+            certificate_id (str):
                 The unique identifier for the Browser Access certificate.
 
         Returns:
@@ -30,7 +30,7 @@ class BACertificatesAPI(APIEndpoint):
                 The Browser Access certificate resource record.
 
         Examples:
-            >>> ba_certificate = zpa.certificates.browser_details('2342342354545455')
+            >>> ba_certificate = zpa.certificates.get_browser_access('2342342354545455')
 
         """
-        return self._get(f'clientlessCertificate/{id}')
+        return self._get(f'clientlessCertificate/{certificate_id}')

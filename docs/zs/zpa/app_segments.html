@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>app_segments &mdash; pyZscaler 0.1.1 documentation</title>
+    <title>app_segments &mdash; pyZscaler 0.2.0 documentation</title>
 
 
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
@@ -52,7 +52,7 @@
 
 
                 <div class="version">
-                    0.1
+                    0.2
                 </div>
 
 
@@ -73,6 +73,7 @@
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
                 <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
                     <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZPA</a>
                         <ul class="current">
                             <li class="toctree-l2 current"><a class="current reference internal"
@@ -160,6 +161,8 @@
                                                title="Permalink to this headline">¶</a></h1>
                             <p>The following methods allow for interaction with the ZPA
                                 Application Segments API endpoints.</p>
+                            <p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zpa.app_segments</span></code>
+                            </p>
                             <span class="target" id="module-pyzscaler.zpa.app_segments"><span
                                     id="zpa-app-segments"></span></span>
                             <dl class="py class">
@@ -175,8 +178,9 @@
                                 <dd>
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.add">
-                                            <span class="sig-name descname"><span class="pre">add</span></span><span
+                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.add_segment">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">add_segment</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
                                                 class="pre">name</span></span><span class="p"><span class="pre">:</span></span>
                                             <span class="n"><a class="reference external"
@@ -184,33 +188,45 @@
                                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
                                             <em class="sig-param"><span class="n"><span class="pre">domain_names</span></span><span
                                                     class="p"><span class="pre">:</span></span> <span class="n"><a
-                                                    class="reference internal"
-                                                    href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                    title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><span
-                                                    class="pre">pyzscaler.zpa.app_segments.AppSegmentsAPI.list</span></a></span></em>,
-                                            <em class="sig-param"><span class="n"><span
-                                                    class="pre">segment_group_id</span></span><span class="p"><span
-                                                    class="pre">:</span></span> <span class="n"><a
                                                     class="reference external"
-                                                    href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#list"
                                                     title="(in Python v3.9)"><span
-                                                    class="pre">str</span></a></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">server_groups</span></span><span
+                                                    class="pre">list</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">segment_group_id</span></span><span
                                                 class="p"><span class="pre">:</span></span> <span class="n"><a
-                                                class="reference internal"
-                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><span
-                                                class="pre">pyzscaler.zpa.app_segments.AppSegmentsAPI.list</span></a></span></em>,
-                                            <em class="sig-param"><span class="n"><span
-                                                    class="pre">tcp_ports</span></span><span class="o"><span
-                                                    class="pre">=</span></span><span class="default_value"><span
-                                                    class="pre">None</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">udp_ports</span></span><span class="o"><span
-                                                class="pre">=</span></span><span class="default_value"><span
+                                                class="reference external"
+                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
+                                            <em class="sig-param"><span class="n"><span class="pre">server_groups</span></span><span
+                                                    class="p"><span class="pre">:</span></span> <span class="n"><a
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">list</span></a></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">tcp_ports</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><span
+                                                class="pre">Optional</span><span class="p"><span
+                                                class="pre">[</span></span><a class="reference external"
+                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                              title="(in Python v3.9)"><span
+                                                class="pre">str</span></a><span class="p"><span
+                                                class="pre">]</span></span></span> <span class="o"><span
+                                                class="pre">=</span></span> <span class="default_value"><span
+                                                class="pre">None</span></span></em>, <em class="sig-param"><span
+                                                class="n"><span class="pre">udp_ports</span></span><span class="p"><span
+                                                class="pre">:</span></span> <span class="n"><span
+                                                class="pre">Optional</span><span class="p"><span
+                                                class="pre">[</span></span><a class="reference external"
+                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                              title="(in Python v3.9)"><span
+                                                class="pre">str</span></a><span class="p"><span
+                                                class="pre">]</span></span></span> <span class="o"><span
+                                                class="pre">=</span></span> <span class="default_value"><span
                                                 class="pre">None</span></span></em>, <em class="sig-param"><span
                                                 class="o"><span class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.add"
+                                                class="headerlink"
+                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.add_segment"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Create an application segment.</p>
                                             <dl class="field-list simple">
@@ -223,9 +239,9 @@
                                                                 title="(in Python v3.9)"><em>str</em></a>) – The unique
                                                             identifer for the segment group this application segment
                                                             belongs to.</p></li>
-                                                        <li><p><strong>udp_ports</strong> (<a class="reference internal"
-                                                                                              href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                                              title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><code
+                                                        <li><p><strong>udp_ports</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                                              title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"
@@ -235,9 +251,9 @@
                                                                 class="pre">str</span></code></a>) – List of udp port
                                                             range pairs, e.g. [‘35000’, ‘35000’] for port 35000.</p>
                                                         </li>
-                                                        <li><p><strong>tcp_ports</strong> (<a class="reference internal"
-                                                                                              href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                                              title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><code
+                                                        <li><p><strong>tcp_ports</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                                              title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"
@@ -248,9 +264,9 @@
                                                             range pairs, e.g. [‘22’, ‘22’] for port 22-22, [‘80’, ‘100’]
                                                             for 80-100.</p></li>
                                                         <li><p><strong>domain_names</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><code
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"
@@ -264,9 +280,9 @@
                                                                                          title="(in Python v3.9)"><em>str</em></a>)
                                                             – The name of the application segment.</p></li>
                                                         <li><p><strong>server_groups</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><code
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"
@@ -286,10 +302,11 @@
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                 title="(in Python v3.9)"><em>str</em></a>) – </p></li>
                                                         <li><p><strong>clientlessApps</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><em>list</em></a>)
-                                                            – </p></li>
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a>) – </p></li>
                                                         <li><p><strong>configSpace</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
@@ -354,7 +371,7 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">app_segments</span><span
-                                                        class="o">.</span><span class="n">add</span><span
+                                                        class="o">.</span><span class="n">add_segment</span><span
                                                         class="p">(</span><span
                                                         class="s1">&#39;new_app_segment&#39;</span><span
                                                         class="p">,</span>
@@ -380,22 +397,23 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.delete">
-                                            <span class="sig-name descname"><span class="pre">delete</span></span><span
+                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">delete_segment</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">segment_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                 title="(in Python v3.9)"><span
                                                 class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete"
+                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Delete an application segment.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>segment_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -431,7 +449,7 @@
                                             id="pyzscaler.zpa.app_segments.AppSegmentsAPI.details">
                                             <span class="sig-name descname"><span class="pre">details</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">segment_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
@@ -443,7 +461,7 @@
                                         <dd><p>Get information for an application segment.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>segment_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -476,11 +494,12 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.list">
-                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.list_segments">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_segments</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
+                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list_segments"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Retrieve all configured application segments.</p>
                                             <dl class="field-list simple">
@@ -488,9 +507,9 @@
                                                 <dd class="field-odd"><p>List of application segments.</p>
                                                 </dd>
                                                 <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference internal"
-                                                                             href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                             title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><code
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
@@ -501,7 +520,7 @@
                                                         class="gp">&gt;&gt;&gt; </span><span
                                                         class="n">app_segments</span> <span class="o">=</span> <span
                                                         class="n">zpa</span><span class="o">.</span><span class="n">app_segments</span><span
-                                                        class="o">.</span><span class="n">list</span><span
+                                                        class="o">.</span><span class="n">list_segments</span><span
                                                         class="p">()</span>
 </pre>
                                                 </div>
@@ -511,27 +530,26 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.update">
-                                            <span class="sig-name descname"><span class="pre">update</span></span><span
+                                            id="pyzscaler.zpa.app_segments.AppSegmentsAPI.update_segment">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">update_segment</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
+                                                class="pre">segment_id</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
                                                 class="reference external"
                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                 title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
                                             <em class="sig-param"><span class="n"><span class="pre">domain_names</span></span><span
                                                     class="p"><span class="pre">:</span></span> <span class="n"><a
-                                                    class="reference internal"
-                                                    href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                    title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><span
-                                                    class="pre">pyzscaler.zpa.app_segments.AppSegmentsAPI.list</span></a></span></em>,
-                                            <em class="sig-param"><span class="o"><span
-                                                    class="pre">**</span></span><span class="n"><span
-                                                    class="pre">kwargs</span></span></em><span
-                                                class="sig-paren">)</span><a class="headerlink"
-                                                                             href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.update"
-                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
+                                                    class="reference external"
+                                                    href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                    title="(in Python v3.9)"><span
+                                                    class="pre">list</span></a></span></em>, <em class="sig-param"><span
+                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.update_segment"
+                                                title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Update an application segment.</p>
                                             <div class="admonition note">
                                                 <p class="admonition-title">Note</p>
@@ -542,15 +560,15 @@
                                                 <dt class="field-odd">Parameters</dt>
                                                 <dd class="field-odd">
                                                     <ul class="simple">
-                                                        <li><p><strong>id</strong> (<a class="reference external"
-                                                                                       href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                       title="(in Python v3.9)"><em>str</em></a>)
-                                                            – The unique identifier for the application segment.</p>
-                                                        </li>
+                                                        <li><p><strong>segment_id</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                            identifier for the application segment.</p></li>
                                                         <li><p><strong>domain_names</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><code
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
                                                                 class="xref py py-obj docutils literal notranslate"><span
                                                                 class="pre">list</span></code></a> of <a
                                                                 class="reference external"
@@ -570,10 +588,11 @@
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                 title="(in Python v3.9)"><em>str</em></a>) – </p></li>
                                                         <li><p><strong>clientlessApps</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><em>list</em></a>)
-                                                            – </p></li>
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a>) – </p></li>
                                                         <li><p><strong>configSpace</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
@@ -590,11 +609,6 @@
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                 title="(in Python v3.9)"><em>str</em></a>) – </p></li>
-                                                        <li><p><strong>domainNames</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><em>list</em></a>)
-                                                            – </p></li>
                                                         <li><p><strong>doubleEncrypt</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/functions.html#bool"
@@ -632,20 +646,23 @@
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                 title="(in Python v3.9)"><em>str</em></a>) – </p></li>
                                                         <li><p><strong>serverGroups</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><em>list</em></a>)
-                                                            – </p></li>
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a>) – </p></li>
                                                         <li><p><strong>tcpPortRanges</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><em>list</em></a>)
-                                                            – </p></li>
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a>) – </p></li>
                                                         <li><p><strong>udpPortRanges</strong> (<a
-                                                                class="reference internal"
-                                                                href="#pyzscaler.zpa.app_segments.AppSegmentsAPI.list"
-                                                                title="pyzscaler.zpa.app_segments.AppSegmentsAPI.list"><em>list</em></a>)
-                                                            – </p></li>
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a>) – </p></li>
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-odd">Returns</dt>

@@ -3,7 +3,7 @@ from restfly.endpoint import APIEndpoint
 
 class SegmentGroupsAPI(APIEndpoint):
 
-    def list(self):
+    def list_groups(self):
         """
         Returns a list of all configured segment groups.
 
@@ -11,48 +11,48 @@ class SegmentGroupsAPI(APIEndpoint):
             :obj:`list`: A list of all configured segment groups.
 
         Examples:
-            >>> for segment_group in zpa.segment_groups.list():
+            >>> for segment_group in zpa.segment_groups.list_groups():
             ...    pprint(segment_group)
 
         """
         return self._get('segmentGroup').list
 
-    def details(self, id: str):
+    def get_group(self, group_id: str):
         """
         Returns information on the specified segment group.
 
         Args:
-            id (str):
+            group_id (str):
                 The unique identifier for the segment group.
 
         Returns:
             :obj:`dict`: The resource record for the segment group.
 
         Examples:
-            >>> pprint(zpa.segment_groups.details('2342342342344433'))
+            >>> pprint(zpa.segment_groups.get_group('2342342342344433'))
 
         """
 
-        return self._get(f'segmentGroup/{id}')
+        return self._get(f'segmentGroup/{group_id}')
 
-    def delete(self, id: str):
+    def delete_group(self, group_id: str):
         """
         Deletes the specified segment group.
 
         Args:
-            id (str):
+            group_id (str):
                 The unique identifier for the segment group to be deleted.
 
         Returns:
             :obj:`str`: The response code for the operation.
 
         Examples:
-            >>> zpa.segment_groups.delete('2342342342343')
+            >>> zpa.segment_groups.delete_group('2342342342343')
 
         """
-        return self._delete(f'segmentGroup/{id}')
+        return self._delete(f'segmentGroup/{group_id}')
 
-    def add(self, name: str, enabled=False, **kwargs):
+    def add_group(self, name: str, enabled=False, **kwargs):
         """
         Adds a new segment group.
 
@@ -78,7 +78,7 @@ class SegmentGroupsAPI(APIEndpoint):
         Examples:
             Creating a segment group with the minimum required parameters:
 
-            >>> zpa.segment_groups.add('new_segment_group',
+            >>> zpa.segment_groups.add_group('new_segment_group',
             ...    True)
 
         """
@@ -92,12 +92,12 @@ class SegmentGroupsAPI(APIEndpoint):
 
         return self._post('segmentGroup', json=payload)
 
-    def update(self, id: str, **kwargs):
+    def update_group(self, group_id: str, **kwargs):
         """
         Updates an existing segment group.
 
         Args:
-            id (str):
+            group_id (str):
                 The unique identifier for the segment group to be updated.
             **kwargs:
 
@@ -120,17 +120,15 @@ class SegmentGroupsAPI(APIEndpoint):
         Examples:
             Updating the name of a segment group:
 
-            >>> zpa.segment_groups.update('23234234324234',
+            >>> zpa.segment_groups.update_group('23234234324234',
             ...    name='updated_name')
 
         """
         payload = {
-            'id': id,
+            'id': group_id,
         }
         # Add optional params to payload
         for key, value in kwargs.items():
             payload[key] = value
 
-        print(payload)
-
-        return self._put(f'segmentGroup/{id}', json=payload)
+        return self._put(f'segmentGroup/{group_id}', json=payload)

@@ -4,34 +4,34 @@ from box import BoxList
 
 class IDPControllerAPI(APIEndpoint):
 
-    def list(self):
+    def list_idps(self):
         """
-        Provides a list of all configured IDPs.
+        Returns a list of all configured IDPs.
 
         Returns:
             :obj:`list`: A list of all configured IDPs.
 
         Examples:
-            >>> for idp in zpa.idp.list():
+            >>> for idp in zpa.idp.list_idps():
             ...    pprint(idp)
 
         """
         return self._get('idp', box=BoxList)
 
-    def details(self, id: str):
+    def get_idp(self, idp_id: str):
         """
-        Provides information on the specified IDP.
+        Returns information on the specified IDP.
 
         Args:
-            id (str):
+            idp_id (str):
                 The unique identifier for the IDP.
 
         Returns:
             :obj:`dict`: The resource record for the IDP.
 
         Examples:
-            >>> pprint(zpa.idp.details('2342342342344433'))
+            >>> pprint(zpa.idp.get_idp('2342342342344433'))
 
         """
 
-        return self._get(f'idp/{id}')
+        return self._get(f'idp/{idp_id}')

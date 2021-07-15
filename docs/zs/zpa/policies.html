@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>policies &mdash; pyZscaler 0.1.1 documentation</title>
+    <title>policies &mdash; pyZscaler 0.2.0 documentation</title>
 
 
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
@@ -52,7 +52,7 @@
 
 
                 <div class="version">
-                    0.1
+                    0.2
                 </div>
 
 
@@ -73,6 +73,7 @@
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
                 <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../zia/index.html">ZIA</a></li>
                     <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZPA</a>
                         <ul class="current">
                             <li class="toctree-l2"><a class="reference internal"
@@ -370,8 +371,8 @@
                                                     <ul class="simple">
                                                         <li><p><strong>conditions</strong> (<a
                                                                 class="reference internal"
-                                                                href="#pyzscaler.zpa.policies.PolicySetsAPI.list"
-                                                                title="pyzscaler.zpa.policies.PolicySetsAPI.list"><em>list</em></a>)
+                                                                href="../zia/admins.html#pyzscaler.zia.admins.AdminManagementAPI.list"
+                                                                title="pyzscaler.zia.admins.AdminManagementAPI.list"><em>list</em></a>)
                                                             – List of conditions.</p></li>
                                                         <li><p><strong>customMsg</strong> (<a class="reference external"
                                                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
@@ -545,8 +546,10 @@
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.policies.PolicySetsAPI.list">
-                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zpa.policies.PolicySetsAPI.list_policies">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_policies</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
                                                 class="pre">policy_type</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><span
@@ -558,7 +561,8 @@
                                                 class="pre">]</span></span></span> <span class="o"><span
                                                 class="pre">=</span></span> <span class="default_value"><span
                                                 class="pre">None</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zpa.policies.PolicySetsAPI.list"
+                                                class="headerlink"
+                                                href="#pyzscaler.zpa.policies.PolicySetsAPI.list_policies"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Returns the policy and rule sets for the given policy type.</p>
                                             <dl class="field-list simple">
@@ -588,7 +592,7 @@
                                                         class="gp">&gt;&gt;&gt; </span><span
                                                         class="n">pprint</span><span class="p">(</span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">policies</span><span
-                                                        class="o">.</span><span class="n">list</span><span
+                                                        class="o">.</span><span class="n">list_policies</span><span
                                                         class="p">(</span><span class="s1">&#39;access&#39;</span><span
                                                         class="p">))</span>
 </pre>
@@ -629,9 +633,9 @@
                                                     requested type.</p>
                                                 </dd>
                                                 <dt class="field-odd">Return type</dt>
-                                                <dd class="field-odd"><p><a class="reference internal"
-                                                                            href="#pyzscaler.zpa.policies.PolicySetsAPI.list"
-                                                                            title="pyzscaler.zpa.policies.PolicySetsAPI.list"><code
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                            title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
@@ -654,8 +658,10 @@
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zpa.policies.PolicySetsAPI.update">
-                                            <span class="sig-name descname"><span class="pre">update</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zpa.policies.PolicySetsAPI.update_rule">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">update_rule</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
                                                 class="pre">policy_type</span></span><span class="p"><span
                                                 class="pre">:</span></span> <span class="n"><a
@@ -693,7 +699,8 @@
                                                 class="pre">None</span></span></em>, <em class="sig-param"><span
                                                 class="o"><span class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zpa.policies.PolicySetsAPI.update"
+                                                class="headerlink"
+                                                href="#pyzscaler.zpa.policies.PolicySetsAPI.update_rule"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Update an existing policy rule</p>
                                             <p>Passing only the policy_type and rule_id will result in a successful
@@ -732,7 +739,7 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">policies</span><span
-                                                        class="o">.</span><span class="n">update</span><span
+                                                        class="o">.</span><span class="n">update_rule</span><span
                                                         class="p">(</span><span class="s1">&#39;access&#39;</span><span
                                                         class="p">,</span> <span
                                                         class="s1">&#39;72057615512764594&#39;</span><span
@@ -748,7 +755,7 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zpa</span><span
                                                         class="o">.</span><span class="n">policies</span><span
-                                                        class="o">.</span><span class="n">update</span><span
+                                                        class="o">.</span><span class="n">update_rule</span><span
                                                         class="p">(</span><span
                                                         class="s1">&#39;client_forwarding&#39;</span><span
                                                         class="p">,</span> <span

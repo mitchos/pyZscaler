@@ -3,7 +3,7 @@ from restfly.endpoint import APIEndpoint
 
 class AppServersAPI(APIEndpoint):
 
-    def add(self, name: str = None, address: str = None, enabled: bool = False, **kwargs):
+    def add_server(self, name: str = None, address: str = None, enabled: bool = False, **kwargs):
         """
         Add a new application server.
 
@@ -30,7 +30,7 @@ class AppServersAPI(APIEndpoint):
         Examples:
             Create a server with the minimum required parameters:
 
-            >>> zpa.servers.add(
+            >>> zpa.servers.add_server(
             ...   name='myserver.example',
             ...   address='192.0.2.10',
             ...   enabled=True)
@@ -46,57 +46,57 @@ class AppServersAPI(APIEndpoint):
         }
         return self._post('server', json=payload)
 
-    def list(self):
+    def list_servers(self):
         """
-        Get all configured servers.
+        Returns all configured servers.
 
         Returns:
             :obj:`list`: List of all configured servers.
 
         Examples:
-            >>> servers = zpa.servers.list()
+            >>> servers = zpa.servers.list_servers()
         """
         return self._get('server').list
 
-    def details(self, id: str):
+    def get_server(self, server_id: str):
         """
         Get information for the specified server id.
 
         Args:
-            id (str):
+            server_id (str):
                 The unique identifier for the server.
 
         Returns:
             :obj:`dict`: The resource record for the server.
 
         Examples:
-            >>> server = zpa.servers.details('12')
+            >>> server = zpa.servers.get_server('12')
 
         """
-        return self._get(f'server/{id}')
+        return self._get(f'server/{server_id}')
 
-    def delete(self, id: str):
+    def delete_server(self, server_id: str):
         """
         Delete the specified server.
 
         Args:
-            id (str):
+            server_id (str):
                 The unique identifier for the server to be deleted.
 
         Returns:
             :obj:`str`: The response code for the operation.
 
         Examples:
-            >>> zpa.servers.delete('32')
+            >>> zpa.servers.delete_server('32')
 
         """
-        return self._delete(f'server/{id}')
+        return self._delete(f'server/{server_id}')
 
-    def update(self, id: str, **kwargs):
-        """
+    def update_server(self, server_id: str, **kwargs):
+        """Updates the specified server
 
         Args:
-            id (str):
+            server_id (str):
                 The unique identifier for the server being updated.
             **kwargs:
 
@@ -120,23 +120,23 @@ class AppServersAPI(APIEndpoint):
         Examples:
             Update the name of a server:
 
-            >>> zpa.servers.update(
+            >>> zpa.servers.update_server(
             ...   '23483234823484',
             ...   name='newname.example')
 
             Update the address and enable a server:
 
-            >>> zpa.servers.update(
+            >>> zpa.servers.update_server(
             ...    '23483234823484',
             ...    address='192.0.2.20',
             ...    enabled=True)
 
         """
         payload = {
-            'id': id
+            'id': server_id
         }
 
         for key, value in kwargs.items():
             payload[key] = value
 
-        return self._put(f'server/{id}', json=payload)
+        return self._put(f'server/{server_id}', json=payload)
