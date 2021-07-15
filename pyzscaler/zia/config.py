@@ -29,4 +29,4 @@ class ActivationAPI(APIEndpoint):
             >>> config_activate = zia.config.activate()
 
         """
-        return self._post('status/activate')
+        return self._post('status/activate').status
