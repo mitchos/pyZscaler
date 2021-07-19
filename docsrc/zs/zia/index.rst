@@ -6,6 +6,7 @@ This package covers the ZIA interface.
     :maxdepth: 2
 
     config
+    locations
     users
 
 .. automodule:: pyzscaler.zia

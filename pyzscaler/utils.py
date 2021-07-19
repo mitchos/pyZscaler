@@ -2,6 +2,11 @@ from restfly.utils import dict_merge, url_validator
 import time
 
 
+def snake_to_camel(name):
+    name = name[0].lower() + name.title()[1:].replace("_", "")
+    return name
+
+
 def obfuscate_api_key(seed):
     now = int(time.time() * 1000)
     n = str(now)[-6:]
