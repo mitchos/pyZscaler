@@ -46,8 +46,9 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme'
 ]
-# autodoc_typehints = "description"
+autodoc_typehints = "none"
 add_module_names = False
+autodoc_class_signature = "separated"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

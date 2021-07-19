@@ -33,9 +33,19 @@ class LocationsAPI(APIEndpoint):
 
                     For sub-locations: Egress, internal, or GRE tunnel IP addresses. Each entry is either a single
                     IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g., 10.10.33.1-10.10.33.10)).
+            ports (:obj:`list` of :obj:`str`):
+                List of whitelisted Proxy ports for the location.
+            vpn_credentials (dict):
+                VPN credentials for the location.
 
         Returns:
             :obj:`dict`: The newly created location resource record
+
+        Examples:
+            Add a new location with an IP address.
+
+            >>> zia.locations.add_location(name='new_location',
+            ...    ip_addresses=['203.0.113.10'])
 
         """
         payload = {
@@ -44,7 +54,7 @@ class LocationsAPI(APIEndpoint):
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[key] = value
+            payload[snake_to_camel(key)] = value
 
         return self._post('locations', json=payload)
 
@@ -59,6 +69,8 @@ class LocationsAPI(APIEndpoint):
         Returns:
             :obj:`dict`: The requested location resource record.
 
+        Examples:
+            >>> location = zia.locations.get_location('97456691')
         """
         return self._get(f'locations/{location_id}')
 
@@ -73,6 +85,10 @@ class LocationsAPI(APIEndpoint):
         Returns:
             :obj:`list`: A list of sub-locations configured for the parent location.
 
+        Examples:
+            >>> for sub_location in zia.locations.list_sub_locations('97456691'):
+            ...    pprint(sub_location)
+
         """
         return self._get(f'locations/{location_id}/sublocations', box=BoxList)
 
@@ -82,6 +98,10 @@ class LocationsAPI(APIEndpoint):
 
         Returns:
             :obj:`list`: A list of configured locations.
+
+        Examples:
+            >>> for location in zia.locations.list_locations_lite():
+            ...    pprint(location)
 
         """
         return self._get('locations/lite', box=BoxList)
@@ -107,6 +127,17 @@ class LocationsAPI(APIEndpoint):
 
         Returns:
             :obj:`dict`: The updated resource record.
+
+        Examples:
+            Update the name of a location:
+
+            >>> zia.locations.update('97456691',
+            ...    name='updated_location_name')
+
+            Upodate the IP address of a location:
+
+            >>> zia.locations.update('97456691',
+            ...    ip_addresses=['203.0.113.20'])
 
         """
         location_record = self.get_location(location_id)
@@ -139,6 +170,9 @@ class LocationsAPI(APIEndpoint):
 
         Returns:
             :obj:`str`: Response code for the operation.
+
+        Examples:
+            >>> zia.locations.delete_location('97456691')
 
         """
         return self._delete(f'locations/{location_id}', box=False).status_code
