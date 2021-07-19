@@ -5,6 +5,7 @@ from restfly.session import APISession
 from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
 from .config import ActivationAPI
+from .locations import LocationsAPI
 from .users import UserManagementAPI
 
 
@@ -70,6 +71,14 @@ class ZIA(APISession):
 
         """
         return ActivationAPI(self)
+
+    @property
+    def locations(self):
+        """
+        The interface object for the :ref:`ZIA Locations interface <zia-locations>`.
+
+        """
+        return LocationsAPI(self)
 
     @property
     def users(self):
