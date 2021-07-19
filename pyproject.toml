@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyzscaler"
-version = "0.2.0"
+version = "0.2.1"
 description = "A python SDK for Zscaler."
 authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
