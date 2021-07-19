@@ -31,6 +31,8 @@
 
     <link rel="index" title="Index" href="../../genindex.html"/>
     <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="next" title="users" href="users.html"/>
+    <link rel="prev" title="config" href="config.html"/>
 </head>
 
 <body class="wy-body-for-nav">
@@ -70,8 +72,15 @@
 
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="index.html">ZIA</a></li>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a>
+                        <ul class="current">
+                            <li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+                            <li class="toctree-l2 current"><a class="current reference internal" href="#">locations</a>
+                            </li>
+                            <li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+                        </ul>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
                 </ul>
 
@@ -103,6 +112,8 @@
 
                         <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
 
+                        <li><a href="index.html">ZIA</a> &raquo;</li>
+
                         <li>locations</li>
 
 
@@ -127,6 +138,8 @@
                                             title="Permalink to this headline">¶</a></h1>
                             <p>The following methods allow for interaction with the ZIA
                                 Location Management API endpoints.</p>
+                            <p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.locations</span></code>
+                            </p>
                             <span class="target" id="module-pyzscaler.zia.locations"><span
                                     id="zia-locations"></span></span>
                             <dl class="py class">
@@ -134,27 +147,21 @@
                                     <em class="property"><span class="pre">class</span> </em><span
                                         class="sig-name descname"><span class="pre">LocationsAPI</span></span><span
                                         class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                        class="pre">api</span></span><span class="p"><span class="pre">:</span></span>
-                                    <span class="n"><span class="pre">restfly.session.APISession</span></span></em><span
-                                        class="sig-paren">)</span><a class="headerlink"
-                                                                     href="#pyzscaler.zia.locations.LocationsAPI"
-                                                                     title="Permalink to this definition">¶</a></dt>
+                                        class="pre">api</span></span></em><span class="sig-paren">)</span><a
+                                        class="headerlink" href="#pyzscaler.zia.locations.LocationsAPI"
+                                        title="Permalink to this definition">¶</a></dt>
                                 <dd>
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zia.locations.LocationsAPI.add">
-                                            <span class="sig-name descname"><span class="pre">add</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.locations.LocationsAPI.add_location">
+                                            <span class="sig-name descname"><span class="pre">add_location</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">name</span></span><span class="p"><span class="pre">:</span></span>
-                                            <span class="n"><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                               title="(in Python v3.9)"><span class="pre">str</span></a></span></em>,
-                                            <em class="sig-param"><span class="o"><span
-                                                    class="pre">**</span></span><span class="n"><span
-                                                    class="pre">kwargs</span></span></em><span
-                                                class="sig-paren">)</span><a class="headerlink"
-                                                                             href="#pyzscaler.zia.locations.LocationsAPI.add"
-                                                                             title="Permalink to this definition">¶</a>
-                                        </dt>
+                                                class="pre">name</span></span></em>, <em class="sig-param"><span
+                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.locations.LocationsAPI.add_location"
+                                                title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Adds a new location.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
@@ -164,19 +171,38 @@
                                                         title="(in Python v3.9)"><em>str</em></a>) – Location name.</p>
                                                 </dd>
                                                 <dt class="field-even">Keyword Arguments</dt>
-                                                <dd class="field-even"><p><strong>ip_address</strong> (<a
-                                                        class="reference internal"
-                                                        href="#pyzscaler.zia.locations.LocationsAPI.list"
-                                                        title="pyzscaler.zia.locations.LocationsAPI.list"><em>list</em></a>)
-                                                    –
-                                                    <p>For locations: IP addresses of the egress points that are
-                                                        provisioned in the Zscaler Cloud.
-                                                        Each entry is a single IP address (e.g., 238.10.33.9).</p>
-                                                    <p>For sub-locations: Egress, internal, or GRE tunnel IP addresses.
-                                                        Each entry is either a single
-                                                        IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g.,
-                                                        10.10.33.1-10.10.33.10)).</p>
-                                                    </p>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>ip_addresses</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><em>list</em></a>) –
+                                                            <p>For locations: IP addresses of the egress points that are
+                                                                provisioned in the Zscaler Cloud.
+                                                                Each entry is a single IP address (e.g.,
+                                                                238.10.33.9).</p>
+                                                            <p>For sub-locations: Egress, internal, or GRE tunnel IP
+                                                                addresses. Each entry is either a single
+                                                                IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g.,
+                                                                10.10.33.1-10.10.33.10)).</p>
+                                                            </p></li>
+                                                        <li><p><strong>ports</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                                          title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a> of <a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">str</span></code></a>) – List of whitelisted
+                                                            Proxy ports for the location.</p></li>
+                                                        <li><p><strong>vpn_credentials</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                title="(in Python v3.9)"><em>dict</em></a>) – VPN
+                                                            credentials for the location.</p></li>
+                                                    </ul>
                                                 </dd>
                                                 <dt class="field-odd">Returns</dt>
                                                 <dd class="field-odd"><p>The newly created location resource record</p>
@@ -189,32 +215,40 @@
                                                         class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
-                                            <div class="admonition-todo admonition" id="id1">
-                                                <p class="admonition-title">Todo</p>
-                                                <ul class="simple">
-                                                    <li><p>Check sensible defaults for commented params</p></li>
-                                                    <li><p>Update docs after defaults have been set</p></li>
-                                                </ul>
+                                            <p class="rubric">Examples</p>
+                                            <p>Add a new location with an IP address.</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span class="n">add_location</span><span
+                                                        class="p">(</span><span class="n">name</span><span
+                                                        class="o">=</span><span class="s1">&#39;new_location&#39;</span><span
+                                                        class="p">,</span>
+<span class="gp">... </span>   <span class="n">ip_addresses</span><span class="o">=</span><span class="p">[</span><span
+                                                            class="s1">&#39;203.0.113.10&#39;</span><span
+                                                            class="p">])</span>
+</pre>
+                                                </div>
                                             </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zia.locations.LocationsAPI.delete">
-                                            <span class="sig-name descname"><span class="pre">delete</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.locations.LocationsAPI.delete_location">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">delete_location</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
-                                                class="pre">:</span></span> <span class="n"><a
-                                                class="reference external"
-                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                title="(in Python v3.9)"><span
-                                                class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zia.locations.LocationsAPI.delete"
-                                                title="Permalink to this definition">¶</a></dt>
+                                                class="pre">location_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.locations.LocationsAPI.delete_location"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
                                         <dd><p>Deletes the location or sub-location for the specified ID</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>location_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -231,25 +265,34 @@
                                                         class="pre">str</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span class="n">delete_location</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;97456691&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zia.locations.LocationsAPI.detail">
-                                            <span class="sig-name descname"><span class="pre">detail</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.locations.LocationsAPI.get_location">
+                                            <span class="sig-name descname"><span class="pre">get_location</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
-                                                class="pre">:</span></span> <span class="n"><a
-                                                class="reference external"
-                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                title="(in Python v3.9)"><span
-                                                class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zia.locations.LocationsAPI.detail"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Get the location information for the specified ID.</p>
+                                                class="pre">location_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.locations.LocationsAPI.get_location"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Returns information for the specified location.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>location_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -266,24 +309,39 @@
                                                         class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">location</span> <span class="o">=</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span class="n">get_location</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;97456691&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zia.locations.LocationsAPI.list">
-                                            <span class="sig-name descname"><span class="pre">list</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.locations.LocationsAPI.list_locations">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_locations</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zia.locations.LocationsAPI.list"
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.locations.LocationsAPI.list_locations"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Provides a list of configured locations.</p>
+                                        <dd><p>Returns a list of configured locations.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
                                                 <dd class="field-odd"><p>List of configured locations.</p>
                                                 </dd>
                                                 <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference internal"
-                                                                             href="#pyzscaler.zia.locations.LocationsAPI.list"
-                                                                             title="pyzscaler.zia.locations.LocationsAPI.list"><code
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
@@ -294,7 +352,7 @@
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">locations</span> <span
                                                         class="o">=</span> <span class="n">zia</span><span
                                                         class="o">.</span><span class="n">locations</span><span
-                                                        class="o">.</span><span class="n">list</span><span
+                                                        class="o">.</span><span class="n">list_locations</span><span
                                                         class="p">()</span>
 </pre>
                                                 </div>
@@ -303,10 +361,12 @@
                                     </dl>
 
                                     <dl class="py method">
-                                        <dt class="sig sig-object py" id="pyzscaler.zia.locations.LocationsAPI.lite">
-                                            <span class="sig-name descname"><span class="pre">lite</span></span><span
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.locations.LocationsAPI.list_locations_lite">
+                                            <span class="sig-name descname"><span class="pre">list_locations_lite</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
-                                                class="headerlink" href="#pyzscaler.zia.locations.LocationsAPI.lite"
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.locations.LocationsAPI.list_locations_lite"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Returns only the name and ID of all configured locations.</p>
                                             <dl class="field-list simple">
@@ -314,35 +374,43 @@
                                                 <dd class="field-odd"><p>A list of configured locations.</p>
                                                 </dd>
                                                 <dt class="field-even">Return type</dt>
-                                                <dd class="field-even"><p><a class="reference internal"
-                                                                             href="#pyzscaler.zia.locations.LocationsAPI.list"
-                                                                             title="pyzscaler.zia.locations.LocationsAPI.list"><code
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
+                                                        class="n">location</span> <span class="ow">in</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span
+                                                        class="n">list_locations_lite</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">location</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.locations.LocationsAPI.sub_detail">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">sub_detail</span></span><span class="sig-paren">(</span><em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span><span class="p"><span
-                                                class="pre">:</span></span> <span class="n"><a
-                                                class="reference external"
-                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                title="(in Python v3.9)"><span
-                                                class="pre">str</span></a></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zia.locations.LocationsAPI.sub_detail"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Get the sub-location information for the specified location ID.</p>
+                                            id="pyzscaler.zia.locations.LocationsAPI.list_sub_locations">
+                                            <span class="sig-name descname"><span class="pre">list_sub_locations</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">location_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.locations.LocationsAPI.list_sub_locations"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Returns sub-location information for the specified location ID.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>location_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
                                                         title="(in Python v3.9)"><em>str</em></a>) – The unique
@@ -353,13 +421,129 @@
                                                     parent location.</p>
                                                 </dd>
                                                 <dt class="field-odd">Return type</dt>
-                                                <dd class="field-odd"><p><a class="reference internal"
-                                                                            href="#pyzscaler.zia.locations.LocationsAPI.list"
-                                                                            title="pyzscaler.zia.locations.LocationsAPI.list"><code
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                            title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
                                                         class="pre">list</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
+                                                        class="n">sub_location</span> <span class="ow">in</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span class="n">list_sub_locations</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;97456691&#39;</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span
+                                                            class="n">sub_location</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.locations.LocationsAPI.update_location">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">update_location</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">location_id</span></span></em>, <em class="sig-param"><span
+                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.locations.LocationsAPI.update_location"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Update the specified location.</p>
+                                            <p>Note: Changes are not additive and will replace existing values.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>location_id</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                            identifier for the location you are updating.</p></li>
+                                                        <li><p><strong>**kwargs</strong> – Optional keyword args.</p>
+                                                        </li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>ip_addresses</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a> of <a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">str</span></code></a>) – List of updated ip
+                                                            addresses.</p></li>
+                                                        <li><p><strong>ports</strong> (<a class="reference external"
+                                                                                          href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                                          title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">list</span></code></a> of <a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><code
+                                                                class="xref py py-obj docutils literal notranslate"><span
+                                                                class="pre">str</span></code></a>) – List of whitelisted
+                                                            Proxy ports for the location.</p></li>
+                                                        <li><p><strong>vpn_credentials</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                title="(in Python v3.9)"><em>dict</em></a>) – VPN
+                                                            credentials for the location.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The updated resource record.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Update the name of a location:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span class="n">update</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;97456691&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;updated_location_name&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                            <p>Upodate the IP address of a location:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">locations</span><span
+                                                        class="o">.</span><span class="n">update</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;97456691&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">ip_addresses</span><span class="o">=</span><span class="p">[</span><span
+                                                            class="s1">&#39;203.0.113.20&#39;</span><span
+                                                            class="p">])</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -373,6 +557,12 @@
 
                 </div>
                 <footer>
+                    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+                        <a href="users.html" class="btn btn-neutral float-right" title="users" accesskey="n" rel="next">Next
+                            <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+                        <a href="config.html" class="btn btn-neutral float-left" title="config" accesskey="p"
+                           rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+                    </div>
 
                     <hr/>
 
