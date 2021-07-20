@@ -111,7 +111,7 @@ need to supply the .net suffix with pyZscaler, so the ``CLOUD`` arg would simply
 
 .. code-block:: python
 
-    from pyzscaler import ZIA
+    from pyzscaler.zia import ZIA
     zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
     for user in zia.users.list():
         pprint(user)
@@ -142,7 +142,7 @@ table below:
 
 .. code-block:: python
 
-    from pyzscaler import ZPA
+    from pyzscaler.zpa import ZPA
     zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
     for app_segment in zpa.app_segments.list():
         pprint(app_segment)
