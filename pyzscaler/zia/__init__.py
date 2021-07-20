@@ -49,7 +49,6 @@ class ZIA(APISession):
         :param kwargs:
         :return:
         """
-        print(self._url)
         super(ZIA, self)._build_session(**kwargs)
         api_obf = obfuscate_api_key(self._api_key)
 
