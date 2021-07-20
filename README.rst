@@ -16,8 +16,10 @@ Overview
 With each Zscaler product having its own developer documentation and authentication methods, this SDK should simplify
 your ability to develop software that uses the Zscaler API.
 
-This SDK leverages the very awesome `RESTfly framework <https://restfly.readthedocs.io/en/latest/index.html>`_ developed by Steve McGrath, which simplifies the development of
-building libraries to interact with RESTful APIs. A big thank you to Steve.
+The goal of Pyzscaler is to eventually cover all public API endpoints published by Zscaler across all of their products.
+
+This SDK leverages the very awesome `RESTfly framework <https://restfly.readthedocs.io/en/latest/index.html>`_ developed
+by Steve McGrath, which simplifies the development of building libraries to interact with RESTful APIs.
 
 Features
 ----------
@@ -25,6 +27,7 @@ Features
 - Uniform interaction with all Zscaler APIs.
 - Uses `python-box <https://github.com/cdgriffith/Box/wiki>`_ to add dot notation access to json data structures.
 - Zscaler API output automatically converted from CamelCase to Snake Case.
+- Various quality of life enhancements for object update methods.
 
 Products
 ---------
