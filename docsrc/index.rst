@@ -1,3 +1,6 @@
+.. meta::
+   :description lang=en:
+        pyZscaler is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
 .. toctree::
    :maxdepth: 1
    :hidden:

@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'pyZscaler'
 copyright = '2021, Mitch Kelly'
 author = 'Mitch Kelly'
+html_title = ''
 
 # The short X.Y version
 version = '0.3'
