@@ -3,7 +3,11 @@ import time
 
 
 def snake_to_camel(name):
-    name = name[0].lower() + name.title()[1:].replace("_", "")
+    # Conditional clauses to support edge-cases where camelCase not strictly followed by Zscaler
+    if name == 'routable_ip':
+        return 'routableIP'
+    else:
+        name = name[0].lower() + name.title()[1:].replace("_", "")
     return name
 
 

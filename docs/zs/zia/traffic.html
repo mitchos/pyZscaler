@@ -5,7 +5,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>traffic &mdash; pyZscaler 0.2.0 documentation</title>
+    <title>traffic &mdash; pyZscaler 0.3.0 documentation</title>
 
 
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css"/>
@@ -31,6 +31,8 @@
 
     <link rel="index" title="Index" href="../../genindex.html"/>
     <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="next" title="users" href="users.html"/>
+    <link rel="prev" title="locations" href="locations.html"/>
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +52,7 @@
 
 
                 <div class="version">
-                    0.2
+                    0.3
                 </div>
 
 
@@ -70,8 +72,17 @@
 
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="index.html">ZIA</a></li>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a>
+                        <ul class="current">
+                            <li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="locations.html">locations</a>
+                            </li>
+                            <li class="toctree-l2 current"><a class="current reference internal" href="#">traffic</a>
+                            </li>
+                            <li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+                        </ul>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
                 </ul>
 
@@ -103,6 +114,8 @@
 
                         <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
 
+                        <li><a href="index.html">ZIA</a> &raquo;</li>
+
                         <li>traffic</li>
 
 
@@ -127,6 +140,8 @@
                             </h1>
                             <p>The following methods allow for interaction with the ZIA
                                 Traffic Management API endpoints.</p>
+                            <p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.traffic</span></code>
+                            </p>
                             <span class="target" id="module-pyzscaler.zia.traffic"><span id="zia-traffic"></span></span>
                             <dl class="py class">
                                 <dt class="sig sig-object py" id="pyzscaler.zia.traffic.TrafficForwardingAPI">
@@ -145,12 +160,12 @@
                                                     class="pre">add_gre_tunnel</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
                                                 class="pre">source_ip</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">primary_dest_vip</span></span></em>, <em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">secondary_dest_vip</span></span></em>, <em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">internal_ip_range</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">within_country</span></span></em>, <em
+                                                class="n"><span class="pre">primary_dest_vip_id</span></span><span
+                                                class="o"><span class="pre">=</span></span><span
+                                                class="default_value"><span class="pre">None</span></span></em>, <em
+                                                class="sig-param"><span class="n"><span class="pre">secondary_dest_vip_id</span></span><span
+                                                class="o"><span class="pre">=</span></span><span
+                                                class="default_value"><span class="pre">None</span></span></em>, <em
                                                 class="sig-param"><span class="o"><span
                                                 class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
@@ -158,6 +173,9 @@
                                                 href="#pyzscaler.zia.traffic.TrafficForwardingAPI.add_gre_tunnel"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Add a new GRE tunnel.</p>
+                                            <p>Note: If the <cite>primary_dest_vip_id</cite> and <cite>secondary_dest_vip_id</cite>
+                                                aren’t specified then the closest recommended
+                                                VIPs will be automatically chosen.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
                                                 <dd class="field-odd">
@@ -168,30 +186,21 @@
                                                             – The source IP address of the GRE tunnel. This is typically
                                                             a static IP address in the organisation
                                                             or SD-WAN.</p></li>
-                                                        <li><p><strong>primary_dest_vip</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/functions.html#object"
-                                                                title="(in Python v3.9)"><em>object</em></a>) – The
-                                                            primary destination data center and virtual IP address (VIP)
-                                                            of the GRE tunnel.</p></li>
-                                                        <li><p><strong>secondary_dest_vip</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/functions.html#object"
-                                                                title="(in Python v3.9)"><em>object</em></a>) – The
-                                                            secondary destination data center and virtual IP address
-                                                            (VIP) of the GRE tunnel.</p></li>
-                                                        <li><p><strong>internal_ip_range</strong> (<a
+                                                        <li><p><strong>primary_dest_vip_id</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a>) – The start
-                                                            of the internal IP address in /29 CIDR range.</p></li>
-                                                        <li><p><strong>within_country</strong> (<a
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                            identifier for the primary destination virtual IP address
+                                                            (VIP) of the GRE tunnel.
+                                                            Defaults to the closest recommended VIP.</p></li>
+                                                        <li><p><strong>secondary_dest_vip_id</strong> (<a
                                                                 class="reference external"
-                                                                href="https://docs.python.org/3/library/functions.html#bool"
-                                                                title="(in Python v3.9)"><em>bool</em></a>) – Restrict
-                                                            the data center virtual IP addresses (VIPs) only to those
-                                                            within the same country as the
-                                                            source IP address.</p></li>
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                            identifier for the secondary destination virtual IP address
+                                                            (VIP) of the GRE tunnel.
+                                                            Defaults to the closest recommended VIP that isn’t in the
+                                                            same city as the primary VIP.</p></li>
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-even">Keyword Arguments</dt>
@@ -208,22 +217,59 @@
                                                             required to support the automated SD-WAN provisioning of GRE
                                                             tunnels, when set to true
                                                             gre_tun_ip and gre_tun_id are set to null</p></li>
+                                                        <li><p><strong>**internal_ip_range</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The start
+                                                            of the internal IP address in /29 CIDR range.</p></li>
+                                                        <li><p><strong>**within_country</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Restrict
+                                                            the data center virtual IP addresses (VIPs) only to those
+                                                            within the same country as the
+                                                            source IP address.</p></li>
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>The resource record for the newly created GRE tunnel.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>The resource record for the newly created GRE
+                                                    tunnel.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Add a GRE tunnel with closest recommended VIPs:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">add_gre_tunnel</span><span class="p">(</span><span
+                                                        class="s1">&#39;203.0.113.10&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                            <p>Add a GRE tunnel with explicit VIPs:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">add_gre_tunnel</span><span class="p">(</span><span
+                                                        class="s1">&#39;203.0.113.11&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">primary_dest_vip_id</span><span class="o">=</span><span class="s1">&#39;88088&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">secondary_dest_vip_id</span><span class="o">=</span><span class="s1">&#39;54590&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;GRE Tunnel for Manufacturing Plant&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -233,12 +279,7 @@
                                             <span class="sig-name descname"><span
                                                     class="pre">add_static_ip</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">ip_address</span></span><span class="o"><span
-                                                class="pre">=</span></span><span class="default_value"><span
-                                                class="pre">None</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">comment</span></span><span class="o"><span
-                                                class="pre">=</span></span><span class="default_value"><span
-                                                class="pre">None</span></span></em>, <em class="sig-param"><span
+                                                class="pre">ip_address</span></span></em>, <em class="sig-param"><span
                                                 class="o"><span class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
@@ -247,23 +288,20 @@
                                         <dd><p>Adds a new static IP.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd">
-                                                    <ul class="simple">
-                                                        <li><p><strong>ip_address</strong> (<a
-                                                                class="reference external"
-                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                title="(in Python v3.9)"><em>str</em></a>) – The static
-                                                            IP address</p></li>
-                                                        <li><p><strong>comment</strong> (<a class="reference external"
-                                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                            title="(in Python v3.9)"><em>str</em></a>)
-                                                            – Additional information about this static IP address.</p>
-                                                        </li>
-                                                    </ul>
+                                                <dd class="field-odd"><p><strong>ip_address</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The static IP
+                                                    address</p>
                                                 </dd>
                                                 <dt class="field-even">Keyword Arguments</dt>
                                                 <dd class="field-even">
                                                     <ul class="simple">
+                                                        <li><p><strong>**comment</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Additional information about this static IP address.</p>
+                                                        </li>
                                                         <li><p><strong>**geo_override</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/functions.html#bool"
@@ -297,80 +335,149 @@
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>The resource record for the newly created static IP.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>The resource record for the newly created
+                                                    static IP.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Add a new static IP address:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">add_static_ip</span><span class="p">(</span><span
+                                                        class="n">ip_address</span><span class="o">=</span><span
+                                                        class="s1">&#39;203.0.113.10&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;Los Angeles Branch Office&quot;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.add_vpn_credentials">
-                                            <span class="sig-name descname"><span class="pre">add_vpn_credentials</span></span><span
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.add_vpn_credential">
+                                            <span class="sig-name descname"><span class="pre">add_vpn_credential</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">type</span></span></em>, <em class="sig-param"><span
-                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">authentication_type</span></span></em>, <em
+                                                class="sig-param"><span class="n"><span
+                                                class="pre">pre_shared_key</span></span></em>, <em
+                                                class="sig-param"><span class="o"><span
+                                                class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.add_vpn_credentials"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.add_vpn_credential"
                                                 title="Permalink to this definition">¶</a></dt>
                                         <dd><p>Add new VPN credentials.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>type</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) –
-                                                    <p>VPN authentication type (i.e., how the VPN credential is sent to
-                                                        the server). It is not modifiable
-                                                        after VpnCredential is created.</p>
-                                                    <p>Must be either CN, IP, UFQDN or XAUTH</p>
-                                                    </p>
-                                                </dd>
-                                                <dt class="field-even">Keyword Arguments</dt>
-                                                <dd class="field-even">
+                                                <dd class="field-odd">
                                                     <ul class="simple">
-                                                        <li><p><strong>fqdn</strong> (<a class="reference external"
-                                                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                         title="(in Python v3.9)"><em>str</em></a>)
-                                                            – Fully Qualified Domain Name. Applicable only to UFQDN or
-                                                            XAUTH (or HOSTED_MOBILE_USERS) auth type.</p></li>
+                                                        <li><p><strong>authentication_type</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) –
+                                                            <p>VPN authentication type (i.e., how the VPN credential is
+                                                                sent to the server). It is not modifiable
+                                                                after VpnCredential is created.</p>
+                                                            <p>Only IP and UFQDN supported via API.</p>
+                                                            </p></li>
                                                         <li><p><strong>pre_shared_key</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                 title="(in Python v3.9)"><em>str</em></a>) – Pre-shared
                                                             key. This is a required field for UFQDN and IP auth type.
                                                         </p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>ip_address</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The static
+                                                            IP address associated with these VPN credentials.</p></li>
+                                                        <li><p><strong>fqdn</strong> (<a class="reference external"
+                                                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                         title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Fully Qualified Domain Name. Applicable only to UFQDN auth
+                                                            type. This must be provided in the format
+                                                            <cite>userid&#64;fqdn</cite>, where the <cite>fqdn</cite> is
+                                                            an authorised domain for your tenancy.</p></li>
                                                         <li><p><strong>comments</strong> (<a class="reference external"
                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                                              title="(in Python v3.9)"><em>str</em></a>)
                                                             – Additional information about this VPN credential.</p></li>
+                                                        <li><p><strong>location_id</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – Associate
+                                                            the VPN credential with an existing location.</p></li>
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>The newly created VPN credential resource record.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>The newly created VPN credential resource
+                                                    record.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Add a VPN credential using IP authentication type before location has
+                                                been defined:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">add_vpn_credential</span><span class="p">(</span><span
+                                                        class="n">authentication_type</span><span
+                                                        class="o">=</span><span class="s1">&#39;IP&#39;</span><span
+                                                        class="p">,</span>
+<span class="gp">... </span>   <span class="n">pre_shared_key</span><span class="o">=</span><span class="s1">&#39;MyInsecurePSK&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">ip_address</span><span class="o">=</span><span class="s1">&#39;203.0.113.40&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;NY Branch Office&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                            <p>Add a VPN credential using UFQDN authentication type and associate with
+                                                location:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">add_vpn_credential</span><span class="p">(</span><span
+                                                        class="n">authentication_type</span><span
+                                                        class="o">=</span><span class="s1">&#39;UFQDN&#39;</span><span
+                                                        class="p">,</span>
+<span class="gp">... </span>   <span class="n">pre_shared_key</span><span class="o">=</span><span class="s1">&#39;MyInsecurePSK&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">fqdn</span><span class="o">=</span><span class="s1">&#39;london_branch@example.com&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;London Branch Office&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">location_id</span><span class="o">=</span><span class="s1">&#39;94963682&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -379,67 +486,29 @@
                                             id="pyzscaler.zia.traffic.TrafficForwardingAPI.bulk_delete_vpn_credentials">
                                             <span class="sig-name descname"><span class="pre">bulk_delete_vpn_credentials</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">ids</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.bulk_delete_vpn_credentials"
-                                                title="Permalink to this definition">¶</a></dt>
+                                                class="pre">credential_ids</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.traffic.TrafficForwardingAPI.bulk_delete_vpn_credentials"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
                                         <dd><p>Bulk delete VPN credentials.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>ids</strong> (<a
+                                                <dd class="field-odd"><p><strong>credential_ids</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#list"
                                                         title="(in Python v3.9)"><em>list</em></a>) – List of credential
                                                     IDs that will be deleted.</p>
                                                 </dd>
                                                 <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">str</span></code></a></dt>
-                                                        <dd><p>Response code for operation.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-even"><p>Response code for operation.</p>
                                                 </dd>
-                                            </dl>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.delete_vpn_credentials">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">delete_vpn_credentials</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.delete_vpn_credentials"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Delete VPN credentials for the specified ID.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
-                                                    identifier for the VPN credentials that will be deleted.</p>
-                                                </dd>
-                                                <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">str</span></code></a></dt>
-                                                        <dd><p>Response code for the operation.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
                                                 </dd>
                                             </dl>
                                             <p class="rubric">Examples</p>
@@ -447,8 +516,246 @@
                                                 <div class="highlight"><pre><span></span><span
                                                         class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
                                                         class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
-                                                        class="n">delete_vpn_credentials</span><span
-                                                        class="p">(</span><span class="s1">&#39;65&#39;</span><span
+                                                        class="n">bulk_delete_vpn_credentials</span><span
+                                                        class="p">([</span><span
+                                                        class="s1">&#39;94963984&#39;</span><span
+                                                        class="p">,</span> <span
+                                                        class="s1">&#39;97679232&#39;</span><span class="p">])</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.check_static_ip">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">check_static_ip</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">ip_address</span></span></em>, <em class="sig-param"><span
+                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.check_static_ip"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Validates if a static IP object is correct.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>ip_address</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The static
+                                                            IP address</p></li>
+                                                        <li><p><strong>**kwargs</strong> – Optional keyword args.</p>
+                                                        </li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>**comment</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Additional information about this static IP address.</p>
+                                                        </li>
+                                                        <li><p><strong>**geo_override</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – If not
+                                                            set, geographic coordinates and city are automatically
+                                                            determined from the IP address.
+                                                            Otherwise, the latitude and longitude coordinates must be
+                                                            provided.</p></li>
+                                                        <li><p><strong>**routable_ip</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Indicates
+                                                            whether a non-RFC 1918 IP address is publicly routable. This
+                                                            attribute is ignored if there
+                                                            is no ZIA Private Service Edge associated to the
+                                                            organization.</p></li>
+                                                        <li><p><strong>**latitude</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#float"
+                                                                title="(in Python v3.9)"><em>float</em></a>) – Required
+                                                            only if the geoOverride attribute is set. Latitude with 7
+                                                            digit precision after
+                                                            decimal point, ranges between -90 and 90 degrees.</p></li>
+                                                        <li><p><strong>**longitude</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#float"
+                                                                title="(in Python v3.9)"><em>float</em></a>) – Required
+                                                            only if the geoOverride attribute is set. Longitude with 7
+                                                            digit precision after decimal
+                                                            point, ranges between -180 and 180 degrees.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The operation response code.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">check_static_ip</span><span class="p">(</span><span
+                                                        class="n">ip_address</span><span class="o">=</span><span
+                                                        class="s1">&#39;203.0.113.11&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">routable_ip</span><span class="o">=</span><span
+                                                            class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;San Francisco Branch Office&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.delete_static_ip">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">delete_static_ip</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">static_ip_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.traffic.TrafficForwardingAPI.delete_static_ip"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Delete the specified static IP.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>static_ip_id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the static IP.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>The response code for the operation.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">delete_static_ip</span><span class="p">(</span><span
+                                                        class="s1">&#39;972494&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.delete_vpn_credential">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">delete_vpn_credential</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">credential_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.traffic.TrafficForwardingAPI.delete_vpn_credential"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Delete VPN credentials for the specified ID.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>credential_id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the VPN credentials that will be deleted.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>Response code for the operation.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">delete_vpn_credential</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;97679391&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.get_closest_diverse_vip_ids">
+                                            <span class="sig-name descname"><span class="pre">get_closest_diverse_vip_ids</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">source_ip</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.get_closest_diverse_vip_ids"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Returns the closest diverse Zscaler destination VIPs for a given source
+                                            IP</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>source_ip</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The source IP used
+                                                    for locating the closest diverse VIPs.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>Tuple containing the preferred and secondary
+                                                    VIP IDs.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#tuple"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">tuple</span></code></a> of <a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">closest_vips</span> <span class="o">=</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">traffic</span><span
+                                                        class="o">.</span><span
+                                                        class="n">get_closest_diverse_vip_ids</span><span
+                                                        class="p">(</span><span class="s1">&#39;203.0.113.20&#39;</span><span
                                                         class="p">)</span>
 </pre>
                                                 </div>
@@ -458,63 +765,158 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.get_vpn_credentials">
-                                            <span class="sig-name descname"><span class="pre">get_vpn_credentials</span></span><span
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.get_gre_tunnel">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">get_gre_tunnel</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
+                                                class="pre">tunnel_id</span></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.get_vpn_credentials"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.get_gre_tunnel"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Get VPN credentials for the specified ID.</p>
+                                        <dd><p>Returns information for the specified GRE tunnel.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
+                                                <dd class="field-odd"><p><strong>tunnel_id</strong> (<a
                                                         class="reference external"
                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) – The VPN credential
-                                                    unique identifier.</p>
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the GRE tunnel.</p>
                                                 </dd>
                                                 <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>The resource record for the requested VPN
-                                                            credentials.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-even"><p>The GRE tunnel resource record.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">gre_tunnel</span> <span
+                                                        class="o">=</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">get_gre_tunnel</span><span class="p">(</span><span
+                                                        class="s1">&#39;967134&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.gre_available_ranges">
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.get_static_ip">
                                             <span class="sig-name descname"><span
-                                                    class="pre">gre_available_ranges</span></span><span
+                                                    class="pre">get_static_ip</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">static_ip_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.traffic.TrafficForwardingAPI.get_static_ip"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Returns information for the specified static IP.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>static_ip_id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the static IP.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>The resource record for the static IP</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">static_ip</span> <span
+                                                        class="o">=</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">get_static_ip</span><span class="p">(</span><span
+                                                        class="s1">&#39;967134&#39;</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.get_vpn_credential">
+                                            <span class="sig-name descname"><span class="pre">get_vpn_credential</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">credential_id</span></span></em><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.traffic.TrafficForwardingAPI.get_vpn_credential"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Get VPN credentials for the specified ID.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>credential_id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the VPN credentials.</p>
+                                                </dd>
+                                                <dt class="field-even">Returns</dt>
+                                                <dd class="field-even"><p>The resource record for the requested VPN
+                                                    credentials.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="n">pprint</span><span class="p">(</span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">get_vpn_credential</span><span class="p">(</span><span
+                                                        class="s1">&#39;97679391&#39;</span><span class="p">))</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.list_gre_ranges">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_gre_ranges</span></span><span
                                                 class="sig-paren">(</span><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.gre_available_ranges"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.list_gre_ranges"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Retrieves a list of available GRE tunnel ranges.</p>
+                                        <dd><p>Returns a list of available GRE tunnel ranges.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#list"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">list</span></code></a></dt>
-                                                        <dd><p>A list of available GRE tunnel ranges.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>A list of available GRE tunnel ranges.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
                                                 </dd>
                                             </dl>
                                             <p class="rubric">Examples</p>
@@ -524,103 +926,7 @@
                                                         class="n">gre_tunnel_ranges</span> <span
                                                         class="o">=</span> <span class="n">zia</span><span
                                                         class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
-                                                        class="n">gre_available_ranges</span><span class="p">()</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.gre_details">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">gre_details</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">id</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.gre_details"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Retrieves info for a given GRE tunnel.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>id</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
-                                                    identifier for the GRE tunnel.</p>
-                                                </dd>
-                                                <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>The GRE tunnel resource record.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span class="n">gre_tunnel</span> <span
-                                                        class="o">=</span> <span class="n">zia</span><span
-                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
-                                                        class="n">gre_details</span><span class="p">(</span><span
-                                                        class="s1">&#39;3542&#39;</span><span class="p">)</span>
-</pre>
-                                                </div>
-                                            </div>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="py method">
-                                        <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.gre_validate_ip">
-                                            <span class="sig-name descname"><span
-                                                    class="pre">gre_validate_ip</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">ip</span></span></em><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.gre_validate_ip"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Retrieves the static IP address and location mapping information for the
-                                            specified GRE tunnel IP address.</p>
-                                            <dl class="field-list simple">
-                                                <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>ip</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) – The static IP
-                                                    address being validated.</p>
-                                                </dd>
-                                                <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>Static IP address and location mapping information</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
-                                                </dd>
-                                            </dl>
-                                            <p class="rubric">Examples</p>
-                                            <div class="doctest highlight-default notranslate">
-                                                <div class="highlight"><pre><span></span><span
-                                                        class="gp">&gt;&gt;&gt; </span><span
-                                                        class="n">gre_tunnel_ip</span> <span class="o">=</span> <span
-                                                        class="n">zia</span><span class="o">.</span><span class="n">traffic</span><span
-                                                        class="o">.</span><span class="n">gre_validate_ip</span><span
-                                                        class="p">(</span><span
-                                                        class="s1">&#39;172.16.1.2&#39;</span><span class="p">)</span>
+                                                        class="n">list_gre_ranges</span><span class="p">()</span>
 </pre>
                                                 </div>
                                             </div>
@@ -636,20 +942,17 @@
                                                 class="headerlink"
                                                 href="#pyzscaler.zia.traffic.TrafficForwardingAPI.list_gre_tunnels"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Retrieves a list of GRE tunnels.</p>
+                                        <dd><p>Returns the list of all configured GRE tunnels.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#list"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">list</span></code></a></dt>
-                                                        <dd><p>The list of GRE tunnels configured in ZIA.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>A list of GRE tunnels configured in ZIA.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
                                                 </dd>
                                             </dl>
                                             <p class="rubric">Examples</p>
@@ -658,7 +961,7 @@
                                                         class="gp">&gt;&gt;&gt; </span><span
                                                         class="n">gre_tunnels</span> <span class="o">=</span> <span
                                                         class="n">zia</span><span class="o">.</span><span class="n">traffic</span><span
-                                                        class="o">.</span><span class="n">gre_list</span><span
+                                                        class="o">.</span><span class="n">list_gre_tunnels</span><span
                                                         class="p">()</span>
 </pre>
                                                 </div>
@@ -675,20 +978,17 @@
                                                 class="headerlink"
                                                 href="#pyzscaler.zia.traffic.TrafficForwardingAPI.list_static_ips"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Retrieves a list of the configured static IPs.</p>
+                                        <dd><p>Returns the list of all configured static IPs.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#list"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">list</span></code></a></dt>
-                                                        <dd><p>A list of the configured static IPs</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>A list of the configured static IPs</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a></p>
                                                 </dd>
                                             </dl>
                                             <p class="rubric">Examples</p>
@@ -706,37 +1006,304 @@
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.update_vpn_credentials">
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.list_vips">
                                             <span class="sig-name descname"><span
-                                                    class="pre">update_vpn_credentials</span></span><span
-                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
-                                                class="pre">type</span></span></em>, <em class="sig-param"><span
-                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                    class="pre">list_vips</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.list_vips"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Returns a list of virtual IP addresses (VIPs) available in the Zscaler
+                                            cloud.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>List of VIP resource records.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a> of <a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                        title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
+                                                        class="n">vip</span> <span class="ow">in</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">list_vips</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">vip</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.list_vips_recommended">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_vips_recommended</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="o"><span
+                                                class="pre">**</span></span><span class="n"><span
                                                 class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
                                                 class="headerlink"
-                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.update_vpn_credentials"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.list_vips_recommended"
                                                 title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Update VPN credentials with the specified ID.</p>
+                                        <dd><p>Returns a list of recommended virtual IP addresses (VIPs) based on
+                                            parameters.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Parameters</dt>
-                                                <dd class="field-odd"><p><strong>type</strong> (<a
-                                                        class="reference external"
-                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                        title="(in Python v3.9)"><em>str</em></a>) –
-                                                    <p>VPN authentication type (i.e., how the VPN credential is sent to
-                                                        the server). It is not modifiable
-                                                        after VpnCredential is created.</p>
-                                                    <p>Must be either CN, IP, UFQDN or XAUTH</p>
-                                                    </p>
+                                                <dd class="field-odd"><p><strong>**kwargs</strong> – Optional keywords
+                                                    args.</p>
                                                 </dd>
                                                 <dt class="field-even">Keyword Arguments</dt>
                                                 <dd class="field-even">
                                                     <ul class="simple">
-                                                        <li><p><strong>fqdn</strong> (<a class="reference external"
-                                                                                         href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                                                         title="(in Python v3.9)"><em>str</em></a>)
-                                                            – Fully Qualified Domain Name. Applicable only to UFQDN or
-                                                            XAUTH (or HOSTED_MOBILE_USERS) auth type.</p></li>
+                                                        <li><p><strong>routable_ip</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – The
+                                                            routable IP address. Default: True.</p></li>
+                                                        <li><p><strong>within_country_only</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Search
+                                                            within country only. Default: False.</p></li>
+                                                        <li><p><strong>include_private_service_edge</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Include
+                                                            ZIA Private Service Edge VIPs. Default: True.</p></li>
+                                                        <li><p><strong>include_current_vips</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Include
+                                                            currently assigned VIPs. Default: True.</p></li>
+                                                        <li><p><strong>source_ip</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.9)"><em>str</em></a>)
+                                                            – The source IP address.</p></li>
+                                                        <li><p><strong>latitude</strong> (<a class="reference external"
+                                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                             title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Latitude coordinate of GRE tunnel source.</p></li>
+                                                        <li><p><strong>longitude</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Longitude coordinate of GRE tunnel source.</p></li>
+                                                        <li><p><strong>geo_override</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Override
+                                                            the geographic coordinates. Default: False.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>List of VIP resource records.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a> of <a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                        title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Return recommended VIPs for a given source IP:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
+                                                        class="n">vip</span> <span class="ow">in</span> <span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">list_vips_recommended</span><span
+                                                        class="p">(</span><span class="n">source_ip</span><span
+                                                        class="o">=</span><span class="s1">&#39;203.0.113.30&#39;</span><span
+                                                        class="p">):</span>
+<span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span class="n">vip</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.list_vpn_credentials">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">list_vpn_credentials</span></span><span
+                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.list_vpn_credentials"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Returns the list of all configured VPN credentials.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>List containing the VPN credential resource
+                                                    records.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#list"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">list</span></code></a> of <a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                        title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span
+                                                        class="n">vpn_credential</span> <span class="ow">in</span> <span
+                                                        class="n">zia</span><span class="o">.</span><span class="n">traffic</span><span
+                                                        class="o">.</span><span
+                                                        class="n">list_vpn_credentials</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">pprint</span><span class="p">(</span><span
+                                                            class="n">vpn_credential</span><span class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.update_static_ip">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">update_static_ip</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">static_ip_id</span></span></em>, <em class="sig-param"><span
+                                                class="o"><span class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.update_static_ip"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Updates information relating to the specified static IP.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd">
+                                                    <ul class="simple">
+                                                        <li><p><strong>static_ip_id</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                            identifier for the static IP</p></li>
+                                                        <li><p><strong>**kwargs</strong> – Optional keyword args.</p>
+                                                        </li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
+                                                        <li><p><strong>**comment</strong> (<a class="reference external"
+                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                              title="(in Python v3.9)"><em>str</em></a>)
+                                                            – Additional information about this static IP address.</p>
+                                                        </li>
+                                                        <li><p><strong>**geo_override</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – If not
+                                                            set, geographic coordinates and city are automatically
+                                                            determined from the IP address.
+                                                            Otherwise, the latitude and longitude coordinates must be
+                                                            provided.</p></li>
+                                                        <li><p><strong>**routable_ip</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#bool"
+                                                                title="(in Python v3.9)"><em>bool</em></a>) – Indicates
+                                                            whether a non-RFC 1918 IP address is publicly routable. This
+                                                            attribute is ignored if there
+                                                            is no ZIA Private Service Edge associated to the
+                                                            organization.</p></li>
+                                                        <li><p><strong>**latitude</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#float"
+                                                                title="(in Python v3.9)"><em>float</em></a>) – Required
+                                                            only if the geoOverride attribute is set. Latitude with 7
+                                                            digit precision after
+                                                            decimal point, ranges between -90 and 90 degrees.</p></li>
+                                                        <li><p><strong>**longitude</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/functions.html#float"
+                                                                title="(in Python v3.9)"><em>float</em></a>) – Required
+                                                            only if the geoOverride attribute is set. Longitude with 7
+                                                            digit precision after decimal
+                                                            point, ranges between -180 and 180 degrees.</p></li>
+                                                    </ul>
+                                                </dd>
+                                                <dt class="field-odd">Returns</dt>
+                                                <dd class="field-odd"><p>The updated static IP resource record.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
+                                                </dd>
+                                            </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">update_static_ip</span><span class="p">(</span><span
+                                                        class="s1">&#39;972494&#39;</span><span class="p">,</span> <span
+                                                        class="n">comment</span><span class="o">=</span><span
+                                                        class="s1">&#39;NY Branch Office&#39;</span><span
+                                                        class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                        </dd>
+                                    </dl>
+
+                                    <dl class="py method">
+                                        <dt class="sig sig-object py"
+                                            id="pyzscaler.zia.traffic.TrafficForwardingAPI.update_vpn_credential">
+                                            <span class="sig-name descname"><span
+                                                    class="pre">update_vpn_credential</span></span><span
+                                                class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                                                class="pre">credential_id</span></span></em>, <em
+                                                class="sig-param"><span class="o"><span
+                                                class="pre">**</span></span><span class="n"><span
+                                                class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a
+                                                class="headerlink"
+                                                href="#pyzscaler.zia.traffic.TrafficForwardingAPI.update_vpn_credential"
+                                                title="Permalink to this definition">¶</a></dt>
+                                        <dd><p>Update VPN credentials with the specified ID.</p>
+                                            <dl class="field-list simple">
+                                                <dt class="field-odd">Parameters</dt>
+                                                <dd class="field-odd"><p><strong>credential_id</strong> (<a
+                                                        class="reference external"
+                                                        href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                        title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                    identifier for the credential that will be updated.</p>
+                                                </dd>
+                                                <dt class="field-even">Keyword Arguments</dt>
+                                                <dd class="field-even">
+                                                    <ul class="simple">
                                                         <li><p><strong>pre_shared_key</strong> (<a
                                                                 class="reference external"
                                                                 href="https://docs.python.org/3/library/stdtypes.html#str"
@@ -747,22 +1314,54 @@
                                                                                              href="https://docs.python.org/3/library/stdtypes.html#str"
                                                                                              title="(in Python v3.9)"><em>str</em></a>)
                                                             – Additional information about this VPN credential.</p></li>
+                                                        <li><p><strong>location_id</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The unique
+                                                            identifier for an existing location.</p></li>
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>The newly updated VPN credential resource record.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>The newly updated VPN credential resource
+                                                    record.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Add a comment:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">update_vpn_credential</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;94963984&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;Adding a comment&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
+                                            <p>Update the pre-shared key:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">traffic</span><span class="o">.</span><span
+                                                        class="n">update_vpn_credential</span><span
+                                                        class="p">(</span><span
+                                                        class="s1">&#39;94963984&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">pre_shared_key</span><span class="o">=</span><span class="s1">&#39;MyNewInsecureKey&#39;</span><span
+                                                            class="p">,</span>
+<span class="gp">... </span>   <span class="n">comments</span><span class="o">=</span><span class="s1">&#39;Pre-shared key rotated on 21 JUL 21&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -776,6 +1375,12 @@
 
                 </div>
                 <footer>
+                    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+                        <a href="users.html" class="btn btn-neutral float-right" title="users" accesskey="n" rel="next">Next
+                            <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+                        <a href="locations.html" class="btn btn-neutral float-left" title="locations" accesskey="p"
+                           rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+                    </div>
 
                     <hr/>
 
