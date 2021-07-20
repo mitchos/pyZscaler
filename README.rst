@@ -71,7 +71,7 @@ table below:
      - ``ZIA_PASSWORD``
      - The password for the administrator user.
 
-`How to generate the API_KEY <https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey>`_
+See the `ZIA docs <https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey>`_ for how to generate the `api_key`.
 
 How to determine the ZIA CLOUD
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -100,10 +100,14 @@ need to supply the .net suffix with pyZscaler, so the ``CLOUD`` arg would simply
    * - admin.zscalergov.net
      - zscalergov
 
+Quick ZIA Example
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
     from pyzscaler.zia import ZIA
+    from pprint import pprint
+
     zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
     for user in zia.users.list():
         pprint(user)
@@ -129,16 +133,31 @@ table below:
      - ``ZPA_CUSTOMER_ID``
      - The customer ID for the ZPA tenancy.
 
-- `How to generate the CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID <https://help.zscaler.com/zpa/about-api-keys>`_
+See the `ZPA docs <https://help.zscaler.com/zpa/about-api-keys>`_ for how to generate the `client_id`, `client_secret` and find the `customer_id`.
 
+Quick ZPA Example
+^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
     from pyzscaler.zpa import ZPA
+    from pprint import pprint
+
     zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
     for app_segment in zpa.app_segments.list():
         pprint(app_segment)
 
+Contributing
+==============
+Contributions to pyZscaler are absolutely welcome. At the moment, we could use more tests and documentation/examples.
+Please see the `Contribution Guidelines <https://github.com/mitchos/pyZscaler/blob/main/CONTRIBUTING.md>`_ for more information.
+
+`Poetry <https://python-poetry.org/docs/>`_ is currently being used for builds and management. You'll want to have
+poetry installed and available in your environment.
+
+Issues
+=========
+Please feel free to open an issue using `Github Issues <https://github.com/mitchos/pyZscaler/issues>`_ if you run into any problems using pyZscaler.
 
 License
 =========

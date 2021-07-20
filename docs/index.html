@@ -133,15 +133,23 @@
                             </h1>
                             <p>pyZscaler aims to provide a uniform and easy-to-use interface for each of the Zscaler
                                 product APIs.</p>
-                            <div class="admonition attention">
-                                <p class="admonition-title">Attention</p>
-                                <p>This SDK is not affiliated with, nor supported by Zscaler in any way.</p>
-                                <p><strong>Caveats</strong></p>
+                            <div class="section" id="quick-links">
+                                <h2>Quick Links<a class="headerlink" href="#quick-links"
+                                                  title="Permalink to this headline">¶</a></h2>
                                 <ul class="simple">
-                                    <li><p>Not all features may be implemented.</p></li>
-                                    <li><p>Implemented features may be buggy or incorrect.</p></li>
-                                    <li><p>Bugs will be fixed in my own time.</p></li>
+                                    <li><p><a class="reference external" href="https://github.com/mitchos/pyZscaler">pyZscaler
+                                        SDK on GitHub</a></p></li>
                                 </ul>
+                                <div class="admonition attention">
+                                    <p class="admonition-title">Attention</p>
+                                    <p>This SDK is not affiliated with, nor supported by Zscaler in any way.</p>
+                                    <p><strong>Caveats</strong></p>
+                                    <ul class="simple">
+                                        <li><p>Not all features may be implemented.</p></li>
+                                        <li><p>Implemented features may be buggy or incorrect.</p></li>
+                                        <li><p>Bugs will be fixed in my own time.</p></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="section" id="overview">
@@ -247,9 +255,9 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <p><a class="reference external"
-                                      href="https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey">How to
-                                    generate the API_KEY</a></p>
+                                <p>See the <a class="reference external"
+                                              href="https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey">ZIA
+                                    docs</a> for how to generate the <cite>api_key</cite>.</p>
                                 <div class="section" id="how-to-determine-the-zia-cloud">
                                     <h3>How to determine the ZIA CLOUD<a class="headerlink"
                                                                          href="#how-to-determine-the-zia-cloud"
@@ -309,10 +317,16 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="section" id="quick-zia-example">
+                                    <h3>Quick ZIA Example<a class="headerlink" href="#quick-zia-example"
+                                                            title="Permalink to this headline">¶</a></h3>
                                     <div class="highlight-python notranslate">
                                         <div class="highlight"><pre><span></span><span class="kn">from</span> <span
                                                 class="nn">pyzscaler.zia</span> <span class="kn">import</span> <span
                                                 class="n">ZIA</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
 <span class="n">zia</span> <span class="o">=</span> <span class="n">ZIA</span><span class="p">(</span><span class="n">api_key</span><span
                                                     class="o">=</span><span class="s1">&#39;API_KEY&#39;</span><span
                                                     class="p">,</span> <span class="n">cloud</span><span
@@ -376,30 +390,55 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <ul class="simple">
-                                    <li><p><a class="reference external"
-                                              href="https://help.zscaler.com/zpa/about-api-keys">How to generate the
-                                        CLIENT_ID, CLIENT_SECRET and find the CUSTOMER_ID</a></p></li>
-                                </ul>
-                                <div class="highlight-python notranslate">
-                                    <div class="highlight"><pre><span></span><span class="kn">from</span> <span
-                                            class="nn">pyzscaler.zpa</span> <span class="kn">import</span> <span
-                                            class="n">ZPA</span>
+                                <p>See the <a class="reference external"
+                                              href="https://help.zscaler.com/zpa/about-api-keys">ZPA docs</a> for how to
+                                    generate the <cite>client_id</cite>, <cite>client_secret</cite> and find the <cite>customer_id</cite>.
+                                </p>
+                                <div class="section" id="quick-zpa-example">
+                                    <h3>Quick ZPA Example<a class="headerlink" href="#quick-zpa-example"
+                                                            title="Permalink to this headline">¶</a></h3>
+                                    <div class="highlight-python notranslate">
+                                        <div class="highlight"><pre><span></span><span class="kn">from</span> <span
+                                                class="nn">pyzscaler.zpa</span> <span class="kn">import</span> <span
+                                                class="n">ZPA</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
 <span class="n">zpa</span> <span class="o">=</span> <span class="n">ZPA</span><span class="p">(</span><span class="n">client_id</span><span
-                                                class="o">=</span><span class="s1">&#39;CLIENT_ID&#39;</span><span
-                                                class="p">,</span> <span class="n">client_secret</span><span
-                                                class="o">=</span><span class="s1">&#39;CLIENT_SECRET&#39;</span><span
-                                                class="p">,</span> <span class="n">customer_id</span><span
-                                                class="o">=</span><span class="s1">&#39;CUSTOMER_ID&#39;</span><span
-                                                class="p">)</span>
+                                                    class="o">=</span><span class="s1">&#39;CLIENT_ID&#39;</span><span
+                                                    class="p">,</span> <span class="n">client_secret</span><span
+                                                    class="o">=</span><span
+                                                    class="s1">&#39;CLIENT_SECRET&#39;</span><span
+                                                    class="p">,</span> <span class="n">customer_id</span><span
+                                                    class="o">=</span><span class="s1">&#39;CUSTOMER_ID&#39;</span><span
+                                                    class="p">)</span>
 <span class="k">for</span> <span class="n">app_segment</span> <span class="ow">in</span> <span class="n">zpa</span><span
-                                                class="o">.</span><span class="n">app_segments</span><span
-                                                class="o">.</span><span class="n">list</span><span class="p">():</span>
+                                                    class="o">.</span><span class="n">app_segments</span><span
+                                                    class="o">.</span><span class="n">list</span><span
+                                                    class="p">():</span>
     <span class="n">pprint</span><span class="p">(</span><span class="n">app_segment</span><span class="p">)</span>
 </pre>
+                                        </div>
                                     </div>
-                                </div>
-                                <span class="target" id="module-pyzscaler"></span></div>
+                                    <span class="target" id="module-pyzscaler"></span></div>
+                            </div>
+                        </div>
+                        <div class="section" id="contributing">
+                            <h1>Contributing<a class="headerlink" href="#contributing"
+                                               title="Permalink to this headline">¶</a></h1>
+                            <p>Contributions to pyZscaler are absolutely welcome. At the moment, we could use more tests
+                                and documentation/examples.
+                                Please see the <a class="reference external"
+                                                  href="https://github.com/mitchos/pyZscaler/blob/main/CONTRIBUTING.md">Contribution
+                                    Guidelines</a> for more information.</p>
+                            <p><a class="reference external" href="https://python-poetry.org/docs/">Poetry</a> is
+                                currently being used for builds and management. You’ll want to have
+                                poetry installed and available in your environment.</p>
+                        </div>
+                        <div class="section" id="issues">
+                            <h1>Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h1>
+                            <p>Please feel free to open an issue using <a class="reference external"
+                                                                          href="https://github.com/mitchos/pyZscaler/issues">Github
+                                Issues</a> if you run into any problems using pyZscaler.</p>
                         </div>
                         <div class="section" id="license">
                             <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a>
