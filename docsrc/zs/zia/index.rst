@@ -7,6 +7,7 @@ This package covers the ZIA interface.
 
     config
     locations
+    traffic
     users
 
 .. automodule:: pyzscaler.zia
