@@ -6,9 +6,9 @@
    zs/zia/index
    zs/zpa/index
 
-pyZscaler is an unofficial SDK for interacting with Zscaler APIs
+pyZscaler - An unofficial SDK for the Zscaler API
 =====================================================================
-pyZscaler aims to provide a uniform and easy-to-use interface for each of the Zscaler product APIs.
+pyZscaler is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
 
 Quick Links
 --------------
