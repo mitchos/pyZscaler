@@ -9,6 +9,7 @@ from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
 from .traffic import TrafficForwardingAPI
+from .url_categories import URLCategoriesAPI
 from .users import UserManagementAPI
 
 
@@ -105,6 +106,14 @@ class ZIA(APISession):
 
         """
         return TrafficForwardingAPI(self)
+
+    @property
+    def url_categories(self):
+        """
+        The interface object for the :ref:`ZIA URL Categories interface <zia-url_categories>`.
+
+        """
+        return URLCategoriesAPI(self)
 
     @property
     def users(self):
