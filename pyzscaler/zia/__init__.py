@@ -6,7 +6,10 @@ from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
 from .config import ActivationAPI
 from .locations import LocationsAPI
+from .sandbox import CloudSandboxAPI
+from .security import SecurityPolicyAPI
 from .traffic import TrafficForwardingAPI
+from .url_categories import URLCategoriesAPI
 from .users import UserManagementAPI
 
 
@@ -81,12 +84,36 @@ class ZIA(APISession):
         return LocationsAPI(self)
 
     @property
+    def sandbox(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Sandbox interface <zia-sandbox>`.
+
+        """
+        return CloudSandboxAPI(self)
+
+    @property
+    def security(self):
+        """
+        The interface object for the :ref:`ZIA Security Policy Settings interface <zia-security>`.
+
+        """
+        return SecurityPolicyAPI(self)
+
+    @property
     def traffic(self):
         """
         The interface object for the :ref:`ZIA Traffic Forwarding interface <zia-traffic>`.
 
         """
         return TrafficForwardingAPI(self)
+
+    @property
+    def url_categories(self):
+        """
+        The interface object for the :ref:`ZIA URL Categories interface <zia-url_categories>`.
+
+        """
+        return URLCategoriesAPI(self)
 
     @property
     def users(self):
