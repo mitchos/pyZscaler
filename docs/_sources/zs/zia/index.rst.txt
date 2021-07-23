@@ -7,7 +7,10 @@ This package covers the ZIA interface.
 
     config
     locations
+    sandbox
+    security
     traffic
+    url_categories
     users
 
 .. automodule:: pyzscaler.zia
