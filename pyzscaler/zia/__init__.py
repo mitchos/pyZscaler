@@ -6,6 +6,7 @@ from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
 from .config import ActivationAPI
 from .locations import LocationsAPI
+from .security import SecurityPolicyAPI
 from .traffic import TrafficForwardingAPI
 from .users import UserManagementAPI
 
@@ -79,6 +80,14 @@ class ZIA(APISession):
 
         """
         return LocationsAPI(self)
+
+    @property
+    def security(self):
+        """
+        The interface object for the :ref:`ZIA Security Policy Settings interface <zia-security>`.
+
+        """
+        return SecurityPolicyAPI(self)
 
     @property
     def traffic(self):
