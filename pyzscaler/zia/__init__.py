@@ -4,6 +4,7 @@ from restfly.session import APISession
 
 from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
+from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
@@ -61,6 +62,14 @@ class ZIA(APISession):
 
         """
         return AuthenticatedSessionAPI(self)
+
+    @property
+    def audit_logs(self):
+        """
+        The interface object for the :ref:`ZIA Admin Audit Logs interface <zia-audit_logs>`.
+
+        """
+        return AuditLogsAPI(self)
 
     @property
     def config(self):
