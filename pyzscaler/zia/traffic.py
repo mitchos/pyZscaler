@@ -361,13 +361,13 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._get("vips/recommendedList", params=payload, box=BoxList)
 
-    def get_closest_diverse_vip_ids(self, source_ip: str):
+    def get_closest_diverse_vip_ids(self, ip_address: str):
         """
-        Returns the closest diverse Zscaler destination VIPs for a given source IP
+        Returns the closest diverse Zscaler destination VIPs for a given IP address.
 
         Args:
-            source_ip (str):
-                The source IP used for locating the closest diverse VIPs.
+            ip_address (str):
+                The IP address used for locating the closest diverse VIPs.
 
         Returns:
             :obj:`tuple` of :obj:`str`: Tuple containing the preferred and secondary VIP IDs.
@@ -376,7 +376,7 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
 
         """
-        vips_list = self.list_vips_recommended(source_ip)
+        vips_list = self.list_vips_recommended(source_ip=ip_address)
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
