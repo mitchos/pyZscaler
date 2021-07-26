@@ -4,7 +4,8 @@ from pyzscaler.utils import obfuscate_api_key
 
 class AuthenticatedSessionAPI(APIEndpoint):
     def status(self):
-        """Returns the status of the authentication session if it exists.
+        """
+        Returns the status of the authentication session if it exists.
 
         Returns:
             :obj:`dict`: Session authentication information.
@@ -16,7 +17,8 @@ class AuthenticatedSessionAPI(APIEndpoint):
         return self._get("authenticatedSession")
 
     def create(self, api_key: str, username: str, password: str):
-        """Creates a ZIA authentication session.
+        """
+        Creates a ZIA authentication session.
 
         Args:
             api_key (str): The ZIA API Key.
@@ -45,7 +47,8 @@ class AuthenticatedSessionAPI(APIEndpoint):
         return self._post("authenticatedSession", json=payload)
 
     def delete(self):
-        """Ends an authentication session.
+        """
+        Ends an authentication session.
 
         Returns:
             :obj:`str`: The status code of the operation.

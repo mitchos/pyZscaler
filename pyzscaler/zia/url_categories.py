@@ -4,9 +4,9 @@ from box import BoxList
 
 
 class URLCategoriesAPI(APIEndpoint):
-
     def lookup(self, urls: list):
-        """Lookup the category for the provided URLs.
+        """
+        Lookup the category for the provided URLs.
 
         Args:
             urls (list):
@@ -21,10 +21,11 @@ class URLCategoriesAPI(APIEndpoint):
         """
         payload = urls
 
-        return self._post('urlLookup', json=payload, box=BoxList)
+        return self._post("urlLookup", json=payload, box=BoxList)
 
     def list_categories(self, custom_only: bool = False):
-        """Returns information on URL categories.
+        """
+        Returns information on URL categories.
 
         Args:
             custom_only (bool):
@@ -44,10 +45,11 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        return self._get(f'urlCategories?customOnly={custom_only}', box=BoxList)
+        return self._get(f"urlCategories?customOnly={custom_only}", box=BoxList)
 
     def get_quota(self):
-        """Returns information on URL category quota usage.
+        """
+        Returns information on URL category quota usage.
 
         Returns:
             :obj:`dict`: The URL quota statistics.
@@ -57,10 +59,11 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        return self._get('urlCategories/urlQuota')
+        return self._get("urlCategories/urlQuota")
 
     def get_category(self, category_id: str):
-        """Returns URL category information for the provided category.
+        """
+        Returns URL category information for the provided category.
 
         Args:
             category_id (str):
@@ -73,10 +76,11 @@ class URLCategoriesAPI(APIEndpoint):
             >>> zia.url_categories.get_category('ALCOHOL_TOBACCO')
 
         """
-        return self._get(f'urlCategories/{category_id}')
+        return self._get(f"urlCategories/{category_id}")
 
     def add_url_category(self, name: str, super_category: str, urls: list, **kwargs):
-        """Adds a new custom URL category.
+        """
+        Adds a new custom URL category.
 
         Args:
             name (str):
@@ -108,20 +112,21 @@ class URLCategoriesAPI(APIEndpoint):
         """
 
         payload = {
-            'type': 'URL_CATEGORY',
-            'superCategory': super_category,
-            'configuredName': name,
-            'urls': urls
+            "type": "URL_CATEGORY",
+            "superCategory": super_category,
+            "configuredName": name,
+            "urls": urls,
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post('urlCategories', json=payload)
+        return self._post("urlCategories", json=payload)
 
     def add_tld_category(self, name: str, tlds: list, **kwargs):
-        """ Adds a new custom TLD category.
+        """
+        Adds a new custom TLD category.
 
         Args:
             name (str):
@@ -148,20 +153,21 @@ class URLCategoriesAPI(APIEndpoint):
         """
 
         payload = {
-            'type': 'TLD_CATEGORY',
-            'superCategory': 'USER_DEFINED',  # TLDs can only be added in USER_DEFINED category
-            'configuredName': name,
-            'urls': tlds  # ZIA API reuses the 'urls' key for tlds
+            "type": "TLD_CATEGORY",
+            "superCategory": "USER_DEFINED",  # TLDs can only be added in USER_DEFINED category
+            "configuredName": name,
+            "urls": tlds,  # ZIA API reuses the 'urls' key for tlds
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post('urlCategories', json=payload)
+        return self._post("urlCategories", json=payload)
 
     def update_url_category(self, category_id: str, **kwargs):
-        """Updates a URL category.
+        """
+        Updates a URL category.
 
         Args:
             category_id (str):
@@ -199,17 +205,19 @@ class URLCategoriesAPI(APIEndpoint):
         category_record = self.get_category(category_id)
 
         payload = {
-            'configuredName': kwargs.pop('name', category_record.configured_name)  # configuredName required.
+            # configuredName required
+            "configuredName": kwargs.pop("name", category_record.configured_name)
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f'urlCategories/{category_id}', json=payload)
+        return self._put(f"urlCategories/{category_id}", json=payload)
 
     def add_urls_to_category(self, category_id: str, urls: list):
-        """Adds URLS to a URL category.
+        """
+        Adds URLS to a URL category.
 
         Args:
             category_id (str):
@@ -230,14 +238,17 @@ class URLCategoriesAPI(APIEndpoint):
         category_record = self.get_category(category_id)
 
         payload = {
-            'configuredName': category_record.configured_name,  # configuredName required.
-            'urls': urls
+            "configuredName": category_record.configured_name,  # configuredName required.
+            "urls": urls,
         }
 
-        return self._put(f'urlCategories/{category_id}?action=ADD_TO_LIST', json=payload)
+        return self._put(
+            f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload
+        )
 
     def delete_urls_from_category(self, category_id: str, urls: list):
-        """Adds URLS to a URL category.
+        """
+        Adds URLS to a URL category.
 
         Args:
             category_id (str):
@@ -258,14 +269,17 @@ class URLCategoriesAPI(APIEndpoint):
         category_record = self.get_category(category_id)
 
         payload = {
-            'configuredName': category_record.configured_name,  # configuredName required.
-            'urls': urls
+            "configuredName": category_record.configured_name,  # configuredName required.
+            "urls": urls,
         }
 
-        return self._put(f'urlCategories/{category_id}?action=REMOVE_FROM_LIST', json=payload)
+        return self._put(
+            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
+        )
 
     def delete_category(self, category_id: str):
-        """Deletes the specified URL category.
+        """
+        Deletes the specified URL category.
 
         Args:
             category_id (str):
@@ -279,4 +293,4 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        return self._delete(f'urlCategories/{category_id}', box=False).status_code
+        return self._delete(f"urlCategories/{category_id}", box=False).status_code
