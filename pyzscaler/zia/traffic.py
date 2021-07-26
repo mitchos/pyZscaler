@@ -4,9 +4,9 @@ from box import Box, BoxList
 
 
 class TrafficForwardingAPI(APIEndpoint):
-
     def list_gre_tunnels(self):
-        """Returns the list of all configured GRE tunnels.
+        """
+        Returns the list of all configured GRE tunnels.
 
         Returns:
             :obj:`list`: A list of GRE tunnels configured in ZIA.
@@ -15,10 +15,11 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> gre_tunnels = zia.traffic.list_gre_tunnels()
 
         """
-        return self._get('greTunnels', box=BoxList)
+        return self._get("greTunnels", box=BoxList)
 
     def get_gre_tunnel(self, tunnel_id: str):
-        """Returns information for the specified GRE tunnel.
+        """
+        Returns information for the specified GRE tunnel.
 
         Args:
             tunnel_id (str):
@@ -31,10 +32,11 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> gre_tunnel = zia.traffic.get_gre_tunnel('967134')
 
         """
-        return self._get(f'greTunnels/{tunnel_id}')
+        return self._get(f"greTunnels/{tunnel_id}")
 
     def list_gre_ranges(self):
-        """Returns a list of available GRE tunnel ranges.
+        """
+        Returns a list of available GRE tunnel ranges.
 
         Returns:
             :obj:`list`: A list of available GRE tunnel ranges.
@@ -43,10 +45,17 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
 
         """
-        return self._get('greTunnels/availableInternalIpRanges', box=BoxList)
+        return self._get("greTunnels/availableInternalIpRanges", box=BoxList)
 
-    def add_gre_tunnel(self, source_ip, primary_dest_vip_id=None, secondary_dest_vip_id=None, **kwargs):
-        """Add a new GRE tunnel.
+    def add_gre_tunnel(
+            self,
+            source_ip: str,
+            primary_dest_vip_id: str = None,
+            secondary_dest_vip_id: str = None,
+            **kwargs,
+    ):
+        """
+        Add a new GRE tunnel.
 
         Note: If the `primary_dest_vip_id` and `secondary_dest_vip_id` aren't specified then the closest recommended
         VIPs will be automatically chosen.
@@ -98,19 +107,20 @@ class TrafficForwardingAPI(APIEndpoint):
             secondary_dest_vip_id = recommended_vips[1]
 
         payload = {
-            'sourceIp': source_ip,
-            'primaryDestVip': {'id': primary_dest_vip_id},
-            'secondaryDestVip': {'id': secondary_dest_vip_id}
+            "sourceIp": source_ip,
+            "primaryDestVip": {"id": primary_dest_vip_id},
+            "secondaryDestVip": {"id": secondary_dest_vip_id},
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post('greTunnels', json=payload)
+        return self._post("greTunnels", json=payload)
 
     def list_static_ips(self):
-        """Returns the list of all configured static IPs.
+        """
+        Returns the list of all configured static IPs.
 
         Returns:
             :obj:`list`: A list of the configured static IPs
@@ -119,10 +129,11 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> static_ips = zia.traffic.list_static_ips()
 
         """
-        return self._get('staticIP', box=BoxList)
+        return self._get("staticIP", box=BoxList)
 
     def get_static_ip(self, static_ip_id: str):
-        """Returns information for the specified static IP.
+        """
+        Returns information for the specified static IP.
 
         Args:
             static_ip_id (str):
@@ -135,10 +146,11 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> static_ip = zia.traffic.get_static_ip('967134')
 
         """
-        return self._get(f'staticIP/{static_ip_id}')
+        return self._get(f"staticIP/{static_ip_id}")
 
     def add_static_ip(self, ip_address: str, **kwargs):
-        """Adds a new static IP.
+        """
+        Adds a new static IP.
 
         Args:
             ip_address (str):
@@ -172,17 +184,18 @@ class TrafficForwardingAPI(APIEndpoint):
         """
 
         payload = {
-            'ipAddress': ip_address,
+            "ipAddress": ip_address,
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post('staticIP', json=payload)
+        return self._post("staticIP", json=payload)
 
     def check_static_ip(self, ip_address: str, **kwargs):
-        """Validates if a static IP object is correct.
+        """
+        Validates if a static IP object is correct.
 
         Args:
             ip_address (str):
@@ -216,17 +229,18 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
         payload = {
-            'ipAddress': ip_address,
+            "ipAddress": ip_address,
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post('staticIP/validate', json=payload, box=False).status_code
+        return self._post("staticIP/validate", json=payload, box=False).status_code
 
     def update_static_ip(self, static_ip_id: str, **kwargs):
-        """ Updates information relating to the specified static IP.
+        """
+        Updates information relating to the specified static IP.
 
         Args:
             static_ip_id (str):
@@ -259,18 +273,21 @@ class TrafficForwardingAPI(APIEndpoint):
         """
 
         payload = {
-            'id': static_ip_id,
-            'ipAddress': self.get_static_ip(static_ip_id)  # ZIA API requires existing IP but can't be modified
+            "id": static_ip_id,
+            "ipAddress": self.get_static_ip(
+                static_ip_id
+            ),  # ZIA API requires existing IP but can't be modified
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f'staticIP/{static_ip_id}', json=payload)
+        return self._put(f"staticIP/{static_ip_id}", json=payload)
 
     def delete_static_ip(self, static_ip_id: str):
-        """Delete the specified static IP.
+        """
+        Delete the specified static IP.
 
         Args:
             static_ip_id (str):
@@ -284,10 +301,11 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
 
-        return self._delete(f'staticIP/{static_ip_id}', box=False).status_code
+        return self._delete(f"staticIP/{static_ip_id}", box=False).status_code
 
     def list_vips(self):
-        """Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
+        """
+        Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 
         Returns:
             :obj:`list` of :obj:`dict`: List of VIP resource records.
@@ -297,10 +315,11 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vip)
 
         """
-        return self._get('vips')
+        return self._get("vips")
 
     def list_vips_recommended(self, **kwargs):
-        """Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
+        """
+        Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
         Args:
             **kwargs:
@@ -340,10 +359,11 @@ class TrafficForwardingAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._get('vips/recommendedList', params=payload, box=BoxList)
+        return self._get("vips/recommendedList", params=payload, box=BoxList)
 
-    def get_closest_diverse_vip_ids(self, source_ip):
-        """ Returns the closest diverse Zscaler destination VIPs for a given source IP
+    def get_closest_diverse_vip_ids(self, source_ip: str):
+        """
+        Returns the closest diverse Zscaler destination VIPs for a given source IP
 
         Args:
             source_ip (str):
@@ -360,13 +380,16 @@ class TrafficForwardingAPI(APIEndpoint):
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
+        secondary_vip = next(
+            (vip for vip in vips_list if vip.city != preferred_vip.city)
+        )
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
 
     def list_vpn_credentials(self):
-        """Returns the list of all configured VPN credentials.
+        """
+        Returns the list of all configured VPN credentials.
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
@@ -376,10 +399,13 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vpn_credential)
 
         """
-        return self._get('vpnCredentials', box=BoxList)
+        return self._get("vpnCredentials", box=BoxList)
 
-    def add_vpn_credential(self, authentication_type: str, pre_shared_key: str, **kwargs):
-        """Add new VPN credentials.
+    def add_vpn_credential(
+            self, authentication_type: str, pre_shared_key: str, **kwargs
+    ):
+        """
+        Add new VPN credentials.
 
         Args:
             authentication_type (str):
@@ -423,22 +449,23 @@ class TrafficForwardingAPI(APIEndpoint):
         """
 
         payload = {
-            'type': authentication_type,
-            'preSharedKey': pre_shared_key,
+            "type": authentication_type,
+            "preSharedKey": pre_shared_key,
         }
 
         # Add location ID to payload if specified.
-        if kwargs.get('location_id'):
-            payload['location'] = {'id': kwargs.pop('location_id')}
+        if kwargs.get("location_id"):
+            payload["location"] = {"id": kwargs.pop("location_id")}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._post('vpnCredentials', json=payload)
+        return self._post("vpnCredentials", json=payload)
 
-    def bulk_delete_vpn_credentials(self, credential_ids):
-        """ Bulk delete VPN credentials.
+    def bulk_delete_vpn_credentials(self, credential_ids: list):
+        """
+        Bulk delete VPN credentials.
 
         Args:
             credential_ids (list):
@@ -452,14 +479,15 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
 
-        payload = {
-            "ids": credential_ids
-        }
+        payload = {"ids": credential_ids}
 
-        return self._post('vpnCredentials/bulkDelete', json=payload, box=False).status_code
+        return self._post(
+            "vpnCredentials/bulkDelete", json=payload, box=False
+        ).status_code
 
-    def get_vpn_credential(self, credential_id):
-        """Get VPN credentials for the specified ID.
+    def get_vpn_credential(self, credential_id: str):
+        """
+        Get VPN credentials for the specified ID.
 
         Args:
             credential_id (str):
@@ -472,10 +500,11 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> pprint(zia.traffic.get_vpn_credential('97679391'))
 
         """
-        return self._get(f'vpnCredentials/{credential_id}')
+        return self._get(f"vpnCredentials/{credential_id}")
 
     def update_vpn_credential(self, credential_id: str, **kwargs):
-        """Update VPN credentials with the specified ID.
+        """
+        Update VPN credentials with the specified ID.
 
         Args:
             credential_id (str):
@@ -509,28 +538,27 @@ class TrafficForwardingAPI(APIEndpoint):
         # Cache the credential record
         credential_record = self.get_vpn_credential(credential_id)
 
-        payload = {
-            'type': credential_record.type
-        }
+        payload = {"type": credential_record.type}
 
         # Provide required params depending on the record type
-        if credential_record.type == 'IP':
-            payload['ipAddress'] = credential_record.ipAddress
-        elif credential_record.type == 'UFQDN':
-            payload['fqdn'] = credential_record.fqdn
+        if credential_record.type == "IP":
+            payload["ipAddress"] = credential_record.ipAddress
+        elif credential_record.type == "UFQDN":
+            payload["fqdn"] = credential_record.fqdn
 
         # Add location ID to payload if specified.
-        if kwargs.get('location_id'):
-            payload['location'] = {'id': kwargs.pop('location_id')}
+        if kwargs.get("location_id"):
+            payload["location"] = {"id": kwargs.pop("location_id")}
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f'vpnCredentials/{credential_id}', json=payload)
+        return self._put(f"vpnCredentials/{credential_id}", json=payload)
 
-    def delete_vpn_credential(self, credential_id):
-        """Delete VPN credentials for the specified ID.
+    def delete_vpn_credential(self, credential_id: str):
+        """
+        Delete VPN credentials for the specified ID.
 
         Args:
             credential_id (str):
@@ -543,4 +571,4 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> zia.traffic.delete_vpn_credential('97679391')
 
         """
-        return self._delete(f'vpnCredentials/{credential_id}', box=False).status_code
+        return self._delete(f"vpnCredentials/{credential_id}", box=False).status_code

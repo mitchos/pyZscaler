@@ -3,9 +3,9 @@ from box import BoxList
 
 
 class CloudSandboxAPI(APIEndpoint):
-
     def get_quota(self):
-        """Returns the Cloud Sandbox API quota information for the organisation.
+        """
+        Returns the Cloud Sandbox API quota information for the organisation.
 
         Returns:
             :obj:`dict`: The Cloud Sandbox quota report.
@@ -14,10 +14,11 @@ class CloudSandboxAPI(APIEndpoint):
             >>> pprint(zia.sandbox.get_quota())
 
         """
-        return self._get('sandbox/report/quota', box=BoxList)[0]
+        return self._get("sandbox/report/quota", box=BoxList)[0]
 
-    def get_report(self, md5_hash: str, report_details: str = 'summary'):
-        """Returns the Cloud Sandbox Report for the provided hash.
+    def get_report(self, md5_hash: str, report_details: str = "summary"):
+        """
+        Returns the Cloud Sandbox Report for the provided hash.
 
         Args:
             md5_hash (str):
@@ -39,4 +40,4 @@ class CloudSandboxAPI(APIEndpoint):
 
         """
 
-        return self._get(f'sandbox/report/{md5_hash}?details={report_details}')
+        return self._get(f"sandbox/report/{md5_hash}?details={report_details}")
