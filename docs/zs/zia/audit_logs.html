@@ -31,6 +31,8 @@
 
     <link rel="index" title="Index" href="../../genindex.html"/>
     <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="next" title="config" href="config.html"/>
+    <link rel="prev" title="ZIA" href="index.html"/>
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +52,7 @@
 
 
                 <div class="version">
-                    0.3
+                    0.5
                 </div>
 
 
@@ -70,8 +72,23 @@
 
 
                 <p class="caption"><span class="caption-text">Contents</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="index.html">ZIA</a></li>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal" href="index.html">ZIA</a>
+                        <ul class="current">
+                            <li class="toctree-l2 current"><a class="current reference internal" href="#">audit_logs</a>
+                            </li>
+                            <li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="locations.html">locations</a>
+                            </li>
+                            <li class="toctree-l2"><a class="reference internal" href="sandbox.html">sandbox</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="security.html">security</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="session.html">session</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="traffic.html">traffic</a></li>
+                            <li class="toctree-l2"><a class="reference internal" href="url_categories.html">url_categories</a>
+                            </li>
+                            <li class="toctree-l2"><a class="reference internal" href="users.html">users</a></li>
+                        </ul>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../zpa/index.html">ZPA</a></li>
                 </ul>
 
@@ -103,6 +120,8 @@
 
                         <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
 
+                        <li><a href="index.html">ZIA</a> &raquo;</li>
+
                         <li>audit_logs</li>
 
 
@@ -125,8 +144,9 @@
                         <div class="section" id="audit-logs">
                             <h1>audit_logs<a class="headerlink" href="#audit-logs"
                                              title="Permalink to this headline">¶</a></h1>
-                            <p>The following methods allow for interaction with the ZIA
-                                Admin Audit Logs API endpoints.</p>
+                            <p>The following methods allow for interaction with the ZIA Audit Logs API endpoints.</p>
+                            <p>Methods are accessible via <code class="docutils literal notranslate"><span class="pre">zia.audit_logs</span></code>
+                            </p>
                             <span class="target" id="module-pyzscaler.zia.audit_logs"><span id="zia-audit-logs"></span></span>
                             <dl class="py class">
                                 <dt class="sig sig-object py" id="pyzscaler.zia.audit_logs.AuditLogsAPI">
@@ -146,19 +166,25 @@
                                         <dd><p>Cancels the request to create an audit log report.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">str</span></code></a></dt>
-                                                        <dd><p>The operation response code.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>The operation response code.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">audit_logs</span><span
+                                                        class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -167,17 +193,7 @@
                                             <span class="sig-name descname"><span class="pre">create</span></span><span
                                                 class="sig-paren">(</span><em class="sig-param"><span class="n"><span
                                                 class="pre">start_time</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">end_time</span></span></em>, <em
-                                                class="sig-param"><span class="n"><span class="pre">action_types</span></span></em>,
-                                            <em class="sig-param"><span class="n"><span
-                                                    class="pre">category</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">sub_categories</span></span></em>, <em
-                                                class="sig-param"><span class="n"><span class="pre">action_result</span></span></em>,
-                                            <em class="sig-param"><span class="n"><span
-                                                    class="pre">action_interface</span></span></em>, <em
-                                                class="sig-param"><span class="n"><span
-                                                class="pre">client_ip</span></span></em>, <em class="sig-param"><span
-                                                class="n"><span class="pre">admin_name</span></span></em><span
+                                                class="n"><span class="pre">end_time</span></span></em><span
                                                 class="sig-paren">)</span><a class="headerlink"
                                                                              href="#pyzscaler.zia.audit_logs.AuditLogsAPI.create"
                                                                              title="Permalink to this definition">¶</a>
@@ -192,65 +208,85 @@
                                                 <dt class="field-odd">Parameters</dt>
                                                 <dd class="field-odd">
                                                     <ul class="simple">
-                                                        <li><p><strong>start_time</strong> – The timestamp, in epoch, of
-                                                            the admin’s last login.</p></li>
-                                                        <li><p><strong>end_time</strong> – The timestamp, in epoch, of
-                                                            the admin’s last logout.</p></li>
-                                                        <li><p><strong>action_types</strong> – The action performed by
-                                                            the admin in the Zscaler Admin Portal (i.e., Admin UI) or
-                                                            API.</p></li>
-                                                        <li><p><strong>category</strong> – The location in the Zscaler
-                                                            Admin Portal (i.e., Admin UI) where the actionType was
-                                                            performed.</p></li>
-                                                        <li><p><strong>sub_categories</strong> – The area within a
-                                                            category where the actionType was performed.</p></li>
-                                                        <li><p><strong>action_result</strong> – The outcome (i.e.,
-                                                            Failure or Success) of an actionType.</p></li>
-                                                        <li><p><strong>action_interface</strong> – The interface (i.e.,
-                                                            Admin UI or API) where the actionType was performed.</p>
-                                                        </li>
-                                                        <li><p><strong>client_ip</strong> – The source IP address for
-                                                            the admin.</p></li>
-                                                        <li><p><strong>admin_name</strong> – The admin’s login ID.</p>
+                                                        <li><p><strong>start_time</strong> (<a
+                                                                class="reference external"
+                                                                href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                title="(in Python v3.9)"><em>str</em></a>) – The
+                                                            timestamp, in epoch, of the admin’s last login.</p></li>
+                                                        <li><p><strong>end_time</strong> (<a class="reference external"
+                                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                                             title="(in Python v3.9)"><em>str</em></a>)
+                                                            – The timestamp, in epoch, of the admin’s last logout.</p>
                                                         </li>
                                                     </ul>
                                                 </dd>
                                                 <dt class="field-even">Returns</dt>
-                                                <dd class="field-even"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#str"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">str</span></code></a></dt>
-                                                        <dd><p>The status code for the operation.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-even"><p>The status code for the operation.</p>
+                                                </dd>
+                                                <dt class="field-odd">Return type</dt>
+                                                <dd class="field-odd"><p><a class="reference external"
+                                                                            href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                            title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">str</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">audit_logs</span><span
+                                                        class="o">.</span><span class="n">create</span><span
+                                                        class="p">(</span><span class="n">start_time</span><span
+                                                        class="o">=</span><span
+                                                        class="s1">&#39;1627221600000&#39;</span><span
+                                                        class="p">,</span>
+<span class="gp">... </span>   <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;1627271676622&#39;</span><span
+                                                            class="p">)</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
                                     <dl class="py method">
                                         <dt class="sig sig-object py"
-                                            id="pyzscaler.zia.audit_logs.AuditLogsAPI.download">
+                                            id="pyzscaler.zia.audit_logs.AuditLogsAPI.get_report">
                                             <span class="sig-name descname"><span
-                                                    class="pre">download</span></span><span
-                                                class="sig-paren">(</span><span class="sig-paren">)</span><a
-                                                class="headerlink"
-                                                href="#pyzscaler.zia.audit_logs.AuditLogsAPI.download"
-                                                title="Permalink to this definition">¶</a></dt>
-                                        <dd><p>Downloads the most recently created audit log report.</p>
+                                                    class="pre">get_report</span></span><span class="sig-paren">(</span><span
+                                                class="sig-paren">)</span><a class="headerlink"
+                                                                             href="#pyzscaler.zia.audit_logs.AuditLogsAPI.get_report"
+                                                                             title="Permalink to this definition">¶</a>
+                                        </dt>
+                                        <dd><p>Returns the most recently created audit log report.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p><a class="reference external"
-                                                                            href="https://docs.python.org/3/library/csv.html#module-csv"
-                                                                            title="(in Python v3.9)"><code
+                                                <dd class="field-odd"><p>String representation of CSV file.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#str"
+                                                                             title="(in Python v3.9)"><code
                                                         class="xref py py-obj docutils literal notranslate"><span
-                                                        class="pre">csv</span></code></a></p>
+                                                        class="pre">str</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <p>Write report to CSV file:</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span
+                                                        class="nb">open</span><span class="p">(</span><span class="s2">&quot;audit_log.csv&quot;</span><span
+                                                        class="p">,</span> <span class="s2">&quot;w+&quot;</span><span
+                                                        class="p">)</span> <span class="k">as</span> <span
+                                                        class="n">fh</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span
+                                                            class="p">(</span><span class="n">zia</span><span class="o">.</span><span
+                                                            class="n">audit_logs</span><span class="o">.</span><span
+                                                            class="n">get_report</span><span class="p">())</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -263,19 +299,26 @@
                                         <dd><p>Get the status of a request for an audit log report.</p>
                                             <dl class="field-list simple">
                                                 <dt class="field-odd">Returns</dt>
-                                                <dd class="field-odd"><p>
-                                                    <dl class="simple">
-                                                        <dt><a class="reference external"
-                                                               href="https://docs.python.org/3/library/stdtypes.html#dict"
-                                                               title="(in Python v3.9)"><code
-                                                                class="xref py py-obj docutils literal notranslate"><span
-                                                                class="pre">dict</span></code></a></dt>
-                                                        <dd><p>Audit log report request status.</p>
-                                                        </dd>
-                                                    </dl>
-                                                    </p>
+                                                <dd class="field-odd"><p>Audit log report request status.</p>
+                                                </dd>
+                                                <dt class="field-even">Return type</dt>
+                                                <dd class="field-even"><p><a class="reference external"
+                                                                             href="https://docs.python.org/3/library/stdtypes.html#dict"
+                                                                             title="(in Python v3.9)"><code
+                                                        class="xref py py-obj docutils literal notranslate"><span
+                                                        class="pre">dict</span></code></a></p>
                                                 </dd>
                                             </dl>
+                                            <p class="rubric">Examples</p>
+                                            <div class="doctest highlight-default notranslate">
+                                                <div class="highlight"><pre><span></span><span
+                                                        class="gp">&gt;&gt;&gt; </span><span
+                                                        class="nb">print</span><span class="p">(</span><span class="n">zia</span><span
+                                                        class="o">.</span><span class="n">audit_logs</span><span
+                                                        class="o">.</span><span class="n">status</span><span class="p">())</span>
+</pre>
+                                                </div>
+                                            </div>
                                         </dd>
                                     </dl>
 
@@ -289,6 +332,12 @@
 
                 </div>
                 <footer>
+                    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+                        <a href="config.html" class="btn btn-neutral float-right" title="config" accesskey="n"
+                           rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+                        <a href="index.html" class="btn btn-neutral float-left" title="ZIA" accesskey="p"
+                           rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+                    </div>
 
                     <hr/>
 

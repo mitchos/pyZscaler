@@ -3,7 +3,10 @@ from box import BoxList
 
 
 class UserManagementAPI(APIEndpoint):
-    """The methods within this section use the ZIA User Management API and are accessed via ``ZIA.users``."""
+    """
+    The methods within this section use the ZIA User Management API and are accessed via ``ZIA.users``.
+
+    """
 
     def list_departments(self):
         """
@@ -16,7 +19,7 @@ class UserManagementAPI(APIEndpoint):
         Examples:
             >>> departments = zia.users.list_departments()
         """
-        return self._get('departments', box=BoxList)
+        return self._get("departments", box=BoxList)
 
     def get_department(self, department_id: str):
         """
@@ -34,7 +37,7 @@ class UserManagementAPI(APIEndpoint):
             >>> department = zia.users.get_department('45543434')
 
         """
-        return self._get(f'departments/{department_id}')
+        return self._get(f"departments/{department_id}")
 
     def list_groups(self):
         """
@@ -47,7 +50,7 @@ class UserManagementAPI(APIEndpoint):
         Examples:
             >>> user_groups = zia.users.list_groups()
         """
-        return self._get('groups', box=BoxList)
+        return self._get("groups", box=BoxList)
 
     def get_group(self, group_id: str):
         """
@@ -65,7 +68,7 @@ class UserManagementAPI(APIEndpoint):
             >>> user_group = zia.users.get_group('4987453')
 
         """
-        return self._get(f'groups/{group_id}')
+        return self._get(f"groups/{group_id}")
 
     def list_users(self):
         """
@@ -78,7 +81,7 @@ class UserManagementAPI(APIEndpoint):
         Examples:
             >>> users = zia.users.list_users()
         """
-        return self._get('users', box=BoxList)
+        return self._get("users", box=BoxList)
 
     def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs):
         """
@@ -127,17 +130,17 @@ class UserManagementAPI(APIEndpoint):
 
         """
         payload = {
-            'name': name,
-            'email': email,
-            'groups': groups,
-            'department': department,
+            "name": name,
+            "email": email,
+            "groups": groups,
+            "department": department,
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[key] = value
 
-        return self._post('users', json=payload)
+        return self._post("users", json=payload)
 
     def bulk_delete_users(self, user_ids: list):
         """
@@ -155,11 +158,9 @@ class UserManagementAPI(APIEndpoint):
             >>> bulk_delete_users = zia.users.bulk_delete_users(['49272455', '49272456', '49272457'])
         """
 
-        payload = {
-            "ids": user_ids
-        }
+        payload = {"ids": user_ids}
 
-        return self._post('users/bulkDelete', json=payload)
+        return self._post("users/bulkDelete", json=payload)
 
     def get_user(self, user_id: str):
         """
@@ -177,10 +178,17 @@ class UserManagementAPI(APIEndpoint):
             >>> user = zia.users.get_user('8312')
 
         """
-        return self._get(f'users/{user_id}')
+        return self._get(f"users/{user_id}")
 
-    def update_user(self, user_id: str, name: str = None, email: str = None, department: dict = None,
-                    groups: list = None, **kwargs):
+    def update_user(
+            self,
+            user_id: str,
+            name: str = None,
+            email: str = None,
+            department: dict = None,
+            groups: list = None,
+            **kwargs,
+    ):
         """Updates the details for the specified user.
 
         Args:
@@ -244,17 +252,17 @@ class UserManagementAPI(APIEndpoint):
             groups = user_record.groups
 
         payload = {
-            'name': name,
-            'email': email,
-            'department': department,
-            'groups': groups
+            "name": name,
+            "email": email,
+            "department": department,
+            "groups": groups,
         }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[key] = value
 
-        return self._put(f'users/{user_id}', json=payload)
+        return self._put(f"users/{user_id}", json=payload)
 
     def delete_user(self, user_id: str):
         """
@@ -272,4 +280,4 @@ class UserManagementAPI(APIEndpoint):
             >>> user = zia.users.delete_user('49272455')
 
         """
-        return self._delete(f'users/{user_id}', box=False).status_code
+        return self._delete(f"users/{user_id}", box=False).status_code
