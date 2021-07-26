@@ -9,6 +9,7 @@ This package covers the ZIA interface.
     locations
     sandbox
     security
+    session
     traffic
     url_categories
     users
