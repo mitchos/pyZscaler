@@ -6,6 +6,7 @@ from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
+from .firewall import FirewallPolicyAPI
 from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
@@ -78,6 +79,14 @@ class ZIA(APISession):
 
         """
         return ActivationAPI(self)
+
+    @property
+    def firewall(self):
+        """
+        The interface object for the :ref:`ZIA Firewall Policies interface <zia-firewall>`.
+
+        """
+        return FirewallPolicyAPI(self)
 
     @property
     def locations(self):
