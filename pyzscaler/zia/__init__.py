@@ -30,6 +30,7 @@ class ZIA(APISession):
 
     _vendor = "Zscaler"
     _product = "Zscaler Internet Access"
+    _backoff = 3
     _build = version
     _box = True
     _box_attrs = {"camel_killer_box": True}
