@@ -1,6 +1,6 @@
 from restfly.endpoint import APIEndpoint
 from pyzscaler.utils import snake_to_camel
-from box import Box, BoxList
+from box import BoxList
 
 
 class TrafficForwardingAPI(APIEndpoint):

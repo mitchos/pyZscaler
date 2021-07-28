@@ -32,14 +32,11 @@ def fixture_user(request, zia):
     )
 
     def teardown():
-        """
-        cleanup function to delete user
-        """
+        """ Cleanup function to delete user."""
         try:
             zia.users.delete_user(user.id)
         except APIError as err:
             print(err)
-            pass
 
     request.addfinalizer(teardown)
     return user
