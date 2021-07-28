@@ -7,6 +7,7 @@ This package covers the ZIA interface.
 
     audit_logs
     config
+    firewall
     locations
     sandbox
     security
