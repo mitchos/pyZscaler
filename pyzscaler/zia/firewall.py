@@ -761,7 +761,7 @@ class FirewallPolicyAPI(APIEndpoint):
         the existing ports will be overwritten.
 
         Args:
-            service_id (str):
+            service_id (str): The unique ID for the Network Service.
             ports (list):
                 A list of port protocol tuples. Tuples must follow the convention `src/dest`, `protocol`, `start port`,
                 `end port`. If this is a single port and not a port range then `end port` can be omitted. E.g.

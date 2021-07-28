@@ -50,7 +50,7 @@
 
 
                 <div class="version">
-                    0.5
+                    0.6
                 </div>
 
 
@@ -69,7 +69,7 @@
             <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
 
 
-                <p class="caption"><span class="caption-text">Contents</span></p>
+                <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="zs/zia/index.html">ZIA</a></li>
                     <li class="toctree-l1"><a class="reference internal" href="zs/zpa/index.html">ZPA</a></li>
@@ -129,6 +129,7 @@
                             | <a href="#C"><strong>C</strong></a>
                             | <a href="#D"><strong>D</strong></a>
                             | <a href="#E"><strong>E</strong></a>
+                            | <a href="#F"><strong>F</strong></a>
                             | <a href="#G"><strong>G</strong></a>
                             | <a href="#I"><strong>I</strong></a>
                             | <a href="#L"><strong>L</strong></a>
@@ -146,13 +147,22 @@
                             <tr>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="zs/zpa/index.html#pyzscaler.zpa.ZPA._client_id">_client_id (ZPA
-                                            attribute)</a>
+                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.__init__">__init__() (ZIA
+                                            method)</a>
+
+                                            <ul>
+                                                <li><a href="zs/zpa/index.html#pyzscaler.zpa.ZPA.__init__">(ZPA
+                                                    method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
+                                        <li><a href="zs/zpa/index.html#pyzscaler.zpa.ZPA._client_id">_client_id (ZPA
+                                            attribute)</a>
+                                        </li>
                                         <li><a href="zs/zpa/index.html#pyzscaler.zpa.ZPA._client_secret">_client_secret
                                             (ZPA attribute)</a>
                                         </li>
@@ -199,8 +209,28 @@
                                             </ul>
                                         </li>
                                         <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.add_ip_destination_group">add_ip_destination_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.add_ip_source_group">add_ip_source_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
                                             <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.add_location">add_location()
                                                 (LocationsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.add_network_service">add_network_service()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.add_network_svc_group">add_network_svc_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.add_rule">add_rule()
+                                                (FirewallPolicyAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.add_segment">add_segment()
@@ -210,6 +240,10 @@
                                             <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.add_server">add_server()
                                                 (AppServersAPI method)</a>
                                         </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
                                         <li>
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.add_static_ip">add_static_ip()
                                                 (TrafficForwardingAPI method)</a>
@@ -222,10 +256,6 @@
                                             <a href="zs/zia/url_categories.html#pyzscaler.zia.url_categories.URLCategoriesAPI.add_tld_category">add_tld_category()
                                                 (URLCategoriesAPI method)</a>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
                                         <li>
                                             <a href="zs/zia/url_categories.html#pyzscaler.zia.url_categories.URLCategoriesAPI.add_url_category">add_url_category()
                                                 (URLCategoriesAPI method)</a>
@@ -383,21 +413,44 @@
                                             </ul>
                                         </li>
                                         <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.delete_ip_destination_group">delete_ip_destination_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.delete_ip_source_group">delete_ip_source_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
                                             <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.delete_location">delete_location()
                                                 (LocationsAPI method)</a>
                                         </li>
                                         <li>
-                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.delete_rule">delete_rule()
-                                                (PolicySetsAPI method)</a>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.delete_network_service">delete_network_service()
+                                                (FirewallPolicyAPI method)</a>
                                         </li>
                                         <li>
-                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment">delete_segment()
-                                                (AppSegmentsAPI method)</a>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.delete_network_svc_group">delete_network_svc_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.delete_rule">delete_rule()
+                                                (FirewallPolicyAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.delete_rule">(PolicySetsAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
+                                        <li>
+                                            <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment">delete_segment()
+                                                (AppSegmentsAPI method)</a>
+                                        </li>
                                         <li>
                                             <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.delete_server">delete_server()
                                                 (AppServersAPI method)</a>
@@ -451,6 +504,26 @@
                                         <li>
                                             <a href="zs/zia/security.html#pyzscaler.zia.security.SecurityPolicyAPI.erase_whitelist">erase_whitelist()
                                                 (SecurityPolicyAPI method)</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h2 id="F">F</h2>
+                        <table style="width: 100%" class="indextable genindextable">
+                            <tr>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="zs/zia/index.html#pyzscaler.zia.ZIA.firewall">firewall (ZIA
+                                            property)</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
+                                        <li><a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI">FirewallPolicyAPI
+                                            (class in pyzscaler.zia.firewall)</a>
                                         </li>
                                     </ul>
                                 </td>
@@ -528,13 +601,21 @@
                                                 </li>
                                             </ul>
                                         </li>
+                                        <li><a href="zs/zpa/idp.html#pyzscaler.zpa.idp.IDPControllerAPI.get_idp">get_idp()
+                                            (IDPControllerAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_ip_destination_group">get_ip_destination_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_ip_source_group">get_ip_source_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
                                     </ul>
                                 </td>
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
-                                        <li><a href="zs/zpa/idp.html#pyzscaler.zpa.idp.IDPControllerAPI.get_idp">get_idp()
-                                            (IDPControllerAPI method)</a>
-                                        </li>
                                         <li>
                                             <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.get_location">get_location()
                                                 (LocationsAPI method)</a>
@@ -542,6 +623,22 @@
                                         <li>
                                             <a href="zs/zpa/trusted_networks.html#pyzscaler.zpa.trusted_networks.TrustedNetworksAPI.get_network">get_network()
                                                 (TrustedNetworksAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_network_app">get_network_app()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_network_app_group">get_network_app_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_network_service">get_network_service()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_network_svc_group">get_network_svc_group()
+                                                (FirewallPolicyAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zpa/posture_profiles.html#pyzscaler.zpa.posture_profiles.PostureProfilesAPI.get_profile">get_profile()
@@ -570,8 +667,15 @@
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.get_rule">get_rule()
-                                                (PolicySetsAPI method)</a>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.get_rule">get_rule()
+                                                (FirewallPolicyAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.get_rule">(PolicySetsAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li>
                                             <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.get_server">get_server()
@@ -688,7 +792,19 @@
                                             (IDPControllerAPI method)</a>
                                         </li>
                                         <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_ip_destination_groups">list_ip_destination_groups()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_ip_source_groups">list_ip_source_groups()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
                                             <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.list_locations">list_locations()
+                                                (LocationsAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.list_locations_lite">list_locations_lite()
                                                 (LocationsAPI method)</a>
                                         </li>
                                     </ul>
@@ -696,8 +812,20 @@
                                 <td style="width: 33%; vertical-align: top;">
                                     <ul>
                                         <li>
-                                            <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.list_locations_lite">list_locations_lite()
-                                                (LocationsAPI method)</a>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_network_app_groups">list_network_app_groups()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_network_apps">list_network_apps()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_network_services">list_network_services()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_network_svc_groups">list_network_svc_groups()
+                                                (FirewallPolicyAPI method)</a>
                                         </li>
                                         <li>
                                             <a href="zs/zpa/trusted_networks.html#pyzscaler.zpa.trusted_networks.TrustedNetworksAPI.list_networks">list_networks()
@@ -712,8 +840,15 @@
                                                 (PostureProfilesAPI method)</a>
                                         </li>
                                         <li>
-                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.list_rules">list_rules()
-                                                (PolicySetsAPI method)</a>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.list_rules">list_rules()
+                                                (FirewallPolicyAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.list_rules">(PolicySetsAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li>
                                             <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.list_segments">list_segments()
@@ -785,6 +920,8 @@
                                                 <li><a href="zs/zia/audit_logs.html#module-pyzscaler.zia.audit_logs">pyzscaler.zia.audit_logs</a>
                                                 </li>
                                                 <li><a href="zs/zia/config.html#module-pyzscaler.zia.config">pyzscaler.zia.config</a>
+                                                </li>
+                                                <li><a href="zs/zia/firewall.html#module-pyzscaler.zia.firewall">pyzscaler.zia.firewall</a>
                                                 </li>
                                                 <li><a href="zs/zia/locations.html#module-pyzscaler.zia.locations">pyzscaler.zia.locations</a>
                                                 </li>
@@ -902,6 +1039,15 @@
 
                                             <ul>
                                                 <li><a href="zs/zia/config.html#module-pyzscaler.zia.config">module</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            pyzscaler.zia.firewall
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zia/firewall.html#module-pyzscaler.zia.firewall">module</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -1256,17 +1402,40 @@
                                             </ul>
                                         </li>
                                         <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.update_ip_destination_group">update_ip_destination_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.update_ip_source_group">update_ip_source_group()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
                                             <a href="zs/zia/locations.html#pyzscaler.zia.locations.LocationsAPI.update_location">update_location()
                                                 (LocationsAPI method)</a>
                                         </li>
                                         <li>
-                                            <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.update_rule">update_rule()
-                                                (PolicySetsAPI method)</a>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.update_network_service">update_network_service()
+                                                (FirewallPolicyAPI method)</a>
+                                        </li>
+                                        <li>
+                                            <a href="zs/zia/firewall.html#pyzscaler.zia.firewall.FirewallPolicyAPI.update_rule">update_rule()
+                                                (FirewallPolicyAPI method)</a>
+
+                                            <ul>
+                                                <li>
+                                                    <a href="zs/zpa/policies.html#pyzscaler.zpa.policies.PolicySetsAPI.update_rule">(PolicySetsAPI
+                                                        method)</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li>
                                             <a href="zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.update_segment">update_segment()
                                                 (AppSegmentsAPI method)</a>
                                         </li>
+                                    </ul>
+                                </td>
+                                <td style="width: 33%; vertical-align: top;">
+                                    <ul>
                                         <li>
                                             <a href="zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.update_server">update_server()
                                                 (AppServersAPI method)</a>
@@ -1275,10 +1444,6 @@
                                             <a href="zs/zia/traffic.html#pyzscaler.zia.traffic.TrafficForwardingAPI.update_static_ip">update_static_ip()
                                                 (TrafficForwardingAPI method)</a>
                                         </li>
-                                    </ul>
-                                </td>
-                                <td style="width: 33%; vertical-align: top;">
-                                    <ul>
                                         <li>
                                             <a href="zs/zia/url_categories.html#pyzscaler.zia.url_categories.URLCategoriesAPI.update_url_category">update_url_category()
                                                 (URLCategoriesAPI method)</a>
