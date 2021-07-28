@@ -1,4 +1,4 @@
-name: Test pyZscaler
+name: build
 
 on:
   push:
