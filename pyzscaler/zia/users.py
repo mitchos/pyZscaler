@@ -13,8 +13,7 @@ class UserManagementAPI(APIEndpoint):
         Returns the list of departments.
 
         Returns:
-            :obj:`list`:
-                The list of departments configured in ZIA.
+            :obj:`list`: The list of departments configured in ZIA.
 
         Examples:
             >>> departments = zia.users.list_departments()
@@ -26,12 +25,10 @@ class UserManagementAPI(APIEndpoint):
         Returns the department details for a given department.
 
         Args:
-            department_id (str):
-                The unique identifier for the department.
+            department_id (str): The unique identifier for the department.
 
         Returns:
-            :obj:`dict`:
-                The department resource record.
+            :obj:`dict`: The department resource record.
 
         Examples:
             >>> department = zia.users.get_department('45543434')
@@ -44,11 +41,11 @@ class UserManagementAPI(APIEndpoint):
         Returns the list of user groups.
 
         Returns:
-            :obj:`list`:
-                The list of user groups configured in ZIA.
+            :obj:`list`: The list of user groups configured in ZIA.
 
         Examples:
             >>> user_groups = zia.users.list_groups()
+
         """
         return self._get("groups", box=BoxList)
 
@@ -57,12 +54,10 @@ class UserManagementAPI(APIEndpoint):
         Returns the user group details for a given user group.
 
         Args:
-            group_id (str):
-                The unique identifier for the user group.
+            group_id (str): The unique identifier for the user group.
 
         Returns:
-            :obj:`dict`:
-                The user group resource record.
+            :obj:`dict`: The user group resource record.
 
         Examples:
             >>> user_group = zia.users.get_group('4987453')
@@ -75,11 +70,11 @@ class UserManagementAPI(APIEndpoint):
         Returns the list of users.
 
         Returns:
-            :obj:`list`:
-                The list of users configured in ZIA.
+            :obj:`list`: The list of users configured in ZIA.
 
         Examples:
             >>> users = zia.users.list_users()
+
         """
         return self._get("users", box=BoxList)
 
@@ -115,8 +110,7 @@ class UserManagementAPI(APIEndpoint):
                 AUDITOR, GUEST, REPORT_USER and UNAUTH_TRAFFIC_DEFAULT.
 
         Returns:
-            :obj:`dict`
-                The resource record for the new user.
+            :obj:`dict`: The resource record for the new user.
 
         Examples:
             Add a user with the minimum required params:
@@ -147,15 +141,14 @@ class UserManagementAPI(APIEndpoint):
         Bulk delete ZIA users.
 
         Args:
-            user_ids (list):
-                List containing id int of each user that will be deleted.
+            user_ids (list): List containing id int of each user that will be deleted.
 
         Returns:
-            :obj:`dict`
-                Object containing list of users that were deleted
+            :obj:`dict`: Object containing list of users that were deleted
 
         Examples:
             >>> bulk_delete_users = zia.users.bulk_delete_users(['49272455', '49272456', '49272457'])
+
         """
 
         payload = {"ids": user_ids}
@@ -167,12 +160,10 @@ class UserManagementAPI(APIEndpoint):
         Returns the user information for the specified ID.
 
         Args:
-            user_id (str):
-                The unique identifier for the requested user.
+            user_id (str): The unique identifier for the requested user.
 
         Returns:
-            :obj:`dict`
-                The resource record for the requested user.
+            :obj:`dict`: The resource record for the requested user.
 
         Examples
             >>> user = zia.users.get_user('8312')
@@ -189,7 +180,8 @@ class UserManagementAPI(APIEndpoint):
             groups: list = None,
             **kwargs,
     ):
-        """Updates the details for the specified user.
+        """
+        Updates the details for the specified user.
 
         Args:
             user_id (str):
@@ -222,7 +214,7 @@ class UserManagementAPI(APIEndpoint):
                 AUDITOR, GUEST, REPORT_USER and UNAUTH_TRAFFIC_DEFAULT.
 
         Returns:
-            The resource record of the updated user.
+            :obj:`dict`: The resource record of the updated user.
 
         Examples:
             Update the user name:
@@ -269,12 +261,10 @@ class UserManagementAPI(APIEndpoint):
         Deletes the specified user ID.
 
         Args:
-            user_id (str):
-                The unique identifier of the user that will be deleted.
+            user_id (str): The unique identifier of the user that will be deleted.
 
         Returns:
-            :obj:`dict`
-                The response code for the request.
+            :obj:`dict`: The response code for the request.
 
         Examples
             >>> user = zia.users.delete_user('49272455')

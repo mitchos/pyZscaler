@@ -1,4 +1,3 @@
-from restfly.utils import dict_merge, url_validator
 import time
 
 

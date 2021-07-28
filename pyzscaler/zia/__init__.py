@@ -2,7 +2,6 @@ import os
 
 from restfly.session import APISession
 
-from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
@@ -17,7 +16,8 @@ from .users import UserManagementAPI
 
 
 class ZIA(APISession):
-    """A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.
+    """
+    A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.
 
     The ZIA object stores the session token and simplifies access to CRUD options within the ZIA platform.
 
@@ -59,10 +59,7 @@ class ZIA(APISession):
 
     @property
     def session(self):
-        """
-        The interface object for the :ref:`ZIA Authenticated Session interface <zia-session>`.
-
-        """
+        """The interface object for the :ref:`ZIA Authenticated Session interface <zia-session>`."""
         return AuthenticatedSessionAPI(self)
 
     @property

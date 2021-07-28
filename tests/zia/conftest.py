@@ -1,7 +1,4 @@
-import os
-
 import pytest
-import responses
 
 from pyzscaler.zia import ZIA
 
