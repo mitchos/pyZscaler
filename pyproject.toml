@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyzscaler"
-version = "0.5.1"
+version = "0.6.0"
 description = "A python SDK for Zscaler."
 authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
@@ -35,7 +35,7 @@ python-box = "^5.3.0"
 [tool.poetry.dev-dependencies]
 restfly = "^1.4.0"
 python-box = "^5.3.0"
-sphinx = "4.0.2"
+sphinx = "4.1.2"
 pytest = "^6.2.4"
 
 [build-system]
