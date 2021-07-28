@@ -1,16 +1,12 @@
-.. |documentation-status| image:: https://readthedocs.org/projects/pyzscaler/badge/?version=latest
+.. image:: https://readthedocs.org/projects/pyzscaler/badge/?version=latest
    :target: http://pyzscaler.readthedocs.io/?badge=latest
-
-.. |license MIT| image:: https://img.shields.io/github/license/mitchos/pyZscaler.svg
+.. image:: https://img.shields.io/github/license/mitchos/pyZscaler.svg
    :target: https://github.com/mitchos/pyZscaler
-
-.. |PyPI pyversions| image:: https://img.shields.io/pypi/pyversions/pyzscaler.svg
+.. image:: https://img.shields.io/pypi/pyversions/pyzscaler.svg
    :target: https://pypi.python.org/pypi/pyzscaler/
-
-.. |PyPi release| image:: https://img.shields.io/pypi/v/pyzscaler.svg
+.. image:: https://img.shields.io/pypi/v/pyzscaler.svg
    :target: https://pypi.org/project/pyZscaler
-
-.. |GitHub release| image:: https://img.shields.io/github/release/mitchos/pyZscaler.svg
+.. image:: https://img.shields.io/github/release/mitchos/pyZscaler.svg
    :target: https://github.com/mitchos/pyZscaler/releases/
 
 pyZscaler - An unofficial SDK for the Zscaler API
