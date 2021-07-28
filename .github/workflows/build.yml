@@ -3,8 +3,18 @@ name: build
 on:
   push:
     branches: [ main, develop ]
+    paths-ignore:
+    - '.github/**'
+    - 'docs/**'
+    - 'docsrc/**'
+    - 'examples/**'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+    - '.github/**'
+    - 'docs/**'
+    - 'docsrc/**'
+    - 'examples/**'
   workflow_dispatch:
 
 jobs:
