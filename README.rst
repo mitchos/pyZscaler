@@ -1,3 +1,5 @@
+.. image:: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml/badge.svg
+   :target: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml
 .. image:: https://readthedocs.org/projects/pyzscaler/badge/?version=latest
    :target: http://pyzscaler.readthedocs.io/?badge=latest
 .. image:: https://img.shields.io/github/license/mitchos/pyZscaler.svg
