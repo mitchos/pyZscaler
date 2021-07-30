@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class ActivationAPI(APIEndpoint):
-
     def status(self):
         """
         Returns the activation status for a configuration change.
@@ -15,7 +14,7 @@ class ActivationAPI(APIEndpoint):
             >>> config_status = zia.config.status()
 
         """
-        return self._get('status').status
+        return self._get("status").status
 
     def activate(self):
         """
@@ -29,4 +28,4 @@ class ActivationAPI(APIEndpoint):
             >>> config_activate = zia.config.activate()
 
         """
-        return self._post('status/activate').status
+        return self._post("status/activate").status

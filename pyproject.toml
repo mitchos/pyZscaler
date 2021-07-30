@@ -1,13 +1,25 @@
 [tool.poetry]
 name = "pyzscaler"
-version = "0.2.0"
+version = "0.7.0"
 description = "A python SDK for Zscaler."
 authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
-readme = "README.rst"
+readme = "README.md"
 documentation = "https://pyzscaler.readthedocs.io/"
 homepage = "https://mitchos.github.io/pyZscaler/"
 repository = "https://github.com/mitchos/pyZscaler"
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Python Modules", ]
 include = [
     "LICENSE",
 ]
@@ -16,11 +28,15 @@ include = [
 "Bug Tracker" = "https://github.com/mitchos/pyZscaler/issues"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.6"
 restfly = "^1.4.0"
 python-box = "^5.3.0"
 
 [tool.poetry.dev-dependencies]
+restfly = "^1.4.0"
+python-box = "^5.3.0"
+sphinx = "4.1.2"
+pytest = "^6.2.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

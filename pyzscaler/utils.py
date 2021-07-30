@@ -1,9 +1,14 @@
-from restfly.utils import dict_merge, url_validator
 import time
 
 
 def snake_to_camel(name):
-    name = name[0].lower() + name.title()[1:].replace("_", "")
+    # Edge-cases where camelCase is breaking
+    if name == "routable_ip":
+        return "routableIP"
+    elif name == "is_name_l10n_tag":
+        return "isNameL10nTag"
+    else:
+        name = name[0].lower() + name.title()[1:].replace("_", "")
     return name
 
 
@@ -17,4 +22,4 @@ def obfuscate_api_key(seed):
     for j in range(0, len(str(r)), 1):
         key += seed[int(str(r)[j]) + 2]
 
-    return {'timestamp': now, 'key': key}
+    return {"timestamp": now, "key": key}
