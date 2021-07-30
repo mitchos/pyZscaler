@@ -10,6 +10,7 @@ from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
 from .session import AuthenticatedSessionAPI
+from .ssl import SSLInspectionAPI
 from .traffic import TrafficForwardingAPI
 from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
@@ -110,6 +111,14 @@ class ZIA(APISession):
 
         """
         return SecurityPolicyAPI(self)
+
+    @property
+    def ssl(self):
+        """
+        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl>`.
+
+        """
+        return SSLInspectionAPI(self)
 
     @property
     def traffic(self):
