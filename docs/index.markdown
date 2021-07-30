@@ -8,10 +8,12 @@ nav_order: 1
 
 ![pyZscaler](assets/images/pyzscaler-logo.png "pyZscaler")
 
-pyZscaler provides a uniform and simple python interface for each of the Zscaler product APIs. {: .fs-6 } {: .fw-300 }
+pyZscaler provides a uniform and simple python interface for each of the Zscaler product APIs. 
+{: .fs-6 } 
+{: .fw-300 }
 
-[Get Started Now](#getting-started){: .btn .btn-purple
-} [View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }
+[Get Started Now](#getting-started){: .btn .btn-purple} 
+[View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }
 
 
 ---

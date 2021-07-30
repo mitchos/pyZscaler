@@ -77,7 +77,5 @@ with ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWO
 We've assigned the returned resource record for Sydney office to the ``sydney_office`` variable. This is returned as
 a ``dict`` and allows us to access those keys using dot notation thanks to `box`.
 
-## Getting information on an existing location
-
 
 
