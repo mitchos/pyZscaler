@@ -32,6 +32,7 @@ theme: just-the-docs
 remote_theme: pmarsceill/just-the-docs
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
 
 domain: mitchos.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://mitchos.github.io  # the base hostname and protocol for your site, e.g. http://example.com
@@ -42,6 +43,13 @@ aux_links:
     - "//github.com/mitchos/pyZscaler"
   "pyZscaler Read The Docs":
     - "//pyzscaler.readthedocs.io"
+  "ZIA API Docs":
+    - "//help.zscaler.com/zia/api"
+  "ZPA API Docs":
+    - "//help.zscaler.com/zpa/zpa-api"
+
+ga_tracking: G-W6R8MX1F8W
+ga_tracking_anonymize_ip: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

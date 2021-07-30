@@ -1,53 +1,73 @@
 ---
 
-# Feel free to add content and custom Front Matter to this file.
-
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: home nav_order: 1
 ---
 
 # Home
 
-pyZscaler aims to provide a uniform and easy-to-use interface for each of the Zscaler product APIs. {: .fs-6 } {:
-.fw-300 }
+![pyZscaler](assets/images/pyzscaler-logo.png "pyZscaler")
 
-[Get Started Now](http://example.com/){: .btn .btn-purple } [View pyZscaler on GitHub](http://example.com/){: .btn }
+pyZscaler provides a uniform and simple python interface for each of the Zscaler product APIs. {: .fs-6 } {: .fw-300 }
+
+[Get Started Now](#getting-started){: .btn .btn-purple
+} [View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }
 
 
 ---
 
-Attention: This SDK is not affiliated with, nor supported by Zscaler in any way.
+**Attention:** This SDK is not affiliated with, nor supported by Zscaler in any way.
 
-# Overview
+## Overview
 
-With each Zscaler product having its own developer documentation and authentication methods, this SDK should simplify
-your ability to develop software that uses the Zscaler API.
+With each Zscaler product having its own developer documentation and authentication methods, this SDK simplifies your
+ability to develop software that uses the Zscaler API.
 
-This SDK leverages the very awesome [RESTfly framework](https://restfly.readthedocs.io/en/latest/index.html) developed
-by Steve McGrath, which simplifies the development of building libraries to interact with RESTful APIs. A big thank you
-to Steve.
+This SDK uses the [RESTfly framework](https://restfly.readthedocs.io/en/latest/index.html) developed by Steve McGrath.
 
-## Features
+The Zscaler APIs expect and return JSON structures with key names in CamelCase. This violates PEP-8 and results in code
+that's hard to read. pyZscaler will seamlessly convert to PEP-8 compliant Snake Case so that your code can remain
+readable and beautiful. Refer to the pyZscaler API documentation at ReadTheDocs to ensure that you are passing correctly
+named parameters to the class methods.
+
+## About This Site
+
+This site aims to provide a reference for developing code that uses this SDK. Code examples are provided to be verbose
+and explanatory; there may be better and more concise ways to implement the example in production. e.g. positional args
+in class method calls are shown using the arg name for clarity.
+
+RFC5735 TEST-NET addresses are used in examples. Be aware that if you use these in your testing then the geo-location
+features will not work as these IP addresses don't resolve to a registered location.
+
+### Features
 
 - Simplified authentication with Zscaler APIs.
 - Uniform interaction with all Zscaler APIs.
 - Uses [python-box](https://github.com/cdgriffith/Box/wiki) to add dot notation access to json data structures.
 - Zscaler API output automatically converted from CamelCase to Snake Case.
 
-## Products
+### Products
 
 - Zscaler Private Access (ZPA)
 - Zscaler Internet Access (ZIA)
-- Cloud Security Posture Management (CSPM) - (work in progress)
 
-# Installation
+## Installation
 
 The most recent version can be installed from pypi as per below.
 
     $ pip install pyzscaler
 
-# License
+## Getting Started
+
+After you've installed pyZscaler, check out the guide for each library below:
+
+- [ZIA](zia/index) (work in progress)
+- ZPA (not yet created)
+
+While these guides are still a work in progress, visit the
+[pyZscaler API documentation](https://pyzscaler.readthedocs.io/en/latest/index.html) for limited examples and full
+documentation of each library.
+
+## License
 
 MIT License
 
