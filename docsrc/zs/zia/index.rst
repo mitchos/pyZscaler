@@ -12,8 +12,10 @@ This package covers the ZIA interface.
     sandbox
     security
     session
+    ssl
     traffic
     url_categories
+    url_filters
     users
 
 .. automodule:: pyzscaler.zia

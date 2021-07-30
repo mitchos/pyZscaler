@@ -2,7 +2,6 @@ import os
 
 from restfly.session import APISession
 
-from pyzscaler.utils import obfuscate_api_key
 from pyzscaler.version import version
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
@@ -11,13 +10,16 @@ from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
 from .session import AuthenticatedSessionAPI
+from .ssl import SSLInspectionAPI
 from .traffic import TrafficForwardingAPI
 from .url_categories import URLCategoriesAPI
+from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 
 
 class ZIA(APISession):
-    """A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.
+    """
+    A Controller to access Endpoints in the Zscaler Internet Access (ZIA) API.
 
     The ZIA object stores the session token and simplifies access to CRUD options within the ZIA platform.
 
@@ -30,6 +32,7 @@ class ZIA(APISession):
 
     _vendor = "Zscaler"
     _product = "Zscaler Internet Access"
+    _backoff = 3
     _build = version
     _box = True
     _box_attrs = {"camel_killer_box": True}
@@ -58,10 +61,7 @@ class ZIA(APISession):
 
     @property
     def session(self):
-        """
-        The interface object for the :ref:`ZIA Authenticated Session interface <zia-session>`.
-
-        """
+        """The interface object for the :ref:`ZIA Authenticated Session interface <zia-session>`."""
         return AuthenticatedSessionAPI(self)
 
     @property
@@ -113,6 +113,14 @@ class ZIA(APISession):
         return SecurityPolicyAPI(self)
 
     @property
+    def ssl(self):
+        """
+        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl>`.
+
+        """
+        return SSLInspectionAPI(self)
+
+    @property
     def traffic(self):
         """
         The interface object for the :ref:`ZIA Traffic Forwarding interface <zia-traffic>`.
@@ -127,6 +135,14 @@ class ZIA(APISession):
 
         """
         return URLCategoriesAPI(self)
+
+    @property
+    def url_filters(self):
+        """
+        The interface object for the :ref:`ZIA URL Filtering interface <zia-url_filters>`.
+
+        """
+        return URLFilteringAPI(self)
 
     @property
     def users(self):

@@ -1,3 +1,16 @@
+.. image:: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml/badge.svg
+   :target: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml
+.. image:: https://readthedocs.org/projects/pyzscaler/badge/?version=latest
+   :target: http://pyzscaler.readthedocs.io/?badge=latest
+.. image:: https://img.shields.io/github/license/mitchos/pyZscaler.svg
+   :target: https://github.com/mitchos/pyZscaler
+.. image:: https://img.shields.io/pypi/pyversions/pyzscaler.svg
+   :target: https://pypi.python.org/pypi/pyzscaler/
+.. image:: https://img.shields.io/pypi/v/pyzscaler.svg
+   :target: https://pypi.org/project/pyZscaler
+.. image:: https://img.shields.io/github/release/mitchos/pyZscaler.svg
+   :target: https://github.com/mitchos/pyZscaler/releases/
+
 pyZscaler - An unofficial SDK for the Zscaler API
 =====================================================================
 pyZscaler is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
