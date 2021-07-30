@@ -12,6 +12,7 @@ from .security import SecurityPolicyAPI
 from .session import AuthenticatedSessionAPI
 from .traffic import TrafficForwardingAPI
 from .url_categories import URLCategoriesAPI
+from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 
 
@@ -125,6 +126,14 @@ class ZIA(APISession):
 
         """
         return URLCategoriesAPI(self)
+
+    @property
+    def url_filters(self):
+        """
+        The interface object for the :ref:`ZIA URL Filtering interface <zia-url_filters>`.
+
+        """
+        return URLFilteringAPI(self)
 
     @property
     def users(self):
