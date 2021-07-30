@@ -431,7 +431,7 @@
             // from different frames are.
             var aCtor = a.constructor, bCtor = b.constructor;
             if (aCtor !== bCtor && !(isFunction$1(aCtor) && aCtor instanceof aCtor &&
-                isFunction$1(bCtor) && bCtor instanceof bCtor)
+                    isFunction$1(bCtor) && bCtor instanceof bCtor)
                 && ('constructor' in a && 'constructor' in b)) {
                 return false;
             }
