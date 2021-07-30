@@ -12,6 +12,7 @@ This package covers the ZIA interface.
     sandbox
     security
     session
+    ssl
     traffic
     url_categories
     users
