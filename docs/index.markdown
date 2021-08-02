@@ -64,7 +64,7 @@ The most recent version can be installed from pypi as per below.
 After you've installed pyZscaler, check out the guide for each library below:
 
 - [ZIA](zia/index) (work in progress)
-- ZPA (not yet created)
+- [ZPA](zpa/index) (work in progress)
 
 While these guides are still a work in progress, visit the
 [pyZscaler API documentation](https://pyzscaler.readthedocs.io/en/latest/index.html) for limited examples and full
