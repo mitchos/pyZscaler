@@ -6,7 +6,7 @@ nav_order: 1
 
 # Home
 
-![pyZscaler](assets/images/pyzscaler-logo.png "pyZscaler")
+![pyZscaler](assets/images/logo.svg "pyZscaler")
 
 pyZscaler provides a uniform and simple python interface for each of the Zscaler product APIs. 
 {: .fs-6 } 
