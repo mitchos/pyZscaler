@@ -19,12 +19,21 @@
 # in the templates via {{ site.myvariable }}.
 
 title: pyZscaler SDK
+tagline: A python SDK for the Zscaler API
 email: me@mkelly.dev
 description: >- # this means to ignore newlines until "baseurl:"
-  pyZscaler is an unoffical SDK that aims to provide a uniform and easy-to-use interface for each of the Zscaler
-  product APIs.
+  pyZscaler is an unofficial Python SDK that provides a simple interface for the Zscaler API.
 
-twitter_username: mitchliveshere
+# Social
+social:
+  name: pyZscaler
+  links:
+    - https://twitter.com/pyZscaler
+author:
+  twitter: mitchliveshere
+  card: summary
+twitter:
+  username: pyZscaler
 github_username: mitchos
 
 # Build settings
@@ -33,6 +42,7 @@ remote_theme: pmarsceill/just-the-docs
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 domain: mitchos.github.io       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://mitchos.github.io  # the base hostname and protocol for your site, e.g. http://example.com
@@ -48,6 +58,9 @@ aux_links:
   "ZPA API Docs":
     - "//help.zscaler.com/zpa/zpa-api"
 
+
+
+# SEO config
 ga_tracking: G-W6R8MX1F8W
 ga_tracking_anonymize_ip: true
 

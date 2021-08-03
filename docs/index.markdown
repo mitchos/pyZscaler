@@ -6,7 +6,7 @@ nav_order: 1
 
 # Home
 
-<img src="https://mitchos.github.io/pyZscaler/assets/images/logo.svg" width="600" height="180">
+<img alt="pyZscaler Logo" src="https://mitchos.github.io/pyZscaler/assets/images/logo.svg" width="600" height="180">
 
 pyZscaler provides a uniform and simple python interface for each of the Zscaler product APIs. 
 {: .fs-6 } 
