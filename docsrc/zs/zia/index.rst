@@ -17,6 +17,7 @@ This package covers the ZIA interface.
     url_categories
     url_filters
     users
+    vips
 
 .. automodule:: pyzscaler.zia
     :members:
