@@ -12,8 +12,8 @@ pyZscaler provides a uniform and simple python interface for each of the Zscaler
 {: .fs-6 } 
 {: .fw-300 }
 
-[Get Started Now](#getting-started){: .btn .btn-purple} 
-[View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }
+[Get Started Now](#getting-started){: .btn .btn-purple }
+[View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }{:target="_blank"}
 
 
 ---
@@ -63,8 +63,8 @@ The most recent version can be installed from pypi as per below.
 
 After you've installed pyZscaler, check out the guide for each library below:
 
-- [ZIA](zia/index) (work in progress)
-- [ZPA](zpa/index) (work in progress)
+- [ZIA](zia-api/index) (work in progress)
+- [ZPA](zpa-api/index) (work in progress)
 
 While these guides are still a work in progress, visit the
 [pyZscaler API documentation](https://pyzscaler.readthedocs.io/en/latest/index.html) for limited examples and full

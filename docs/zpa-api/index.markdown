@@ -1,7 +1,7 @@
 ---
 layout: default 
 title: ZPA 
-permalink: /zpa/ 
+permalink: /zpa-api/ 
 nav_order: 2 
 has_children: true
 

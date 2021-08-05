@@ -9,20 +9,29 @@ nav_order: 3
 
 Application Segments are used to configure groups of Applications in ZPA.
 
-The following methods are supported by pyZscaler for ZPA Application Segments:
+## Class Methods
+The following methods are supported by pyZscaler for ZPA Application Segments. Links lead to pyZscaler library documentation:
 
-- add_segment()
-- delete_segment()
-- details()
-- list_segments()
-- update_segment()
+- [add_segment()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI)
+- [delete_segment()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment)
+- [details()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.details)
+- [list_segments()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.list_segments)
+- [update_segment()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.update_segment)
 
 ## Adding a ZPA Application Segment
+
+
 ### Prerequisites
 You must create the following objects in ZPA before you can add an Application Segment:
 
 - Segment Group
 - Server Group
+
+The ZPA API requires the following params to be provided when adding an Application Segment:
+- name
+- segment_group_id
+- server_groups
+- tcp_ports or udp_ports
 
 ```python
 from pyzscaler.zpa import ZPA

@@ -1,7 +1,7 @@
 ---
 layout: default 
 title: ZIA 
-permalink: /zia/ 
+permalink: /zia-api/ 
 nav_order: 2 
 has_children: true
 
