@@ -10,7 +10,7 @@ nav_order: 3
 Application Segments are used to configure groups of Applications in ZPA.
 
 ## Class Methods
-The following methods are supported by pyZscaler for ZPA Application Segments. Links lead to pyZscaler library documentation:
+The following methods are supported by pyZscaler for ZPA Application Segments.
 
 - [add_segment()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI)
 - [delete_segment()](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/app_segments.html#pyzscaler.zpa.app_segments.AppSegmentsAPI.delete_segment)

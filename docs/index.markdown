@@ -20,6 +20,9 @@ pyZscaler provides a uniform and simple python interface for each of the Zscaler
 
 **Attention:** This SDK is not affiliated with, nor supported by Zscaler in any way.
 
+## Quick Links
+- [pyZscaler Library Documentation on ReadTheDocs](https://pyzscaler.readthedocs.io)
+
 ## Overview
 
 With each Zscaler product having its own developer documentation and authentication methods, this SDK simplifies your
