@@ -4,11 +4,19 @@ title: Segment Groups
 parent: ZPA 
 nav_order: 3
 ---
+1. TOC
+{:toc}
 
+---
 # Overview
 
 Segment Groups are used to configure policies for one or more Application Segments. Application Segments
 can only belong to a single Segment Group.
+
+## References
+- pyZscaler - Library Reference for Segment Groups
+- Zscaler - ZPA Segment Groups API Reference
+- Zscaler - ZPA Segment Groups Documentation
 
 ## Class Methods
 The following methods are supported by pyZscaler for ZPA Segment Groups:
@@ -20,6 +28,19 @@ The following methods are supported by pyZscaler for ZPA Segment Groups:
 - [`update_group()`](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/segment_groups.html#pyzscaler.zpa.segment_groups.SegmentGroupsAPI.update_group)
 
 ## Adding a ZPA Segment Group
+This section details how you can add a Segment Group in ZPA using pyZscaler.
+
+### Overview
+{: .no_toc }
+Unless you know what parameters you want set, you may want to start with an 'empty' Segment Group. You can always
+customise the Segment Group later using the `update_group()` method.
+
+### Class Methods used
+{: .no_toc }
+- `add_group()`
+
+### Prerequisites
+{: .no_toc }
 The minimum params required to create a Segment Group in ZPA with the API are:
 
  - `name`
@@ -27,6 +48,8 @@ The minimum params required to create a Segment Group in ZPA with the API are:
 The Segment Group will be in the disabled state unless you pass `enabled=True` upon creation.
 
 ### Example
+{: .no_toc }
+We can add a Segment Group with the absolute minimum required parameters as per below:
 
 ```python
 from pyzscaler.zpa import ZPA
@@ -40,10 +63,16 @@ with ZPA() as zpa:
     zpa.segment_groups.add_group(name="Web Apps", enabled=True)
 ```
 
+
 ## Deleting a ZPA Segment Group
+This section details how you can delete a Segment Group in ZPA using pyZscaler.
+
+### Prerequisites
+{: .no_toc }
+You'll need the `id` of the Segment Group that you want to delete.
 
 ### Example
-
+{: .no_toc }
 ```python
 from pyzscaler.zpa import ZPA
 
@@ -53,9 +82,11 @@ with ZPA() as zpa:
     zpa.segment_groups.delete_group('45096653')
 ```
 
-## Getting information for a ZPA Segment Group
+## Getting information on a ZPA Segment Group
+This section details how you can get information on a single Segment Group in ZPA using pyZscaler.
 
 ### Example
+{: .no_toc }
 ```python
 from pprint import pprint
 from pyzscaler.zpa import ZPA
@@ -68,7 +99,7 @@ with ZPA() as zpa:
 ## Listing all ZPA Segment Groups
 
 ### Example
-
+{: .no_toc }
 ```python
 from pprint import pprint
 from pyzscaler.zpa import ZPA
@@ -82,7 +113,7 @@ with ZPA() as zpa:
 ## Updating a ZPA Segment Group
 
 ### Example
-
+{: .no_toc }
 ```python
 from pyzscaler.zpa import ZPA
 
