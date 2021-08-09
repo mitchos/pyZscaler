@@ -1,8 +1,9 @@
 from restfly.endpoint import APIEndpoint
 
+from pyzscaler.utils import snake_to_camel
+
 
 class SegmentGroupsAPI(APIEndpoint):
-
     def list_groups(self):
         """
         Returns a list of all configured segment groups.
@@ -15,7 +16,7 @@ class SegmentGroupsAPI(APIEndpoint):
             ...    pprint(segment_group)
 
         """
-        return self._get('segmentGroup').list
+        return self._get("segmentGroup").list
 
     def get_group(self, group_id: str):
         """
@@ -33,7 +34,7 @@ class SegmentGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f'segmentGroup/{group_id}')
+        return self._get(f"segmentGroup/{group_id}")
 
     def delete_group(self, group_id: str):
         """
@@ -50,7 +51,7 @@ class SegmentGroupsAPI(APIEndpoint):
             >>> zpa.segment_groups.delete_group('2342342342343')
 
         """
-        return self._delete(f'segmentGroup/{group_id}')
+        return self._delete(f"segmentGroup/{group_id}")
 
     def add_group(self, name: str, enabled=False, **kwargs):
         """
@@ -64,13 +65,13 @@ class SegmentGroupsAPI(APIEndpoint):
             **kwargs:
 
         Keyword Args:
-            applications (:obj:`list` of :obj:`dict`):
-                Define an application object for the segment group.
-            configSpace (str):
+            application_ids (:obj:`list` of :obj:`dict`):
+                Unique application IDs to associate with the segment group.
+            config_space (str):
                 The config space for the segment group. Can either be DEFAULT or SIEM.
             description (str):
                 A description for the segment group.
-            policyMigrated (bool):
+            policy_migrated (bool):
 
         Returns:
             :obj:`dict`: The resource record for the newly created segment group.
@@ -82,15 +83,22 @@ class SegmentGroupsAPI(APIEndpoint):
             ...    True)
 
         """
-        payload = {
-            'name': name,
-            'enabled': enabled,
-        }
-        # Add optional params to payload
-        for key, value in kwargs.items():
-            payload[key] = value
 
-        return self._post('segmentGroup', json=payload)
+        payload = {
+            "name": name,
+            "enabled": enabled,
+        }
+
+        if kwargs.get("application_ids"):
+            payload["applications"] = [
+                {"id": app_id} for app_id in kwargs.pop("application_ids")
+            ]
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._post("segmentGroup", json=payload)
 
     def update_group(self, group_id: str, **kwargs):
         """
@@ -99,20 +107,20 @@ class SegmentGroupsAPI(APIEndpoint):
         Args:
             group_id (str):
                 The unique identifier for the segment group to be updated.
-            **kwargs:
+            **kwargs: Optional keyword args.
 
         Keyword Args:
             name (str):
                 The name of the new segment group.
             enabled (bool):
                 Enable the segment group.
-            applications (:obj:`list` of :obj:`dict`):
-                Define an application object for the segment group.
-            configSpace (str):
+            application_ids (:obj:`list` of :obj:`dict`):
+                Unique application IDs to associate with the segment group.
+            config_space (str):
                 The config space for the segment group. Can either be DEFAULT or SIEM.
             description (str):
                 A description for the segment group.
-            policyMigrated (bool):
+            policy_migrated (bool):
 
         Returns:
             :obj:`dict`: The resource record for the updated segment group.
@@ -124,11 +132,18 @@ class SegmentGroupsAPI(APIEndpoint):
             ...    name='updated_name')
 
         """
-        payload = {
-            'id': group_id,
-        }
-        # Add optional params to payload
-        for key, value in kwargs.items():
-            payload[key] = value
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
-        return self._put(f'segmentGroup/{group_id}', json=payload)
+        if kwargs.get("application_ids"):
+            payload["applications"] = [
+                {"id": app_id} for app_id in kwargs.pop("application_ids")
+            ]
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._put(
+            f"segmentGroup/{group_id}", json=payload, box=False
+        ).status_code

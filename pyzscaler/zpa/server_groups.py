@@ -1,7 +1,14 @@
 from restfly.endpoint import APIEndpoint
 
+from pyzscaler.utils import snake_to_camel, add_id_groups
+
 
 class ServerGroupsAPI(APIEndpoint):
+    reformat_params = [
+        ("application_ids", "applications"),
+        ("server_ids", "servers"),
+        ("app_connector_group_ids", "appConnectorGroups"),
+    ]
 
     def list_groups(self):
         """
@@ -15,7 +22,7 @@ class ServerGroupsAPI(APIEndpoint):
             ...    pprint(server_group)
 
         """
-        return self._get('serverGroup').list
+        return self._get("serverGroup").list
 
     def get_group(self, group_id: str):
         """
@@ -33,7 +40,7 @@ class ServerGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f'serverGroup/{group_id}')
+        return self._get(f"serverGroup/{group_id}")
 
     def delete_group(self, group_id: str):
         """
@@ -50,27 +57,29 @@ class ServerGroupsAPI(APIEndpoint):
             >>> zpa.server_groups.delete_group('2342342342343')
 
         """
-        return self._delete(f'serverGroup/{group_id}')
+        return self._delete(f"serverGroup/{group_id}")
 
-    def add_group(self, name: str, app_connector_ids: list, **kwargs):
+    def add_group(self, app_connector_group_ids: list, name: str, **kwargs):
         """Adds a server group.
 
         Args:
             name (str):
                 The name for the server group.
-            app_connector_ids (:obj:`list` of :obj:`str`):
+            app_connector_group_ids (:obj:`list` of :obj:`str`):
                 A list of application connector IDs that will be attached to the server group.
             **kwargs:
                 Optional params.
 
         Keyword Args:
-            applications (list):
-            configSpace (str):
-            description (str):
-            enabled (bool):
-            ipAnchored (bool):
-            dynamicDiscovery (bool):
-            servers (list):
+            application_ids (:obj:`list` of :obj:`str`):
+                A list of unique IDs of applications to associate with this server group.
+            config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
+            description (str): Additional information about the server group.
+            enabled (bool): Enable the server group.
+            ip_anchored (bool): Enable IP Anchoring.
+            dynamic_discovery (bool): Enable Dynamic Discovery.
+            server_ids (:obj:`list` of :obj:`str`):
+                A list of unique IDs of servers to associate with this server group.
 
         Returns:
             :obj:`dict`: The resource record for the newly created server group.
@@ -79,12 +88,12 @@ class ServerGroupsAPI(APIEndpoint):
             Create a server group with the minimum params:
 
             >>> zpa.server_groups.add_group('new_server_group'
-            ...    app_connector_ids['23423423432444'])
+            ...    app_connector_group_ids['916196382959075361'])
 
             Create a server group and define a new server on the fly:
 
             >>> zpa.server_groups.add_group('new_server_group',
-            ...    app_connector_ids=['23423423432444'],
+            ...    app_connector_group_ids=['916196382959075361'],
             ...    enabled=True,
             ...    servers=[{
             ...      'name': 'new_server',
@@ -94,53 +103,64 @@ class ServerGroupsAPI(APIEndpoint):
         """
         # Initialise payload
         payload = {
-            'name': name,
-            'appConnectorGroups': []
+            "name": name,
+            "appConnectorGroups": [
+                {"id": group_id} for group_id in app_connector_group_ids
+            ],
         }
-        # Iterate through provided app connector group IDs and add to payload
-        for app_connector_id in app_connector_ids:
-            app_connector_group = {
-                'id': app_connector_id
-            }
-            payload['appConnectorGroups'].append(app_connector_group)
-        # Add optional params to payload
+
+        add_id_groups(self.reformat_params, kwargs, payload)
+
+        # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[key] = value
+            payload[snake_to_camel(key)] = value
 
-        return self._post('serverGroup', json=payload)
+        return self._post("serverGroup", json=payload)
 
-    def update_group(self, group_id: str, dynamic_discovery: bool = None, servers: list = None, **kwargs):
+    def update_group(self, group_id: str, **kwargs):
         """
         Updates a server group.
-
-        .. Note:: The ZPA server group API requires the dynamic_discovery and servers params to be provided for all
-            updates.
 
         Args:
             group_id (str, required):
                 The unique identifier for the server group.
-            dynamic_discovery (bool, required):
-                Should Dynamic Discovery be enabled.
-            servers (:obj:`list` of :obj:`dict`):
-                The server objects for the server group.
-            **kwargs:
+            **kwargs: Optional keyword args.
+
+        Keyword Args:
+            app_connector_group_ids (:obj:`list` of :obj:`str`):
+                A list of application connector IDs that will be attached to the server group.
+            application_ids (:obj:`list` of :obj:`str`):
+                A list of unique IDs of applications to associate with this server group.
+            config_space (str): The configuration space. Accepted values are `DEFAULT` or `SIEM`.
+            description (str): Additional information about the server group.
+            enabled (bool): Enable the server group.
+            ip_anchored (bool): Enable IP Anchoring.
+            dynamic_discovery (bool): Enable Dynamic Discovery.
+            server_ids (:obj:`list` of :obj:`str`):
+                A list of unique IDs of servers to associate with this server group
 
         Returns:
             :obj:`dict`: The resource record for the updated server group.
 
+        Examples:
+            Update the name of a server group:
+
+            >>> zpa.server_groups.update_group(name='Updated Name')
+
+            Enable IP anchoring and Dynamic Discovery:
+
+            >>> zpa.server_groups.update_group(ip_anchored=True,
+            ...    dynamic_discovery=True)
+
         """
 
-        payload = {
-            'id': group_id,
-        }
-        if dynamic_discovery is None:
-            payload['dynamicDiscovery'] = dynamic_discovery
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
-        if servers is not None:
-            payload['servers'] = servers
+        add_id_groups(self.reformat_params, kwargs, payload)
 
-        # Add optional params to payload
+        # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[key] = value
+            payload[snake_to_camel(key)] = value
 
-        return self._put(f'serverGroup/{group_id}', json=payload, box=False)
+        return self._put(f"serverGroup/{group_id}", json=payload, box=False).status_code

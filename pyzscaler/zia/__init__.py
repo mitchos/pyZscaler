@@ -15,6 +15,7 @@ from .traffic import TrafficForwardingAPI
 from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
+from .vips import DataCenterVIPSAPI
 
 
 class ZIA(APISession):
@@ -151,3 +152,11 @@ class ZIA(APISession):
 
         """
         return UserManagementAPI(self)
+
+    @property
+    def vips(self):
+        """
+        The interface object for the :ref:`ZIA Data Center VIPs interface <zia-vips>`.
+
+        """
+        return DataCenterVIPSAPI(self)
