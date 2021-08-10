@@ -1,6 +1,6 @@
 import os
-import pytest
 
+import pytest
 from restfly.errors import APIError
 from restfly.utils import check
 
@@ -155,11 +155,3 @@ def test_users_delete_user(user, zia):
     resp = zia.users.delete_user(user.id)
     check("response", resp, int)
     assert resp == 204
-
-
-def test_users_bulk_delete(user, zia):
-    resp = zia.users.bulk_delete_users([user.id])
-    check("response", resp, dict)
-    check("ids", resp["ids"], list)
-    for user_id in resp["ids"]:
-        assert user_id == user.id

@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class SCIMAttributesAPI(APIEndpoint):
-
     def list_attribute(self):
         """
         Returns a list of all configured SCIM attributes.
@@ -15,7 +14,7 @@ class SCIMAttributesAPI(APIEndpoint):
             ...    pprint(scim_attribute)
 
         """
-        return self._get('scimAttribute').list
+        return self._get("scimAttribute").list
 
     def get_attribute(self, idp_id: str):
         """
@@ -33,7 +32,7 @@ class SCIMAttributesAPI(APIEndpoint):
 
         """
 
-        return self._get(f'scimAttribute/{idp_id}')
+        return self._get(f"scimAttribute/{idp_id}")
 
     def get_values(self, idp_id: str, attribute_id: str):
         """
@@ -53,4 +52,4 @@ class SCIMAttributesAPI(APIEndpoint):
 
         """
 
-        return self._get(f'scimAttribute/{idp_id}/attributeId/{attribute_id}')
+        return self._get(f"scimAttribute/{idp_id}/attributeId/{attribute_id}")

@@ -1,9 +1,8 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
 
 
 class TrustedNetworksAPI(APIEndpoint):
-
     def list_networks(self):
         """
         Returns a list of all configured trusted networks.
@@ -16,7 +15,7 @@ class TrustedNetworksAPI(APIEndpoint):
             ...    pprint(trusted_network)
 
         """
-        return self._get('network', box=BoxList)
+        return self._get("network", box=BoxList)
 
     def get_network(self, network_id: str):
         """
@@ -34,4 +33,4 @@ class TrustedNetworksAPI(APIEndpoint):
 
         """
 
-        return self._get(f'network/{network_id}')
+        return self._get(f"network/{network_id}")

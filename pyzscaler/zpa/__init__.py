@@ -1,7 +1,8 @@
 import os
-from restfly.session import APISession
-from pyzscaler.version import version
 
+from restfly.session import APISession
+
+from pyzscaler.version import version
 from .app_segments import AppSegmentsAPI
 from .certificates import BACertificatesAPI
 from .cloud_connector_groups import CloudConnectorGroupsAPI
@@ -14,8 +15,9 @@ from .saml_attributes import SAMLAttributesAPI
 from .scim_attributes import SCIMAttributesAPI
 from .scim_groups import SCIMGroupsAPI
 from .segment_groups import SegmentGroupsAPI
-from .servers import AppServersAPI
 from .server_groups import ServerGroupsAPI
+from .servers import AppServersAPI
+from .session import AuthenticatedSessionAPI
 from .trusted_networks import TrustedNetworksAPI
 
 
@@ -30,45 +32,40 @@ class ZPA(APISession):
         _customer_id (str): The ZPA tenant ID found in the Administration > Company menu in the ZPA console.
 
     """
-    _vendor = 'Zscaler'
-    _product = 'Zscaler Private Access'
+
+    _vendor = "Zscaler"
+    _product = "Zscaler Private Access"
     _build = version
     _box = True
-    _box_attrs = {
-        'camel_killer_box': True
-    }
-    _env_base = 'ZPA'
-    _url = 'https://config.private.zscaler.com'
+    _box_attrs = {"camel_killer_box": True}
+    _env_base = "ZPA"
+    _url = "https://config.private.zscaler.com"
 
     def __init__(self, **kw):
-        self._client_id = kw.get('client_id',
-                                 os.getenv(f'{self._env_base}_CLIENT_ID'))
-        self._client_secret = kw.get('client_secret',
-                                     os.getenv(f'{self._env_base}_CLIENT_SECRET'))
-        self._customer_id = kw.get('customer_id',
-                                   os.getenv(f'{self._env_base}_CUSTOMER_ID'))
+        self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
+        self._client_secret = kw.get(
+            "client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET")
+        )
+        self._customer_id = kw.get(
+            "customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID")
+        )
         super(ZPA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> None:
+        """Creates a ZPA API authenticated session."""
         super(ZPA, self)._build_session(**kwargs)
 
-        payload = f"client_id={self._client_id}&client_secret={self._client_secret}"
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
-        token = self.post('signin', headers=headers, data=payload).access_token
-        self._session.headers.update({
-            'Authorization': f'Bearer {token}'
-        })
-        self._url = f'https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}'
+        self._url = f"https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}"
+        self._auth_token = self.session.create_token(
+            client_id=self._client_id, client_secret=self._client_secret
+        )
+        return self._session.headers.update(
+            {"Authorization": f"Bearer {self._auth_token}"}
+        )
 
-    @property
-    def servers(self):
-        """
-        The interface object for the :ref:`ZPA Application Servers interface <zpa-app_servers>`.
-
-        """
-        return AppServersAPI(self)
+    def _deauthenticate(self, **kwargs):
+        """Ends the ZPA API authenticated session."""
+        return self.session.delete()
 
     @property
     def app_segments(self):
@@ -79,8 +76,20 @@ class ZPA(APISession):
         return AppSegmentsAPI(self)
 
     @property
-    def segment_groups(self):
-        return SegmentGroupsAPI(self)
+    def certificates(self):
+        """
+        The interface object for the :ref:`ZPA Browser Access Certificates interface <zpa-certificates>`.
+
+        """
+        return BACertificatesAPI(self)
+
+    @property
+    def cloud_connector_groups(self):
+        """
+        The interface object for the :ref:`ZPA Cloud Connector Groups interface <zpa-cloud_connector_groups>`.
+
+        """
+        return CloudConnectorGroupsAPI(self)
 
     @property
     def connector_groups(self):
@@ -105,14 +114,6 @@ class ZPA(APISession):
 
         """
         return MachineGroupsAPI(self)
-
-    @property
-    def cloud_connector_groups(self):
-        """
-        The interface object for the :ref:`ZPA Cloud Connector Groups interface <zpa-cloud_connector_groups>`.
-
-        """
-        return CloudConnectorGroupsAPI(self)
 
     @property
     def policies(self):
@@ -147,21 +148,21 @@ class ZPA(APISession):
         return SCIMAttributesAPI(self)
 
     @property
-    def trusted_networks(self):
-        """
-        The interface object for the :ref:`ZPA Trusted Networks interface <zpa-trusted_networks>`.
-
-        """
-        return TrustedNetworksAPI(self)
-
-    @property
     def scim_groups(self):
         """
         The interface object for the :ref:`ZPA SCIM Groups interface <zpa-scim_groups>`.
 
         """
-        self._url = f'https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}'
+        self._url = f"https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}"
         return SCIMGroupsAPI(self)
+
+    @property
+    def segment_groups(self):
+        """
+        The interface object for the :ref:`ZPA Segment Groups interface <zpa-segment_groups>`.
+
+        """
+        return SegmentGroupsAPI(self)
 
     @property
     def server_groups(self):
@@ -172,9 +173,26 @@ class ZPA(APISession):
         return ServerGroupsAPI(self)
 
     @property
-    def certificates(self):
+    def servers(self):
         """
-        The interface object for the :ref:`ZPA Browser Access Certificates interface <zpa-certificates>`.
+        The interface object for the :ref:`ZPA Application Servers interface <zpa-app_servers>`.
 
         """
-        return BACertificatesAPI(self)
+        return AppServersAPI(self)
+
+    @property
+    def session(self):
+        """
+        The interface object for the :ref:`ZPA Session API calls <zpa-session>`.
+
+        """
+
+        return AuthenticatedSessionAPI(self)
+
+    @property
+    def trusted_networks(self):
+        """
+        The interface object for the :ref:`ZPA Trusted Networks interface <zpa-trusted_networks>`.
+
+        """
+        return TrustedNetworksAPI(self)

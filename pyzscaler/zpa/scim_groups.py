@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class SCIMGroupsAPI(APIEndpoint):
-
     def list_groups(self):
         """
         Returns a list of all configured SCIM groups.
@@ -15,7 +14,7 @@ class SCIMGroupsAPI(APIEndpoint):
             ...    pprint(scim_group)
 
         """
-        return self._get('scimgroup').list
+        return self._get("scimgroup").list
 
     def get_group(self, idp_id: str):
         """
@@ -33,4 +32,4 @@ class SCIMGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f'scimgroup/idpId/{idp_id}')
+        return self._get(f"scimgroup/idpId/{idp_id}")
