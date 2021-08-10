@@ -30,7 +30,7 @@ class ServerGroupsAPI(APIEndpoint):
 
         Args:
             group_id (str):
-                The unique identifier for the server group.
+                The unique id for the server group.
 
         Returns:
             :obj:`dict`: The resource record for the server group.
@@ -48,7 +48,7 @@ class ServerGroupsAPI(APIEndpoint):
 
         Args:
             group_id (str):
-                The unique identifier for the server group to be deleted.
+                The unique id for the server group to be deleted.
 
         Returns:
             :obj:`str`: The response code for the operation.
