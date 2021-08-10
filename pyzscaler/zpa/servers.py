@@ -1,27 +1,33 @@
 from restfly.endpoint import APIEndpoint
 
+from pyzscaler.utils import snake_to_camel, add_id_groups
+
 
 class AppServersAPI(APIEndpoint):
+    reformat_params = [
+        ("app_connector_group_ids", "appConnectorGroups"),
+    ]
 
-    def add_server(self, name: str = None, address: str = None, enabled: bool = False, **kwargs):
+    def add_server(self, name: str, address: str, enabled: bool = False, **kwargs):
         """
         Add a new application server.
 
         Args:
-            name (str, required):
+            name (str):
                 The name of the server.
-            address (str, required):
+            address (str):
                 The IP address of the server.
-            enabled (bool, required):
-                 Should the server be enabled. Defaults to False.
+            enabled (bool):
+                 Enable the server. Defaults to False.
             **kwargs:
+                Optional keyword args.
 
         Keyword Args:
-            description (str, optional):
+            description (str):
                 A description for the server.
-            appServerGroupIds (:obj:`list` of :obj:`str`), optional):
+            app_server_group_ids (list):
                 Unique identifiers for the server groups the server belongs to.
-            configSpace (str, optional):
+            config_space (str):
                 The configuration space for the server. Defaults to DEFAULT.
 
         Returns:
@@ -36,15 +42,15 @@ class AppServersAPI(APIEndpoint):
             ...   enabled=True)
 
         """
-        payload = {
-            "name": name,
-            "address": address,
-            "enabled": enabled,
-            "description": kwargs.get('description', ''),
-            "appServerGroupIds": kwargs.get('server_group_ids', []),
-            "configSpace": kwargs.get('config_space', 'DEFAULT')
-        }
-        return self._post('server', json=payload)
+        payload = {"name": name, "address": address, "enabled": enabled}
+
+        add_id_groups(self.reformat_params, kwargs, payload)
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._post("server", json=payload)
 
     def list_servers(self):
         """
@@ -56,11 +62,11 @@ class AppServersAPI(APIEndpoint):
         Examples:
             >>> servers = zpa.servers.list_servers()
         """
-        return self._get('server').list
+        return self._get("server").list
 
     def get_server(self, server_id: str):
         """
-        Get information for the specified server id.
+        Gets information on the specified server.
 
         Args:
             server_id (str):
@@ -70,48 +76,51 @@ class AppServersAPI(APIEndpoint):
             :obj:`dict`: The resource record for the server.
 
         Examples:
-            >>> server = zpa.servers.get_server('12')
+            >>> server = zpa.servers.get_server('916196382959075424')
 
         """
-        return self._get(f'server/{server_id}')
+        return self._get(f"server/{server_id}")
 
     def delete_server(self, server_id: str):
         """
         Delete the specified server.
 
+        The server must not be assigned to any Server Groups or the operation will fail.
+
         Args:
-            server_id (str):
-                The unique identifier for the server to be deleted.
+            server_id (str): The unique identifier for the server to be deleted.
 
         Returns:
             :obj:`str`: The response code for the operation.
 
         Examples:
-            >>> zpa.servers.delete_server('32')
+            >>> zpa.servers.delete_server('916196382959075424')
 
         """
-        return self._delete(f'server/{server_id}')
+        return self._delete(f"server/{server_id}", box=False).status_code
 
     def update_server(self, server_id: str, **kwargs):
-        """Updates the specified server
+        """
+        Updates the specified server.
 
         Args:
             server_id (str):
                 The unique identifier for the server being updated.
             **kwargs:
+                Optional keyword args.
 
         Keyword Args:
-            name (str, optional):
+            name (str):
                 The name of the server.
-            address (str, optional):
+            address (str):
                 The IP address of the server.
-            enabled (bool, optional):
-                 Should the server be enabled.
-            description (str, optional):
+            enabled (bool):
+                 Enable the server.
+            description (str):
                 A description for the server.
-            appServerGroupIds (list(str), optional):
+            app_server_group_ids (list):
                 Unique identifiers for the server groups the server belongs to.
-            configSpace (str, optional):
+            config_space (str):
                 The configuration space for the server.
 
         Returns:
@@ -121,22 +130,23 @@ class AppServersAPI(APIEndpoint):
             Update the name of a server:
 
             >>> zpa.servers.update_server(
-            ...   '23483234823484',
+            ...   '916196382959075424',
             ...   name='newname.example')
 
             Update the address and enable a server:
 
             >>> zpa.servers.update_server(
-            ...    '23483234823484',
+            ...    '916196382959075424',
             ...    address='192.0.2.20',
             ...    enabled=True)
 
         """
-        payload = {
-            'id': server_id
-        }
+        # Set payload to value of existing record
+        payload = {snake_to_camel(k): v for k, v in self.get_server(server_id).items()}
 
+        # Add optional parameters to payload
+        add_id_groups(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
-            payload[key] = value
+            payload[snake_to_camel(key)] = value
 
-        return self._put(f'server/{server_id}', json=payload)
+        return self._put(f"server/{server_id}", json=payload, box=False).status_code
