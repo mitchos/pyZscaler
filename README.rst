@@ -1,7 +1,9 @@
 .. image:: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml/badge.svg
    :target: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml
 .. image:: https://readthedocs.org/projects/pyzscaler/badge/?version=latest
-   :target: http://pyzscaler.readthedocs.io/?badge=latest
+   :target: https://pyzscaler.readthedocs.io/?badge=latest
+.. image:: https://app.codacy.com/project/badge/Grade/d339fa5d957140f496fdb5c40abc4666
+   :target: https://www.codacy.com/gh/mitchos/pyZscaler/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mitchos/pyZscaler&amp;utm_campaign=Badge_Grade
 .. image:: https://img.shields.io/github/license/mitchos/pyZscaler.svg
    :target: https://github.com/mitchos/pyZscaler
 .. image:: https://img.shields.io/pypi/pyversions/pyzscaler.svg
@@ -11,28 +13,20 @@
 .. image:: https://img.shields.io/github/release/mitchos/pyZscaler.svg
    :target: https://github.com/mitchos/pyZscaler/releases/
 
-pyZscaler - An unofficial SDK for the Zscaler API
+pyZscaler - An unofficial Python SDK for the Zscaler API
 =====================================================================
-pyZscaler is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
+pyZscaler is a Python SDK that provides a simple and uniform interface for each of the Zscaler product APIs.
 
 
-.. attention:: This SDK is not affiliated with, nor supported by Zscaler in any way.
-
-   :strong:`Caveats`
-
-   - Not all features may be implemented.
-   - Implemented features may be buggy or incorrect.
-   - Bugs will be fixed in my own time.
+**Attention:** This SDK is not affiliated with, nor supported by Zscaler in any way.
 
 Overview
 ==========
-With each Zscaler product having its own developer documentation and authentication methods, this SDK should simplify
-your ability to develop software that uses the Zscaler API.
+Each Zscaler product has separate developer documentation and authentication methods. This SDK simplifies
+software development using the Zscaler API.
 
-The goal of Pyzscaler is to eventually cover all public API endpoints published by Zscaler across all of their products.
-
-This SDK leverages the very awesome `RESTfly framework <https://restfly.readthedocs.io/en/latest/index.html>`_ developed
-by Steve McGrath, which simplifies the development of building libraries to interact with RESTful APIs.
+This SDK leverages the `RESTfly framework <https://restfly.readthedocs.io/en/latest/index.html>`_ developed
+by Steve McGrath.
 
 Features
 ----------
@@ -40,7 +34,7 @@ Features
 - Uniform interaction with all Zscaler APIs.
 - Uses `python-box <https://github.com/cdgriffith/Box/wiki>`_ to add dot notation access to json data structures.
 - Zscaler API output automatically converted from CamelCase to Snake Case.
-- Various quality of life enhancements for object update methods.
+- Various quality of life enhancements for object CRUD methods.
 
 Products
 ---------
@@ -63,59 +57,6 @@ Before you can interact with any of the Zscaler APIs, you may need to generate A
 for each product that you are interfacing with. Once you have the requirements and you have installed pyZscaler,
 you're ready to go.
 
-Getting started with ZIA
---------------------------
-For ZIA, you will need to provide params when instantiating the class or set the environment variables as per the
-table below:
-
-.. list-table:: ZIA Requirements
-   :header-rows: 1
-
-   * - Param
-     - ENV
-     - Description
-   * - cloud
-     - ``ZIA_CLOUD``
-     - The cloud that your ZIA tenant is provisioned on.
-   * - api_key
-     - ``ZIA_API_KEY``
-     - The API key generated from your ZIA console.
-   * - username
-     - ``ZIA_USERNAME``
-     - The username of your administrator user that will be used for API calls.
-   * - password
-     - ``ZIA_PASSWORD``
-     - The password for the administrator user.
-
-See the `ZIA docs <https://help.zscaler.com/zia/api-getting-started#RetrieveAPIKey>`_ for how to generate the `api_key`.
-
-How to determine the ZIA CLOUD
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-You can find the name of the cloud in the URL that admins use to log into the Zscaler service. E.g.
-if an organisation logs into admin.zscaler.net, then that organization's cloud name is zscaler.net. You don't
-need to supply the .net suffix with pyZscaler, so the ``CLOUD`` arg would simply be ``zscaler``.
-
-.. list-table:: ZIA Cloud List
-   :header-rows: 1
-
-   * - URL
-     - CLOUD
-   * - admin.zscaler.net
-     - zscaler
-   * - admin.zscalerone.net
-     - zscalerone
-   * - admin.zscalertwo.net
-     - zscalertwo
-   * - admin.zscalerthree.net
-     - zscalerthree
-   * - admin.zscloud.net
-     - zscloud
-   * - admin.zscalerbeta.net
-     - zscalerbeta
-   * - admin.zscalergov.net
-     - zscalergov
-
 Quick ZIA Example
 ^^^^^^^^^^^^^^^^^^^
 
@@ -127,29 +68,6 @@ Quick ZIA Example
     zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
     for user in zia.users.list():
         pprint(user)
-
-Getting started with ZPA
---------------------------
-For ZPA, you will need to provide params when instantiating the class or set the environment variables as per the
-table below:
-
-.. list-table:: ZPA Requirements
-   :header-rows: 1
-
-   * - Param
-     - ENV
-     - Description
-   * - client_id
-     - ``ZPA_CLIENT_ID``
-     - The client ID that is associated with the client secret.
-   * - client_secret
-     - ``ZPA_CLIENT_SECRET``
-     - The client secret that was generated for the client ID.
-   * - customer_id
-     - ``ZPA_CUSTOMER_ID``
-     - The customer ID for the ZPA tenancy.
-
-See the `ZPA docs <https://help.zscaler.com/zpa/about-api-keys>`_ for how to generate the `client_id`, `client_secret` and find the `customer_id`.
 
 Quick ZPA Example
 ^^^^^^^^^^^^^^^^^^^

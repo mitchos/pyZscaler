@@ -4,7 +4,6 @@ from pyzscaler.utils import snake_to_camel
 
 
 class PolicySetsAPI(APIEndpoint):
-
     @staticmethod
     def _create_conditions(conditions):
         """
@@ -23,11 +22,13 @@ class PolicySetsAPI(APIEndpoint):
         for condition in conditions:
             if isinstance(condition, tuple) and len(condition) == 3:
                 operand = {
-                    "operands": [{
-                        "objectType": condition[0].upper(),
-                        "lhs": condition[1],
-                        "rhs": condition[2]
-                    }]
+                    "operands": [
+                        {
+                            "objectType": condition[0].upper(),
+                            "lhs": condition[1],
+                            "rhs": condition[2],
+                        }
+                    ]
                 }
                 template.append(operand)
 
@@ -193,7 +194,7 @@ class PolicySetsAPI(APIEndpoint):
         payload = {
             "name": name,
             "action": action.upper(),
-            "conditions": self._create_conditions(kwargs.pop('conditions', []))
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
         }
 
         # Get the policy id of the provided policy type for the URL.
@@ -206,7 +207,8 @@ class PolicySetsAPI(APIEndpoint):
         return self._post(f"policySet/{_policy_id}/rule", json=payload)
 
     def add_timeout_rule(self, name: str, **kwargs):
-        """Add a new Timeout Policy rule.
+        """
+        Add a new Timeout Policy rule.
 
         See the `ZPA Timeout Policy API reference <https://help.zscaler.com/zpa/timeout-policy-use-cases>`_
         for further detail on optional keyword parameter structures.
@@ -249,19 +251,15 @@ class PolicySetsAPI(APIEndpoint):
         payload = {
             "name": name,
             "action": "RE_AUTH",
-            "conditions": self._create_conditions(kwargs.pop('conditions', []))
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
         }
 
         # Get the policy id of the provided policy type for the URL.
         _policy_id = self.list_policies("timeout").id
 
         # Use specified timeouts or default to UI values
-        payload["reauthTimeout"] = kwargs.get(
-            "re_auth_timeout", 172800
-        )
-        payload["reauthIdleTimeout"] = kwargs.get(
-            "re_auth_idle_timeout", 600
-        )
+        payload["reauthTimeout"] = kwargs.get("re_auth_timeout", 172800)
+        payload["reauthIdleTimeout"] = kwargs.get("re_auth_idle_timeout", 600)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -270,7 +268,8 @@ class PolicySetsAPI(APIEndpoint):
         return self._post(f"policySet/{_policy_id}/rule", json=payload)
 
     def add_client_forwarding_rule(self, name: str, action: str, **kwargs):
-        """Add a new Client Forwarding Policy rule.
+        """
+        Add a new Client Forwarding Policy rule.
 
         See the
         `ZPA Client Forwarding Policy API reference <https://help.zscaler.com/zpa/client-forwarding-policy-use-cases>`_
@@ -316,7 +315,7 @@ class PolicySetsAPI(APIEndpoint):
         payload = {
             "name": name,
             "action": action.upper(),
-            "conditions": self._create_conditions(kwargs.pop('conditions', []))
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
         }
 
         # Get the policy id of the provided policy type for the URL.
@@ -328,12 +327,7 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._post(f"policySet/{_policy_id}/rule", json=payload)
 
-    def update_rule(
-        self,
-        policy_type: str,
-        rule_id: str,
-        **kwargs
-    ):
+    def update_rule(self, policy_type: str, rule_id: str, **kwargs):
         """
         Update an existing policy rule
 
@@ -387,11 +381,13 @@ class PolicySetsAPI(APIEndpoint):
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            if key == 'conditions':
-                payload['conditions'] = self._create_conditions(value)
+            if key == "conditions":
+                payload["conditions"] = self._create_conditions(value)
             else:
                 payload[snake_to_camel(key)] = value
 
         return self._put(
-            f"policySet/{current_rule.policySetId}/rule/{rule_id}", json=payload, box=False
+            f"policySet/{current_rule.policySetId}/rule/{rule_id}",
+            json=payload,
+            box=False,
         ).status_code

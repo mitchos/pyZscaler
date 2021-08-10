@@ -11,7 +11,8 @@ class AppSegmentsAPI(APIEndpoint):
     ]
 
     def list_segments(self):
-        """Retrieve all configured application segments.
+        """
+        Retrieve all configured application segments.
 
         Returns:
             :obj:`list`: List of application segments.
@@ -23,7 +24,8 @@ class AppSegmentsAPI(APIEndpoint):
         return self._get("application").list
 
     def get_segment(self, segment_id: str):
-        """Get information for an application segment.
+        """
+        Get information for an application segment.
 
         Args:
             segment_id (str):
@@ -39,7 +41,8 @@ class AppSegmentsAPI(APIEndpoint):
         return self._get(f"application/{segment_id}")
 
     def delete_segment(self, segment_id: str):
-        """Delete an application segment.
+        """
+        Delete an application segment.
 
         Args:
             segment_id (str):
@@ -143,7 +146,8 @@ class AppSegmentsAPI(APIEndpoint):
         return self._post("application", json=payload)
 
     def update_segment(self, segment_id: str, **kwargs):
-        """Update an application segment.
+        """
+        Update an application segment.
 
         Args:
             segment_id (str):

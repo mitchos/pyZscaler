@@ -60,7 +60,8 @@ class ServerGroupsAPI(APIEndpoint):
         return self._delete(f"serverGroup/{group_id}")
 
     def add_group(self, app_connector_group_ids: list, name: str, **kwargs):
-        """Adds a server group.
+        """
+        Adds a server group.
 
         Args:
             name (str):
