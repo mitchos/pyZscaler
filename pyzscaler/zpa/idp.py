@@ -1,9 +1,8 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
 
 
 class IDPControllerAPI(APIEndpoint):
-
     def list_idps(self):
         """
         Returns a list of all configured IDPs.
@@ -16,7 +15,7 @@ class IDPControllerAPI(APIEndpoint):
             ...    pprint(idp)
 
         """
-        return self._get('idp', box=BoxList)
+        return self._get("idp", box=BoxList)
 
     def get_idp(self, idp_id: str):
         """
@@ -34,4 +33,4 @@ class IDPControllerAPI(APIEndpoint):
 
         """
 
-        return self._get(f'idp/{idp_id}')
+        return self._get(f"idp/{idp_id}")

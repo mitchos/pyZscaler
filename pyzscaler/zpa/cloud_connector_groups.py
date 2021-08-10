@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class CloudConnectorGroupsAPI(APIEndpoint):
-
     def list_groups(self):
         """
         Returns a list of all configured cloud connector groups.
@@ -15,7 +14,7 @@ class CloudConnectorGroupsAPI(APIEndpoint):
             ...    pprint(cloud_connector_group)
 
         """
-        return self._get('cloudConnectorGroups').list
+        return self._get("cloudConnectorGroups").list
 
     def get_group(self, group_id: str):
         """
@@ -33,4 +32,4 @@ class CloudConnectorGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f'cloudConnectorGroups/{group_id}')
+        return self._get(f"cloudConnectorGroups/{group_id}")

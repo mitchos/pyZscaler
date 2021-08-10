@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class ConnectorGroupsAPI(APIEndpoint):
-
     def list_groups(self):
         """
         Returns a list of all connector groups.
@@ -14,7 +13,7 @@ class ConnectorGroupsAPI(APIEndpoint):
             >>> connector_groups = zpa.connector_groups.list_groups()
 
         """
-        return self._get('appConnectorGroup').list
+        return self._get("appConnectorGroup").list
 
     def get_group(self, group_id: str):
         """
@@ -32,4 +31,4 @@ class ConnectorGroupsAPI(APIEndpoint):
             >>> connector_group = zpa.connector_groups.get_group('2342342354545455')
 
         """
-        return self._get(f'appConnectorGroup/{group_id}')
+        return self._get(f"appConnectorGroup/{group_id}")

@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class MachineGroupsAPI(APIEndpoint):
-
     def list_groups(self):
         """
         Returns a list of all configured machine groups.
@@ -15,7 +14,7 @@ class MachineGroupsAPI(APIEndpoint):
             ...    pprint(machine_group)
 
         """
-        return self._get('machineGroups').list
+        return self._get("machineGroups").list
 
     def get_group(self, group_id: str):
         """
@@ -33,4 +32,4 @@ class MachineGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f'machineGroups/{group_id}')
+        return self._get(f"machineGroups/{group_id}")

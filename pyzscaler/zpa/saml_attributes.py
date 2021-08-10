@@ -1,9 +1,8 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
 
 
 class SAMLAttributesAPI(APIEndpoint):
-
     def list_attributes(self):
         """
         Returns a list of all configured SAML attributes.
@@ -16,7 +15,7 @@ class SAMLAttributesAPI(APIEndpoint):
             ...    pprint(saml_attribute)
 
         """
-        return self._get('samlAttribute', box=BoxList)
+        return self._get("samlAttribute", box=BoxList)
 
     def get_attribute(self, attribute_id: str):
         """
@@ -34,4 +33,4 @@ class SAMLAttributesAPI(APIEndpoint):
 
         """
 
-        return self._get(f'samlAttribute/{attribute_id}')
+        return self._get(f"samlAttribute/{attribute_id}")

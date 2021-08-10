@@ -100,7 +100,8 @@ class AppServersAPI(APIEndpoint):
         return self._delete(f"server/{server_id}", box=False).status_code
 
     def update_server(self, server_id: str, **kwargs):
-        """Updates the specified server.
+        """
+        Updates the specified server.
 
         Args:
             server_id (str):
