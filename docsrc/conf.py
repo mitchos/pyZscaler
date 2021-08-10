@@ -90,6 +90,7 @@ html_logo = 'logo.svg'
 # documentation.
 #
 html_theme_options = {
+    "sidebar_hide_name": True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
