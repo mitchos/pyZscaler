@@ -52,14 +52,13 @@ The most recent version can be installed from pypi as per below.
     $ pip install pyzscaler
 
 Usage
-========
+=======
 Before you can interact with any of the Zscaler APIs, you may need to generate API keys or retrieve tenancy information
 for each product that you are interfacing with. Once you have the requirements and you have installed pyZscaler,
 you're ready to go.
 
 Quick ZIA Example
-^^^^^^^^^^^^^^^^^^^
-
+-------------------
 .. code-block:: python
 
     from pyzscaler.zia import ZIA
@@ -70,8 +69,7 @@ Quick ZIA Example
         pprint(user)
 
 Quick ZPA Example
-^^^^^^^^^^^^^^^^^^^
-
+-------------------
 .. code-block:: python
 
     from pyzscaler.zpa import ZPA
