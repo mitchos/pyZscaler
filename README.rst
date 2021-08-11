@@ -1,3 +1,5 @@
+.. image:: https://github.com/mitchos/pyZscaler/blob/gh-pages/docs/assets/images/logo.svg
+
 .. image:: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml/badge.svg
    :target: https://github.com/mitchos/pyZscaler/actions/workflows/build.yml
 .. image:: https://readthedocs.org/projects/pyzscaler/badge/?version=latest
@@ -12,6 +14,7 @@
    :target: https://pypi.org/project/pyZscaler
 .. image:: https://img.shields.io/github/release/mitchos/pyZscaler.svg
    :target: https://github.com/mitchos/pyZscaler/releases/
+   
 
 pyZscaler - An unofficial Python SDK for the Zscaler API
 =====================================================================
