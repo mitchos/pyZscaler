@@ -20,7 +20,7 @@ Application Segments are used to configure groups of Applications in ZPA.
 - [Zscaler - ZPA Application Segment Documentation](https://help.zscaler.com/zpa/configuring-application-segments){:target="_blank"}
 
 ## Class Methods
-The pyZscaler Application Segments module can be accessed via `zpa.app_segments`.
+The pyZscaler Application Segments Class can be accessed via `zpa.app_segments`.
 
 The following methods are supported by pyZscaler for ZPA Application Segments.
 
@@ -41,8 +41,8 @@ This section details how you can add an Application Segment in ZPA using pyZscal
 {: .no_toc }
 You must create the following objects in ZPA before you can add an Application Segment:
 
-- [Segment Group](segment_groups)
-- [Server Group](server_groups)
+- [Segment Group](segment-groups-api)
+- [Server Group](server-groups-api)
 
 The ZPA API requires the following params to be provided when adding an Application Segment:
 - `name`

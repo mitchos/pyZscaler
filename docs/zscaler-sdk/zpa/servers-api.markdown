@@ -14,8 +14,8 @@ permalink: /zscaler-sdk/zpa/servers-api
 
 Server objects in ZPA are used to define the virtual or physical servers that host an application.
 
-When you define a Server using the ZPA API, you'll also want to assign it to a [Server Group](server_groups) so that you
-can assign it to an [Application Segment](app_segments).
+When you define a Server using the ZPA API, you'll also want to assign it to a [Server Group](server-groups-api) so that you
+can assign it to an [Application Segment](app-segments-api).
 
 ## References
 - [pyZscaler - Library Reference for Servers](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/servers.html){:target="_blank"}
@@ -23,6 +23,8 @@ can assign it to an [Application Segment](app_segments).
 - [Zscaler - ZPA Servers Documentation](https://help.zscaler.com/zpa/about-servers){:target="_blank"}
 
 ## Class Methods
+The pyZscaler Servers Class can be accessed via `zpa.servers`.
+
 The following methods are supported by pyZscaler for ZPA Servers:
 
 - [`add_server()`](https://pyzscaler.readthedocs.io/en/latest/zs/zpa/servers.html#pyzscaler.zpa.servers.AppServersAPI.add_server){:target="_blank"}

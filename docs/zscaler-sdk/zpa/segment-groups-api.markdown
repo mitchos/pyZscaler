@@ -26,7 +26,7 @@ Creating a Segment Group is a prerequisite for adding an Application Segment.
 - [Zscaler - ZPA Segment Groups Documentation](https://help.zscaler.com/zpa/about-segment-groups){:target="_blank"}
 
 ## Class Methods
-The pyZscaler Segment Groups module can be accessed via `zpa.segment_groups`.
+The pyZscaler Segment Groups Class can be accessed via `zpa.segment_groups`.
 
 The following methods are supported by pyZscaler for ZPA Segment Groups:
 

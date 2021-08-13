@@ -21,7 +21,7 @@ are assigned to Server Groups.
 - [Zscaler - ZPA Server Groups Documentation](https://help.zscaler.com/zpa/about-server-groups){:target="_blank"}
 
 ## Class Methods
-The pyZscaler Server Groups module can be accessed via `zpa.server_groups`.
+The pyZscaler Server Groups Class can be accessed via `zpa.server_groups`.
 
 The following methods are supported by pyZscaler for ZPA Server Groups:
 
