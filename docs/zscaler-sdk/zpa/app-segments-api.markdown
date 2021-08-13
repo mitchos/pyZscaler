@@ -1,15 +1,17 @@
 ---
 layout: default 
-title: Application Segments 
-parent: ZPA 
-nav_order: 3
+title: Application Segments API
+parent: ZPA
+permalink: /zscaler-sdk/zpa/app-segments-api
 ---
 1. TOC
 {:toc}
 
 ---
 
-# Overview
+# Zscaler ZPA App Segments API 
+
+## Overview
 Application Segments are used to configure groups of Applications in ZPA.
 
 ## References

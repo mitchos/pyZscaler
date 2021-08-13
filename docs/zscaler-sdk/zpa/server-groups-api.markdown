@@ -1,14 +1,16 @@
 ---
 layout: default 
-title: Server Groups
-parent: ZPA 
-nav_order: 3
+title: Server Groups API
+parent: ZPA
+permalink: /zscaler-sdk/zpa/server-groups-api
 ---
 1. TOC
 {:toc}
 
 ---
-# Overview
+# Zscaler ZPA Server Groups API 
+
+## Overview
 
 Server Groups are used within ZPA to define a group of servers that host one or more applications. Application Segments
 are assigned to Server Groups.

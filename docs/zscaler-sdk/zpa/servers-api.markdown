@@ -1,14 +1,16 @@
 ---
 layout: default 
-title: Servers
-parent: ZPA 
-nav_order: 3
+title: Servers API
+parent: ZPA
+permalink: /zscaler-sdk/zpa/servers-api
 ---
 1. TOC
 {:toc}
 
 ---
-# Overview
+# Zscaler ZPA Servers API
+
+## Overview
 
 Server objects in ZPA are used to define the virtual or physical servers that host an application.
 

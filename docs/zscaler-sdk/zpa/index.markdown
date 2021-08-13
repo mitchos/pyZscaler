@@ -1,19 +1,20 @@
 ---
 layout: default 
-title: ZPA 
+title: ZPA
 permalink: /zpa-api/ 
 nav_order: 2 
 has_children: true
+permalink: /zscaler-sdk/zpa/
 
 ---
 
-# Getting Started with ZPA
+# Getting Started with the Zscaler ZPA API
 
-For ZPA, you will need to provide params when initialising the class or set the environment variables.
+For the ZPA API, you will need to provide params when initialising the class or set the environment variables.
 
-## Initialising the ZPA instance and returning a list of Application Segments
+## Initialising the pyZscaler ZPA instance
 
-All examples in this documentation will assume that you are initialising the ZPA Class the same way as shown below.
+All examples in this documentation will assume that you are initialising the pyZscaler ZPA Class the same way as shown below.
 Ensure that you make adjustments in your code if you are using a different naming convention.
 
 ```python
@@ -28,7 +29,7 @@ for app_segment in zpa.app_segments.list():
 
 ## ZPA Parameters
 
-The table below shows the parameters that the ZPA Class requires.
+The table below shows the parameters that the pyZscaler ZPA Class requires.
 
 | Param        | ENV        | Description |
 |:-------------|:------------------|:------|

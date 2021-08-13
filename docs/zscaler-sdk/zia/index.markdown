@@ -1,19 +1,19 @@
 ---
 layout: default 
 title: ZIA 
-permalink: /zia-api/ 
+permalink: /zscaler-sdk/zia/ 
 nav_order: 2 
 has_children: true
 
 ---
 
-# Getting Started with ZIA
+# Getting Started with the Zscaler ZIA API
 
 For ZIA, you will need to provide params when initialising the class or set the environment variables.
 
-## Initialising the ZIA instance and returning a list of users
+## Initialising the pyZscaler ZIA instance and returning a list of users
 
-All examples in this documentation will assume that you are initialising the ZIA Class the same way as shown below.
+All examples in this documentation will assume that you are initialising the pyZscaler ZIA Class the same way as shown below.
 Ensure that you make adjustments in your code if you are using a different naming convention.
 
 We'll use the Python ``with`` context handler so that the ``ZIA._deauthenticate`` method is called to delete the session
@@ -30,9 +30,9 @@ with ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWO
         pprint(user)
 ```
 
-## ZIA Parameters
+## pyZscaler ZIA Parameters
 
-The table below shows the parameters that the ZIA Class requires.
+The table below shows the parameters that the pyZscaler ZIA Class requires.
 
 | Param        | ENV        | Description |
 |:-------------|:------------------|:------|

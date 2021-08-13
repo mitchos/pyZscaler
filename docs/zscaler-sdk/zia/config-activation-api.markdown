@@ -1,15 +1,17 @@
 ---
 layout: default 
-title: Config Activation 
-parent: ZIA 
-nav_order: 3
+title:  Config Activation API
+parent: ZIA
+permalink: /zscaler-sdk/zia/config-activation-api
 ---
 1. TOC
 {:toc}
 
 ---
 
-# Config Activation Overview
+# Zscaler ZIA Config Activation API 
+
+## Overview
 
 Configuration changes in ZIA go into a staging state until activated. 
 

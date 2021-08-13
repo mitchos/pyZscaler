@@ -1,8 +1,8 @@
 ---
 layout: default 
-title: Segment Groups 
-parent: ZPA 
-nav_order: 3
+title: Segment Groups API
+parent: ZPA
+permalink: /zscaler-sdk/zpa/segment-groups-api
 ---
 
 1. TOC 
@@ -10,7 +10,9 @@ nav_order: 3
 
 ---
 
-# Overview
+# Zscaler ZPA Segment Groups API 
+
+## Overview
 
 Segment Groups are used to configure policies for one or more Application Segments. Application Segments can only belong
 to a single Segment Group.

@@ -38,7 +38,7 @@ github_username: mitchos
 
 # Build settings
 theme: just-the-docs
-remote_theme: pmarsceill/just-the-docs
+remote_theme: mitchos/just-the-docs
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
@@ -47,6 +47,7 @@ plugins:
 domain: pyzscaler.packet.tech       # if you want to force HTTPS, specify the domain without the http at the start, e.g. example.com
 url: https://pyzscaler.packet.tech  # the base hostname and protocol for your site, e.g. http://example.com
 baseurl: /      # place folder name if the site is served in a subfolder
+color_scheme: light
 
 aux_links:
   "pyZscaler on GitHub":
@@ -56,7 +57,7 @@ aux_links:
   "ZIA API Docs":
     - "//help.zscaler.com/zia/api"
   "ZPA API Docs":
-    - "//help.zscaler.com/zpa/zpa-api"
+    - "//help.zscaler.com/zpa/zpa"
 
 # SEO config
 ga_tracking: G-W6R8MX1F8W

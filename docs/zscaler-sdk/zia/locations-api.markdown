@@ -1,15 +1,16 @@
 ---
 layout: default 
-title: Locations 
-parent: ZIA 
-nav_order: 3
+title:  Locations API
+parent: ZIA
 ---
 1. TOC
 {:toc}
 
 ---
 
-# Locations Overview
+# Zscaler ZIA Locations API 
+
+## Overview
 
 Locations are used to identify the networks where traffic is coming from in your organisation.
 

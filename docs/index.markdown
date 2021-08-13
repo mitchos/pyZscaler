@@ -1,5 +1,4 @@
 ---
-
 layout: home 
 nav_order: 1
 ---
@@ -8,13 +7,12 @@ nav_order: 1
 
 <img alt="pyZscaler Logo" src="https://mitchos.github.io/pyZscaler/assets/images/logo.svg" width="600" height="180">
 
-pyZscaler provides a uniform and simple python interface for each of the Zscaler product APIs. 
+pyZscaler is a Python SDK for Zscaler APIs. 
 {: .fs-6 } 
 {: .fw-300 }
 
 [Get Started Now](#getting-started){: .btn .btn-purple }
 [View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }{:target="_blank"}
-
 
 ---
 
@@ -26,14 +24,14 @@ pyZscaler provides a uniform and simple python interface for each of the Zscaler
 ## Overview
 
 With each Zscaler product having its own developer documentation and authentication methods, this SDK simplifies your
-ability to develop software that uses the Zscaler API.
+ability to develop Python software that uses the Zscaler API.
 
 This SDK uses the [RESTfly framework](https://restfly.readthedocs.io/en/latest/index.html) developed by Steve McGrath.
 
 The Zscaler APIs expect and return JSON structures with key names in CamelCase. This violates PEP-8 and results in code
 that's hard to read. pyZscaler will seamlessly convert to PEP-8 compliant Snake Case so that your code can remain
-readable and beautiful. Refer to the pyZscaler API documentation at ReadTheDocs to ensure that you are passing correctly
-named parameters to the class methods.
+readable and beautiful. Refer to the [pyZscaler Library Documentation](https://pyzscaler.readthedocs.io) at ReadTheDocs 
+to ensure that you are passing correctly named parameters to the class methods.
 
 ## About This Site
 
@@ -53,8 +51,8 @@ features will not work as these IP addresses don't resolve to a registered locat
 
 ### Products
 
-- Zscaler Private Access (ZPA)
 - Zscaler Internet Access (ZIA)
+- Zscaler Private Access (ZPA)
 
 ## Installation
 
@@ -66,12 +64,12 @@ The most recent version can be installed from pypi as per below.
 
 After you've installed pyZscaler, check out the guide for each library below:
 
-- [ZIA](zia-api/index) (work in progress)
-- [ZPA](zpa-api/index) (work in progress)
+- [ZIA](zscaler-sdk/zia/index) (work in progress)
+- [ZPA](zscaler-sdk/zpa/index) (work in progress)
 
 While these guides are still a work in progress, visit the
-[pyZscaler API documentation](https://pyzscaler.readthedocs.io/en/latest/index.html) for limited examples and full
-documentation of each library.
+[pyZscaler Library Documentation](https://pyzscaler.readthedocs.io/en/latest/index.html) for full documentation of each
+library.
 
 ## License
 
