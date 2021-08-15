@@ -5,14 +5,14 @@ nav_order: 1
 
 # Home
 
-<img alt="pyZscaler Logo" src="https://mitchos.github.io/pyZscaler/assets/images/logo.svg" width="600" height="180">
+<img rel=preload alt="pyZscaler Logo" src="assets/images/logo.svg" width="600" height="180">
 
 pyZscaler is a Python SDK for Zscaler APIs. 
 {: .fs-6 } 
 {: .fw-300 }
 
 [Get Started Now](#getting-started){: .btn .btn-purple }
-[View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }{:target="_blank"}
+[View pyZscaler on GitHub](http://github.com/mitchos/pyZscaler/){: .btn }{:target="_blank" rel="noopener"}
 
 ---
 
