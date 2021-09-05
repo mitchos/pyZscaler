@@ -5,6 +5,7 @@ from restfly.session import APISession
 from pyzscaler.version import version
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
+from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
 from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
@@ -80,6 +81,15 @@ class ZIA(APISession):
 
         """
         return ActivationAPI(self)
+
+    @property
+    def dlp(self):
+        """
+        The interface object for the :ref:`ZIA DLP Dictionaries interface <zia-dlp>`.
+
+
+        """
+        return DLPAPI(self)
 
     @property
     def firewall(self):
