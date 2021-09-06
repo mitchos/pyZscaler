@@ -8,6 +8,8 @@ def snake_to_camel(name):
         return "routableIP"
     elif name == "is_name_l10n_tag":
         return "isNameL10nTag"
+    elif name == "name_l10n_tag":
+        return "nameL10nTag"
     else:
         name = name[0].lower() + name.title()[1:].replace("_", "")
     return name
