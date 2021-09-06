@@ -101,7 +101,7 @@ def test_users_list_users(zia):
         for group in user["groups"]:
             check("group_id", group["id"], int)
             check("group_name", group["name"], str)
-        check("department", user["department"], dict)
+        # check("department", user["department"], dict)
         check("admin_user", user["admin_user"], bool)
         check("is_non_editable", user["is_non_editable"], bool)
         check("deleted", user["deleted"], bool)
