@@ -13,4 +13,7 @@ def zia():
         content_type="application/json",
         status=200,
     )
-    return ZIA()
+    return ZIA(username='test@example.com',
+               password='hunter2',
+               cloud='zscaler',
+               api_key='123456789abcdef')
