@@ -1,12 +1,47 @@
+import pytest
 import responses
-
 from box import BoxList
+
+
+@pytest.fixture
+def dlp_dicts():
+    return [
+        {
+            "id": 1,
+            "custom": True,
+            "customPhraseMatchType": "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY",
+            "dictionaryType": "PATTERNS_AND_PHRASES",
+            "name": "test",
+            "nameL10nTag": False,
+            "description": "test",
+            "phrases": [
+                {"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test"},
+                {"action": "PHRASE_COUNT_TYPE_UNIQUE", "phrase": "test"},
+            ],
+            "patterns": [
+                {"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"},
+                {"action": "PATTERN_COUNT_TYPE_UNIQUE", "pattern": "test"},
+            ],
+        },
+        {
+            "id": 2,
+            "name": "test2",
+            "phrases": [],
+            "customPhraseMatchType": "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY",
+            "patterns": [{"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "tester"}],
+            "nameL10nTag": False,
+            "dictionaryType": "PATTERNS_AND_PHRASES",
+            "exactDataMatchDetails": [],
+            "idmProfileMatchAccuracyDetails": [],
+            "custom": True,
+        },
+    ]
 
 
 @responses.activate
 def test_dlp_add_dicts(zia, dlp_dicts):
     responses.add(
-        method="POST",
+        responses.POST,
         url="https://zsapi.zscaler.net/api/v1/dlpDictionaries",
         status=200,
         json=dlp_dicts[0],
