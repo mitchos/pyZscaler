@@ -1,157 +1,205 @@
-import os
-
 import pytest
-from restfly.errors import APIError
-from restfly.utils import check
+import responses
 
 
-@pytest.fixture(name="user")
-def fixture_user(request, zia):
-    """
-    Fixture to create a user
-    """
-    domain = os.getenv("ZIA_TEST_DOMAIN")
-    group_id = None
-    dept_id = None
+@pytest.fixture(name="users")
+def fixture_users():
+    return [
+        {
+            "id": 1,
+            "name": "Test User A",
+            "email": "testusera@example.com",
+            "groups": {"id": 1, "name": "test"},
+            "department": {"id": 1, "name": "test_department"},
+            "adminUser": False,
+            "isNonEditable": False,
+            "disabled": False,
+            "deleted": False,
+        },
+        {
+            "id": 2,
+            "name": "Test User B",
+            "email": "testuserb@example.com",
+            "groups": {"id": 1, "name": "test"},
+            "department": {"id": 1, "name": "test_department"},
+            "adminUser": True,
+            "isNonEditable": False,
+            "disabled": True,
+            "deleted": False,
+        },
+    ]
 
-    # Use built-in Service Admin group for testing - always exists
-    for group in zia.users.list_groups():
-        if group.name == "Service Admin":
-            group_id = group.id
 
-    # Use built-in Service Admin department for testing - always exists
-    for dept in zia.users.list_departments():
-        if dept.name == "Service Admin":
-            dept_id = dept.id
+@pytest.fixture(name="groups")
+def fixture_groups():
+    return [{"id": 1, "name": "Group A"}, {"id": 2, "name": "Group B"}]
 
-    user = zia.users.add_user(
-        name="Test User",
-        email=f"test.user@{domain}",
-        groups=[{"id": group_id}],
-        department={"id": dept_id},
+
+@pytest.fixture(name="departments")
+def fixture_depts():
+    return [{"id": 1, "name": "Dept A"}, {"id": 2, "name": "Dept B"}]
+
+
+@responses.activate
+def test_users_add_user(zia, users):
+    responses.add(
+        method="POST",
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=users[0],
+        status=200,
+        match=[
+            responses.json_params_matcher(
+                {
+                    "name": "Test User A",
+                    "email": "testusera@example.com",
+                    "groups": {"id": "1"},
+                    "department": {"id": "1"},
+                }
+            )
+        ],
     )
 
-    def teardown():
-        """ Cleanup function to delete user."""
-        try:
-            zia.users.delete_user(user.id)
-        except APIError as err:
-            print(err)
+    resp = zia.users.add_user(
+        name="Test User A",
+        email="testusera@example.com",
+        groups={"id": "1"},
+        department={"id": "1"},
+    )
 
-    request.addfinalizer(teardown)
-    return user
-
-
-def test_users_add_user(user):
-    assert isinstance(user, dict)
-    check("id", user["id"], int)
-    check("name", user["name"], str)
-    check("email", user["email"], str)
-    assert isinstance(user["groups"], list)
-    for group in user["groups"]:
-        check("group_id", group["id"], int)
+    assert isinstance(resp, dict)
+    assert resp.id == 1
+    assert resp.admin_user is False
 
 
-def test_users_get_user(user, zia):
-    test_user = zia.users.get_user(user.id)
-    check("id", test_user["id"], int)
-    check("name", test_user["name"], str)
-    check("email", test_user["email"], str)
-    assert isinstance(test_user["groups"], list)
-    for group in test_user["groups"]:
-        check("group_id", group["id"], int)
-        check("group_name", group["name"], str)
-    check("department", test_user["department"], dict)
-    check("admin_user", test_user["admin_user"], bool)
-    if "is_non_editable" in test_user and test_user["is_non_editable"]:
-        check("is_non_editable", test_user["is_non_editable"], bool)
-    check("deleted", test_user["deleted"], bool)
-    if "temp_auth_email" in test_user and test_user["temp_auth_email"]:
-        check("temp_auth_email", test_user["temp_auth_email"], str)
+@responses.activate
+def test_users_get_user(users, zia):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/users/1",
+        json=users[0],
+        status=200,
+    )
+    resp = zia.users.get_user("1")
+
+    assert isinstance(resp, dict)
+    assert resp.id == 1
 
 
-def test_users_update_user(user, zia):
-    updated_name = "updated_test_name"
-    updated_user = zia.users.update_user(user.id, name=updated_name)
+@responses.activate
+def test_users_update_user(zia, users):
+    updated_user = users[0]
+    updated_user["name"] = "Test User C"
 
-    check("id", updated_user["id"], int)
-    check("name", updated_user["name"], str)
-    assert updated_user["name"] == updated_name
-    check("email", updated_user["email"], str)
-    assert isinstance(updated_user["groups"], list)
-    for group in updated_user["groups"]:
-        check("group_id", group["id"], int)
-        check("group_name", group["name"], str)
-    check("department", updated_user["department"], dict)
-    check("admin_user", updated_user["admin_user"], bool)
-    check("deleted", updated_user["deleted"], bool)
-    if "temp_auth_email" in updated_user and updated_user["temp_auth_email"]:
-        check("temp_auth_email", updated_user["temp_auth_email"], str)
+    responses.add(
+        responses.GET,
+        "https://zsapi.zscaler.net/api/v1/users/1",
+        json=users[0],
+        status=200,
+    )
+
+    responses.add(
+        responses.PUT,
+        url="https://zsapi.zscaler.net/api/v1/users/1",
+        json=updated_user,
+        match=[
+            responses.json_params_matcher(
+                {
+                    "name": updated_user["name"],
+                    "email": updated_user["email"],
+                    "groups": updated_user["groups"],
+                    "department": updated_user["department"],
+                }
+            )
+        ],
+    )
+
+    resp = zia.users.update_user("1", name="Test User C")
+
+    assert isinstance(resp, dict)
 
 
-def test_users_list_users(zia):
-    users = zia.users.list_users()
-    assert isinstance(users, list)
-    for user in users:
+@responses.activate
+def test_users_list_users(zia, users):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=users,
+        status=200,
+    )
+    resp = zia.users.list_users()
+    assert isinstance(resp, list)
+    assert len(resp) == 2
+    for user in resp:
         assert isinstance(user, dict)
-        check("id", user["id"], int)
-        check("name", user["name"], str)
-        check("email", user["email"], str)
-        assert isinstance(user["groups"], list)
-        for group in user["groups"]:
-            check("group_id", group["id"], int)
-            check("group_name", group["name"], str)
-        check("department", user["department"], dict)
-        check("admin_user", user["admin_user"], bool)
-        check("is_non_editable", user["is_non_editable"], bool)
-        check("deleted", user["deleted"], bool)
-        if "temp_auth_email" in user and user["temp_auth_email"]:
-            check("temp_auth_email", user["temp_auth_email"], str)
 
 
-def test_users_list_groups(zia):
-    groups = zia.users.list_groups()
-    assert isinstance(groups, list)
-    for group in groups:
-        check("group", group, dict)
-        check("id", group["id"], int)
-        check("name", group["name"], str)
-        if "is_non_editable" in group and group["is_non_editable"]:
-            check("is_non_editable", group["is_non_editable"], bool)
+@responses.activate
+def test_users_list_groups(zia, groups):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=groups,
+        status=200,
+    )
+
+    resp = zia.users.list_groups()
+    assert isinstance(resp, list)
+    for group in resp:
+        assert isinstance(group, dict)
+        assert isinstance(group.id, int)
 
 
-def test_users_list_departments(zia):
-    departments = zia.users.list_departments()
-    assert isinstance(departments, list)
-    for department in departments:
-        check("department", department, dict)
-        check("id", department["id"], int)
-        check("name", department["name"], str)
-        if "is_non_editable" in department and department["is_non_editable"]:
-            check("is_non_editable", department["is_non_editable"], bool)
+@responses.activate
+def test_users_get_group(zia, groups):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/groups/1",
+        json=groups[0],
+        status=200,
+    )
+
+    resp = zia.users.get_group("1")
+
+    assert isinstance(resp, dict)
+    assert resp.id == 1
 
 
-def test_users_get_group(zia):
-    group_id = zia.users.list_groups()[0].id
-    group = zia.users.get_group(group_id)
-    check("group", group, dict)
-    check("id", group["id"], int)
-    check("name", group["name"], str)
-    if "is_non_editable" in group and group["is_non_editable"]:
-        check("is_non_editable", group["is_non_editable"], bool)
+@responses.activate
+def test_users_list_departments(zia, departments):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=departments,
+        status=200,
+    )
+
+    resp = zia.users.list_departments()
+
+    assert isinstance(resp, list)
+    for dept in resp:
+        assert isinstance(dept, dict)
+        assert isinstance(dept.id, int)
 
 
-def test_users_get_department(zia):
-    department_id = zia.users.list_departments()[0].id
-    department = zia.users.get_department(department_id)
-    check("department", department, dict)
-    check("id", department["id"], int)
-    check("name", department["name"], str)
-    if "is_non_editable" in department and department["is_non_editable"]:
-        check("is_non_editable", department["is_non_editable"], bool)
+@responses.activate
+def test_users_get_department(zia, departments):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/departments/1",
+        json=departments[0],
+        status=200,
+    )
+
+    resp = zia.users.get_department("1")
+
+    assert isinstance(resp, dict)
+    assert resp.id == 1
 
 
-def test_users_delete_user(user, zia):
-    resp = zia.users.delete_user(user.id)
-    check("response", resp, int)
+@responses.activate
+def test_users_delete_user(zia):
+    responses.add(
+        method="DELETE", url="https://zsapi.zscaler.net/api/v1/users/1", status=204
+    )
+    resp = zia.users.delete_user("1")
     assert resp == 204

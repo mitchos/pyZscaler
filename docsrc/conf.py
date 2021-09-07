@@ -25,9 +25,9 @@ author = 'Mitch Kelly'
 html_title = ''
 
 # The short X.Y version
-version = '0.7'
+version = '0.8'
 # The full version, including alpha/beta/rc tags
-release = '0.7.1'
+release = '0.8.0'
 
 # -- General configuration ---------------------------------------------------
 

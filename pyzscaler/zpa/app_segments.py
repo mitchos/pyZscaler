@@ -67,7 +67,8 @@ class AppSegmentsAPI(APIEndpoint):
         udp_ports: str = None,
         **kwargs,
     ):
-        """Create an application segment.
+        """
+        Create an application segment.
 
         Args:
             segment_group_id (str):
