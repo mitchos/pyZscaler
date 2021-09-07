@@ -24,10 +24,9 @@ jobs:
       name: test
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       fail-fast: false
       matrix:
-        python-version: [ 3.7, 3.8 ]
+        python-version: [ 3.6, 3.7, 3.8, 3.9, 3.10 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -49,11 +48,5 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
-        env:
-          ZIA_API_KEY: ${{ secrets.ZIA_API_KEY }}
-          ZIA_USERNAME: ${{ secrets.ZIA_USERNAME }}
-          ZIA_PASSWORD: ${{ secrets.ZIA_PASSWORD }}
-          ZIA_CLOUD: ${{ secrets.ZIA_CLOUD }}
-          ZIA_TEST_DOMAIN: ${{ secrets.ZIA_TEST_DOMAIN }}
         run: |
           pytest
