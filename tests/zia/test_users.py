@@ -11,6 +11,7 @@ def fixture_users():
             "email": "testusera@example.com",
             "groups": {"id": 1, "name": "test"},
             "department": {"id": 1, "name": "test_department"},
+            "comments": "Test",
             "adminUser": False,
             "isNonEditable": False,
             "disabled": False,
@@ -54,6 +55,7 @@ def test_users_add_user(zia, users):
                     "email": "testusera@example.com",
                     "groups": {"id": "1"},
                     "department": {"id": "1"},
+                    "comments": "Test"
                 }
             )
         ],
@@ -64,11 +66,13 @@ def test_users_add_user(zia, users):
         email="testusera@example.com",
         groups={"id": "1"},
         department={"id": "1"},
+        comments="Test"
     )
 
     assert isinstance(resp, dict)
     assert resp.id == 1
     assert resp.admin_user is False
+    assert resp.comments == "Test"
 
 
 @responses.activate
@@ -89,6 +93,7 @@ def test_users_get_user(users, zia):
 def test_users_update_user(zia, users):
     updated_user = users[0]
     updated_user["name"] = "Test User C"
+    updated_user["comments"] = "Updated Test"
 
     responses.add(
         responses.GET,
@@ -108,12 +113,13 @@ def test_users_update_user(zia, users):
                     "email": updated_user["email"],
                     "groups": updated_user["groups"],
                     "department": updated_user["department"],
+                    "comments": updated_user["comments"]
                 }
             )
         ],
     )
 
-    resp = zia.users.update_user("1", name="Test User C")
+    resp = zia.users.update_user("1", name="Test User C", comments="Updated Test")
 
     assert isinstance(resp, dict)
 
@@ -203,3 +209,24 @@ def test_users_delete_user(zia):
     )
     resp = zia.users.delete_user("1")
     assert resp == 204
+
+
+@responses.activate
+def test_users_bulk_delete_users(zia):
+    user_ids = ['1', '2']
+    responses.add(
+        responses.POST,
+        url="https://zsapi.zscaler.net/api/v1/users/bulkDelete",
+        status=204,
+        json={
+            'ids': user_ids
+        },
+        match=[
+            responses.json_params_matcher({
+                "ids": user_ids
+            })
+        ]
+    )
+    resp = zia.users.bulk_delete_users(['1', '2'])
+    assert isinstance(resp, dict)
+    assert resp.ids == ['1', '2']
