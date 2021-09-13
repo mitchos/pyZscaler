@@ -205,4 +205,4 @@ class SecurityPolicyAPI(APIEndpoint):
             "security/advanced/blacklistUrls?action=REMOVE_FROM_LIST",
             json=payload,
             box=False,
-        ).blacklist_urls
+        ).status_code
