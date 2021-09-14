@@ -4,9 +4,15 @@ from pyzscaler.utils import snake_to_camel
 
 
 class LocationsAPI(APIEndpoint):
-    def list_locations(self):
+    def list_locations(self, page_size=100, page=1):
         """
         Returns a list of configured locations.
+
+        Args:
+            page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            page (int, optional):
+                Specifies the page offset. Default is 1.
 
         Returns:
             :obj:`list`: List of configured locations.
@@ -15,7 +21,9 @@ class LocationsAPI(APIEndpoint):
             >>> locations = zia.locations.list_locations()
 
         """
-        return self._get("locations", box=BoxList)
+        return self._get("locations",
+                         params={"page": page, "pageSize": page_size},
+                         box=BoxList)
 
     def add_location(self, name: str, **kwargs):
         """
@@ -91,9 +99,15 @@ class LocationsAPI(APIEndpoint):
         """
         return self._get(f"locations/{location_id}/sublocations", box=BoxList)
 
-    def list_locations_lite(self):
+    def list_locations_lite(self, page_size=100, page=1):
         """
         Returns only the name and ID of all configured locations.
+
+        Args:
+            page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            page (int, optional):
+                Specifies the page offset. Default is 1.
 
         Returns:
             :obj:`list`: A list of configured locations.
@@ -103,7 +117,9 @@ class LocationsAPI(APIEndpoint):
             ...    pprint(location)
 
         """
-        return self._get("locations/lite", box=BoxList)
+        return self._get("locations/lite",
+                         params={"page": page, "pageSize": page_size},
+                         box=BoxList)
 
     def update_location(self, location_id: str, **kwargs):
         """
