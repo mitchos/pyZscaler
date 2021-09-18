@@ -40,9 +40,7 @@ def obfuscate_api_key(seed):
 
 
 class Iterator(APIIterator):
-    """
-    Iterator class.
-    """
+    """Iterator class."""
     page_size = 100
 
     def __init__(self, api, path='', **kw):
@@ -52,9 +50,7 @@ class Iterator(APIIterator):
         self.path = path
 
     def _get_page(self) -> None:
-        """
-        Iterator function to get the page.
-        """
+        """Iterator function to get the page."""
         self.page = self._api.get(self.path,
                                   params={"page": self.num_pages + 1, "pageSize": self.page_size},
                                   box=BoxList)
