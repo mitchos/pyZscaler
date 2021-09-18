@@ -1,31 +1,14 @@
 from box import BoxList
 from restfly.endpoint import APIEndpoint
-from restfly.iterator import APIIterator
 
-from pyzscaler.utils import snake_to_camel
-
-
-class LocationsIterator(APIIterator):
-    """
-    Iterator class for locations.
-    """
-    page_size = 100
-
-    def _get_page(self) -> None:
-        """
-        Iterator function to get the page.
-        """
-        self.page = self._api.get('locations',
-                                  params={
-                                      "page": self.num_pages + 1,
-                                      "pageSize": self.page_size
-                                  },
-                                  box=BoxList)
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class LocationsAPI(APIEndpoint):
     def list_locations(self, **kwargs):
         """
+        Return list of locations.
+
         Args:
             max_items (int, optional):
                 The maximum number of items to return before stopping iteration.
@@ -40,7 +23,7 @@ class LocationsAPI(APIEndpoint):
             >>> locations = zia.locations.list_locations()
 
         """
-        return list(LocationsIterator(self._api, **kwargs))
+        return list(Iterator(self._api, "locations", **kwargs))
 
     def add_location(self, name: str, **kwargs):
         """
@@ -116,15 +99,17 @@ class LocationsAPI(APIEndpoint):
         """
         return self._get(f"locations/{location_id}/sublocations", box=BoxList)
 
-    def list_locations_lite(self, page_size: int = 100, page: int = 1):
+    def list_locations_lite(self, **kwargs):
         """
         Returns only the name and ID of all configured locations.
 
         Args:
+            max_items (int, optional):
+                The maximum number of items to return before stopping iteration.
+            max_pages (int, optional):
+                The maximum number of pages to request before throwing stopping iteration.
             page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
-            page (int, optional):
-                Specifies the page offset. Default is 1.
 
         Returns:
             :obj:`list`: A list of configured locations.
@@ -134,9 +119,7 @@ class LocationsAPI(APIEndpoint):
             ...    pprint(location)
 
         """
-        return self._get("locations/lite",
-                         params={"page": page, "pageSize": page_size},
-                         box=BoxList)
+        return list(Iterator(self._api, "locations/lite", **kwargs))
 
     def update_location(self, location_id: str, **kwargs):
         """
