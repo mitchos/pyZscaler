@@ -46,6 +46,7 @@ class Iterator(APIIterator):
     page_size = 100
 
     def __init__(self, api, path='', **kw):
+        """Initialize Iterator class."""
         super().__init__(api, **kw)
 
         self.path = path
