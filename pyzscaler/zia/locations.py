@@ -1,7 +1,8 @@
 from box import BoxList
-from pyzscaler.utils import snake_to_camel
 from restfly.endpoint import APIEndpoint
 from restfly.iterator import APIIterator
+
+from pyzscaler.utils import snake_to_camel
 
 
 class LocationsIterator(APIIterator):
@@ -134,10 +135,7 @@ class LocationsAPI(APIEndpoint):
 
         """
         return self._get("locations/lite",
-                         params={
-                             "page": page,
-                             "pageSize": page_size
-                         },
+                         params={"page": page, "pageSize": page_size},
                          box=BoxList)
 
     def update_location(self, location_id: str, **kwargs):
@@ -180,15 +178,13 @@ class LocationsAPI(APIEndpoint):
         payload = {}
 
         # Check if required params are provided, if not, add to payload from existing record.
-        if not kwargs.get(
-                "ip_addresses") and "ip_addresses" in location_record:
+        if not kwargs.get("ip_addresses") and "ip_addresses" in location_record:
             payload["ipAddresses"] = location_record["ip_addresses"]
 
         if not kwargs.get("ports") and "ports" in location_record:
             payload["ports"] = location_record["ports"]
 
-        if not kwargs.get(
-                "vpn_credentials") and "vpnCredentials" in location_record:
+        if not kwargs.get("vpn_credentials") and "vpnCredentials" in location_record:
             payload["vpnCredentials"] = location_record["vpn_credentials"]
 
         # Add optional parameters to payload
