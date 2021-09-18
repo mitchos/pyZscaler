@@ -1,18 +1,21 @@
-from restfly.endpoint import APIEndpoint
-from pyzscaler.utils import snake_to_camel
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class TrafficForwardingAPI(APIEndpoint):
-    def list_gre_tunnels(self, page_size: int = 100, page: int = 1):
+    def list_gre_tunnels(self, **kwargs):
         """
         Returns the list of all configured GRE tunnels.
 
         Args:
+            max_items (int, optional):
+                The maximum number of items to return before stopping iteration.
+            max_pages (int, optional):
+                The maximum number of pages to request before throwing stopping iteration.
             page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
-            page (int, optional):
-                Specifies the page offset. Default is 1.
 
         Returns:
             :obj:`list`: A list of GRE tunnels configured in ZIA.
@@ -21,9 +24,7 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> gre_tunnels = zia.traffic.list_gre_tunnels()
 
         """
-        return self._get("greTunnels",
-                         params={"page": page, "pageSize": page_size},
-                         box=BoxList)
+        return list(Iterator(self._api, "greTunnels", **kwargs))
 
     def get_gre_tunnel(self, tunnel_id: str):
         """
@@ -395,15 +396,17 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return recommended_vips
 
-    def list_vpn_credentials(self, page_size: int = 100, page: int = 1):
+    def list_vpn_credentials(self, **kwargs):
         """
         Returns the list of all configured VPN credentials.
 
         Args:
+            max_items (int, optional):
+                The maximum number of items to return before stopping iteration.
+            max_pages (int, optional):
+                The maximum number of pages to request before throwing stopping iteration.
             page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
-            page (int, optional):
-                Specifies the page offset. Default is 1.
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
@@ -413,9 +416,7 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vpn_credential)
 
         """
-        return self._get("vpnCredentials",
-                         params={"page": page, "pageSize": page_size},
-                         box=BoxList)
+        return list(Iterator(self._api, "vpnCredentials", **kwargs))
 
     def add_vpn_credential(
             self, authentication_type: str, pre_shared_key: str, **kwargs
