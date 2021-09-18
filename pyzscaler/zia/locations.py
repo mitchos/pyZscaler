@@ -1,19 +1,37 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
 from pyzscaler.utils import snake_to_camel
+from restfly.endpoint import APIEndpoint
+from restfly.iterator import APIIterator
+
+
+class LocationsIterator(APIIterator):
+    """
+    Iterator class for locations.
+    """
+    page_size = 100
+
+    def _get_page(self) -> None:
+        """
+        Iterator function to get the page.
+        """
+        self.page = self._api.get('locations',
+                                  params={
+                                      "page": self.num_pages + 1,
+                                      "pageSize": self.page_size
+                                  },
+                                  box=BoxList)
 
 
 class LocationsAPI(APIEndpoint):
-    def list_locations(self, page_size=100, page=1):
+    def list_locations(self, **kwargs):
         """
-        Returns a list of configured locations.
-
         Args:
+            max_items (int, optional):
+                The maximum number of items to return before stopping iteration.
+            max_pages (int, optional):
+                The maximum number of pages to request before throwing stopping iteration.
             page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
-            page (int, optional):
-                Specifies the page offset. Default is 1.
-
         Returns:
             :obj:`list`: List of configured locations.
 
@@ -21,9 +39,7 @@ class LocationsAPI(APIEndpoint):
             >>> locations = zia.locations.list_locations()
 
         """
-        return self._get("locations",
-                         params={"page": page, "pageSize": page_size},
-                         box=BoxList)
+        return list(LocationsIterator(self._api, **kwargs))
 
     def add_location(self, name: str, **kwargs):
         """
@@ -99,7 +115,7 @@ class LocationsAPI(APIEndpoint):
         """
         return self._get(f"locations/{location_id}/sublocations", box=BoxList)
 
-    def list_locations_lite(self, page_size=100, page=1):
+    def list_locations_lite(self, page_size: int = 100, page: int = 1):
         """
         Returns only the name and ID of all configured locations.
 
@@ -118,7 +134,10 @@ class LocationsAPI(APIEndpoint):
 
         """
         return self._get("locations/lite",
-                         params={"page": page, "pageSize": page_size},
+                         params={
+                             "page": page,
+                             "pageSize": page_size
+                         },
                          box=BoxList)
 
     def update_location(self, location_id: str, **kwargs):
@@ -161,13 +180,15 @@ class LocationsAPI(APIEndpoint):
         payload = {}
 
         # Check if required params are provided, if not, add to payload from existing record.
-        if not kwargs.get("ip_addresses") and "ip_addresses" in location_record:
+        if not kwargs.get(
+                "ip_addresses") and "ip_addresses" in location_record:
             payload["ipAddresses"] = location_record["ip_addresses"]
 
         if not kwargs.get("ports") and "ports" in location_record:
             payload["ports"] = location_record["ports"]
 
-        if not kwargs.get("vpn_credentials") and "vpnCredentials" in location_record:
+        if not kwargs.get(
+                "vpn_credentials") and "vpnCredentials" in location_record:
             payload["vpnCredentials"] = location_record["vpn_credentials"]
 
         # Add optional parameters to payload
