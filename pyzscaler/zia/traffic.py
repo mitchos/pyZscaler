@@ -9,12 +9,12 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         Returns the list of all configured GRE tunnels.
 
-        Args:
-            max_items (int, optional):
+        Keyword Args:
+            **max_items (int, optional):
                 The maximum number of items to return before stopping iteration.
-            max_pages (int, optional):
+            **max_pages (int, optional):
                 The maximum number of pages to request before throwing stopping iteration.
-            page_size (int, optional):
+            **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
@@ -400,12 +400,12 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         Returns the list of all configured VPN credentials.
 
-        Args:
-            max_items (int, optional):
+        Keyword Args:
+            **max_items (int, optional):
                 The maximum number of items to return before stopping iteration.
-            max_pages (int, optional):
+            **max_pages (int, optional):
                 The maximum number of pages to request before throwing stopping iteration.
-            page_size (int, optional):
+            **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
