@@ -148,7 +148,9 @@ class LocationsAPI(APIEndpoint):
         # Check if required params are provided, if not, add to payload from existing record.
         payload["ipAddresses"] = kwargs.get("ip_addresses",
                                             location_record.get("ip_addresses", []))
+
         payload["ports"] = kwargs.get("ports", location_record.get("ports", []))
+
         payload["vpnCredentials"] = kwargs.get("vpn_credentials",
                                                location_record.get("vpn_credentials", []))
 
