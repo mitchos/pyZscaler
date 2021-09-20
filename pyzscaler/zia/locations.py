@@ -143,11 +143,12 @@ class LocationsAPI(APIEndpoint):
         """
         location_record = self.get_location(location_id)
 
-        payload = {}
+        payload = {
+            'ipAddresses': kwargs.get(
+                "ip_addresses", location_record.get("ip_addresses", [])
+            )
+        }
 
-        # Check if required params are provided, if not, add to payload from existing record.
-        payload["ipAddresses"] = kwargs.get("ip_addresses",
-                                            location_record.get("ip_addresses", []))
 
         payload["ports"] = kwargs.get("ports", location_record.get("ports", []))
 
