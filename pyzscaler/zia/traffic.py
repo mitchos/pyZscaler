@@ -1,12 +1,21 @@
-from restfly.endpoint import APIEndpoint
-from pyzscaler.utils import snake_to_camel
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class TrafficForwardingAPI(APIEndpoint):
-    def list_gre_tunnels(self):
+    def list_gre_tunnels(self, **kwargs):
         """
         Returns the list of all configured GRE tunnels.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: A list of GRE tunnels configured in ZIA.
@@ -15,7 +24,7 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> gre_tunnels = zia.traffic.list_gre_tunnels()
 
         """
-        return self._get("greTunnels", box=BoxList)
+        return list(Iterator(self._api, "greTunnels", **kwargs))
 
     def get_gre_tunnel(self, tunnel_id: str):
         """
@@ -303,9 +312,17 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._delete(f"staticIP/{static_ip_id}", box=False).status_code
 
-    def list_vips(self):
+    def list_vips(self, **kwargs):
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list` of :obj:`dict`: List of VIP resource records.
@@ -315,7 +332,7 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vip)
 
         """
-        return self._get("vips")
+        return list(Iterator(self._api, "vips", **kwargs))
 
     def list_vips_recommended(self, **kwargs):
         """
@@ -387,9 +404,17 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return recommended_vips
 
-    def list_vpn_credentials(self):
+    def list_vpn_credentials(self, **kwargs):
         """
         Returns the list of all configured VPN credentials.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
@@ -399,7 +424,7 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vpn_credential)
 
         """
-        return self._get("vpnCredentials", box=BoxList)
+        return list(Iterator(self._api, "vpnCredentials", **kwargs))
 
     def add_vpn_credential(
             self, authentication_type: str, pre_shared_key: str, **kwargs

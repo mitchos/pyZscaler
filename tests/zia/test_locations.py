@@ -39,7 +39,7 @@ def test_list_locations(zia, locations):
         status=200,
     )
 
-    resp = zia.locations.list_locations()
+    resp = zia.locations.list_locations(max_items=1)
 
     assert isinstance(resp, list)
     for location in resp:
