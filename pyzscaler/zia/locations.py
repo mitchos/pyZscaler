@@ -7,7 +7,7 @@ from pyzscaler.utils import Iterator, snake_to_camel
 class LocationsAPI(APIEndpoint):
     def list_locations(self, **kwargs):
         """
-        Return list of locations.
+        Returns a list of locations.
 
         Keyword Args:
             **max_items (int, optional):
