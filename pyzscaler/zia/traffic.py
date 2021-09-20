@@ -312,9 +312,17 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._delete(f"staticIP/{static_ip_id}", box=False).status_code
 
-    def list_vips(self):
+    def list_vips(self, **kwargs):
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list` of :obj:`dict`: List of VIP resource records.
@@ -324,7 +332,7 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vip)
 
         """
-        return self._get("vips")
+        return list(Iterator(self._api, "vips", **kwargs))
 
     def list_vips_recommended(self, **kwargs):
         """
