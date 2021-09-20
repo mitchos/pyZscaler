@@ -370,11 +370,7 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vip)
 
         """
-        payload = {}
-
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
         return self._get("vips/recommendedList", params=payload, box=BoxList)
 
@@ -400,9 +396,7 @@ class TrafficForwardingAPI(APIEndpoint):
         secondary_vip = next(
             (vip for vip in vips_list if vip.city != preferred_vip.city)
         )
-        recommended_vips = (preferred_vip.id, secondary_vip.id)
-
-        return recommended_vips
+        return preferred_vip.id, secondary_vip.id
 
     def list_vpn_credentials(self, **kwargs):
         """
