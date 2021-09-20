@@ -116,7 +116,9 @@ def test_update_location(zia, locations):
         json=updated_location,
         match=[responses.json_params_matcher({
             'name': 'Updated Test',
-            'ipAddresses': ['203.0.113.1']
+            'ipAddresses': ['203.0.113.1'],
+            'ports': [],
+            'vpnCredentials': []
         })],
     )
 

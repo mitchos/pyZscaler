@@ -1,5 +1,6 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
 from pyzscaler.utils import snake_to_camel
 
 
@@ -145,14 +146,11 @@ class LocationsAPI(APIEndpoint):
         payload = {}
 
         # Check if required params are provided, if not, add to payload from existing record.
-        if not kwargs.get("ip_addresses") and "ip_addresses" in location_record:
-            payload["ipAddresses"] = location_record["ip_addresses"]
-
-        if not kwargs.get("ports") and "ports" in location_record:
-            payload["ports"] = location_record["ports"]
-
-        if not kwargs.get("vpn_credentials") and "vpnCredentials" in location_record:
-            payload["vpnCredentials"] = location_record["vpn_credentials"]
+        payload["ipAddresses"] = kwargs.get("ip_addresses",
+                                            location_record.get("ip_addresses", []))
+        payload["ports"] = kwargs.get("ports", location_record.get("ports", []))
+        payload["vpnCredentials"] = kwargs.get("vpn_credentials",
+                                               location_record.get("vpn_credentials", []))
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
