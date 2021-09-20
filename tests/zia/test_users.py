@@ -126,7 +126,7 @@ def test_users_list_users(zia, users):
         json=users,
         status=200,
     )
-    resp = zia.users.list_users()
+    resp = zia.users.list_users(max_items=2)
     assert isinstance(resp, list)
     assert len(resp) == 2
     for user in resp:
@@ -142,7 +142,7 @@ def test_users_list_groups(zia, groups):
         status=200,
     )
 
-    resp = zia.users.list_groups()
+    resp = zia.users.list_groups(max_items=2)
     assert isinstance(resp, list)
     for group in resp:
         assert isinstance(group, dict)
@@ -173,7 +173,7 @@ def test_users_list_departments(zia, departments):
         status=200,
     )
 
-    resp = zia.users.list_departments()
+    resp = zia.users.list_departments(max_items=2)
 
     assert isinstance(resp, list)
     for dept in resp:
