@@ -1,21 +1,42 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
-from pyzscaler.utils import snake_to_camel
+from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class LocationsAPI(APIEndpoint):
-    def list_locations(self):
+    def list_locations(self, **kwargs):
         """
-        Returns a list of configured locations.
+        Returns a list of locations.
 
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
         Returns:
             :obj:`list`: List of configured locations.
 
         Examples:
-            >>> locations = zia.locations.list_locations()
+            List locations using default settings:
+
+            >>> for location in zia.locations.list_locations():
+            ...    print(location)
+
+            List locations, limiting to a maximum of 10 items:
+
+            >>> for location in zia.locations.list_locations(max_items=10):
+            ...    print(location)
+
+            List locations, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for location in zia.locations.list_locations(page_size=200, max_pages=2):
+            ...    print(location)
 
         """
-        return self._get("locations", box=BoxList)
+        return list(Iterator(self._api, "locations", **kwargs))
 
     def add_location(self, name: str, **kwargs):
         """
@@ -91,19 +112,39 @@ class LocationsAPI(APIEndpoint):
         """
         return self._get(f"locations/{location_id}/sublocations", box=BoxList)
 
-    def list_locations_lite(self):
+    def list_locations_lite(self, **kwargs):
         """
         Returns only the name and ID of all configured locations.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: A list of configured locations.
 
         Examples:
+            List locations with default settings:
+
             >>> for location in zia.locations.list_locations_lite():
-            ...    pprint(location)
+            ...    print(location)
+
+            List locations, limiting to a maximum of 10 items:
+
+            >>> for location in zia.locations.list_locations_lite(max_items=10):
+            ...    print(location)
+
+            List locations, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for location in zia.locations.list_locations_lite(page_size=200, max_pages=2):
+            ...    print(location)
 
         """
-        return self._get("locations/lite", box=BoxList)
+        return list(Iterator(self._api, "locations/lite", **kwargs))
 
     def update_location(self, location_id: str, **kwargs):
         """
