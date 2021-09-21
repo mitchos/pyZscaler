@@ -20,7 +20,20 @@ class LocationsAPI(APIEndpoint):
             :obj:`list`: List of configured locations.
 
         Examples:
-            >>> locations = zia.locations.list_locations()
+            List locations using default settings:
+
+            >>> for location in zia.locations.list_locations():
+            ...    print(location)
+
+            List locations, limiting to a maximum of 10 items:
+
+            >>> for location in zia.locations.list_locations(max_items=10):
+            ...    print(location)
+
+            List locations, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for location in zia.locations.list_locations(page_size=200, max_pages=2):
+            ...    print(location)
 
         """
         return list(Iterator(self._api, "locations", **kwargs))
@@ -115,8 +128,20 @@ class LocationsAPI(APIEndpoint):
             :obj:`list`: A list of configured locations.
 
         Examples:
+            List locations with default settings:
+
             >>> for location in zia.locations.list_locations_lite():
-            ...    pprint(location)
+            ...    print(location)
+
+            List locations, limiting to a maximum of 10 items:
+
+            >>> for location in zia.locations.list_locations_lite(max_items=10):
+            ...    print(location)
+
+            List locations, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for location in zia.locations.list_locations_lite(page_size=200, max_pages=2):
+            ...    print(location)
 
         """
         return list(Iterator(self._api, "locations/lite", **kwargs))

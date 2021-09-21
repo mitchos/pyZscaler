@@ -25,7 +25,20 @@ class UserManagementAPI(APIEndpoint):
             :obj:`list`: The list of departments configured in ZIA.
 
         Examples:
-            >>> departments = zia.users.list_departments()
+            List departments using default settings:
+
+            >>> for department in zia.users.list_departments():
+            ...   print(department)
+
+            List departments, limiting to a maximum of 10 items:
+
+            >>> for department in zia.users.list_departments(max_items=10):
+            ...    print(department)
+
+            List departments, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
+            ...    print(department)
         """
         return list(Iterator(self._api, "departments", **kwargs))
 
@@ -61,7 +74,20 @@ class UserManagementAPI(APIEndpoint):
             :obj:`list`: The list of user groups configured in ZIA.
 
         Examples:
-            >>> user_groups = zia.users.list_groups()
+            List groups using default settings:
+
+            >>> for group in zia.users.list_groups():
+            ...    print(group)
+
+            List groups, limiting to a maximum of 10 items:
+
+            >>> for group in zia.users.list_groups(max_items=10):
+            ...    print(group)
+
+            List groups, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for group in zia.users.list_groups(page_size=200, max_pages=2):
+            ...    print(group)
 
         """
         return list(Iterator(self._api, "groups", **kwargs))
@@ -98,7 +124,20 @@ class UserManagementAPI(APIEndpoint):
             :obj:`list`: The list of users configured in ZIA.
 
         Examples:
-            >>> users = zia.users.list_users()
+            List users using default settings:
+
+            >>> for user in zia.users.list_users():
+            ...    print(user)
+
+            List users, limiting to a maximum of 10 items:
+
+            >>> for user in zia.users.list_users(max_items=10):
+            ...    print(user)
+
+            List users, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for user in zia.users.list_users(page_size=200, max_pages=2):
+            ...    print(user)
 
         """
         return list(Iterator(self._api, "users", **kwargs))
