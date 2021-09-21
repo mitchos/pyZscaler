@@ -197,13 +197,13 @@ class UserManagementAPI(APIEndpoint):
         return self._get(f"users/{user_id}")
 
     def update_user(
-            self,
-            user_id: str,
-            name: str = None,
-            email: str = None,
-            department: dict = None,
-            groups: list = None,
-            **kwargs,
+        self,
+        user_id: str,
+        name: str = None,
+        email: str = None,
+        department: dict = None,
+        groups: list = None,
+        **kwargs,
     ):
         """
         Updates the details for the specified user.

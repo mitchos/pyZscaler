@@ -57,11 +57,11 @@ class TrafficForwardingAPI(APIEndpoint):
         return self._get("greTunnels/availableInternalIpRanges", box=BoxList)
 
     def add_gre_tunnel(
-            self,
-            source_ip: str,
-            primary_dest_vip_id: str = None,
-            secondary_dest_vip_id: str = None,
-            **kwargs,
+        self,
+        source_ip: str,
+        primary_dest_vip_id: str = None,
+        secondary_dest_vip_id: str = None,
+        **kwargs,
     ):
         """
         Add a new GRE tunnel.
@@ -127,9 +127,17 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._post("greTunnels", json=payload)
 
-    def list_static_ips(self):
+    def list_static_ips(self, **kwargs):
         """
         Returns the list of all configured static IPs.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: A list of the configured static IPs
@@ -138,7 +146,8 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> static_ips = zia.traffic.list_static_ips()
 
         """
-        return self._get("staticIP", box=BoxList)
+
+        return list(Iterator(self._api, "staticIP", **kwargs))
 
     def get_static_ip(self, static_ip_id: str):
         """
@@ -427,7 +436,7 @@ class TrafficForwardingAPI(APIEndpoint):
         return list(Iterator(self._api, "vpnCredentials", **kwargs))
 
     def add_vpn_credential(
-            self, authentication_type: str, pre_shared_key: str, **kwargs
+        self, authentication_type: str, pre_shared_key: str, **kwargs
     ):
         """
         Add new VPN credentials.
