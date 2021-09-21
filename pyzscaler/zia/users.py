@@ -1,5 +1,6 @@
 from restfly.endpoint import APIEndpoint
-from box import BoxList
+
+from pyzscaler.utils import Iterator
 
 
 class UserManagementAPI(APIEndpoint):
@@ -8,17 +9,38 @@ class UserManagementAPI(APIEndpoint):
 
     """
 
-    def list_departments(self):
+    def list_departments(self, **kwargs):
         """
         Returns the list of departments.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: The list of departments configured in ZIA.
 
         Examples:
-            >>> departments = zia.users.list_departments()
+            List departments using default settings:
+
+            >>> for department in zia.users.list_departments():
+            ...   print(department)
+
+            List departments, limiting to a maximum of 10 items:
+
+            >>> for department in zia.users.list_departments(max_items=10):
+            ...    print(department)
+
+            List departments, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
+            ...    print(department)
         """
-        return self._get("departments", box=BoxList)
+        return list(Iterator(self._api, "departments", **kwargs))
 
     def get_department(self, department_id: str):
         """
@@ -36,18 +58,39 @@ class UserManagementAPI(APIEndpoint):
         """
         return self._get(f"departments/{department_id}")
 
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns the list of user groups.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: The list of user groups configured in ZIA.
 
         Examples:
-            >>> user_groups = zia.users.list_groups()
+            List groups using default settings:
+
+            >>> for group in zia.users.list_groups():
+            ...    print(group)
+
+            List groups, limiting to a maximum of 10 items:
+
+            >>> for group in zia.users.list_groups(max_items=10):
+            ...    print(group)
+
+            List groups, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for group in zia.users.list_groups(page_size=200, max_pages=2):
+            ...    print(group)
 
         """
-        return self._get("groups", box=BoxList)
+        return list(Iterator(self._api, "groups", **kwargs))
 
     def get_group(self, group_id: str):
         """
@@ -65,18 +108,39 @@ class UserManagementAPI(APIEndpoint):
         """
         return self._get(f"groups/{group_id}")
 
-    def list_users(self):
+    def list_users(self, **kwargs):
         """
         Returns the list of users.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: The list of users configured in ZIA.
 
         Examples:
-            >>> users = zia.users.list_users()
+            List users using default settings:
+
+            >>> for user in zia.users.list_users():
+            ...    print(user)
+
+            List users, limiting to a maximum of 10 items:
+
+            >>> for user in zia.users.list_users(max_items=10):
+            ...    print(user)
+
+            List users, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for user in zia.users.list_users(page_size=200, max_pages=2):
+            ...    print(user)
 
         """
-        return self._get("users", box=BoxList)
+        return list(Iterator(self._api, "users", **kwargs))
 
     def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs):
         """
@@ -172,13 +236,13 @@ class UserManagementAPI(APIEndpoint):
         return self._get(f"users/{user_id}")
 
     def update_user(
-            self,
-            user_id: str,
-            name: str = None,
-            email: str = None,
-            department: dict = None,
-            groups: list = None,
-            **kwargs,
+        self,
+        user_id: str,
+        name: str = None,
+        email: str = None,
+        department: dict = None,
+        groups: list = None,
+        **kwargs,
     ):
         """
         Updates the details for the specified user.

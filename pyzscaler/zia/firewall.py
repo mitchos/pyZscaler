@@ -1,5 +1,6 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
 from pyzscaler.utils import snake_to_camel
 
 
@@ -413,7 +414,7 @@ class FirewallPolicyAPI(APIEndpoint):
         return self._delete(f"ipSourceGroups/{group_id}", box=False).status_code
 
     def add_ip_source_group(
-            self, name: str, ip_addresses: list, description: str = None
+        self, name: str, ip_addresses: list, description: str = None
     ):
         """
         Adds a new IP Source Group.
@@ -605,7 +606,7 @@ class FirewallPolicyAPI(APIEndpoint):
         return self._delete(f"networkServiceGroups/{group_id}")
 
     def add_network_svc_group(
-            self, name: str, service_ids: list, description: str = None
+        self, name: str, service_ids: list, description: str = None
     ):
         """
         Adds a new Network Service Group.

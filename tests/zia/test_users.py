@@ -11,6 +11,7 @@ def fixture_users():
             "email": "testusera@example.com",
             "groups": {"id": 1, "name": "test"},
             "department": {"id": 1, "name": "test_department"},
+            "comments": "Test",
             "adminUser": False,
             "isNonEditable": False,
             "disabled": False,
@@ -54,6 +55,7 @@ def test_users_add_user(zia, users):
                     "email": "testusera@example.com",
                     "groups": {"id": "1"},
                     "department": {"id": "1"},
+                    "comments": "Test",
                 }
             )
         ],
@@ -64,11 +66,13 @@ def test_users_add_user(zia, users):
         email="testusera@example.com",
         groups={"id": "1"},
         department={"id": "1"},
+        comments="Test",
     )
 
     assert isinstance(resp, dict)
     assert resp.id == 1
     assert resp.admin_user is False
+    assert resp.comments == "Test"
 
 
 @responses.activate
@@ -89,6 +93,7 @@ def test_users_get_user(users, zia):
 def test_users_update_user(zia, users):
     updated_user = users[0]
     updated_user["name"] = "Test User C"
+    updated_user["comments"] = "Updated Test"
 
     responses.add(
         responses.GET,
@@ -108,45 +113,205 @@ def test_users_update_user(zia, users):
                     "email": updated_user["email"],
                     "groups": updated_user["groups"],
                     "department": updated_user["department"],
+                    "comments": updated_user["comments"],
                 }
             )
         ],
     )
 
-    resp = zia.users.update_user("1", name="Test User C")
+    resp = zia.users.update_user("1", name="Test User C", comments="Updated Test")
 
     assert isinstance(resp, dict)
 
 
 @responses.activate
-def test_users_list_users(zia, users):
+def test_list_users_with_one_page(zia, paginated_items):
+    items = paginated_items(200)
+
     responses.add(
-        method="GET",
+        responses.GET,
         url="https://zsapi.zscaler.net/api/v1/users",
-        json=users,
+        json=items[0:100],
         status=200,
     )
-    resp = zia.users.list_users()
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_users(max_pages=1, page_size=100)
+
     assert isinstance(resp, list)
-    assert len(resp) == 2
-    for user in resp:
-        assert isinstance(user, dict)
+    assert resp[50].id == 50
+    assert len(resp) == 100
 
 
 @responses.activate
-def test_users_list_groups(zia, groups):
+def test_list_users_with_two_pages(zia, paginated_items):
+    items = paginated_items(200)
+
     responses.add(
-        method="GET",
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=groups,
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[100:200],
         status=200,
     )
 
-    resp = zia.users.list_groups()
+    resp = zia.users.list_users(max_pages=2, page_size=100)
+
     assert isinstance(resp, list)
-    for group in resp:
-        assert isinstance(group, dict)
-        assert isinstance(group.id, int)
+    assert resp[50].id == 50
+    assert resp[150].id == 150
+    assert len(resp) == 200
+
+
+@responses.activate
+def test_list_users_with_max_items_1(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_users(max_items=1)
+
+    assert isinstance(resp, list)
+    assert len(resp) == 1
+
+
+@responses.activate
+def test_list_users_with_max_items_150(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/users",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_users(max_items=150)
+
+    assert isinstance(resp, list)
+    assert len(resp) == 150
+
+
+@responses.activate
+def test_list_groups_with_one_page(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_groups(max_pages=1, page_size=100)
+
+    assert isinstance(resp, list)
+    assert resp[50].id == 50
+    assert len(resp) == 100
+
+
+@responses.activate
+def test_list_groups_with_two_pages(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_groups(max_pages=2, page_size=100)
+
+    assert isinstance(resp, list)
+    assert resp[50].id == 50
+    assert resp[150].id == 150
+    assert len(resp) == 200
+
+
+@responses.activate
+def test_list_groups_with_max_items_1(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_groups(max_items=1)
+
+    assert isinstance(resp, list)
+    assert len(resp) == 1
+
+
+@responses.activate
+def test_list_users_with_max_items_150(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/groups",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_groups(max_items=150)
+
+    assert isinstance(resp, list)
+    assert len(resp) == 150
 
 
 @responses.activate
@@ -165,20 +330,98 @@ def test_users_get_group(zia, groups):
 
 
 @responses.activate
-def test_users_list_departments(zia, departments):
+def test_list_departments_with_one_page(zia, paginated_items):
+    items = paginated_items(200)
+
     responses.add(
-        method="GET",
+        responses.GET,
         url="https://zsapi.zscaler.net/api/v1/departments",
-        json=departments,
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[100:200],
         status=200,
     )
 
-    resp = zia.users.list_departments()
+    resp = zia.users.list_departments(max_pages=1, page_size=100)
 
     assert isinstance(resp, list)
-    for dept in resp:
-        assert isinstance(dept, dict)
-        assert isinstance(dept.id, int)
+    assert resp[50].id == 50
+    assert len(resp) == 100
+
+
+@responses.activate
+def test_list_departments_with_two_pages(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_departments(max_pages=2, page_size=100)
+
+    assert isinstance(resp, list)
+    assert resp[50].id == 50
+    assert resp[150].id == 150
+    assert len(resp) == 200
+
+
+@responses.activate
+def test_list_departments_with_max_items_1(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_departments(max_items=1)
+
+    assert isinstance(resp, list)
+    assert len(resp) == 1
+
+
+@responses.activate
+def test_list_departments_with_max_items_150(zia, paginated_items):
+    items = paginated_items(200)
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[0:100],
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/departments",
+        json=items[100:200],
+        status=200,
+    )
+
+    resp = zia.users.list_departments(max_items=150)
+
+    assert isinstance(resp, list)
+    assert len(resp) == 150
 
 
 @responses.activate
@@ -203,3 +446,18 @@ def test_users_delete_user(zia):
     )
     resp = zia.users.delete_user("1")
     assert resp == 204
+
+
+@responses.activate
+def test_users_bulk_delete_users(zia):
+    user_ids = ["1", "2"]
+    responses.add(
+        responses.POST,
+        url="https://zsapi.zscaler.net/api/v1/users/bulkDelete",
+        status=204,
+        json={"ids": user_ids},
+        match=[responses.json_params_matcher({"ids": user_ids})],
+    )
+    resp = zia.users.bulk_delete_users(["1", "2"])
+    assert isinstance(resp, dict)
+    assert resp.ids == ["1", "2"]

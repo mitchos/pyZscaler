@@ -1,5 +1,8 @@
 import time
 
+from box import BoxList
+from restfly import APIIterator
+
 
 # Converts Python Snake Case to Zscaler's lower camelCase
 def snake_to_camel(name):
@@ -34,3 +37,23 @@ def obfuscate_api_key(seed):
         key += seed[int(str(r)[j]) + 2]
 
     return {"timestamp": now, "key": key}
+
+
+class Iterator(APIIterator):
+    """Iterator class."""
+
+    page_size = 100
+
+    def __init__(self, api, path="", **kw):
+        """Initialize Iterator class."""
+        super().__init__(api, **kw)
+
+        self.path = path
+
+    def _get_page(self) -> None:
+        """Iterator function to get the page."""
+        self.page = self._api.get(
+            self.path,
+            params={"page": self.num_pages + 1, "pageSize": self.page_size},
+            box=BoxList,
+        )
