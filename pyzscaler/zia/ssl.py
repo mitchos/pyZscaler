@@ -31,15 +31,15 @@ class SSLInspectionAPI(APIEndpoint):
         return self._get("sslSettings/showcert")
 
     def generate_csr(
-            self,
-            cert_name: str,
-            cn: str,
-            org: str,
-            dept: str,
-            city: str,
-            state: str,
-            country: str,
-            signature: str,
+        self,
+        cert_name: str,
+        cn: str,
+        org: str,
+        dept: str,
+        city: str,
+        state: str,
+        country: str,
+        signature: str,
     ):
         """
         Generates a Certificate Signing Request.
