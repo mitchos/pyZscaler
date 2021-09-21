@@ -47,21 +47,25 @@ you're ready to go.
 
 ### Quick ZIA Example
 
-    from pyzscaler.zia import ZIA
-    from pprint import pprint
+```python
+from pyzscaler.zia import ZIA
+from pprint import pprint
 
-    zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
-    for user in zia.users.list():
-        pprint(user)
+zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+for user in zia.users.list():
+    pprint(user)
+```
 
 ### Quick ZPA Example
 
-    from pyzscaler.zpa import ZPA
-    from pprint import pprint
+```python
+from pyzscaler.zpa import ZPA
+from pprint import pprint
 
-    zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
-    for app_segment in zpa.app_segments.list():
-        pprint(app_segment)
+zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
+for app_segment in zpa.app_segments.list():
+    pprint(app_segment)
+```
 
 ## Contributing
 
