@@ -4,9 +4,20 @@ python:
   - "3.7"
   - "3.8"
   - "3.9"
+
+# Codacy coverage
+before_script:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
+
 # command to install dependencies
 install:
   - pip install -r docs-requirements.txt
+  - pip install pytest-cov
+
 # command to run tests
 script:
-  - pytest
+  - pytest --cov=./
+  - coverage xml
+
+after_success:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
