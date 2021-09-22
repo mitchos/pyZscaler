@@ -114,16 +114,10 @@ def test_update_location(zia, locations):
         url="https://zsapi.zscaler.net/api/v1/locations/1",
         status=200,
         json=updated_location,
-        match=[responses.json_params_matcher({
-            'name': 'Updated Test',
-            'ipAddresses': ['203.0.113.1'],
-            'ports': [],
-            'vpnCredentials': []
-        })],
+        match=[responses.json_params_matcher(updated_location)]
     )
 
-    resp = zia.locations.update_location('1',
-                                         name='Updated Test')
+    resp = zia.locations.update_location('1', name='Updated Test')
 
     assert isinstance(resp, dict)
     assert resp.id == 1

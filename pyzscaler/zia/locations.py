@@ -141,18 +141,10 @@ class LocationsAPI(APIEndpoint):
             ...    ip_addresses=['203.0.113.20'])
 
         """
-        location_record = self.get_location(location_id)
-
-        payload = {}
-
-        # Check if required params are provided, if not, add to payload from existing record.
-        payload["ipAddresses"] = kwargs.get("ip_addresses",
-                                            location_record.get("ip_addresses", []))
-
-        payload["ports"] = kwargs.get("ports", location_record.get("ports", []))
-
-        payload["vpnCredentials"] = kwargs.get("vpn_credentials",
-                                               location_record.get("vpn_credentials", []))
+        # Set payload to value of existing record
+        payload = {
+            snake_to_camel(k): v for k, v in self.get_location(location_id).items()
+        }
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
