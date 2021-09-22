@@ -193,9 +193,7 @@ def test_update_location(zia, locations):
         status=200,
         json=updated_location,
         match=[
-            responses.json_params_matcher(
-                {"name": "Updated Test", "ipAddresses": ["203.0.113.1"]}
-            )
+            responses.json_params_matcher(updated_location)
         ],
     )
 
