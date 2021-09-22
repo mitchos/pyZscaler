@@ -1,5 +1,6 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
 from pyzscaler.utils import snake_to_camel
 
 
@@ -135,9 +136,9 @@ class URLFilteringAPI(APIEndpoint):
         payload = {
             "rank": rank,
             "name": name,
-            'action': action,
-            'protocols': protocols,
-            "order": kwargs.pop("order", len(self.list_rules()))
+            "action": action,
+            "protocols": protocols,
+            "order": kwargs.pop("order", len(self.list_rules())),
         }
 
         # Add optional parameters to payload

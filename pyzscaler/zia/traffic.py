@@ -1,21 +1,43 @@
-from restfly.endpoint import APIEndpoint
-from pyzscaler.utils import snake_to_camel
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class TrafficForwardingAPI(APIEndpoint):
-    def list_gre_tunnels(self):
+    def list_gre_tunnels(self, **kwargs):
         """
         Returns the list of all configured GRE tunnels.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: A list of GRE tunnels configured in ZIA.
 
         Examples:
-            >>> gre_tunnels = zia.traffic.list_gre_tunnels()
+            List GRE tunnels with default settings:
+
+            >>> for tunnel in zia.traffic.list_gre_tunnels():
+            ...    print(tunnel)
+
+            List GRE tunnels, limiting to a maximum of 10 items:
+
+            >>> for tunnel in zia.traffic.list_gre_tunnels(max_items=10):
+            ...    print(tunnel)
+
+            List GRE tunnels, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for tunnel in zia.traffic.list_gre_tunnels(page_size=200, max_pages=2):
+            ...    print(tunnel)
 
         """
-        return self._get("greTunnels", box=BoxList)
+        return list(Iterator(self._api, "greTunnels", **kwargs))
 
     def get_gre_tunnel(self, tunnel_id: str):
         """
@@ -48,11 +70,11 @@ class TrafficForwardingAPI(APIEndpoint):
         return self._get("greTunnels/availableInternalIpRanges", box=BoxList)
 
     def add_gre_tunnel(
-            self,
-            source_ip: str,
-            primary_dest_vip_id: str = None,
-            secondary_dest_vip_id: str = None,
-            **kwargs,
+        self,
+        source_ip: str,
+        primary_dest_vip_id: str = None,
+        secondary_dest_vip_id: str = None,
+        **kwargs,
     ):
         """
         Add a new GRE tunnel.
@@ -118,18 +140,40 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._post("greTunnels", json=payload)
 
-    def list_static_ips(self):
+    def list_static_ips(self, **kwargs):
         """
         Returns the list of all configured static IPs.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list`: A list of the configured static IPs
 
         Examples:
-            >>> static_ips = zia.traffic.list_static_ips()
+            List static IPs using default settings:
+
+            >>> for ip_address in zia.traffic.list_static_ips():
+            ...    print(ip_address)
+
+            List static IPs, limiting to a maximum of 10 items:
+
+            >>> for ip_address in zia.traffic.list_static_ips(max_items=10):
+            ...    print(ip_address)
+
+            List static IPs, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for ip_address in zia.traffic.list_static_ips(page_size=200, max_pages=2):
+            ...    print(ip_address)
 
         """
-        return self._get("staticIP", box=BoxList)
+
+        return list(Iterator(self._api, "staticIP", **kwargs))
 
     def get_static_ip(self, static_ip_id: str):
         """
@@ -303,19 +347,39 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._delete(f"staticIP/{static_ip_id}", box=False).status_code
 
-    def list_vips(self):
+    def list_vips(self, **kwargs):
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list` of :obj:`dict`: List of VIP resource records.
 
         Examples:
+            List VIPs using default settings:
+
             >>> for vip in zia.traffic.list_vips():
             ...    pprint(vip)
 
+            List VIPs, limiting to a maximum of 10 items:
+
+            >>> for vip in zia.traffic.list_vips(max_items=10):
+            ...    print(vip)
+
+            List VIPs, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for vip in zia.traffic.list_vips(page_size=200, max_pages=2):
+            ...    print(vip)
+
         """
-        return self._get("vips")
+        return list(Iterator(self._api, "vips", **kwargs))
 
     def list_vips_recommended(self, **kwargs):
         """
@@ -387,22 +451,42 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return recommended_vips
 
-    def list_vpn_credentials(self):
+    def list_vpn_credentials(self, **kwargs):
         """
         Returns the list of all configured VPN credentials.
+
+        Keyword Args:
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
 
         Examples:
-            >>> for vpn_credential in zia.traffic.list_vpn_credentials:
-            ...    pprint(vpn_credential)
+            List VPN credentials using default settings:
+
+            >>> for credential in zia.traffic.list_vpn_credentials:
+            ...    pprint(credential)
+
+            List VPN credentials, limiting to a maximum of 10 items:
+
+            >>> for credential in zia.traffic.list_vpn_credentials(max_items=10):
+            ...    print(credential)
+
+            List VPN credentials, returning 200 items per page for a maximum of 2 pages:
+
+            >>> for credential in zia.traffic.list_vpn_credentials(page_size=200, max_pages=2):
+            ...    print(credential)
 
         """
-        return self._get("vpnCredentials", box=BoxList)
+        return list(Iterator(self._api, "vpnCredentials", **kwargs))
 
     def add_vpn_credential(
-            self, authentication_type: str, pre_shared_key: str, **kwargs
+        self, authentication_type: str, pre_shared_key: str, **kwargs
     ):
         """
         Add new VPN credentials.
