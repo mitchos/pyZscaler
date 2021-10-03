@@ -656,3 +656,20 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
         return self._delete(f"vpnCredentials/{credential_id}", box=False).status_code
+
+    def get_vpn_credential_fqdn(self, fqdn: str):
+        """
+        Get VPN credentials based on the name or None if not found.
+        Args:
+            fqdn (str):
+                The unique identifier for the VPN credentials.
+
+        Returns:
+            :obj:`dict`: The resource record for the requested VPN credentials.
+
+        Examples:
+            >>> pprint(zia.traffic.get_vpn_credential_fqdn('userid@fqdn'))
+
+        """
+        credentials = (record for record in Iterator(self._api, "vpnCredentials") if record['fqdn'] == fqdn)
+        return next(credentials, None)
