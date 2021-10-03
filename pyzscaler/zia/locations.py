@@ -209,6 +209,21 @@ class LocationsAPI(APIEndpoint):
         """
         return self._delete(f"locations/{location_id}", box=False).status_code
 
+    def search_locations(self, searchstr: str):
+        """
+        Returns a list of locations that partially matches searchstr.
+
+        Args:
+            searchstr (str): String to match location name
+
+        Returns:
+             :obj:`list`: A list of location resource records.
+
+        Examples:
+            >>> locations = zia.locations.search_locations('sesth')
+        """
+        return list(Iterator(self._api, path="locations", params={"search": searchstr}))
+
     def get_location_name(self, location_name: str):
         """
         Returns location based on the location name or None if not found.
@@ -222,6 +237,5 @@ class LocationsAPI(APIEndpoint):
         Examples:
             >>> location = zia.locations.get_location_name('stockholm_office')
         """
-
-        location = (record for record in Iterator(self._api, "locations") if record['name'] == location_name)
+        location = (record for record in self.search_locations(location_name) if record.name == location_name)
         return next(location, None)
