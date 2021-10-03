@@ -657,6 +657,22 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         return self._delete(f"vpnCredentials/{credential_id}", box=False).status_code
 
+    def search_credentials(self, searchstr: str):
+        """
+        Returns a list of VPN credentials that partially matches searchstr against a VPN credential's
+        commonName, fqdn, ipAddress, comments, or locationName attributes.
+
+        Args:
+            searchstr (str): String to match
+
+        Returns:
+             :obj:`list`: A list of VPN credential resource records.
+
+        Examples:
+            >>> credentials = zia.locations.search_credentials('@example.com')
+        """
+        return list(Iterator(self._api, path="vpnCredentials", params={"search": searchstr}))
+
     def get_vpn_credential_fqdn(self, fqdn: str):
         """
         Get VPN credentials based on the name or None if not found.
@@ -671,5 +687,5 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> pprint(zia.traffic.get_vpn_credential_fqdn('userid@fqdn'))
 
         """
-        credentials = (record for record in Iterator(self._api, "vpnCredentials") if record['fqdn'] == fqdn)
-        return next(credentials, None)
+        credential = (record for record in self.search_credentials(fqdn) if record.fqdn == fqdn)
+        return next(credential, None)
