@@ -208,3 +208,20 @@ class LocationsAPI(APIEndpoint):
 
         """
         return self._delete(f"locations/{location_id}", box=False).status_code
+
+    def get_location_name(self, location_name: str):
+        """
+        Returns location based on the location name or None if not found.
+
+        Args:
+            location_name (str):
+
+        Returns:
+            :obj:`dict`: The requested location resource record.
+
+        Examples:
+            >>> location = zia.locations.get_location_name('stockholm_office')
+        """
+
+        location = (record for record in Iterator(self._api, "locations") if record['name'] == location_name)
+        return next(location, None)
