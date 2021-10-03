@@ -335,3 +335,20 @@ class UserManagementAPI(APIEndpoint):
 
         """
         return self._delete(f"users/{user_id}", box=False).status_code
+
+    def get_user_name(self, user_name: str):
+        """
+        Returns the user information for the specified username or None if not found.
+
+        Args:
+            user_name (str): The name of the requested user.
+
+        Returns:
+            :obj:`dict`: The resource record for the requested user.
+
+        Examples
+            >>> user = zia.users.get_user_name('Lilly Piccadilly')
+
+        """
+        user = (record for record in Iterator(self._api, "users") if record['user'] == user_name)
+        return next(user, None)
