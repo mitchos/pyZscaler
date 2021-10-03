@@ -350,5 +350,5 @@ class UserManagementAPI(APIEndpoint):
             >>> user = zia.users.get_user_name('Lilly Piccadilly')
 
         """
-        user = (record for record in Iterator(self._api, "users") if record['user'] == user_name)
+        user = (record for record in Iterator(self._api, "users") if record['email'] == user_name)
         return next(user, None)
