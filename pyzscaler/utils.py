@@ -44,12 +44,12 @@ class Iterator(APIIterator):
 
     page_size = 100
 
-    def __init__(self, api, path="", params={}, **kw):
+    def __init__(self, api, path: str = "", params: dict = None, **kw):
         """Initialize Iterator class."""
         super().__init__(api, **kw)
 
         self.path = path
-        self.params = params
+        self.params = params if params else {}
 
     def _get_page(self) -> None:
         """Iterator function to get the page."""
