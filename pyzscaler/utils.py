@@ -4,18 +4,18 @@ from box import BoxList
 from restfly import APIIterator
 
 
-# Converts Python Snake Case to Zscaler's lower camelCase
 def snake_to_camel(name):
+    """Converts Python Snake Case to Zscaler's lower camelCase."""
     # Edge-cases where camelCase is breaking
-    if name == "routable_ip":
-        return "routableIP"
-    elif name == "is_name_l10n_tag":
-        return "isNameL10nTag"
-    elif name == "name_l10n_tag":
-        return "nameL10nTag"
-    else:
-        name = name[0].lower() + name.title()[1:].replace("_", "")
-    return name
+    edge_cases = {
+        "routable_ip": "routableIP",
+        "is_name_l10n_tag": "isNameL10nTag",
+        "name_l10n_tag": "nameL10nTag",
+        "surrogate_ip": "surrogateIP",
+        "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers"
+    }
+    ret = edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
+    return ret
 
 
 # Takes a tuple if id_groups, kwargs and the payload dict; reformat for API call
