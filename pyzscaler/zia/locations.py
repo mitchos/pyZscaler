@@ -243,5 +243,5 @@ class LocationsAPI(APIEndpoint):
         Examples:
             >>> location = zia.locations.get_location_name('stockholm_office')
         """
-        location = (record for record in self.search_locations(location_name) if record.name == location_name)
+        location = (record for record in self.search_locations(search=location_name) if record.name == location_name)
         return next(location, None)
