@@ -221,7 +221,7 @@ class UserManagementAPI(APIEndpoint):
 
     def get_user(self, user_id: str = "", email: str = ""):
         """
-        Returns the user information for the specified ID.
+        Returns the user information for the specified ID or email.
 
         Args:
             user_id (optional, str): The unique identifier for the requested user.
