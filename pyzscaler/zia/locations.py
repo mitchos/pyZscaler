@@ -209,20 +209,26 @@ class LocationsAPI(APIEndpoint):
         """
         return self._delete(f"locations/{location_id}", box=False).status_code
 
-    def search_locations(self, searchstr: str):
+    def search_locations(self, **kwargs):
         """
-        Returns a list of locations that partially matches searchstr.
+        Returns a list of locations that partially matches search arguments.
 
-        Args:
-            searchstr (str): String to match location name
-
+        Keyword Args:
+            **search (str, optional):
+                String used to partially match against a location's name and port attributes.
+            **xffEnabled (bool, optional):
+                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
+            **authRequired (bool, optional):
+                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
+            **bwEnforced (bool, optional):
+                Filter based on whether Bandwith Control is being enforced for a location.
         Returns:
              :obj:`list`: A list of location resource records.
 
         Examples:
             >>> locations = zia.locations.search_locations('sesth')
         """
-        return list(Iterator(self._api, path="locations", params={"search": searchstr}))
+        return list(Iterator(self._api, path="locations", params=kwargs))
 
     def get_location_name(self, location_name: str):
         """
