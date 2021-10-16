@@ -54,7 +54,9 @@ class ZIA(APISession):
         """Creates a ZIA API session."""
         super(ZIA, self)._build_session(**kwargs)
         return self.session.create(
-            api_key=self._api_key, username=self._username, password=self._password
+            api_key=self._api_key,
+            username=self._username,
+            password=self._password,
         )
 
     def _deauthenticate(self):
