@@ -50,10 +50,14 @@ class Iterator(APIIterator):
 
         self.path = path
 
+        search = ''
+        if 'search' in kw:
+            self.search = kw['search']
+
     def _get_page(self) -> None:
         """Iterator function to get the page."""
         self.page = self._api.get(
             self.path,
-            params={"page": self.num_pages + 1, "pageSize": self.page_size},
+            params={"page": self.num_pages + 1, "pageSize": self.page_size, "search": self.search},
             box=BoxList,
         )

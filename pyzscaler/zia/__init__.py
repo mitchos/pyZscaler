@@ -17,6 +17,7 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
+from .admin_role_management import AdminAndRoleManagementAPI
 
 
 class ZIA(APISession):
@@ -172,3 +173,11 @@ class ZIA(APISession):
 
         """
         return DataCenterVIPSAPI(self)
+
+    @property
+    def admin_and_role_management(self):
+        """
+        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+
+        """
+        return AdminAndRoleManagementAPI(self)
