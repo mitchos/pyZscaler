@@ -226,11 +226,11 @@ class LocationsAPI(APIEndpoint):
         Keyword Args:
             **search (str, optional):
                 String used to partially match against a location's name and port attributes.
-            **xffEnabled (bool, optional):
+            **xff_enabled (bool, optional):
                 Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
-            **authRequired (bool, optional):
+            **auth_required (bool, optional):
                 Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
-            **bwEnforced (bool, optional):
+            **bw_enforced (bool, optional):
                 Filter based on whether Bandwith Control is being enforced for a location.
         Returns:
              :obj:`list`: A list of location resource records.
