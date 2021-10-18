@@ -42,19 +42,24 @@ def obfuscate_api_key(seed):
 class Iterator(APIIterator):
     """Iterator class."""
 
-    page_size = 100
-
-    def __init__(self, api, path: str = "", params: dict = None, **kw):
+    def __init__(self, api, path: str = "", **kw):
         """Initialize Iterator class."""
         super().__init__(api, **kw)
 
         self.path = path
-        self.params = params if params else {}
+        self.max_items = kw.pop('max_items', 0)
+        self.max_pages = kw.pop('max_pages', 0)
+        self.payload = {}
+        if kw:
+            self.payload = {snake_to_camel(key): value for key, value in kw.items()}
 
     def _get_page(self) -> None:
         """Iterator function to get the page."""
+
         self.page = self._api.get(
             self.path,
-            params={**self.params, "page": self.num_pages + 1, "pageSize": self.page_size},
-            box=BoxList,
+            params={**self.payload, "page": self.num_pages + 1},
+            box=BoxList
         )
+        if not self.page and self.num_pages == 0:
+            raise ValueError("Requested resource not found.")
