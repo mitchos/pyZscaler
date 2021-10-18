@@ -591,7 +591,7 @@ class TrafficForwardingAPI(APIEndpoint):
         Args:
             credential_id (str, optional):
                 The unique identifier for the VPN credentials.
-        Keyworkd Args:
+        Keyword Args:
             fqdn (str, optional):
                 The unique FQDN for the VPN credentials.
 
