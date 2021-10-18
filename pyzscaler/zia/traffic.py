@@ -471,11 +471,8 @@ class TrafficForwardingAPI(APIEndpoint):
                 comments, or locationName
             **type (str, optional):
                 Only gets VPN credentials for the specified type (CN, IP, UFQDN, XAUTH)
-            **includeOnlyWithoutLocation (bool, optional):
+            **include_only_without_location (bool, optional):
                 Include VPN credential only if not associated to any location.
-            **locationId (int, optional):
-                Gets the VPN credentials for the specified location ID.
-                (This should work according to Zscaler API doc, but does not seem to work.)
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
@@ -498,7 +495,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
         return list(Iterator(self._api, "vpnCredentials", max_items=max_items, max_pages=max_pages,
-                             page_size=page_size, params=kwargs))
+                             page_size=page_size, **kwargs))
 
     def add_vpn_credential(
         self, authentication_type: str, pre_shared_key: str, **kwargs
@@ -586,7 +583,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
     def get_vpn_credential(self, credential_id: str = "", fqdn: str = ""):
         """
-        Get VPN credentials for the specified ID.
+        Get VPN credentials for the specified ID or fqdn.
 
         Args:
             credential_id (str, optional):
