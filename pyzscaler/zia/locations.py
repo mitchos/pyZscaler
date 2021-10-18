@@ -78,21 +78,31 @@ class LocationsAPI(APIEndpoint):
 
         return self._post("locations", json=payload)
 
-    def get_location(self, location_id: str):
+    def get_location(self, location_id: str = "", name: str = ""):
         """
-        Returns information for the specified location.
+        Returns information for the specified location based on the location_id or name.
+        If no location could be found, None is returned.
 
         Args:
-            location_id (str):
+            location_id (str, optional):
                 The unique identifier for the location.
+        Keyword Args:
+            location_name (str, optional):
+                The uniqe name of the location.
 
         Returns:
             :obj:`dict`: The requested location resource record.
 
         Examples:
             >>> location = zia.locations.get_location('97456691')
+
+            >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
-        return self._get(f"locations/{location_id}")
+        if location_id:
+            return self._get(f"locations/{location_id}")
+
+        location = (record for record in self.list_locations(search=name) if record.name == name)
+        return next(location, None)
 
     def list_sub_locations(self, location_id: str):
         """
@@ -229,19 +239,3 @@ class LocationsAPI(APIEndpoint):
             >>> locations = zia.locations.search_locations('sesth')
         """
         return list(Iterator(self._api, path="locations", params=kwargs))
-
-    def get_location_name(self, location_name: str):
-        """
-        Returns location based on the location name or None if not found.
-
-        Args:
-            location_name (str):
-
-        Returns:
-            :obj:`dict`: The requested location resource record.
-
-        Examples:
-            >>> location = zia.locations.get_location_name('stockholm_office')
-        """
-        location = (record for record in self.search_locations(search=location_name) if record.name == location_name)
-        return next(location, None)
