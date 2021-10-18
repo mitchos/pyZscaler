@@ -238,4 +238,4 @@ class LocationsAPI(APIEndpoint):
         Examples:
             >>> locations = zia.locations.search_locations('sesth')
         """
-        return list(Iterator(self._api, path="locations", params=kwargs))
+        return list(Iterator(self._api, path="locations", **kwargs))
