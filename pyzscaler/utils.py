@@ -56,11 +56,8 @@ class Iterator(APIIterator):
 
             self.payload = {snake_to_camel(key): value for key, value in kw.items()}
 
-            print(self.payload)
-
     def _get_page(self) -> None:
         """Iterator function to get the page."""
-        print('Getting page')
         self.page = self._api.get(
             self.path,
             params={**self.payload, 'page': self.num_pages + 1},

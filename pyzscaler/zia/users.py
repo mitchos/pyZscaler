@@ -219,12 +219,15 @@ class UserManagementAPI(APIEndpoint):
 
         return self._post("users/bulkDelete", json=payload)
 
-    def get_user(self, user_id: str):
+    def get_user(self, user_id: str = "", email: str = ""):
         """
-        Returns the user information for the specified ID.
+        Returns the user information for the specified ID or email.
 
         Args:
-            user_id (str): The unique identifier for the requested user.
+            user_id (optional, str): The unique identifier for the requested user.
+
+        Keyword Args:
+            email (optional, str): The email of the requested user.
 
         Returns:
             :obj:`dict`: The resource record for the requested user.
@@ -232,8 +235,14 @@ class UserManagementAPI(APIEndpoint):
         Examples
             >>> user = zia.users.get_user('8312')
 
+            >>> user = zia.users.get_user(email='jane.doe@example.com')
+
         """
-        return self._get(f"users/{user_id}")
+        if user_id:
+            return self._get(f"users/{user_id}")
+
+        user = (record for record in Iterator(self._api, "users") if record['email'] == email)
+        return next(user, None)
 
     def update_user(
         self,

@@ -78,21 +78,31 @@ class LocationsAPI(APIEndpoint):
 
         return self._post("locations", json=payload)
 
-    def get_location(self, location_id: str):
+    def get_location(self, location_id: str = "", name: str = ""):
         """
-        Returns information for the specified location.
+        Returns information for the specified location based on the location_id or name.
+        If no location could be found, None is returned.
 
         Args:
-            location_id (str):
+            location_id (str, optional):
                 The unique identifier for the location.
+        Keyword Args:
+            location_name (str, optional):
+                The uniqe name of the location.
 
         Returns:
             :obj:`dict`: The requested location resource record.
 
         Examples:
             >>> location = zia.locations.get_location('97456691')
+
+            >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
-        return self._get(f"locations/{location_id}")
+        if location_id:
+            return self._get(f"locations/{location_id}")
+
+        location = (record for record in self.list_locations(search=name) if record.name == name)
+        return next(location, None)
 
     def list_sub_locations(self, location_id: str):
         """
@@ -208,3 +218,24 @@ class LocationsAPI(APIEndpoint):
 
         """
         return self._delete(f"locations/{location_id}", box=False).status_code
+
+    def search_locations(self, **kwargs):
+        """
+        Returns a list of locations that partially matches search arguments.
+
+        Keyword Args:
+            **search (str, optional):
+                String used to partially match against a location's name and port attributes.
+            **xffEnabled (bool, optional):
+                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
+            **authRequired (bool, optional):
+                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
+            **bwEnforced (bool, optional):
+                Filter based on whether Bandwith Control is being enforced for a location.
+        Returns:
+             :obj:`list`: A list of location resource records.
+
+        Examples:
+            >>> locations = zia.locations.search_locations('sesth')
+        """
+        return list(Iterator(self._api, path="locations", params=kwargs))

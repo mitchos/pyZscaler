@@ -451,17 +451,31 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return recommended_vips
 
-    def list_vpn_credentials(self, **kwargs):
+    def list_vpn_credentials(self, max_items=0, max_pages=0, page_size=100, **kwargs):
         """
         Returns the list of all configured VPN credentials.
 
-        Keyword Args:
-            **max_items (int, optional):
+        Args:
+            max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
+            max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
-            **page_size (int, optional):
+            page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **kwargs:
+                Optional keyword search filters.
+
+        Keyword Args:
+            **search (str, optional):
+                The search string used to match against a VPN credential's commonName, fqdn, ipAddress,
+                comments, or locationName
+            **type (str, optional):
+                Only gets VPN credentials for the specified type (CN, IP, UFQDN, XAUTH)
+            **includeOnlyWithoutLocation (bool, optional):
+                Include VPN credential only if not associated to any location.
+            **locationId (int, optional):
+                Gets the VPN credentials for the specified location ID.
+                (This should work according to Zscaler API doc, but does not seem to work.)
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
@@ -483,7 +497,8 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    print(credential)
 
         """
-        return list(Iterator(self._api, "vpnCredentials", **kwargs))
+        return list(Iterator(self._api, "vpnCredentials", max_items=max_items, max_pages=max_pages,
+                             page_size=page_size, params=kwargs))
 
     def add_vpn_credential(
         self, authentication_type: str, pre_shared_key: str, **kwargs
@@ -569,13 +584,16 @@ class TrafficForwardingAPI(APIEndpoint):
             "vpnCredentials/bulkDelete", json=payload, box=False
         ).status_code
 
-    def get_vpn_credential(self, credential_id: str):
+    def get_vpn_credential(self, credential_id: str = "", fqdn: str = ""):
         """
         Get VPN credentials for the specified ID.
 
         Args:
-            credential_id (str):
+            credential_id (str, optional):
                 The unique identifier for the VPN credentials.
+        Keyword Args:
+            fqdn (str, optional):
+                The unique FQDN for the VPN credentials.
 
         Returns:
             :obj:`dict`: The resource record for the requested VPN credentials.
@@ -583,8 +601,14 @@ class TrafficForwardingAPI(APIEndpoint):
         Examples:
             >>> pprint(zia.traffic.get_vpn_credential('97679391'))
 
+            >>> pprint(zia.traffic.get_vpn_credential(fqdn='userid@fqdn'))
+
         """
-        return self._get(f"vpnCredentials/{credential_id}")
+        if credential_id:
+            return self._get(f"vpnCredentials/{credential_id}")
+
+        credential = (record for record in self.list_vpn_credentials(search=fqdn) if record.fqdn == fqdn)
+        return next(credential, None)
 
     def update_vpn_credential(self, credential_id: str, **kwargs):
         """
