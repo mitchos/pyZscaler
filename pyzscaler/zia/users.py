@@ -14,12 +14,16 @@ class UserManagementAPI(APIEndpoint):
         Returns the list of departments.
 
         Keyword Args:
+            **limit_search (bool, optional):
+                Limits the search to match against the department name only.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to match against a department's name or comments attributes.
 
         Returns:
             :obj:`list`: The list of departments configured in ZIA.
@@ -69,6 +73,8 @@ class UserManagementAPI(APIEndpoint):
                 The maximum number of pages to request before stopping iteration.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to match against a group's name or comments attributes.
 
         Returns:
             :obj:`list`: The list of user groups configured in ZIA.
@@ -113,10 +119,16 @@ class UserManagementAPI(APIEndpoint):
         Returns the list of users.
 
         Keyword Args:
+            **dept (str, optional):
+                Filters by department name. This is a `starts with` match.
+            **group (str, optional):
+                Filters by group name. This is a `starts with` match.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
+            **name (str, optional):
+                Filters by user name. This is a `partial` match.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
@@ -219,15 +231,13 @@ class UserManagementAPI(APIEndpoint):
 
         return self._post("users/bulkDelete", json=payload)
 
-    def get_user(self, user_id: str = "", email: str = ""):
+    def get_user(self, user_id: str = None, email: str = None):
         """
         Returns the user information for the specified ID or email.
 
         Args:
             user_id (optional, str): The unique identifier for the requested user.
-
-        Keyword Args:
-            email (optional, str): The email of the requested user.
+            email (optional, str): The unique email for the requested user.
 
         Returns:
             :obj:`dict`: The resource record for the requested user.
@@ -238,11 +248,21 @@ class UserManagementAPI(APIEndpoint):
             >>> user = zia.users.get_user(email='jane.doe@example.com')
 
         """
-        if user_id:
-            return self._get(f"users/{user_id}")
 
-        user = (record for record in Iterator(self._api, "users") if record['email'] == email)
-        return next(user, None)
+        if user_id and email:
+            raise ValueError(
+                "TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided."
+            )
+
+        elif email:
+            user = (
+                record
+                for record in self.list_users(search=email)
+                if record.email == email
+            )
+            return next(user, None)
+
+        return self._get(f"users/{user_id}")
 
     def update_user(
         self,

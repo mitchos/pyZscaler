@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import Iterator, snake_to_camel
@@ -10,12 +9,21 @@ class LocationsAPI(APIEndpoint):
         Returns a list of locations.
 
         Keyword Args:
+            **auth_required (bool, optional):
+                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
+            **bw_enforced (bool, optional):
+                Filter based on whether Bandwith Control is being enforced for a location.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to partially match against a location's name and port attributes.
+            **xff_enabled (bool, optional):
+                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
+
         Returns:
             :obj:`list`: List of configured locations.
 
@@ -78,17 +86,15 @@ class LocationsAPI(APIEndpoint):
 
         return self._post("locations", json=payload)
 
-    def get_location(self, location_id: str = "", name: str = ""):
+    def get_location(self, location_id: str = None, location_name: str = None):
         """
-        Returns information for the specified location based on the location_id or name.
-        If no location could be found, None is returned.
+        Returns information for the specified location based on the location id or location name.
 
         Args:
             location_id (str, optional):
                 The unique identifier for the location.
-        Keyword Args:
             location_name (str, optional):
-                The uniqe name of the location.
+                The unique name for the location.
 
         Returns:
             :obj:`dict`: The requested location resource record.
@@ -98,19 +104,49 @@ class LocationsAPI(APIEndpoint):
 
             >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
-        if location_id:
-            return self._get(f"locations/{location_id}")
+        if location_id and location_name:
+            raise ValueError(
+                "TOO MANY ARGUMENTS: Expected either a location_id or a location_name. Both were provided."
+            )
+        elif location_name:
+            location = (
+                record
+                for record in self.list_locations(search=location_name)
+                if record.name == location_name
+            )
+            return next(location, None)
 
-        location = (record for record in self.list_locations(search=name) if record.name == name)
-        return next(location, None)
+        return self._get(f"locations/{location_id}")
 
-    def list_sub_locations(self, location_id: str):
+    def list_sub_locations(self, location_id: str, **kwargs):
         """
         Returns sub-location information for the specified location ID.
 
         Args:
             location_id (str):
                 The unique identifier for the parent location.
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            **auth_required (bool, optional):
+                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
+            **bw_enforced (bool, optional):
+                Filter based on whether Bandwith Control is being enforced for a location.
+            **enable_firewall (bool, optional):
+                Filter based on whether Enable Firewall setting is enabled or disabled for a sub-location.
+            **enforce_aup (bool, optional):
+                Filter based on whether Enforce AUP setting is enabled or disabled for a sub-location.
+            **max_items (int, optional):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int, optional):
+                The maximum number of pages to request before stopping iteration.
+            **page_size (int, optional):
+                Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to partially match against a location's name and port attributes.
+            **xff_enabled (bool, optional):
+                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
 
         Returns:
             :obj:`list`: A list of sub-locations configured for the parent location.
@@ -120,19 +156,27 @@ class LocationsAPI(APIEndpoint):
             ...    pprint(sub_location)
 
         """
-        return self._get(f"locations/{location_id}/sublocations", box=BoxList)
+        return list(
+            Iterator(self._api, f"locations/{location_id}/sublocations", **kwargs)
+        )
 
     def list_locations_lite(self, **kwargs):
         """
         Returns only the name and ID of all configured locations.
 
         Keyword Args:
+            **include_parent_locations (bool, optional):
+                Only locations with sub-locations will be included in the response if `True`.
+            **include_sub_locations (bool, optional):
+                Sub-locations will be included in the response if `True`.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to partially match against a location's name and port attributes.
 
         Returns:
             :obj:`list`: A list of configured locations.
@@ -218,24 +262,3 @@ class LocationsAPI(APIEndpoint):
 
         """
         return self._delete(f"locations/{location_id}", box=False).status_code
-
-    def search_locations(self, **kwargs):
-        """
-        Returns a list of locations that partially matches search arguments.
-
-        Keyword Args:
-            **search (str, optional):
-                String used to partially match against a location's name and port attributes.
-            **xffEnabled (bool, optional):
-                Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
-            **authRequired (bool, optional):
-                Filter based on whether the Enforce Authentication setting is enabled or disabled for a location.
-            **bwEnforced (bool, optional):
-                Filter based on whether Bandwith Control is being enforced for a location.
-        Returns:
-             :obj:`list`: A list of location resource records.
-
-        Examples:
-            >>> locations = zia.locations.search_locations('sesth')
-        """
-        return list(Iterator(self._api, path="locations", params=kwargs))

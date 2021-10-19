@@ -63,5 +63,3 @@ class Iterator(APIIterator):
             params={**self.payload, "page": self.num_pages + 1},
             box=BoxList,
         )
-        if not self.page and self.num_pages == 0:
-            raise ValueError("No requested resources were found.")
