@@ -126,7 +126,7 @@ class ZIA(APISession):
     @property
     def ssl(self):
         """
-        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl>`.
+        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl_inspection>`.
 
         """
         return SSLInspectionAPI(self)

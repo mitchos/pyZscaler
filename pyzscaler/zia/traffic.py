@@ -56,9 +56,17 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         return self._get(f"greTunnels/{tunnel_id}")
 
-    def list_gre_ranges(self):
+    def list_gre_ranges(self, **kwargs):
         """
         Returns a list of available GRE tunnel ranges.
+
+        Keyword Args:
+            **internal_ip_range (str, optional):
+                Internal IP range information.
+            **static_ip (str, optional):
+                Static IP information.
+            **limit (int, optional):
+                The maximum number of GRE tunnel IP ranges that can be added. Defaults to `10`.
 
         Returns:
             :obj:`list`: A list of available GRE tunnel ranges.
@@ -67,7 +75,9 @@ class TrafficForwardingAPI(APIEndpoint):
             >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
 
         """
-        return self._get("greTunnels/availableInternalIpRanges", box=BoxList)
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+
+        return self._get("greTunnels/availableInternalIpRanges", params=payload, box=BoxList)
 
     def add_gre_tunnel(
         self,
@@ -371,7 +381,6 @@ class TrafficForwardingAPI(APIEndpoint):
             **region (str, optional):
                 Filter based on region.
 
-
         Returns:
             :obj:`list` of :obj:`dict`: List of VIP resource records.
 
@@ -430,11 +439,7 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vip)
 
         """
-        payload = {}
-
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
         return self._get("vips/recommendedList", params=payload, box=BoxList)
 
