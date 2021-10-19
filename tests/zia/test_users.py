@@ -1,6 +1,6 @@
 import pytest
 import responses
-
+from responses import matchers
 
 @pytest.fixture(name="users")
 def fixture_users():
@@ -49,7 +49,7 @@ def test_users_add_user(zia, users):
         json=users[0],
         status=200,
         match=[
-            responses.json_params_matcher(
+            matchers.json_params_matcher(
                 {
                     "name": "Test User A",
                     "email": "testusera@example.com",
@@ -107,7 +107,7 @@ def test_users_update_user(zia, users):
         url="https://zsapi.zscaler.net/api/v1/users/1",
         json=updated_user,
         match=[
-            responses.json_params_matcher(
+            matchers.json_params_matcher(
                 {
                     "name": updated_user["name"],
                     "email": updated_user["email"],
@@ -456,7 +456,7 @@ def test_users_bulk_delete_users(zia):
         url="https://zsapi.zscaler.net/api/v1/users/bulkDelete",
         status=204,
         json={"ids": user_ids},
-        match=[responses.json_params_matcher({"ids": user_ids})],
+        match=[matchers.json_params_matcher({"ids": user_ids})],
     )
     resp = zia.users.bulk_delete_users(["1", "2"])
     assert isinstance(resp, dict)

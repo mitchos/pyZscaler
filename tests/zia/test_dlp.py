@@ -1,5 +1,6 @@
 import pytest
 import responses
+from responses import matchers
 from box import BoxList
 
 from pyzscaler.zia import ZIA
@@ -72,7 +73,7 @@ def test_dlp_update_dict(zia, dlp_dicts):
         },
         status=200,
         match=[
-            responses.json_params_matcher(
+            matchers.json_params_matcher(
                 {
                     "id": 1,
                     "custom": True,
@@ -146,83 +147,3 @@ def test_dlp_get(zia, dlp_dicts):
 
     resp = zia.dlp.get_dict("1")
 
-
-@pytest.fixture
-@responses.activate
-def zia():
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/authenticatedSession",
-        content_type="application/json",
-        status=200,
-    )
-    return ZIA(
-        username="test@example.com",
-        password="hunter2",
-        cloud="zscaler",
-        api_key="123456789abcdef",
-    )
-
-
-@pytest.mark.parametrize(
-    "zia,dlp_dicts,test_match_type,num",
-    [(zia, dlp_dicts, "all", 0), (zia, dlp_dicts, "any", 1)],
-    indirect=("zia", "dlp_dicts"),
-)
-@responses.activate
-def test_dlp_add_dict(zia, dlp_dicts, test_match_type, num):
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/dlpDictionaries",
-        status=200,
-        json=dlp_dicts[num],
-        match=[
-            responses.json_params_matcher(
-                {
-                    "name": "test",
-                    "description": "test",
-                    "dictionaryType": "PATTERNS_AND_PHRASES",
-                    "customPhraseMatchType": dlp_dicts[num]["customPhraseMatchType"],
-                    "phrases": [
-                        {"action": "PHRASE_COUNT_TYPE_ALL", "phrase": "test"},
-                        {"action": "PHRASE_COUNT_TYPE_UNIQUE", "phrase": "test"},
-                    ],
-                    "patterns": [
-                        {"action": "PATTERN_COUNT_TYPE_ALL", "pattern": "test"},
-                        {"action": "PATTERN_COUNT_TYPE_UNIQUE", "pattern": "test"},
-                    ],
-                }
-            )
-        ],
-    )
-
-    resp = zia.dlp.add_dict(
-        name="test",
-        description="test",
-        match_type=test_match_type,
-        phrases=[("all", "test"), ("unique", "test")],
-        patterns=[("all", "test"), ("unique", "test")],
-    )
-
-    assert isinstance(resp, dict)
-
-
-@responses.activate
-def test_validate_dict(zia):
-    responses.add(
-        responses.POST,
-        url="https://zsapi.zscaler.net/api/v1/dlpDictionaries/validateDlpPattern",
-        status=200,
-        json={
-            "status": "test",
-            "errPosition": 0,
-            "errMsg": "test",
-            "errParameter": "test",
-            "errSuggestion": "test",
-            "idList": [1],
-        },
-    )
-    resp = zia.dlp.validate_dict("test")
-
-    assert isinstance(resp, dict)
-    assert resp.err_msg == "test"
