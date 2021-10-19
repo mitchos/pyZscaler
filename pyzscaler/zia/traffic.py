@@ -145,6 +145,11 @@ class TrafficForwardingAPI(APIEndpoint):
         Returns the list of all configured static IPs.
 
         Keyword Args:
+            **available_for_gre_tunnel (bool, optional):
+                Only return the static IP addresses that are not yet associated with a GRE tunnel if True.
+                Defaults to False.
+            **ip_address (str, optional):
+                Filter based on IP address.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
@@ -352,12 +357,20 @@ class TrafficForwardingAPI(APIEndpoint):
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 
         Keyword Args:
+            **dc (str, optional):
+                Filter based on data center.
+            **include (str, optional):
+                Include all, private, or public VIPs in the list. Available choices are `all`, `private`, `public`.
+                Defaults to `public`.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **region (str, optional):
+                Filter based on region.
+
 
         Returns:
             :obj:`list` of :obj:`dict`: List of VIP resource records.
@@ -455,13 +468,29 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         Returns the list of all configured VPN credentials.
 
+        Args:
+            **kwargs:
+                Optional keyword search filters.
+
         Keyword Args:
+            **include_only_without_location (bool, optional):
+                Include VPN credential only if not associated to any location.
+            **location_id (int, optional):
+                Gets the VPN credentials for the specified location ID.
+
+                **NOTE**: Included for completeness as per documentation, but the ZIA API does not respond with
+                filtered results.
             **max_items (int, optional):
                 The maximum number of items to request before stopping iteration.
             **max_pages (int, optional):
                 The maximum number of pages to request before stopping iteration.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
+            **search (str, optional):
+                The search string used to match against a VPN credential's commonName, fqdn, ipAddress,
+                comments, or locationName
+            **type (str, optional):
+                Only gets VPN credentials for the specified type (CN, IP, UFQDN, XAUTH)
 
         Returns:
             :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
@@ -569,13 +598,15 @@ class TrafficForwardingAPI(APIEndpoint):
             "vpnCredentials/bulkDelete", json=payload, box=False
         ).status_code
 
-    def get_vpn_credential(self, credential_id: str):
+    def get_vpn_credential(self, credential_id: str = None, fqdn: str = None):
         """
         Get VPN credentials for the specified ID.
 
         Args:
-            credential_id (str):
+            credential_id (str, optional):
                 The unique identifier for the VPN credentials.
+            fqdn (str, optional):
+                The unique FQDN for the VPN credentials.
 
         Returns:
             :obj:`dict`: The resource record for the requested VPN credentials.
@@ -583,7 +614,21 @@ class TrafficForwardingAPI(APIEndpoint):
         Examples:
             >>> pprint(zia.traffic.get_vpn_credential('97679391'))
 
+            >>> pprint(zia.traffic.get_vpn_credential(fqdn='userid@fqdn'))
+
         """
+        if credential_id and fqdn:
+            raise ValueError(
+                "TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided."
+            )
+        elif fqdn:
+            credential = (
+                record
+                for record in self.list_vpn_credentials(search=fqdn)
+                if record.fqdn == fqdn
+            )
+            return next(credential, None)
+
         return self._get(f"vpnCredentials/{credential_id}")
 
     def update_vpn_credential(self, credential_id: str, **kwargs):

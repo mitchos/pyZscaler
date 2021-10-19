@@ -12,7 +12,7 @@ def snake_to_camel(name):
         "is_name_l10n_tag": "isNameL10nTag",
         "name_l10n_tag": "nameL10nTag",
         "surrogate_ip": "surrogateIP",
-        "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers"
+        "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
     }
     ret = edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
     return ret
@@ -44,16 +44,22 @@ class Iterator(APIIterator):
 
     page_size = 100
 
-    def __init__(self, api, path="", **kw):
+    def __init__(self, api, path: str = "", **kw):
         """Initialize Iterator class."""
         super().__init__(api, **kw)
 
         self.path = path
+        self.max_items = kw.pop("max_items", 0)
+        self.max_pages = kw.pop("max_pages", 0)
+        self.payload = {}
+        if kw:
+
+            self.payload = {snake_to_camel(key): value for key, value in kw.items()}
 
     def _get_page(self) -> None:
         """Iterator function to get the page."""
         self.page = self._api.get(
             self.path,
-            params={"page": self.num_pages + 1, "pageSize": self.page_size},
+            params={**self.payload, "page": self.num_pages + 1},
             box=BoxList,
         )
