@@ -1,2 +1,2 @@
-restfly==1.4.1
+restfly~=1.4.2
 python-box==5.4.1

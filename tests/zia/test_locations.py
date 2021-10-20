@@ -1,5 +1,6 @@
 import pytest
 import responses
+from responses import matchers
 
 
 @pytest.fixture(name="locations")
@@ -193,7 +194,7 @@ def test_update_location(zia, locations):
         status=200,
         json=updated_location,
         match=[
-            responses.json_params_matcher(updated_location)
+            matchers.json_params_matcher(updated_location)
         ],
     )
 
