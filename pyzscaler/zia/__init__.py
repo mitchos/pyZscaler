@@ -11,7 +11,7 @@ from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
 from .session import AuthenticatedSessionAPI
-from .ssl import SSLInspectionAPI
+from .ssl_inspection import SSLInspectionAPI
 from .traffic import TrafficForwardingAPI
 from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
