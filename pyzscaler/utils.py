@@ -54,6 +54,6 @@ class Iterator(APIIterator):
         """Iterator function to get the page."""
         self.page = self._api.get(
             self.path,
-            params={"page": self.num_pages + 1, "pageSize": self.page_size, "search": self.search},
+            params={"page": self.num_pages + 1, "pageSize": self.page_size,},
             box=BoxList,
         )
