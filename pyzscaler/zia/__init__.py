@@ -17,6 +17,7 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
+from .admin_role_management import AdminAndRoleManagementAPI
 
 
 class ZIA(APISession):
@@ -54,7 +55,9 @@ class ZIA(APISession):
         """Creates a ZIA API session."""
         super(ZIA, self)._build_session(**kwargs)
         return self.session.create(
-            api_key=self._api_key, username=self._username, password=self._password
+            api_key=self._api_key,
+            username=self._username,
+            password=self._password,
         )
 
     def _deauthenticate(self):
@@ -170,3 +173,11 @@ class ZIA(APISession):
 
         """
         return DataCenterVIPSAPI(self)
+
+    @property
+    def admin_and_role_management(self):
+        """
+        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+
+        """
+        return AdminAndRoleManagementAPI(self)
