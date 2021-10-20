@@ -1,16 +1,28 @@
 import pytest
 import responses
+import requests
 
 from pyzscaler.zia import ZIA
 
 
-@pytest.fixture
+@pytest.fixture(name="session")
+def fixture_session():
+    return {
+        "authType": "ADMIN_LOGIN",
+        "obfuscateApiKey": False,
+        "passwordExpiryTime": 0,
+        "passwordExpiryDays": 0,
+    }
+
+
+@pytest.fixture(name="zia")
 @responses.activate
-def zia():
+def zia(session):
     responses.add(
         responses.POST,
         url="https://zsapi.zscaler.net/api/v1/authenticatedSession",
         content_type="application/json",
+        json=session,
         status=200,
     )
     return ZIA(

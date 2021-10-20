@@ -25,9 +25,9 @@ author = 'Mitch Kelly'
 html_title = ''
 
 # The short X.Y version
-version = '0.9'
+version = '0.10'
 # The full version, including alpha/beta/rc tags
-release = '0.9.1'
+release = '0.10.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -43,8 +43,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.githubpages',
-    'sphinx.ext.napoleon',
-    'sphinx_rtd_theme'
+    'sphinx.ext.napoleon'
 ]
 autodoc_typehints = "none"
 add_module_names = False

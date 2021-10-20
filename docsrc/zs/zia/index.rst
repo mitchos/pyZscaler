@@ -13,7 +13,7 @@ This package covers the ZIA interface.
     sandbox
     security
     session
-    ssl
+    ssl_inspection
     traffic
     url_categories
     url_filters

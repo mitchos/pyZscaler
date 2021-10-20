@@ -1,6 +1,6 @@
 import pytest
 import responses
-
+from responses import matchers
 
 @pytest.fixture(name="url_filters")
 def fixture_url_filters():
@@ -127,7 +127,7 @@ def test_add_rule(zia, url_filters):
         json=url_filters[0],
         status=200,
         match=[
-            responses.json_params_matcher(
+            matchers.json_params_matcher(
                 {
                     "action": "ALLOW",
                     "departments": [{"id": 1}],
@@ -196,7 +196,7 @@ def test_update_rule(zia, url_filters):
         json=updated_rule,
         status=200,
         match=[
-            responses.json_params_matcher(
+            matchers.json_params_matcher(
                 {
                     "accessControl": "READ_WRITE",
                     "action": "ALLOW",

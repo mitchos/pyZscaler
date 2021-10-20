@@ -1,0 +1,7 @@
+sphinx==4.2.0
+restfly==1.4.2
+python-box==5.4.1
+furo==2021.10.9
+pytest~=6.2.5
+responses~=0.14.0
+requests~=2.26.0

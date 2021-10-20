@@ -1,12 +1,13 @@
 [![pyZscaler](https://raw.githubusercontent.com/mitchos/pyZscaler/gh-pages/docs/assets/images/logo.svg)](https://github.com/mitchos/pyZscaler)
 # pyZscaler - An unofficial SDK for the Zscaler API
 
+[![Build Status](https://github.com/mitchos/pyZscaler/actions/workflows/build.yml/badge.svg)](https://github.com/mitchos/pyZscaler/actions/workflows/build.yml)
 [![Documentation Status](https://readthedocs.org/projects/pyzscaler/badge/?version=latest)](https://pyzscaler.readthedocs.io/?badge=latest)
-[![](https://img.shields.io/github/license/mitchos/pyZscaler.svg)](https://github.com/mitchos/pyZscaler)
-[![](https://app.codacy.com/project/badge/Grade/d339fa5d957140f496fdb5c40abc4666)](https://www.codacy.com/gh/mitchos/pyZscaler/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mitchos/pyZscaler&amp;utm_campaign=Badge_Grade)
-[![](https://img.shields.io/pypi/v/pyzscaler.svg)](https://pypi.org/project/pyZscaler)
+[![License](https://img.shields.io/github/license/mitchos/pyZscaler.svg)](https://github.com/mitchos/pyZscaler)
+[![Code Quality](https://app.codacy.com/project/badge/Grade/d339fa5d957140f496fdb5c40abc4666)](https://www.codacy.com/gh/mitchos/pyZscaler/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mitchos/pyZscaler&amp;utm_campaign=Badge_Grade)
+[![PyPI Version](https://img.shields.io/pypi/v/pyzscaler.svg)](https://pypi.org/project/pyZscaler)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/pyzscaler.svg)](https://pypi.python.org/pypi/pyzscaler/)
-[![GitHub release](https://img.shields.io/github/release/mitchos/pyZscaler.svg)](https://github.com/mitchos/pyZscaler/releases/)
+[![GitHub Release](https://img.shields.io/github/release/mitchos/pyZscaler.svg)](https://github.com/mitchos/pyZscaler/releases/)
 
 pyZscaler is an SDK that provides a uniform and easy-to-use interface for each of the Zscaler product APIs.
 
@@ -52,7 +53,7 @@ from pyzscaler.zia import ZIA
 from pprint import pprint
 
 zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
-for user in zia.users.list():
+for user in zia.users.list_users():
     pprint(user)
 ```
 

@@ -1,6 +1,6 @@
 import pytest
 import responses
-
+from responses import matchers
 
 @pytest.fixture(name="blacklist_urls")
 def fixture_urls():
@@ -61,7 +61,7 @@ def test_erase_whitelist(zia):
         url="https://zsapi.zscaler.net/api/v1/security",
         status=200,
         match=[
-            responses.json_params_matcher({
+            matchers.json_params_matcher({
                 "whitelistUrls": []
             })
         ]
@@ -79,7 +79,7 @@ def test_replace_whitelist(zia, whitelist_urls):
         json=whitelist_urls,
         status=200,
         match=[
-            responses.json_params_matcher(whitelist_urls)
+            matchers.json_params_matcher(whitelist_urls)
         ]
     )
     resp = zia.security.replace_whitelist(['demo.com', 'site.com'])
@@ -105,7 +105,7 @@ def test_add_urls_to_whitelist(zia, whitelist_urls):
         json=whitelist_urls,
         status=200,
         match=[
-            responses.json_params_matcher(whitelist_urls)
+            matchers.json_params_matcher(whitelist_urls)
         ]
     )
     resp = zia.security.add_urls_to_whitelist(['mysite.com'])
@@ -131,7 +131,7 @@ def test_delete_urls_from_whitelist(zia, whitelist_urls):
         json=whitelist_urls,
         status=200,
         match=[
-            responses.json_params_matcher(whitelist_urls)
+            matchers.json_params_matcher(whitelist_urls)
         ]
     )
 
@@ -152,7 +152,7 @@ def test_add_urls_to_blacklist(zia, blacklist_urls):
         json=blacklist_urls,
         status=200,
         match=[
-            responses.json_params_matcher({'blacklistUrls': ['mysite.com']})
+            matchers.json_params_matcher({'blacklistUrls': ['mysite.com']})
         ]
     )
     resp = zia.security.add_urls_to_blacklist(['mysite.com'])
@@ -164,14 +164,13 @@ def test_add_urls_to_blacklist(zia, blacklist_urls):
 @responses.activate
 def test_delete_urls_from_blacklist(zia, blacklist_urls):
     blacklist_urls['blacklistUrls'].pop(0)
-    print(blacklist_urls)
 
     responses.add(
         responses.POST,
         url="https://zsapi.zscaler.net/api/v1/security/advanced/blacklistUrls?action=REMOVE_FROM_LIST",
         status=204,
         match=[
-            responses.json_params_matcher({'blacklistUrls': ['test.com']})
+            matchers.json_params_matcher({'blacklistUrls': ['test.com']})
         ]
     )
     resp = zia.security.delete_urls_from_blacklist(['test.com'])
@@ -187,7 +186,7 @@ def test_erase_blacklist(zia):
         url="https://zsapi.zscaler.net/api/v1/security/advanced",
         status=200,
         match=[
-            responses.json_params_matcher({
+            matchers.json_params_matcher({
                 "blacklistUrls": []
             })
         ]
@@ -207,7 +206,7 @@ def test_replace_blacklist(zia):
         json=new_urls,
         status=204,
         match=[
-            responses.json_params_matcher(new_urls)
+            matchers.json_params_matcher(new_urls)
         ]
     )
     resp = zia.security.replace_blacklist(['abc.com', 'def.com'])

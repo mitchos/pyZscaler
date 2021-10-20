@@ -2,16 +2,6 @@ import pytest
 import responses
 
 
-@pytest.fixture(name="session")
-def fixture_session():
-    return {
-        "authType": "ADMIN_LOGIN",
-        "obfuscateApiKey": False,
-        "passwordExpiryTime": 0,
-        "passwordExpiryDays": 0,
-    }
-
-
 @responses.activate
 def test_create(zia, session):
 

@@ -2,7 +2,7 @@ import os
 
 from restfly.session import APISession
 
-from pyzscaler.version import version
+from pyzscaler import __version__
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
@@ -17,6 +17,7 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
+from .admin_role_management import AdminAndRoleManagementAPI
 
 
 class ZIA(APISession):
@@ -35,7 +36,7 @@ class ZIA(APISession):
     _vendor = "Zscaler"
     _product = "Zscaler Internet Access"
     _backoff = 3
-    _build = version
+    _build = __version__
     _box = True
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZIA"
@@ -54,7 +55,9 @@ class ZIA(APISession):
         """Creates a ZIA API session."""
         super(ZIA, self)._build_session(**kwargs)
         return self.session.create(
-            api_key=self._api_key, username=self._username, password=self._password
+            api_key=self._api_key,
+            username=self._username,
+            password=self._password,
         )
 
     def _deauthenticate(self):
@@ -126,7 +129,7 @@ class ZIA(APISession):
     @property
     def ssl(self):
         """
-        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl>`.
+        The interface object for the :ref:`ZIA SSL Inspection interface <zia-ssl_inspection>`.
 
         """
         return SSLInspectionAPI(self)
@@ -170,3 +173,11 @@ class ZIA(APISession):
 
         """
         return DataCenterVIPSAPI(self)
+
+    @property
+    def admin_and_role_management(self):
+        """
+        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+
+        """
+        return AdminAndRoleManagementAPI(self)
