@@ -2,7 +2,7 @@ import os
 
 from restfly.session import APISession
 
-from pyzscaler.version import version
+from pyzscaler import __version__
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
@@ -36,7 +36,7 @@ class ZIA(APISession):
     _vendor = "Zscaler"
     _product = "Zscaler Internet Access"
     _backoff = 3
-    _build = version
+    _build = __version__
     _box = True
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZIA"
