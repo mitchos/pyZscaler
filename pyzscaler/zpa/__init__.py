@@ -2,7 +2,7 @@ import os
 
 from restfly.session import APISession
 
-from pyzscaler.version import version
+from pyzscaler import __version__
 from .app_segments import AppSegmentsAPI
 from .certificates import BACertificatesAPI
 from .cloud_connector_groups import CloudConnectorGroupsAPI
@@ -35,7 +35,7 @@ class ZPA(APISession):
 
     _vendor = "Zscaler"
     _product = "Zscaler Private Access"
-    _build = version
+    _build = __version__
     _box = True
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZPA"
