@@ -242,9 +242,7 @@ class URLCategoriesAPI(APIEndpoint):
             "urls": urls,
         }
 
-        return self._put(
-            f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload
-        )
+        return self._put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
 
     def delete_urls_from_category(self, category_id: str, urls: list):
         """
@@ -273,9 +271,7 @@ class URLCategoriesAPI(APIEndpoint):
             "urls": urls,
         }
 
-        return self._put(
-            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
-        )
+        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
 
     def delete_category(self, category_id: str):
         """

@@ -250,16 +250,10 @@ class UserManagementAPI(APIEndpoint):
         """
 
         if user_id and email:
-            raise ValueError(
-                "TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided."
-            )
+            raise ValueError("TOO MANY ARGUMENTS: Expected either a user_id or an email. Both were provided.")
 
         elif email:
-            user = (
-                record
-                for record in self.list_users(search=email)
-                if record.email == email
-            )
+            user = (record for record in self.list_users(search=email) if record.email == email)
             return next(user, None)
 
         return self._get(f"users/{user_id}")

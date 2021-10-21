@@ -2,6 +2,7 @@ import pytest
 import responses
 from responses import matchers
 
+
 @pytest.fixture(name="users")
 def fixture_users():
     return [
@@ -292,29 +293,6 @@ def test_list_groups_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
-def test_list_users_with_max_items_150(zia, paginated_items):
-    items = paginated_items(200)
-
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[0:100],
-        status=200,
-    )
-    responses.add(
-        responses.GET,
-        url="https://zsapi.zscaler.net/api/v1/groups",
-        json=items[100:200],
-        status=200,
-    )
-
-    resp = zia.users.list_groups(max_items=150)
-
-    assert isinstance(resp, list)
-    assert len(resp) == 150
-
-
-@responses.activate
 def test_users_get_group(zia, groups):
     responses.add(
         method="GET",
@@ -441,9 +419,7 @@ def test_users_get_department(zia, departments):
 
 @responses.activate
 def test_users_delete_user(zia):
-    responses.add(
-        method="DELETE", url="https://zsapi.zscaler.net/api/v1/users/1", status=204
-    )
+    responses.add(method="DELETE", url="https://zsapi.zscaler.net/api/v1/users/1", status=204)
     resp = zia.users.delete_user("1")
     assert resp == 204
 

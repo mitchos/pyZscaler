@@ -29,13 +29,11 @@ class DataCenterVIPSAPI(APIEndpoint):
         if continent is not None:
             if continent == "amer":
                 continent = "_amer"
-            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
-                f"{cloud}.net"
-            ][f"continent : {continent}"]
+            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
+                f"continent : {continent}"
+            ]
 
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
-            f"{cloud}.net"
-        ]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"]
 
     def list_ca(self, cloud: str):
         """
@@ -54,9 +52,7 @@ class DataCenterVIPSAPI(APIEndpoint):
             ...    print(ip)
 
         """
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")[
-            "ranges"
-        ]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")["ranges"]
 
     def list_pac(self, cloud: str):
         """
