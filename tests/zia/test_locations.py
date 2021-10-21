@@ -160,7 +160,7 @@ def test_add_location(zia, locations):
         status=200,
         json=locations[0],
         match=[
-            responses.json_params_matcher(
+            matchers.json_params_matcher(
                 {
                     "name": "Test",
                     "ipAddresses": ["203.0.113.1"],
