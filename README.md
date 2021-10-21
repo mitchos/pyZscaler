@@ -53,7 +53,7 @@ from pyzscaler.zia import ZIA
 from pprint import pprint
 
 zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
-for user in zia.users.list():
+for user in zia.users.list_users():
     pprint(user)
 ```
 
