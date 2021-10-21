@@ -1,6 +1,7 @@
-from restfly.endpoint import APIEndpoint
-from pyzscaler.utils import snake_to_camel
 from box import BoxList
+from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import snake_to_camel
 
 
 class URLCategoriesAPI(APIEndpoint):
