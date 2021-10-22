@@ -3,6 +3,8 @@ import os
 from restfly.session import APISession
 
 from pyzscaler import __version__
+
+from .admin_role_management import AdminAndRoleManagementAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
@@ -17,7 +19,6 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
-from .admin_role_management import AdminAndRoleManagementAPI
 
 
 class ZIA(APISession):

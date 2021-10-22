@@ -3,6 +3,7 @@ import os
 from restfly.session import APISession
 
 from pyzscaler import __version__
+
 from .app_segments import AppSegmentsAPI
 from .certificates import BACertificatesAPI
 from .cloud_connector_groups import CloudConnectorGroupsAPI
