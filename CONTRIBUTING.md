@@ -65,9 +65,9 @@ People *love* thorough bug reports.
 
 ## Use a Consistent Coding Style
 
-- I use [Black](https://github.com/psf/black) for formatting in this project with line-length 127.
+- [Black](https://github.com/psf/black) is used for formatting in this project with line-length 127.
 
-- Flake8 is used for linting.
+- [Flake8](https://flake8.pycqa.org) is used for linting.
 
 ## License
 
