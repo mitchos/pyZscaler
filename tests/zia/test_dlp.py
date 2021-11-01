@@ -1,7 +1,7 @@
 import pytest
 import responses
-from responses import matchers
 from box import BoxList
+from responses import matchers
 
 
 @pytest.fixture(name="dlp_dicts")
