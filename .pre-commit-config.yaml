@@ -10,14 +10,11 @@ repos:
         require_serial: true
         types: [python]
 
-  - repo: local
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
     hooks:
       - id: flake8
-        name: flake8
-        entry: flake8
-        language: system 
-        types: [python]
-  
+
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
     hooks:

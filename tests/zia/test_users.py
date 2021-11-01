@@ -309,7 +309,7 @@ def test_list_groups_with_max_items_150(zia, paginated_items):
         status=200,
     )
 
-    resp = zia.users.list_users(max_items=150)
+    resp = zia.users.list_groups(max_items=150)
 
     assert isinstance(resp, list)
     assert len(resp) == 150
