@@ -1,6 +1,6 @@
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import Iterator
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class AdminAndRoleManagementAPI(APIEndpoint):
@@ -24,9 +24,50 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             :obj:`list`: The admin_users resource record.
 
         Examples:
-            >>> department = zia.admin_and_role_management.get_admin_users(search='login_name')
+            >>> users = zia.admin_and_role_management.list_users(search='login_name')
 
         """
         return list(Iterator(self._api, "adminUsers", **kwargs))
 
-    def
+    def add_user(self, **kwargs):
+        """
+        Creates a ZIA Admin User.
+
+        Args:
+            **kwargs:
+                login_name: str
+                user_name: str
+                email: str
+                role: dict
+                admin_scope: dict
+                type: str
+                scope_entitites: list[dict]
+                is_non_editable: bool
+                disabled: bool
+                is_auditor: bool
+                password: bool
+                is_password_login_allowed: bool
+                is_security_report_comm_enabled: bool
+                is_service_update_comm_enabled: bool
+                is_product_update_comm_enabled: bool
+                is_password_expired: bool
+                is_exec_mobile_app_enabled: bool
+                exec_mobile_app_tokens: list[dict]
+
+        Returns: dict of user's account
+
+        Examples:
+            >>> admin_user = zia.admin_and_role_management.add_user(
+            ...    login_name='username',
+            ...    user_name:'Jim Bob',
+            ...    email='jim@domain.com'
+            ...)
+
+        """
+        # Add parameters to payload
+        payload = {}
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        print(f'{payload=}')
+        return self._post("adminUsers", json=payload)
