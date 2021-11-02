@@ -69,5 +69,4 @@ class AdminAndRoleManagementAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        print(f'{payload=}')
         return self._post("adminUsers", json=payload)
