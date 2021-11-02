@@ -29,16 +29,20 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-restfly = "^1.4.2"
+restfly = "^1.4.3"
 python-box = "^5.4.1"
+Sphinx = "^4.2.0"
+furo = "^2021.10.9"
+pytest = "^6.2.5"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
-restfly = "^1.4.2"
+restfly = "^1.4.3"
 python-box = "^5.4.1"
 sphinx = "4.2.0"
 pytest = "^6.2.5"
 furo = "2021.10.9"
-responses = "0.14.0"
+responses = "0.15.0"
 requests = "2.26.0"
 
 [build-system]

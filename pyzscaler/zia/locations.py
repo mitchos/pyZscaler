@@ -157,7 +157,7 @@ class LocationsAPI(APIEndpoint):
 
         """
         return list(
-            Iterator(self._api, f"locations/{location_id}/sublocations", **kwargs)
+            Iterator(self._api, f"locations/{location_id}/sublocations", max_pages=1, **kwargs)
         )
 
     def list_locations_lite(self, **kwargs):

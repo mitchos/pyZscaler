@@ -9,7 +9,7 @@ on:
     - 'docsrc/**'
     - 'examples/**'
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
     paths-ignore:
     - '.github/**'
     - 'docs/**'
