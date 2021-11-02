@@ -4,7 +4,7 @@ from pyzscaler.utils import Iterator
 
 
 class AdminAndRoleManagementAPI(APIEndpoint):
-    def get_admin_users(self, **kwargs):
+    def list_users(self, **kwargs):
         """
         Returns a list of admin users.
 
@@ -28,3 +28,5 @@ class AdminAndRoleManagementAPI(APIEndpoint):
 
         """
         return list(Iterator(self._api, "adminUsers", **kwargs))
+
+    def

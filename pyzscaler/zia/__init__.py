@@ -17,7 +17,7 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
-from .admin_role_management import AdminAndRoleManagementAPI
+from .admin_and_role_management import AdminAndRoleManagementAPI
 
 
 class ZIA(APISession):
