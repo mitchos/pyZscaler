@@ -193,9 +193,7 @@ def test_update_location(zia, locations):
         url="https://zsapi.zscaler.net/api/v1/locations/1",
         status=200,
         json=updated_location,
-        match=[
-            matchers.json_params_matcher(updated_location)
-        ],
+        match=[matchers.json_params_matcher(updated_location)],
     )
 
     resp = zia.locations.update_location("1", name="Updated Test")

@@ -81,13 +81,9 @@ class DLPAPI(APIEndpoint):
 
         # Simplify Zscaler's required values for our users.
         if match_type == "all":
-            payload[
-                "customPhraseMatchType"
-            ] = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
+            payload["customPhraseMatchType"] = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
         elif match_type == "any":
-            payload[
-                "customPhraseMatchType"
-            ] = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"
+            payload["customPhraseMatchType"] = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"
         else:
             raise ValueError
 
@@ -172,13 +168,9 @@ class DLPAPI(APIEndpoint):
         if kwargs.get("match_type"):
             match_type = kwargs.pop("match_type")
             if match_type == "all":
-                payload[
-                    "customPhraseMatchType"
-                ] = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
+                payload["customPhraseMatchType"] = "MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY"
             elif match_type == "any":
-                payload[
-                    "customPhraseMatchType"
-                ] = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"
+                payload["customPhraseMatchType"] = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"
             else:
                 raise ValueError
 

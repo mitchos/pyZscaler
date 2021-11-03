@@ -1,6 +1,5 @@
 import pytest
 import responses
-import requests
 
 from pyzscaler.zia import ZIA
 

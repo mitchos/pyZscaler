@@ -1,6 +1,6 @@
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel, add_id_groups
+from pyzscaler.utils import add_id_groups, snake_to_camel
 
 
 class AppServersAPI(APIEndpoint):
