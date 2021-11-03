@@ -3,5 +3,5 @@ restfly==1.4.3
 python-box==5.4.1
 furo==2021.10.9
 pytest~=6.2.5
-responses~=0.15.0
+responses==0.15.0
 requests~=2.26.0
