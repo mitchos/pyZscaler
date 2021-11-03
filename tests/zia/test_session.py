@@ -1,4 +1,3 @@
-import pytest
 import responses
 
 
@@ -12,9 +11,7 @@ def test_create(zia, session):
         status=200,
     )
 
-    resp = zia.session.create(
-        api_key="test1234567890", username="test@example.com", password="hunter2"
-    )
+    resp = zia.session.create(api_key="test1234567890", username="test@example.com", password="hunter2")
 
     assert isinstance(resp, dict)
     assert resp.auth_type == "ADMIN_LOGIN"

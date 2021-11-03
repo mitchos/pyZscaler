@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 127
+max-doc-length = 127
+extend_ignore = E203, W503, W605, F841
+exclude = build,dist,.git,docs,docsrc,examples,.venv,venv

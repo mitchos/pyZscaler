@@ -1,6 +1,6 @@
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel, add_id_groups
+from pyzscaler.utils import add_id_groups, snake_to_camel
 
 
 class ServerGroupsAPI(APIEndpoint):
@@ -105,9 +105,7 @@ class ServerGroupsAPI(APIEndpoint):
         # Initialise payload
         payload = {
             "name": name,
-            "appConnectorGroups": [
-                {"id": group_id} for group_id in app_connector_group_ids
-            ],
+            "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
         }
 
         add_id_groups(self.reformat_params, kwargs, payload)
