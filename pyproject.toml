@@ -48,3 +48,24 @@ requests = "2.26.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 127
+
+[tool.pylint.'MESSAGES CONTROL']
+disable=[
+    "format",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-public-methods",
+    "anomalous-backslash-in-string",
+    "import-error",
+    "redefined-outer-name",
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 127
+
+[tool.isort]
+profile = "black"

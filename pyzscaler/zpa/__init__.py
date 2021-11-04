@@ -3,6 +3,7 @@ import os
 from restfly.session import APISession
 
 from pyzscaler import __version__
+
 from .app_segments import AppSegmentsAPI
 from .certificates import BACertificatesAPI
 from .cloud_connector_groups import CloudConnectorGroupsAPI
@@ -43,12 +44,8 @@ class ZPA(APISession):
 
     def __init__(self, **kw):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
-        self._client_secret = kw.get(
-            "client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET")
-        )
-        self._customer_id = kw.get(
-            "customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID")
-        )
+        self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
+        self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
         super(ZPA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> None:
@@ -56,12 +53,8 @@ class ZPA(APISession):
         super(ZPA, self)._build_session(**kwargs)
 
         self._url = f"https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}"
-        self._auth_token = self.session.create_token(
-            client_id=self._client_id, client_secret=self._client_secret
-        )
-        return self._session.headers.update(
-            {"Authorization": f"Bearer {self._auth_token}"}
-        )
+        self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
+        return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
 
     def _deauthenticate(self, **kwargs):
         """Ends the ZPA API authenticated session."""

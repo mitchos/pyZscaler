@@ -26,7 +26,8 @@ Pull requests are the best way to propose changes to the codebase. Pull requests
 Once your change has been merged into `develop`, it will be bundled with the next batch of changes into the next release,
 which is merged into main.
 
-## Keep Pull Requests Short and Specific!
+## Keep Pull Requests Short and Specific
+
 It takes a lot of work to review a PR that covers multiple issues or features. Breaking
 your PR up into smaller requests is greatly appreciated. Doing this ensures quick review
 and PRs that require additional work won't hold up other work.
@@ -34,6 +35,7 @@ and PRs that require additional work won't hold up other work.
 If there is one thing you do, please do this.
 
 ## I recommend Conventional Commits
+
 No system is perfect, but I've found [Conventional Commits](https://www.conventionalcommits.org/) to work pretty well for myself. At the very
 least check it out and see if it works for you too.
 
@@ -45,7 +47,7 @@ maintainers if that's a concern.
 
 ## Report bugs using Github's [issues](https://github.com/mitchos/pyZscaler/issues)
 
-I use GitHub issues to track public bugs. Report a bug by [opening a new issue](); it's that easy!
+I use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/mitchos/pyzscaler/issues/new); it's that easy!
 
 ## Write bug reports with detail, background, and sample code
 
@@ -53,8 +55,8 @@ I use GitHub issues to track public bugs. Report a bug by [opening a new issue](
 
 - A quick summary and/or background
 - Steps to reproduce
-    - Be specific!
-    - Give sample code if you can.
+- Be specific!
+- Give sample code if you can.
 - What you expected would happen
 - What actually happens
 - Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
@@ -63,8 +65,9 @@ People *love* thorough bug reports.
 
 ## Use a Consistent Coding Style
 
-* Tabs over spaces :)
-* I use [Black](https://github.com/psf/black) for formatting in this project.
+- [Black](https://github.com/psf/black) is used for formatting in this project with line-length 127.
+
+- [Flake8](https://flake8.pycqa.org) is used for linting.
 
 ## License
 

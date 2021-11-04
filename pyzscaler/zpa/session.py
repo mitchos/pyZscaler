@@ -24,9 +24,7 @@ class AuthenticatedSessionAPI(APIEndpoint):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
         }
-        return self._post(
-            "https://config.private.zscaler.com/signin", headers=headers, data=payload
-        ).access_token
+        return self._post("https://config.private.zscaler.com/signin", headers=headers, data=payload).access_token
 
     def delete(self):
         """

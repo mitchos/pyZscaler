@@ -1,5 +1,5 @@
-from restfly.endpoint import APIEndpoint
 from box import BoxList
+from restfly.endpoint import APIEndpoint
 
 
 class CloudSandboxAPI(APIEndpoint):
