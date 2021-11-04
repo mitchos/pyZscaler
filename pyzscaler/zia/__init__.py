@@ -4,7 +4,7 @@ from restfly.session import APISession
 
 from pyzscaler import __version__
 
-from .admin_role_management import AdminAndRoleManagementAPI
+from .admin_and_role_management import AdminAndRoleManagementAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
