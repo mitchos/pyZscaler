@@ -99,6 +99,8 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             if key == "scope_ids":
                 for scope_id in value:
                     payload["adminScopeScopeEntities"].append({"id": scope_id})
+            elif key == "role_id":
+                payload["role"] = {"id": value}
             else:
                 payload[snake_to_camel(key)] = value
 
