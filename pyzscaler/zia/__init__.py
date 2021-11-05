@@ -71,6 +71,14 @@ class ZIA(APISession):
         return AuthenticatedSessionAPI(self)
 
     @property
+    def admin_and_role_management(self):
+        """
+        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+
+        """
+        return AdminAndRoleManagementAPI(self)
+
+    @property
     def audit_logs(self):
         """
         The interface object for the :ref:`ZIA Admin Audit Logs interface <zia-audit_logs>`.
@@ -174,11 +182,3 @@ class ZIA(APISession):
 
         """
         return DataCenterVIPSAPI(self)
-
-    @property
-    def admin_and_role_management(self):
-        """
-        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
-
-        """
-        return AdminAndRoleManagementAPI(self)
