@@ -90,9 +90,7 @@ class SegmentGroupsAPI(APIEndpoint):
         }
 
         if kwargs.get("application_ids"):
-            payload["applications"] = [
-                {"id": app_id} for app_id in kwargs.pop("application_ids")
-            ]
+            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -136,14 +134,10 @@ class SegmentGroupsAPI(APIEndpoint):
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
         if kwargs.get("application_ids"):
-            payload["applications"] = [
-                {"id": app_id} for app_id in kwargs.pop("application_ids")
-            ]
+            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(
-            f"segmentGroup/{group_id}", json=payload, box=False
-        ).status_code
+        return self._put(f"segmentGroup/{group_id}", json=payload, box=False).status_code

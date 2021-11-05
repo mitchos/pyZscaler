@@ -1,4 +1,5 @@
 from restfly.endpoint import APIEndpoint
+
 from pyzscaler.utils import obfuscate_api_key
 
 

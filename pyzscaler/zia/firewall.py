@@ -343,10 +343,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
 
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v
-            for k, v in self.get_ip_destination_group(group_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_ip_destination_group(group_id).items()}
 
         # Update payload
         for key, value in kwargs.items():
@@ -413,9 +410,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"ipSourceGroups/{group_id}", box=False).status_code
 
-    def add_ip_source_group(
-        self, name: str, ip_addresses: list, description: str = None
-    ):
+    def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None):
         """
         Adds a new IP Source Group.
 
@@ -477,9 +472,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
 
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_ip_source_group(group_id).items()}
 
         # Update payload
         for key, value in kwargs.items():
@@ -605,9 +598,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"networkServiceGroups/{group_id}")
 
-    def add_network_svc_group(
-        self, name: str, service_ids: list, description: str = None
-    ):
+    def add_network_svc_group(self, name: str, service_ids: list, description: str = None):
         """
         Adds a new Network Service Group.
 
@@ -744,9 +735,7 @@ class FirewallPolicyAPI(APIEndpoint):
                 port_obj = {"start": items[2]}
                 if len(ports) == 4:
                     port_obj["end"] = items[3]
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(
-                    port_obj
-                )
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_obj)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -806,9 +795,7 @@ class FirewallPolicyAPI(APIEndpoint):
                 port_obj = {"start": items[2]}
                 if len(ports) == 4:
                     port_obj["end"] = items[3]
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(
-                    port_obj
-                )
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_obj)
         else:
             # Use existing values and convert back to camelCase
             payload = {snake_to_camel(k): v for k, v in existing_service.items()}

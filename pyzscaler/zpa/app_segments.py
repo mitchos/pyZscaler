@@ -1,6 +1,6 @@
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel, add_id_groups
+from pyzscaler.utils import add_id_groups, snake_to_camel
 
 
 class AppSegmentsAPI(APIEndpoint):
@@ -208,9 +208,7 @@ class AppSegmentsAPI(APIEndpoint):
         """
 
         # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_segment(segment_id).items()
-        }
+        payload = {snake_to_camel(k): v for k, v in self.get_segment(segment_id).items()}
 
         add_id_groups(self.reformat_params, kwargs, payload)
 
