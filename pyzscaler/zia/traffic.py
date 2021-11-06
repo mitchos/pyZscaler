@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import Iterator, snake_to_camel
@@ -77,7 +76,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
-        return self._get("greTunnels/availableInternalIpRanges", params=payload, box=BoxList)
+        return self._get("greTunnels/availableInternalIpRanges", params=payload)
 
     def add_gre_tunnel(
         self,
@@ -439,7 +438,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
-        return self._get("vips/recommendedList", params=payload, box=BoxList)
+        return self._get("vips/recommendedList", params=payload)
 
     def get_closest_diverse_vip_ids(self, ip_address: str):
         """

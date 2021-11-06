@@ -1,6 +1,5 @@
 import time
 
-from box import BoxList
 from restfly import APIIterator
 
 
@@ -51,7 +50,6 @@ class Iterator(APIIterator):
         self.max_pages = kw.pop("max_pages", 0)
         self.payload = {}
         if kw:
-
             self.payload = {snake_to_camel(key): value for key, value in kw.items()}
 
     def _get_page(self) -> None:
@@ -59,5 +57,4 @@ class Iterator(APIIterator):
         self.page = self._api.get(
             self.path,
             params={**self.payload, "page": self.num_pages + 1},
-            box=BoxList,
         )

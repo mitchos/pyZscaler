@@ -50,7 +50,7 @@ class SecurityPolicyAPI(APIEndpoint):
         """
         payload = {"whitelistUrls": []}
 
-        return self._put("security", json=payload, box=False).status_code
+        return self._put("security", json=payload).status_code
 
     def replace_whitelist(self, url_list: list):
         """
@@ -141,11 +141,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        return self._post(
-            "security/advanced/blacklistUrls?action=ADD_TO_LIST",
-            json=payload,
-            box=False,
-        ).status_code
+        return self._post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).blacklist_urls
 
     def replace_blacklist(self, url_list: list):
         """
@@ -201,8 +197,4 @@ class SecurityPolicyAPI(APIEndpoint):
 
         payload = {"blacklistUrls": url_list}
 
-        return self._post(
-            "security/advanced/blacklistUrls?action=REMOVE_FROM_LIST",
-            json=payload,
-            box=False,
-        ).status_code
+        return self._post("security/advanced/blacklistUrls?action=REMOVE_FROM_LIST", json=payload, box=False).status_code

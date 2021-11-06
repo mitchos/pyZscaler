@@ -46,6 +46,7 @@ class ZPA(APISession):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
+        self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> None:

@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
@@ -29,7 +28,7 @@ class URLFilteringAPI(APIEndpoint):
             ...    pprint(rule)
 
         """
-        return self._get("urlFilteringRules", box=BoxList)
+        return self._get("urlFilteringRules")
 
     def get_rule(self, rule_id: str):
         """

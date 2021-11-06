@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 
@@ -14,7 +13,7 @@ class CloudSandboxAPI(APIEndpoint):
             >>> pprint(zia.sandbox.get_quota())
 
         """
-        return self._get("sandbox/report/quota", box=BoxList)[0]
+        return self._get("sandbox/report/quota")[0]
 
     def get_report(self, md5_hash: str, report_details: str = "summary"):
         """

@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
@@ -223,7 +222,7 @@ class DLPAPI(APIEndpoint):
 
         """
         payload = {"search": query}
-        return self._get("dlpDictionaries", params=payload, box=BoxList)
+        return self._get("dlpDictionaries", params=payload)
 
     def get_dict(self, dict_id: str):
         """
