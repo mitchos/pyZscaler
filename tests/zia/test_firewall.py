@@ -560,7 +560,12 @@ def test_add_network_service(zia, network_services):
         status=200,
         match=[
             matchers.json_params_matcher(
-                {"name": "TEST", "description": "Test", "destTcpPorts": [{"start": 1}], "destUdpPorts": [{"start": 1}]}
+                {
+                    "name": "TEST",
+                    "description": "Test",
+                    "destTcpPorts": [{"start": 1}, {"end": 2}],
+                    "destUdpPorts": [{"start": 1}],
+                }
             )
         ],
     )

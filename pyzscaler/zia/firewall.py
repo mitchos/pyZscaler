@@ -732,10 +732,10 @@ class FirewallPolicyAPI(APIEndpoint):
         # Convert tuple list to dict and add to payload
         if ports is not None:
             for items in ports:
-                port_obj = {"start": items[2]}
+                port_range = [{"start": items[2]}]
                 if len(items) == 4:
-                    port_obj["end"] = items[3]
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_obj)
+                    port_range.append({"end": items[3]})
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(port_range)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
