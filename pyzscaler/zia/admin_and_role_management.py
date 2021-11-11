@@ -153,7 +153,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
-        return self._get("adminRoles/lite", params=payload, box=BoxList)
+        return self._get("adminRoles/lite", params=payload)
 
     def get_user(self, user_id: str) -> dict:
         """

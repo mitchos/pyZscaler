@@ -386,8 +386,4 @@ class PolicySetsAPI(APIEndpoint):
             else:
                 payload[snake_to_camel(key)] = value
 
-        return self._put(
-            f"policySet/{current_rule.policySetId}/rule/{rule_id}",
-            json=payload,
-            box=False,
-        ).status_code
+        return self._put(f"policySet/{current_rule.policySetId}/rule/{rule_id}", json=payload, box=False).status_code

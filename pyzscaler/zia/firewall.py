@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
@@ -34,7 +33,7 @@ class FirewallPolicyAPI(APIEndpoint):
             ...    pprint(rule)
 
         """
-        return self._get("firewallFilteringRules", box=BoxList)
+        return self._get("firewallFilteringRules")
 
     def add_rule(self, name: str, action: str, **kwargs):
         """
@@ -228,7 +227,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"excludeType": exclude_type}
 
-        return self._get("ipDestinationGroups", params=payload, box=BoxList)
+        return self._get("ipDestinationGroups", params=payload)
 
     def get_ip_destination_group(self, group_id: str):
         """
@@ -376,7 +375,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"search": search}
 
-        return self._get("ipSourceGroups", params=payload, box=BoxList)
+        return self._get("ipSourceGroups", params=payload)
 
     def get_ip_source_group(self, group_id: str):
         """
@@ -493,7 +492,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplicationGroups", params=payload, box=BoxList)
+        return self._get("networkApplicationGroups", params=payload)
 
     def get_network_app_group(self, group_id: str):
         """
@@ -528,7 +527,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search}
-        return self._get("networkApplications", params=payload, box=BoxList)
+        return self._get("networkApplications", params=payload)
 
     def get_network_app(self, app_id: str):
         """
@@ -564,7 +563,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         payload = {"search": search}
 
-        return self._get("networkServiceGroups", params=payload, box=BoxList)
+        return self._get("networkServiceGroups", params=payload)
 
     def get_network_svc_group(self, group_id: str):
         """
@@ -646,7 +645,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         """
         payload = {"search": search, "protocol": protocol}
-        return self._get("networkServices", params=payload, box=BoxList)
+        return self._get("networkServices", params=payload)
 
     def get_network_service(self, service_id: str):
         """

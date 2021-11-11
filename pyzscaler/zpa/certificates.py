@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 
@@ -14,7 +13,7 @@ class BACertificatesAPI(APIEndpoint):
             >>> ba_certificates = zpa.certificates.list_browser_access()
 
         """
-        return self._get("clientlessCertificate/issued", box=BoxList)
+        return self._get("clientlessCertificate/issued")
 
     def get_browser_access(self, certificate_id: str):
         """
