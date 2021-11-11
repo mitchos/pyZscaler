@@ -1,7 +1,9 @@
 import responses
+from conftest import stub_sleep
 
 
 @responses.activate
+@stub_sleep
 def test_list_gre_tunnels_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -26,6 +28,7 @@ def test_list_gre_tunnels_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_gre_tunnels_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -51,6 +54,7 @@ def test_list_gre_tunnels_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_gre_tunnels_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -74,6 +78,7 @@ def test_list_gre_tunnels_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_gre_tunnels_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
@@ -97,6 +102,7 @@ def test_list_gre_tunnels_with_max_items_150(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_static_ips_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -121,6 +127,7 @@ def test_list_static_ips_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_static_ips_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -146,6 +153,7 @@ def test_list_static_ips_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_static_ips_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -169,6 +177,7 @@ def test_list_static_ips_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_static_ips_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
@@ -192,6 +201,7 @@ def test_list_static_ips_with_max_items_150(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vips_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -216,6 +226,7 @@ def test_list_vips_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vips_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -241,6 +252,7 @@ def test_list_vips_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vips_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -264,6 +276,7 @@ def test_list_vips_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vips_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
@@ -287,6 +300,7 @@ def test_list_vips_with_max_items_150(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vpn_credentials_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -311,6 +325,7 @@ def test_list_vpn_credentials_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vpn_credentials_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -336,6 +351,7 @@ def test_list_vpn_credentials_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vpn_credentials_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -359,6 +375,7 @@ def test_list_vpn_credentials_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_vpn_credentials_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
