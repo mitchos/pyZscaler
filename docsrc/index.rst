@@ -64,11 +64,11 @@ Quick ZIA Example
 
 .. code-block:: python
 
-    from pyzscaler.zia import ZIA
+    from pyzscaler import ZIA
     from pprint import pprint
 
     zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
-    for user in zia.users.list():
+    for user in zia.users.list_users():
         pprint(user)
 
 Quick ZPA Example
@@ -76,11 +76,11 @@ Quick ZPA Example
 
 .. code-block:: python
 
-    from pyzscaler.zpa import ZPA
+    from pyzscaler import ZPA
     from pprint import pprint
 
     zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
-    for app_segment in zpa.app_segments.list():
+    for app_segment in zpa.app_segments.list_segments():
         pprint(app_segment)
 
 .. automodule:: pyzscaler

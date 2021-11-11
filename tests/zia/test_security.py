@@ -146,8 +146,8 @@ def test_add_urls_to_blacklist(zia, blacklist_urls):
     )
     resp = zia.security.add_urls_to_blacklist(["mysite.com"])
 
-    assert isinstance(resp, int)
-    assert resp == 200
+    assert isinstance(resp, list)
+    assert resp == ["test.com", "example.com", "mysite.com"]
 
 
 @responses.activate

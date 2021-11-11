@@ -4,7 +4,7 @@ __contributors__ = [
     "Dax Mickelson",
     "Jacob Gårder",
 ]
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 from pyzscaler.zia import ZIA  # noqa
 from pyzscaler.zpa import ZPA  # noqa

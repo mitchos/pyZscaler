@@ -1,4 +1,3 @@
-from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
@@ -22,7 +21,7 @@ class URLCategoriesAPI(APIEndpoint):
         """
         payload = urls
 
-        return self._post("urlLookup", json=payload, box=BoxList)
+        return self._post("urlLookup", json=payload)
 
     def list_categories(self, custom_only: bool = False):
         """
@@ -46,7 +45,7 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        return self._get(f"urlCategories?customOnly={custom_only}", box=BoxList)
+        return self._get(f"urlCategories?customOnly={custom_only}")
 
     def get_quota(self):
         """
