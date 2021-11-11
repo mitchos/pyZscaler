@@ -595,7 +595,7 @@ class FirewallPolicyAPI(APIEndpoint):
             >>> zia.firewall.delete_network_svc_group('762398')
 
         """
-        return self._delete(f"networkServiceGroups/{group_id}")
+        return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
 
     def add_network_svc_group(self, name: str, service_ids: list, description: str = None):
         """
@@ -731,10 +731,10 @@ class FirewallPolicyAPI(APIEndpoint):
         # Convert tuple list to dict and add to payload
         if ports is not None:
             for items in ports:
-                port_obj = {"start": items[2]}
-                if len(ports) == 4:
-                    port_obj["end"] = items[3]
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_obj)
+                port_range = [{"start": items[2]}]
+                if len(items) == 4:
+                    port_range.append({"end": items[3]})
+                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).extend(port_range)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -785,19 +785,17 @@ class FirewallPolicyAPI(APIEndpoint):
 
 
         """
-        existing_service = self.get_network_service(service_id)
+        payload = {snake_to_camel(k): v for k, v in self.get_network_service(service_id).items()}
 
         # Convert tuple list to dict and add to payload
         if ports is not None:
-            payload = {}
+            # Clear existing ports and set new values
             for items in ports:
-                port_obj = {"start": items[2]}
-                if len(ports) == 4:
-                    port_obj["end"] = items[3]
-                payload.setdefault(f"{items[0]}{items[1].title()}Ports", []).append(port_obj)
-        else:
-            # Use existing values and convert back to camelCase
-            payload = {snake_to_camel(k): v for k, v in existing_service.items()}
+                port_key = f"{items[0]}{items[1].title()}Ports"
+                payload[port_key] = []
+                payload[port_key].append({"start": items[2]})
+                if len(items) == 4:
+                    payload[port_key].append({"end": items[3]})
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
