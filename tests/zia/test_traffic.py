@@ -1,4 +1,159 @@
+import pytest
 import responses
+from box import Box
+
+
+@pytest.fixture(name="gre_tunnels")
+def fixture_gre_tunnels():
+    return [
+        {
+            "id": 1,
+            "sourceIp": "1.1.1.1",
+            "primaryDestVip": {
+                "id": 1,
+                "virtualIp": "1.1.1.1",
+                "privateServiceEdge": False,
+                "datacenter": "TESTA",
+                "latitude": -1.0,
+                "longitude": 1.0,
+                "city": "Test",
+                "countryCode": "TEST  ",
+                "region": "Test",
+            },
+            "secondaryDestVip": {
+                "id": 2,
+                "virtualIp": "1.1.1.1",
+                "privateServiceEdge": False,
+                "datacenter": "TESTB",
+                "latitude": -2.0,
+                "longitude": 2.0,
+                "city": "Test",
+                "countryCode": "TEST  ",
+                "region": "Test",
+            },
+            "internalIpRange": "1.1.1.1",
+            "last_modification_time": 1,
+            "lastModifiedBy": {"id": 1, "name": "DEFAULT ADMIN"},
+            "comment": "Test",
+            "ipUnnumbered": False,
+        },
+        {
+            "id": 2,
+            "sourceIp": "1.1.1.1",
+            "primaryDestVip": {
+                "id": 1,
+                "virtualIp": "1.1.1.1",
+                "privateServiceEdge": False,
+                "datacenter": "TESTA",
+                "latitude": -1.0,
+                "longitude": 1.0,
+                "city": "Test",
+                "countryCode": "TEST  ",
+                "region": "Test",
+            },
+            "secondaryDestVip": {
+                "id": 2,
+                "virtualIp": "1.1.1.1",
+                "privateServiceEdge": False,
+                "datacenter": "TESTB",
+                "latitude": -2.0,
+                "longitude": 2.0,
+                "city": "Test",
+                "countryCode": "TEST  ",
+                "region": "Test",
+            },
+            "internalIpRange": "1.1.1.1",
+            "last_modification_time": 1,
+            "lastModifiedBy": {"id": 1, "name": "DEFAULT ADMIN"},
+            "comment": "Test",
+            "ipUnnumbered": False,
+        },
+    ]
+
+
+@responses.activate
+def test_get_gre_tunnel(zia, gre_tunnels):
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/greTunnels/1",
+        json=gre_tunnels[0],
+        status=200,
+    )
+
+    resp = zia.traffic.get_gre_tunnel("1")
+
+    assert isinstance(resp, Box)
+    assert resp.id == 1
+
+
+@responses.activate
+def test_list_gre_ranges(zia):
+    pass
+
+
+@responses.activate
+def test_add_gre_tunnel(zia):
+    pass
+
+
+@responses.activate
+def test_get_static_ip(zia):
+    pass
+
+
+@responses.activate
+def test_add_static_ip(zia):
+    pass
+
+
+@responses.activate
+def test_check_static_ip(zia):
+    pass
+
+
+@responses.activate
+def test_update_static_ip(zia):
+    pass
+
+
+@responses.activate
+def test_delete_static_ip(zia):
+    pass
+
+
+@responses.activate
+def test_list_vips_recommended(zia):
+    pass
+
+
+@responses.activate
+def test_get_closest_diverse_vip_ids(zia):
+    pass
+
+
+@responses.activate
+def test_add_vpn_credentials(zia):
+    pass
+
+
+@responses.activate
+def test_bulk_delete_vpn_credentials(zia):
+    pass
+
+
+@responses.activate
+def test_get_vpn_credentials(zia):
+    pass
+
+
+@responses.activate
+def test_update_vpn_credentials(zia):
+    pass
+
+
+@responses.activate
+def test_delete_vpn_credential(zia):
+    pass
 
 from tests.conftest import stub_sleep
 
