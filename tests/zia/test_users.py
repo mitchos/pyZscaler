@@ -2,6 +2,8 @@ import pytest
 import responses
 from responses import matchers
 
+from tests.conftest import stub_sleep
+
 
 @pytest.fixture(name="users")
 def fixture_users():
@@ -126,6 +128,7 @@ def test_users_update_user(zia, users):
 
 
 @responses.activate
+@stub_sleep
 def test_list_users_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -150,6 +153,7 @@ def test_list_users_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_users_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -175,6 +179,7 @@ def test_list_users_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_users_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -198,6 +203,7 @@ def test_list_users_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_users_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
@@ -221,6 +227,7 @@ def test_list_users_with_max_items_150(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_groups_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -245,6 +252,7 @@ def test_list_groups_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_groups_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -270,6 +278,7 @@ def test_list_groups_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_groups_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -293,6 +302,7 @@ def test_list_groups_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_groups_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
@@ -331,6 +341,7 @@ def test_users_get_group(zia, groups):
 
 
 @responses.activate
+@stub_sleep
 def test_list_departments_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -355,6 +366,7 @@ def test_list_departments_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_departments_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -380,6 +392,7 @@ def test_list_departments_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_departments_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -403,6 +416,7 @@ def test_list_departments_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_departments_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 

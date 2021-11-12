@@ -14,8 +14,8 @@ class AuthenticatedSessionAPI(APIEndpoint):
             :obj:`dict`: The authenticated session information.
 
         Examples:
-            >>> zpa.session.create(client_id='Eh3UzT7E2RXkjCkYQMbVF9jWDJNY4geM6bMp6NXxxCkzjjf77B7YpYMMuGhb==',
-            ...    client_secret='fvWHWSC(Z%]7AbmVH%qR%Yt;iUG89Z')
+            >>> zpa.session.create(client_id='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx==',
+            ...    client_secret='yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
 
         """
 

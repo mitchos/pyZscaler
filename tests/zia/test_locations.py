@@ -2,6 +2,8 @@ import pytest
 import responses
 from responses import matchers
 
+from tests.conftest import stub_sleep
+
 
 @pytest.fixture(name="locations")
 def fixture_locations():
@@ -30,6 +32,7 @@ def fixture_locations():
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -54,6 +57,7 @@ def test_list_locations_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -79,6 +83,7 @@ def test_list_locations_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
     responses.add(
@@ -101,6 +106,7 @@ def test_list_locations_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_with_max_items_150(zia, paginated_items):
     items = paginated_items(150)
     responses.add(
@@ -204,6 +210,7 @@ def test_update_location(zia, locations):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_lite_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -228,6 +235,7 @@ def test_list_locations_lite_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_lite_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -253,6 +261,7 @@ def test_list_locations_lite_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_lite_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
     responses.add(
@@ -275,6 +284,7 @@ def test_list_locations_lite_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_locations_lite_with_max_items_150(zia, paginated_items):
     items = paginated_items(150)
     responses.add(

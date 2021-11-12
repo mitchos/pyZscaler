@@ -1,8 +1,11 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator
 
 
 class SCIMAttributesAPI(APIEndpoint):
-    def list_attribute(self):
+    def list_attribute(self, **kwargs):
         """
         Returns a list of all configured SCIM attributes.
 
@@ -14,7 +17,7 @@ class SCIMAttributesAPI(APIEndpoint):
             ...    pprint(scim_attribute)
 
         """
-        return self._get("scimAttribute").list
+        return BoxList(Iterator(self._api, "scimAttribute", **kwargs))
 
     def get_attribute(self, idp_id: str):
         """

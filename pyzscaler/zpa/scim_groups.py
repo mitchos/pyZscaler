@@ -1,8 +1,11 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator
 
 
 class SCIMGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns a list of all configured SCIM groups.
 
@@ -14,7 +17,7 @@ class SCIMGroupsAPI(APIEndpoint):
             ...    pprint(scim_group)
 
         """
-        return self._get("scimgroup").list
+        return BoxList(Iterator(self._api, "scimgroup", **kwargs))
 
     def get_group(self, idp_id: str):
         """

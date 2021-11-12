@@ -1,8 +1,11 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator
 
 
 class CloudConnectorGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns a list of all configured cloud connector groups.
 
@@ -14,7 +17,7 @@ class CloudConnectorGroupsAPI(APIEndpoint):
             ...    pprint(cloud_connector_group)
 
         """
-        return self._get("cloudConnectorGroups").list
+        return BoxList(Iterator(self._api, "cloudConnectorGroups", **kwargs))
 
     def get_group(self, group_id: str):
         """

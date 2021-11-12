@@ -1,6 +1,7 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class PolicySetsAPI(APIEndpoint):
@@ -89,7 +90,7 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._get(f"policySet/{_policy_id}/rule/{rule_id}")
 
-    def list_rules(self, policy_type: str):
+    def list_rules(self, policy_type: str, **kwargs):
         """
         Returns policy rules for a given policy type.
 
@@ -118,7 +119,7 @@ class PolicySetsAPI(APIEndpoint):
         elif policy_type == "client_forwarding":
             policy_type = "BYPASS_POLICY"
 
-        return self._get(f"policySet/rules/policyType/{policy_type}").list
+        return BoxList(Iterator(self._api, f"policySet/rules/policyType/{policy_type}", **kwargs))
 
     def delete_rule(self, policy_type: str, rule_id: str):
         """

@@ -54,7 +54,21 @@ class Iterator(APIIterator):
 
     def _get_page(self) -> None:
         """Iterator function to get the page."""
-        self.page = self._api.get(
+        resp = self._api.get(
             self.path,
             params={**self.payload, "page": self.num_pages + 1},
         )
+        try:
+            # If we are using ZPA then the API will return records under the
+            # 'list' key.
+            self.page = resp.get("list") or []
+        except AttributeError:
+            # If the list key doesn't exist then we're likely using ZIA so just
+            # return the full response.
+            self.page = resp
+        finally:
+            # If we use the default retry-after logic in Restfly then we are
+            # going to keep seeing 429 messages in stdout. ZIA and ZPA have a
+            # standard 1 sec rate limit on the API endpoints with pagination so
+            # we are going to include it here.
+            time.sleep(1)

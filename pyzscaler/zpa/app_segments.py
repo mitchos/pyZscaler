@@ -1,6 +1,7 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import add_id_groups, snake_to_camel
+from pyzscaler.utils import Iterator, add_id_groups, snake_to_camel
 
 
 class AppSegmentsAPI(APIEndpoint):
@@ -10,7 +11,7 @@ class AppSegmentsAPI(APIEndpoint):
         ("server_group_ids", "serverGroups"),
     ]
 
-    def list_segments(self):
+    def list_segments(self, **kwargs):
         """
         Retrieve all configured application segments.
 
@@ -21,7 +22,7 @@ class AppSegmentsAPI(APIEndpoint):
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        return self._get("application").list
+        return BoxList(Iterator(self._api, "application", **kwargs))
 
     def get_segment(self, segment_id: str):
         """
