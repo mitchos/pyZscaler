@@ -1,5 +1,6 @@
 import responses
-from conftest import stub_sleep
+
+from tests.conftest import stub_sleep
 
 
 @responses.activate

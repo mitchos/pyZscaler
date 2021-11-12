@@ -1,7 +1,8 @@
 import pytest
 import responses
-from conftest import stub_sleep
 from responses import matchers
+
+from tests.conftest import stub_sleep
 
 
 @pytest.fixture(name="locations")

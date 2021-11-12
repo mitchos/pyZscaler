@@ -1,8 +1,9 @@
 import pytest
 import responses
 from box import BoxList
-from conftest import stub_sleep
 from responses import matchers
+
+from tests.conftest import stub_sleep
 
 
 @pytest.fixture(name="admin_users")
