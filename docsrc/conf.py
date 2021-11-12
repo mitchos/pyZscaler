@@ -14,7 +14,6 @@
 #
 import os
 import sys
-from pyzscaler import __version__
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -26,9 +25,9 @@ author = "Mitch Kelly"
 html_title = ""
 
 # The short X.Y version
-version = '.'.join(__version__.split('.')[:2])
+version = '0.12'
 # The full version, including alpha/beta/rc tags
-release = __version__
+release = '0.12.0'
 
 # -- General configuration ---------------------------------------------------
 
