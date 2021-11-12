@@ -3,6 +3,8 @@ import responses
 from box import BoxList
 from responses import matchers
 
+from tests.conftest import stub_sleep
+
 
 @pytest.fixture(name="admin_users")
 def fixture_users():
@@ -112,6 +114,7 @@ def test_admin_users_update_user(zia, admin_users):
 
 
 @responses.activate
+@stub_sleep
 def test_list_admin_users_with_one_page(zia, paginated_items):
     items = paginated_items(200)
 
@@ -136,6 +139,7 @@ def test_list_admin_users_with_one_page(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_admin_users_with_two_pages(zia, paginated_items):
     items = paginated_items(200)
 
@@ -161,6 +165,7 @@ def test_list_admin_users_with_two_pages(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_admin_users_with_max_items_1(zia, paginated_items):
     items = paginated_items(200)
 
@@ -184,6 +189,7 @@ def test_list_admin_users_with_max_items_1(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_list_admin_users_with_max_items_150(zia, paginated_items):
     items = paginated_items(200)
 
@@ -207,6 +213,7 @@ def test_list_admin_users_with_max_items_150(zia, paginated_items):
 
 
 @responses.activate
+@stub_sleep
 def test_admin_users_get_user(admin_users, zia):
     responses.add(
         method="GET",

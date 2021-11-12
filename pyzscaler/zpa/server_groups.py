@@ -1,6 +1,7 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import add_id_groups, snake_to_camel
+from pyzscaler.utils import Iterator, add_id_groups, snake_to_camel
 
 
 class ServerGroupsAPI(APIEndpoint):
@@ -10,7 +11,7 @@ class ServerGroupsAPI(APIEndpoint):
         ("app_connector_group_ids", "appConnectorGroups"),
     ]
 
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns a list of all configured server groups.
 
@@ -22,7 +23,7 @@ class ServerGroupsAPI(APIEndpoint):
             ...    pprint(server_group)
 
         """
-        return self._get("serverGroup").list
+        return BoxList(Iterator(self._api, "serverGroup", **kwargs))
 
     def get_group(self, group_id: str):
         """
@@ -57,7 +58,7 @@ class ServerGroupsAPI(APIEndpoint):
             >>> zpa.server_groups.delete_group('2342342342343')
 
         """
-        return self._delete(f"serverGroup/{group_id}")
+        return self._delete(f"serverGroup/{group_id}").status_code
 
     def add_group(self, app_connector_group_ids: list, name: str, **kwargs):
         """
@@ -162,4 +163,7 @@ class ServerGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"serverGroup/{group_id}", json=payload, box=False).status_code
+        resp = self._put(f"serverGroup/{group_id}", json=payload, box=False).status_code
+
+        if resp == 204:
+            return self.get_group(group_id)

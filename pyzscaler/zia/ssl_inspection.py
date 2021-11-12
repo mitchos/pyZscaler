@@ -15,7 +15,7 @@ class SSLInspectionAPI(APIEndpoint):
             >>> csr = zia.ssl.get_csr()
 
         """
-        return self._get("sslSettings/downloadcsr", box=False).text
+        return self._get("sslSettings/downloadcsr").text
 
     def get_intermediate_ca(self):
         """

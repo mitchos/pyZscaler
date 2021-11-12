@@ -68,4 +68,4 @@ class AuditLogsAPI(APIEndpoint):
             ...    fh.write(zia.audit_logs.get_report())
 
         """
-        return self._get("auditlogEntryReport/download", box=False).text
+        return self._get("auditlogEntryReport/download").text

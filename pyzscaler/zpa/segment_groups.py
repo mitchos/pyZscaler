@@ -1,10 +1,11 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class SegmentGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns a list of all configured segment groups.
 
@@ -16,7 +17,7 @@ class SegmentGroupsAPI(APIEndpoint):
             ...    pprint(segment_group)
 
         """
-        return self._get("segmentGroup").list
+        return BoxList(Iterator(self._api, "segmentGroup", **kwargs))
 
     def get_group(self, group_id: str):
         """
@@ -51,7 +52,7 @@ class SegmentGroupsAPI(APIEndpoint):
             >>> zpa.segment_groups.delete_group('2342342342343')
 
         """
-        return self._delete(f"segmentGroup/{group_id}")
+        return self._delete(f"segmentGroup/{group_id}").status_code
 
     def add_group(self, name: str, enabled=False, **kwargs):
         """
@@ -140,4 +141,9 @@ class SegmentGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"segmentGroup/{group_id}", json=payload, box=False).status_code
+        # ZPA doesn't return the updated resource so let's check our response
+        # was okay and then return the resource, else return None.
+        resp = self._put(f"segmentGroup/{group_id}", json=payload, box=False).status_code
+
+        if resp == 204:
+            return self.get_group(group_id)

@@ -105,7 +105,7 @@ class LocationsAPI(APIEndpoint):
             >>> location = zia.locations.get_location_name(name='stockholm_office')
         """
         if location_id and location_name:
-            raise ValueError("TOO MANY ARGUMENTS: Expected either a location_id or a location_name. Both were provided.")
+            raise ValueError("TOO MANY ARGUMENTS: Expected either location_id or location_name. Both were provided.")
         elif location_name:
             location = (record for record in self.list_locations(search=location_name) if record.name == location_name)
             return next(location, None)

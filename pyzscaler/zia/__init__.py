@@ -50,6 +50,7 @@ class ZIA(APISession):
         self._password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
         self._env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
         self._url = f"https://zsapi.{self._env_cloud}.net/api/v1"
+        self.conv_box = True
         super(ZIA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> None:
