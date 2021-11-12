@@ -1,4 +1,4 @@
-sphinx==4.2.0
+sphinx==4.3.0
 restfly==1.4.4
 python-box==5.4.1
 furo==2021.10.9
