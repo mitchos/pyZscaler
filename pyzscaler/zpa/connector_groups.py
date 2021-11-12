@@ -1,8 +1,11 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator
 
 
 class ConnectorGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns a list of all connector groups.
 
@@ -13,7 +16,7 @@ class ConnectorGroupsAPI(APIEndpoint):
             >>> connector_groups = zpa.connector_groups.list_groups()
 
         """
-        return self._get("appConnectorGroup").list
+        return BoxList(Iterator(self._api, "appConnectorGroup", **kwargs))
 
     def get_group(self, group_id: str):
         """

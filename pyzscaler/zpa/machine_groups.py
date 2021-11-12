@@ -1,8 +1,11 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator
 
 
 class MachineGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs):
         """
         Returns a list of all configured machine groups.
 
@@ -14,7 +17,7 @@ class MachineGroupsAPI(APIEndpoint):
             ...    pprint(machine_group)
 
         """
-        return self._get("machineGroups").list
+        return BoxList(Iterator(self._api, "machineGroups", **kwargs))
 
     def get_group(self, group_id: str):
         """

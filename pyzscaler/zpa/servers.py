@@ -1,6 +1,7 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import add_id_groups, snake_to_camel
+from pyzscaler.utils import Iterator, add_id_groups, snake_to_camel
 
 
 class AppServersAPI(APIEndpoint):
@@ -52,7 +53,7 @@ class AppServersAPI(APIEndpoint):
 
         return self._post("server", json=payload)
 
-    def list_servers(self):
+    def list_servers(self, **kwargs):
         """
         Returns all configured servers.
 
@@ -62,7 +63,7 @@ class AppServersAPI(APIEndpoint):
         Examples:
             >>> servers = zpa.servers.list_servers()
         """
-        return self._get("server").list
+        return BoxList(Iterator(self._api, "server", **kwargs))
 
     def get_server(self, server_id: str):
         """
