@@ -5,7 +5,7 @@ from restfly.session import APISession
 from pyzscaler import __version__
 
 from .app_segments import AppSegmentsAPI
-from .certificates import BACertificatesAPI
+from .certificates import CertificatesAPI
 from .cloud_connector_groups import CloudConnectorGroupsAPI
 from .connector_groups import ConnectorGroupsAPI
 from .idp import IDPControllerAPI
@@ -46,6 +46,8 @@ class ZPA(APISession):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
+        # The v2 URL supports additional API endpoints
+        self.v2_url = f"https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/{self._customer_id}"
         self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
@@ -75,7 +77,7 @@ class ZPA(APISession):
         The interface object for the :ref:`ZPA Browser Access Certificates interface <zpa-certificates>`.
 
         """
-        return BACertificatesAPI(self)
+        return CertificatesAPI(self)
 
     @property
     def cloud_connector_groups(self):
