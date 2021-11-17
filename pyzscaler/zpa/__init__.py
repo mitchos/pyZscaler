@@ -3,24 +3,23 @@ import os
 from restfly.session import APISession
 
 from pyzscaler import __version__
+from pyzscaler.zpa.app_segments import AppSegmentsAPI
+from pyzscaler.zpa.certificates import CertificatesAPI
+from pyzscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
+from pyzscaler.zpa.connector_groups import ConnectorGroupsAPI
+from pyzscaler.zpa.idp import IDPControllerAPI
+from pyzscaler.zpa.machine_groups import MachineGroupsAPI
+from pyzscaler.zpa.policies import PolicySetsAPI
+from pyzscaler.zpa.posture_profiles import PostureProfilesAPI
 from pyzscaler.zpa.provisioning import ProvisioningAPI
-
-from .app_segments import AppSegmentsAPI
-from .certificates import CertificatesAPI
-from .cloud_connector_groups import CloudConnectorGroupsAPI
-from .connector_groups import ConnectorGroupsAPI
-from .idp import IDPControllerAPI
-from .machine_groups import MachineGroupsAPI
-from .policies import PolicySetsAPI
-from .posture_profiles import PostureProfilesAPI
-from .saml_attributes import SAMLAttributesAPI
-from .scim_attributes import SCIMAttributesAPI
-from .scim_groups import SCIMGroupsAPI
-from .segment_groups import SegmentGroupsAPI
-from .server_groups import ServerGroupsAPI
-from .servers import AppServersAPI
-from .session import AuthenticatedSessionAPI
-from .trusted_networks import TrustedNetworksAPI
+from pyzscaler.zpa.saml_attributes import SAMLAttributesAPI
+from pyzscaler.zpa.scim_attributes import SCIMAttributesAPI
+from pyzscaler.zpa.scim_groups import SCIMGroupsAPI
+from pyzscaler.zpa.segment_groups import SegmentGroupsAPI
+from pyzscaler.zpa.server_groups import ServerGroupsAPI
+from pyzscaler.zpa.servers import AppServersAPI
+from pyzscaler.zpa.session import AuthenticatedSessionAPI
+from pyzscaler.zpa.trusted_networks import TrustedNetworksAPI
 
 
 class ZPA(APISession):
