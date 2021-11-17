@@ -3,6 +3,7 @@ import os
 from restfly.session import APISession
 
 from pyzscaler import __version__
+from pyzscaler.zpa.provisioning import ProvisioningAPI
 
 from .app_segments import AppSegmentsAPI
 from .certificates import CertificatesAPI
@@ -126,6 +127,14 @@ class ZPA(APISession):
 
         """
         return PostureProfilesAPI(self)
+
+    @property
+    def provisioning(self):
+        """
+        The interface object for the :ref:`ZPA Provisioning interface <zpa-provisioning>`.
+
+        """
+        return ProvisioningAPI(self)
 
     @property
     def saml_attributes(self):
