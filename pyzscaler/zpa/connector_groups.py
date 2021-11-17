@@ -1,3 +1,5 @@
+from warnings import warn
+
 from box import BoxList
 from restfly.endpoint import APIEndpoint
 
@@ -9,6 +11,10 @@ class ConnectorGroupsAPI(APIEndpoint):
         """
         Returns a list of all connector groups.
 
+        Warnings:
+            .. deprecated:: 0.13.0
+                Use :func:`zpa.connectors.list_connector_groups` instead.
+
         Returns:
             :obj:`list`: List of all configured connector groups.
 
@@ -16,11 +22,20 @@ class ConnectorGroupsAPI(APIEndpoint):
             >>> connector_groups = zpa.connector_groups.list_groups()
 
         """
+        warn(
+            "This endpoint is deprecated and will eventually be removed. "
+            "Use zpa.connectors.list_connector_groups() instead."
+        )
+
         return BoxList(Iterator(self._api, "appConnectorGroup", **kwargs))
 
     def get_group(self, group_id: str):
         """
         Get information for a specified connector group.
+
+        Warnings:
+            .. deprecated:: 0.13.0
+                Use :func:`zpa.connectors.get_connector_group` instead.
 
         Args:
             group_id (str):
@@ -34,4 +49,8 @@ class ConnectorGroupsAPI(APIEndpoint):
             >>> connector_group = zpa.connector_groups.get_group('2342342354545455')
 
         """
+        warn(
+            "This endpoint is deprecated and will eventually be removed. " "Use zpa.connectors.get_connector_group() instead."
+        )
+
         return self._get(f"appConnectorGroup/{group_id}")

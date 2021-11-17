@@ -46,6 +46,12 @@ class ConnectorsAPI(APIEndpoint):
         Returns:
             :obj:`BoxList`: List containing all configured ZPA App Connectors.
 
+        Examples:
+            List all configured App Connectors:
+
+            >>> for connector in zpa.connectors.list_connectors():
+            ...    print(connector)
+
         """
         return BoxList(Iterator(self._api, "connector", **kwargs))
 
@@ -59,7 +65,7 @@ class ConnectorsAPI(APIEndpoint):
         Returns:
             :obj:`Box`: The specified App Connector resource record.
 
-        Example:
+        Examples:
             >>> app_connector = zpa.connectors.get_connector('1976541121')
 
         """
@@ -80,6 +86,13 @@ class ConnectorsAPI(APIEndpoint):
 
         Returns:
             :obj:`Box`: The updated App Connector resource record.
+
+        Examples:
+            Update an App Connector name and disable it.
+
+            >>> app_connector = zpa.connectors.update_connector('999999',
+            ...    name="Updated App Connector Name",
+            ...    enabled=False)
 
         """
         # Set payload to equal existing record
