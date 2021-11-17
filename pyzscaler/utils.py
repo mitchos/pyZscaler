@@ -36,6 +36,23 @@ def obfuscate_api_key(seed):
     return {"timestamp": now, "key": key}
 
 
+def pick_version_profile(kwargs, payload):
+    # Used in ZPA endpoints.
+    # This function is used to convert the name of the version profile to
+    # the version profile id. This means our users don't need to look up the
+    # version profile id mapping themselves.
+
+    version_profile = kwargs.pop("version_profile", None)
+    if version_profile:
+        payload["overrideVersionProfile"] = True
+        if version_profile == "default":
+            payload["versionProfileId"] = 0
+        elif version_profile == "previous_default":
+            payload["versionProfileId"] = 1
+        elif version_profile == "new_release":
+            payload["versionProfileId"] = 2
+
+
 class Iterator(APIIterator):
     """Iterator class."""
 

@@ -18,6 +18,7 @@ from pyzscaler.zpa.scim_groups import SCIMGroupsAPI
 from pyzscaler.zpa.segment_groups import SegmentGroupsAPI
 from pyzscaler.zpa.server_groups import ServerGroupsAPI
 from pyzscaler.zpa.servers import AppServersAPI
+from pyzscaler.zpa.service_edges import ServiceEdgesAPI
 from pyzscaler.zpa.session import AuthenticatedSessionAPI
 from pyzscaler.zpa.trusted_networks import TrustedNetworksAPI
 
@@ -183,6 +184,14 @@ class ZPA(APISession):
 
         """
         return AppServersAPI(self)
+
+    @property
+    def service_edges(self):
+        """
+        The interface object for the :ref:`ZPA Service Edges interface <zpa-service_edges>`.
+
+        """
+        return ServiceEdgesAPI(self)
 
     @property
     def session(self):

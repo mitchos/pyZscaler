@@ -1,23 +1,12 @@
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import Iterator, add_id_groups, snake_to_camel
-
-
-def pick_version_profile(kwargs, payload):
-    # This function is used to convert the name of the version profile to
-    # the version profile id. This means our users don't need to look up the
-    # version profile id mapping themselves.
-
-    version_profile = kwargs.pop("version_profile", None)
-    if version_profile:
-        payload["overrideVersionProfile"] = True
-        if version_profile == "default":
-            payload["versionProfileId"] = 0
-        elif version_profile == "previous_default":
-            payload["versionProfileId"] = 1
-        elif version_profile == "new_release":
-            payload["versionProfileId"] = 2
+from pyzscaler.utils import (
+    Iterator,
+    add_id_groups,
+    pick_version_profile,
+    snake_to_camel,
+)
 
 
 class ConnectorsAPI(APIEndpoint):
@@ -66,7 +55,7 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`Box`: The specified App Connector resource record.
 
         Examples:
-            >>> app_connector = zpa.connectors.get_connector('1976541121')
+            >>> app_connector = zpa.connectors.get_connector('99999')
 
         """
         return self._get(f"connector/{connector_id}")
@@ -121,7 +110,7 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zpa.connectors.delete_connector('1976541121')
+            >>> zpa.connectors.delete_connector('999999')
 
         """
         return self._delete(f"connector/{connector_id}", box=False).status_code
@@ -137,7 +126,7 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`int`: The status code for the operation.
 
         Examples:
-            >>> zpa.connectors.bulk_delete_connectors(['1976541121', '1976541122', '1976541123'])
+            >>> zpa.connectors.bulk_delete_connectors(['111111', '222222', '333333'])
 
         """
         payload = {"ids": connector_ids}
@@ -179,7 +168,7 @@ class ConnectorsAPI(APIEndpoint):
                 The connector group resource record.
 
         Examples:
-            >>> connector_group = zpa.connector_groups.get_group('2342342354545455')
+            >>> connector_group = zpa.connector_groups.get_group('99999')
 
         """
         return self._get(f"appConnectorGroup/{group_id}")
@@ -228,6 +217,15 @@ class ConnectorsAPI(APIEndpoint):
         Returns:
             :obj:`Box`: The resource record of the newly created App Connector Group.
 
+        Examples:
+            Add a new ZPA App Connector Group with parameters.
+
+            >>> group = zpa.connectors.add_connector_group(name="New App Connector Group",
+            ...    location="Sydney",
+            ...    latitude="33.8688",
+            ...    longitude="151.2093",
+            ...    version_profile="default")
+
         """
         payload = {
             "name": name,
@@ -255,9 +253,51 @@ class ConnectorsAPI(APIEndpoint):
             **kwargs: Optional keyword args.
 
         Keyword Args:
+            **connector_ids (list):
+                The unique ids for the App Connectors that will be added to this App Connector Group.
+            **city_country (str):
+                The City and Country for where the App Connectors are located. Format is:
+
+                ``<City>, <Country Code>`` e.g. ``Sydney, AU``
+            **country_code (str):
+                The ISO<std> Country Code that represents the country where the App Connectors are located.
+            **description (str):
+                Additional information about the App Connector Group.
+            **dns_query_type (str):
+                The type of DNS queries that are enabled for this App Connector Group. Accepted values are:
+                ``IPV4_IPV6``, ``IPV4`` and ``IPV6``
+            **enabled (bool):
+                Is the App Connector Group enabled? Defaults to ``True``.
+            **name (str): The name of the App Connector Group.
+            **latitude (int): The latitude representing the App Connector's physical location.
+            **location (str): The name of the location that the App Connector Group represents.
+            **longitude (int): The longitude representing the App Connector's physical location.
+            **override_version_profile (bool):
+                Override the local App Connector version according to ``version_profile``. Defaults to ``False``.
+            **server_group_ids (list):
+                The unique ids of the Server Groups that are associated with this App Connector Group
+            **lss_app_connector_group (bool):
+            **upgrade_day (str):
+                The day of the week that upgrades will be pushed to the App Connector.
+            **upgrade_time_in_secs (str):
+                The time of the day that upgrades will be pushed to the App Connector.
+            **version_profile (str):
+                The version profile to use. This will automatically set ``override_version_profile`` to True.
+                Accepted values are:
+
+                ``default``, ``previous_default`` and ``new_release``
 
         Returns:
             :obj:`Box`: The updated ZPA App Connector Group resource record.
+
+        Examples:
+            Update the name of an App Connector Group in ZPA, change the version profile to new releases and disable
+            the group.
+
+            >>> group = zpa.connectors.update_connector_group('99999',
+            ...    name="Updated App Connector Group",
+            ...    version_profile="new_release",
+            ...    enabled=False)
 
         """
 
