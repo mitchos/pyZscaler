@@ -10,33 +10,6 @@ class CertificatesAPI(APIEndpoint):
 
         self.v2_url = api.v2_url
 
-    def list_certs(self, **kwargs) -> BoxList:
-        """
-        Returns a list of all configured certificates in ZPA.
-
-        Args:
-            **kwargs: Optional keyword args.
-
-        Keyword Args:
-            **max_items (int, optional):
-                The maximum number of items to request before stopping iteration.
-            **max_pages (int, optional):
-                The maximum number of pages to request before stopping iteration.
-            **pagesize (int, optional):
-                Specifies the page size. The default size is 20, but the maximum size is 500.
-            **search (str, optional):
-                The search string used to match against features and fields.
-
-        Returns:
-            :obj:`BoxList`: List of all certificates.
-
-        Examples:
-            >>> for cert in zpa.certificates.list_certs():
-            ...    print(cert)
-
-        """
-        return BoxList(Iterator(self._api, f"{self.v2_url}/clientlessCertificate/issued", **kwargs))
-
     def list_browser_access(self, **kwargs) -> BoxList:
         """
         Returns a list of all Browser Access certificates.
@@ -55,7 +28,7 @@ class CertificatesAPI(APIEndpoint):
                 The search string used to match against features and fields.
 
         Returns:
-            :obj:`list`: List of all Browser Access certificates.
+            :obj:`BoxList`: List of all Browser Access certificates.
 
         Examples:
             >>> for cert in zpa.certificates.list_browser_access():
@@ -73,16 +46,16 @@ class CertificatesAPI(APIEndpoint):
                 The unique identifier for the Browser Access certificate.
 
         Returns:
-            :obj:`dict`:
+            :obj:`Box`:
                 The Browser Access certificate resource record.
 
         Examples:
-            >>> ba_certificate = zpa.certificates.get_browser_access('2342342354545455')
+            >>> ba_certificate = zpa.certificates.get_browser_access('99999')
 
         """
         return self._get(f"clientlessCertificate/{certificate_id}")
 
-    def get_enrolment_cert(self, certificate_id: str) -> Box:
+    def get_enrolment(self, certificate_id: str) -> Box:
         """
         Returns information on the specified enrollment certificate.
 
@@ -90,15 +63,15 @@ class CertificatesAPI(APIEndpoint):
             certificate_id (str): The unique id of the enrollment certificate.
 
         Returns:
-            :obj:`dict`: The enrollment certificate resource record.
+            :obj:`Box`: The enrollment certificate resource record.
 
         Examples:
-            enrolment_cert = zpa.certificates.get_enrolment_cert('99999999')
+            enrolment_cert = zpa.certificates.get_enrolment('99999999')
 
         """
         return self._get(f"enrollmentCert/{certificate_id}")
 
-    def list_enrolment_certs(self, **kwargs) -> BoxList:
+    def list_enrolment(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured enrollment certificates.
 
@@ -119,7 +92,7 @@ class CertificatesAPI(APIEndpoint):
             :obj:`BoxList`: List of all enrollment certificates.
 
         Examples:
-            >>> for cert in zpa.certificates.list_enrolment_certs():
+            >>> for cert in zpa.certificates.list_enrolment():
             ...    print(cert)
 
         """
