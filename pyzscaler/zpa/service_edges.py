@@ -58,7 +58,7 @@ class ServiceEdgesAPI(APIEndpoint):
             >>> service_edge = zpa.service_edges.get_service_edge('999999')
 
         """
-        return self._get(f"/serviceEdge/{service_edge_id}")
+        return self._get(f"serviceEdge/{service_edge_id}")
 
     def update_service_edge(self, service_edge_id: str, **kwargs) -> Box:
         """
@@ -90,7 +90,7 @@ class ServiceEdgesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        resp = self._put(f"service_edge/{service_edge_id}", json=payload).status_code
+        resp = self._put(f"serviceEdge/{service_edge_id}", json=payload).status_code
 
         if resp == 204:
             return self.get_service_edge(service_edge_id)
