@@ -1,15 +1,11 @@
-from box import BoxList
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import Iterator, add_id_groups, snake_to_camel
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class AppServersAPI(APIEndpoint):
-    reformat_params = [
-        ("app_connector_group_ids", "appConnectorGroups"),
-    ]
-
-    def add_server(self, name: str, address: str, enabled: bool = False, **kwargs):
+    def add_server(self, name: str, address: str, enabled: bool = False, **kwargs) -> Box:
         """
         Add a new application server.
 
@@ -32,7 +28,7 @@ class AppServersAPI(APIEndpoint):
                 The configuration space for the server. Defaults to DEFAULT.
 
         Returns:
-            :obj:`dict`: The resource record for the newly created server.
+            :obj:`Box`: The resource record for the newly created server.
 
         Examples:
             Create a server with the minimum required parameters:
@@ -45,27 +41,35 @@ class AppServersAPI(APIEndpoint):
         """
         payload = {"name": name, "address": address, "enabled": enabled}
 
-        add_id_groups(self.reformat_params, kwargs, payload)
-
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
         return self._post("server", json=payload)
 
-    def list_servers(self, **kwargs):
+    def list_servers(self, **kwargs) -> BoxList:
         """
         Returns all configured servers.
 
+        Keyword Args:
+            **max_items (int):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int):
+                The maximum number of pages to request before stopping iteration.
+            **pagesize (int):
+                Specifies the page size. The default size is 20, but the maximum size is 500.
+            **search (str, optional):
+                The search string used to match against features and fields.
+
         Returns:
-            :obj:`list`: List of all configured servers.
+            :obj:`BoxList`: List of all configured servers.
 
         Examples:
             >>> servers = zpa.servers.list_servers()
         """
         return BoxList(Iterator(self._api, "server", **kwargs))
 
-    def get_server(self, server_id: str):
+    def get_server(self, server_id: str) -> Box:
         """
         Gets information on the specified server.
 
@@ -74,15 +78,15 @@ class AppServersAPI(APIEndpoint):
                 The unique identifier for the server.
 
         Returns:
-            :obj:`dict`: The resource record for the server.
+            :obj:`Box`: The resource record for the server.
 
         Examples:
-            >>> server = zpa.servers.get_server('916196382959075424')
+            >>> server = zpa.servers.get_server('99999')
 
         """
         return self._get(f"server/{server_id}")
 
-    def delete_server(self, server_id: str):
+    def delete_server(self, server_id: str) -> int:
         """
         Delete the specified server.
 
@@ -92,15 +96,15 @@ class AppServersAPI(APIEndpoint):
             server_id (str): The unique identifier for the server to be deleted.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> zpa.servers.delete_server('916196382959075424')
+            >>> zpa.servers.delete_server('99999')
 
         """
         return self._delete(f"server/{server_id}", box=False).status_code
 
-    def update_server(self, server_id: str, **kwargs):
+    def update_server(self, server_id: str, **kwargs) -> Box:
         """
         Updates the specified server.
 
@@ -125,19 +129,19 @@ class AppServersAPI(APIEndpoint):
                 The configuration space for the server.
 
         Returns:
-            :obj:`dict`: The resource record for the updated server.
+            :obj:`Box`: The resource record for the updated server.
 
         Examples:
             Update the name of a server:
 
             >>> zpa.servers.update_server(
-            ...   '916196382959075424',
+            ...   '99999',
             ...   name='newname.example')
 
             Update the address and enable a server:
 
             >>> zpa.servers.update_server(
-            ...    '916196382959075424',
+            ...    '99999',
             ...    address='192.0.2.20',
             ...    enabled=True)
 
@@ -146,8 +150,10 @@ class AppServersAPI(APIEndpoint):
         payload = {snake_to_camel(k): v for k, v in self.get_server(server_id).items()}
 
         # Add optional parameters to payload
-        add_id_groups(self.reformat_params, kwargs, payload)
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"server/{server_id}", json=payload, box=False).status_code
+        resp = self._put(f"server/{server_id}", json=payload, box=False).status_code
+
+        if resp == 204:
+            return self.get_server(server_id)
