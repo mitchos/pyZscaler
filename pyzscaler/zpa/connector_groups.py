@@ -1,13 +1,13 @@
 from warnings import warn
 
-from box import BoxList
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import Iterator
 
 
 class ConnectorGroupsAPI(APIEndpoint):
-    def list_groups(self, **kwargs):
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all connector groups.
 
@@ -16,7 +16,7 @@ class ConnectorGroupsAPI(APIEndpoint):
                 Use :func:`zpa.connectors.list_connector_groups` instead.
 
         Returns:
-            :obj:`list`: List of all configured connector groups.
+            :obj:`BoxList`: List of all configured connector groups.
 
         Examples:
             >>> connector_groups = zpa.connector_groups.list_groups()
@@ -29,7 +29,7 @@ class ConnectorGroupsAPI(APIEndpoint):
 
         return BoxList(Iterator(self._api, "appConnectorGroup", **kwargs))
 
-    def get_group(self, group_id: str):
+    def get_group(self, group_id: str) -> Box:
         """
         Get information for a specified connector group.
 
@@ -42,7 +42,7 @@ class ConnectorGroupsAPI(APIEndpoint):
                 The unique identifier for the connector group.
 
         Returns:
-            :obj:`dict`:
+            :obj:`Box`:
                 The connector group resource record.
 
         Examples:

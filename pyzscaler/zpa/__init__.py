@@ -7,6 +7,7 @@ from pyzscaler.zpa.app_segments import AppSegmentsAPI
 from pyzscaler.zpa.certificates import CertificatesAPI
 from pyzscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from pyzscaler.zpa.connector_groups import ConnectorGroupsAPI
+from pyzscaler.zpa.connectors import ConnectorsAPI
 from pyzscaler.zpa.idp import IDPControllerAPI
 from pyzscaler.zpa.machine_groups import MachineGroupsAPI
 from pyzscaler.zpa.policies import PolicySetsAPI
@@ -49,6 +50,7 @@ class ZPA(APISession):
         self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
         # The v2 URL supports additional API endpoints
         self.v2_url = f"https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/{self._customer_id}"
+        self.user_config_url = f"https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}"
         self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
@@ -59,10 +61,6 @@ class ZPA(APISession):
         self._url = f"https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}"
         self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
         return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
-
-    def _deauthenticate(self, **kwargs):
-        """Ends the ZPA API authenticated session."""
-        return self.session.delete()
 
     @property
     def app_segments(self):
@@ -95,6 +93,14 @@ class ZPA(APISession):
 
         """
         return ConnectorGroupsAPI(self)
+
+    @property
+    def connectors(self):
+        """
+        The interface object for the :ref:`ZPA Connectors interface <zpa-connectors>`.
+
+        """
+        return ConnectorsAPI(self)
 
     @property
     def idp(self):

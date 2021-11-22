@@ -1,16 +1,16 @@
-from box import BoxList
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class SegmentGroupsAPI(APIEndpoint):
-    def list_groups(self, **kwargs):
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured segment groups.
 
         Returns:
-            :obj:`list`: A list of all configured segment groups.
+            :obj:`BoxList`: A list of all configured segment groups.
 
         Examples:
             >>> for segment_group in zpa.segment_groups.list_groups():
@@ -19,7 +19,7 @@ class SegmentGroupsAPI(APIEndpoint):
         """
         return BoxList(Iterator(self._api, "segmentGroup", **kwargs))
 
-    def get_group(self, group_id: str):
+    def get_group(self, group_id: str) -> Box:
         """
         Returns information on the specified segment group.
 
@@ -28,16 +28,16 @@ class SegmentGroupsAPI(APIEndpoint):
                 The unique identifier for the segment group.
 
         Returns:
-            :obj:`dict`: The resource record for the segment group.
+            :obj:`Box`: The resource record for the segment group.
 
         Examples:
-            >>> pprint(zpa.segment_groups.get_group('2342342342344433'))
+            >>> pprint(zpa.segment_groups.get_group('99999'))
 
         """
 
         return self._get(f"segmentGroup/{group_id}")
 
-    def delete_group(self, group_id: str):
+    def delete_group(self, group_id: str) -> int:
         """
         Deletes the specified segment group.
 
@@ -46,15 +46,15 @@ class SegmentGroupsAPI(APIEndpoint):
                 The unique identifier for the segment group to be deleted.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> zpa.segment_groups.delete_group('2342342342343')
+            >>> zpa.segment_groups.delete_group('99999')
 
         """
         return self._delete(f"segmentGroup/{group_id}").status_code
 
-    def add_group(self, name: str, enabled=False, **kwargs):
+    def add_group(self, name: str, enabled=False, **kwargs) -> Box:
         """
         Adds a new segment group.
 
@@ -75,7 +75,7 @@ class SegmentGroupsAPI(APIEndpoint):
             policy_migrated (bool):
 
         Returns:
-            :obj:`dict`: The resource record for the newly created segment group.
+            :obj:`Box`: The resource record for the newly created segment group.
 
         Examples:
             Creating a segment group with the minimum required parameters:
@@ -99,7 +99,7 @@ class SegmentGroupsAPI(APIEndpoint):
 
         return self._post("segmentGroup", json=payload)
 
-    def update_group(self, group_id: str, **kwargs):
+    def update_group(self, group_id: str, **kwargs) -> Box:
         """
         Updates an existing segment group.
 
@@ -122,12 +122,12 @@ class SegmentGroupsAPI(APIEndpoint):
             policy_migrated (bool):
 
         Returns:
-            :obj:`dict`: The resource record for the updated segment group.
+            :obj:`Box`: The resource record for the updated segment group.
 
         Examples:
             Updating the name of a segment group:
 
-            >>> zpa.segment_groups.update_group('23234234324234',
+            >>> zpa.segment_groups.update_group('99999',
             ...    name='updated_name')
 
         """

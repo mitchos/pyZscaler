@@ -25,16 +25,3 @@ class AuthenticatedSessionAPI(APIEndpoint):
             "Content-Type": "application/x-www-form-urlencoded",
         }
         return self._post("https://config.private.zscaler.com/signin", headers=headers, data=payload).access_token
-
-    def delete(self):
-        """
-        Deletes the ZPA authentication session.
-
-        Returns:
-            :obj:`str`: The status code of the operation.
-
-        Examples:
-            >>> zpa.session.delete()
-
-        """
-        return self._post("https://config.private.zscaler.com/signout")

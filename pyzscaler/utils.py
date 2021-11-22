@@ -1,5 +1,7 @@
 import time
+from typing import Union
 
+from box import Box, BoxList
 from restfly import APIIterator
 
 
@@ -15,6 +17,22 @@ def snake_to_camel(name):
     }
     ret = edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
     return ret
+
+
+# Recursive function to convert all keys and nested keys from snake case
+# to camel case.
+def convert_keys(data):
+    if isinstance(data, Union[list, BoxList]):
+        return [convert_keys(inner_dict) for inner_dict in data]
+    elif isinstance(data, Union[Box, dict]):
+        new_dict = {}
+        for k in data.keys():
+            v = data[k]
+            new_key = snake_to_camel(k)
+            new_dict[new_key] = convert_keys(v) if isinstance(v, (dict, list)) else v
+        return new_dict
+    else:
+        return data
 
 
 # Takes a tuple if id_groups, kwargs and the payload dict; reformat for API call
