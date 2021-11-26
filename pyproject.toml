@@ -6,7 +6,7 @@ authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
 readme = "README.md"
 documentation = "https://pyzscaler.readthedocs.io/"
-homepage = "https://mitchos.github.io/pyZscaler/"
+homepage = "https://pyzscaler.packet.tech/"
 repository = "https://github.com/mitchos/pyZscaler"
 classifiers = [
     "Environment :: Console",
