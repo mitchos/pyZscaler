@@ -155,7 +155,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
 
         return self._get("adminRoles/lite", params=payload)
 
-    def get_user(self, user_id: str) -> dict:
+    def get_user(self, user_id: str) -> Box:
         """
         Returns information on the specified admin user id.
 
@@ -163,7 +163,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             user_id (str): The unique id of the admin user.
 
         Returns:
-            :obj:`dict`: The admin user resource record.
+            :obj:`Box`: The admin user resource record.
 
         Examples:
             >>> print(zia.admin_and_role_management.get_user('987321202'))
