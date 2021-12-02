@@ -1,10 +1,11 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class LocationsAPI(APIEndpoint):
-    def list_locations(self, **kwargs):
+    def list_locations(self, **kwargs) -> BoxList:
         """
         Returns a list of locations.
 
@@ -25,7 +26,7 @@ class LocationsAPI(APIEndpoint):
                 Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
 
         Returns:
-            :obj:`list`: List of configured locations.
+            :obj:`BoxList`: List of configured locations.
 
         Examples:
             List locations using default settings:
@@ -44,9 +45,9 @@ class LocationsAPI(APIEndpoint):
             ...    print(location)
 
         """
-        return list(Iterator(self._api, "locations", **kwargs))
+        return BoxList(Iterator(self._api, "locations", **kwargs))
 
-    def add_location(self, name: str, **kwargs):
+    def add_location(self, name: str, **kwargs) -> Box:
         """
         Adds a new location.
 
@@ -67,7 +68,7 @@ class LocationsAPI(APIEndpoint):
                 VPN credentials for the location.
 
         Returns:
-            :obj:`dict`: The newly created location resource record
+            :obj:`Box`: The newly created location resource record
 
         Examples:
             Add a new location with an IP address.
@@ -86,7 +87,7 @@ class LocationsAPI(APIEndpoint):
 
         return self._post("locations", json=payload)
 
-    def get_location(self, location_id: str = None, location_name: str = None):
+    def get_location(self, location_id: str = None, location_name: str = None) -> Box:
         """
         Returns information for the specified location based on the location id or location name.
 
@@ -97,7 +98,7 @@ class LocationsAPI(APIEndpoint):
                 The unique name for the location.
 
         Returns:
-            :obj:`dict`: The requested location resource record.
+            :obj:`Box`: The requested location resource record.
 
         Examples:
             >>> location = zia.locations.get_location('97456691')
@@ -112,7 +113,7 @@ class LocationsAPI(APIEndpoint):
 
         return self._get(f"locations/{location_id}")
 
-    def list_sub_locations(self, location_id: str, **kwargs):
+    def list_sub_locations(self, location_id: str, **kwargs) -> BoxList:
         """
         Returns sub-location information for the specified location ID.
 
@@ -143,16 +144,16 @@ class LocationsAPI(APIEndpoint):
                 Filter based on whether the Enforce XFF Forwarding setting is enabled or disabled for a location.
 
         Returns:
-            :obj:`list`: A list of sub-locations configured for the parent location.
+            :obj:`BoxList`: A list of sub-locations configured for the parent location.
 
         Examples:
             >>> for sub_location in zia.locations.list_sub_locations('97456691'):
             ...    pprint(sub_location)
 
         """
-        return list(Iterator(self._api, f"locations/{location_id}/sublocations", max_pages=1, **kwargs))
+        return BoxList(Iterator(self._api, f"locations/{location_id}/sublocations", max_pages=1, **kwargs))
 
-    def list_locations_lite(self, **kwargs):
+    def list_locations_lite(self, **kwargs) -> BoxList:
         """
         Returns only the name and ID of all configured locations.
 
@@ -171,7 +172,7 @@ class LocationsAPI(APIEndpoint):
                 The search string used to partially match against a location's name and port attributes.
 
         Returns:
-            :obj:`list`: A list of configured locations.
+            :obj:`BoxList`: A list of configured locations.
 
         Examples:
             List locations with default settings:
@@ -190,9 +191,9 @@ class LocationsAPI(APIEndpoint):
             ...    print(location)
 
         """
-        return list(Iterator(self._api, "locations/lite", **kwargs))
+        return BoxList(Iterator(self._api, "locations/lite", **kwargs))
 
-    def update_location(self, location_id: str, **kwargs):
+    def update_location(self, location_id: str, **kwargs) -> Box:
         """
         Update the specified location.
 
@@ -213,7 +214,7 @@ class LocationsAPI(APIEndpoint):
                 VPN credentials for the location.
 
         Returns:
-            :obj:`dict`: The updated resource record.
+            :obj:`Box`: The updated resource record.
 
         Examples:
             Update the name of a location:
@@ -236,7 +237,7 @@ class LocationsAPI(APIEndpoint):
 
         return self._put(f"locations/{location_id}", json=payload)
 
-    def delete_location(self, location_id: str):
+    def delete_location(self, location_id: str) -> int:
         """
         Deletes the location or sub-location for the specified ID
 
@@ -245,7 +246,7 @@ class LocationsAPI(APIEndpoint):
                 The unique identifier for the location or sub-location.
 
         Returns:
-            :obj:`str`: Response code for the operation.
+            :obj:`int`: Response code for the operation.
 
         Examples:
             >>> zia.locations.delete_location('97456691')

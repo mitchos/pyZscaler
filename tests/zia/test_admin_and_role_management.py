@@ -30,7 +30,7 @@ def fixture_users():
             "id": 2,
             "role": {"id": 2, "name": "Test"},
             "email": "testuserb@example.com",
-            "adminScopeType": "ORGANIZATION",
+            "adminScopeType": "DEPARTMENT",
             "isDefaultAdmin": False,
             "isAuditor": False,
             "password": "hunter2",
@@ -39,6 +39,14 @@ def fixture_users():
             "newLocationCreateAllowed": False,
             "disabled": False,
         },
+    ]
+
+
+@pytest.fixture(name="admin_roles")
+def fixture_admin_roles():
+    return [
+        {"id": 1, "rank": 7, "name": "Super Admin", "roleType": "EXEC_INSIGHT_AND_ORG_ADMIN"},
+        {"id": 2, "rank": 7, "name": "Executive Insights App", "roleType": "EXEC_INSIGHT"},
     ]
 
 
@@ -75,6 +83,44 @@ def test_admin_users_add_user(zia, admin_users):
     assert isinstance(resp, dict)
     assert resp.role.id == 1
     assert resp.admin_scope_type == "ORGANIZATION"
+
+
+@responses.activate
+def test_admin_users_add_user_with_scope(zia, admin_users):
+    responses.add(
+        method="POST",
+        url="https://zsapi.zscaler.net/api/v1/adminUsers",
+        json=admin_users[1],
+        status=200,
+        match=[
+            matchers.json_params_matcher(
+                {
+                    "userName": "Test User B",
+                    "email": "testuserb@example.com",
+                    "role": {"id": "2"},
+                    "password": "hunter2",
+                    "loginName": "testuserb@example.com",
+                    "comments": "Test",
+                    "adminScopeType": "DEPARTMENT",
+                    "adminScopeScopeEntities": [{"id": "1"}],
+                }
+            )
+        ],
+    )
+
+    resp = zia.admin_and_role_management.add_user(
+        name="Test User B",
+        email="testuserb@example.com",
+        login_name="testuserb@example.com",
+        password="hunter2",
+        role_id="2",
+        comments="Test",
+        admin_scope="department",
+        scope_ids=["1"],
+    )
+    assert isinstance(resp, dict)
+    assert resp.role.id == 2
+    assert resp.admin_scope_type == "DEPARTMENT"
 
 
 @responses.activate
@@ -235,7 +281,23 @@ def test_admin_users_get_user(admin_users, zia):
 
 @responses.activate
 def test_admin_users_delete_user(zia):
-    responses.add(method="DELETE", url="https://zsapi.zscaler.net/api/v1/adminUsers/1", status=204)
+    responses.add(
+        method="DELETE",
+        url="https://zsapi.zscaler.net/api/v1/adminUsers/1",
+        status=204,
+    )
     resp = zia.admin_and_role_management.delete_user("1")
-
     assert resp == 204
+
+
+@responses.activate
+def test_admin_list_roles(admin_roles, zia):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/adminRoles/lite",
+        json=admin_roles,
+        status=200,
+    )
+    resp = zia.admin_and_role_management.list_roles(include_auditor_role=True)
+    assert isinstance(resp, BoxList)
+    assert resp[0].id == 1

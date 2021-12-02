@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "pyzscaler"
-version = "0.12.0"
+version = "1.0.0"
 description = "A python SDK for the Zscaler API."
 authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
 readme = "README.md"
 documentation = "https://pyzscaler.readthedocs.io/"
-homepage = "https://mitchos.github.io/pyZscaler/"
+homepage = "https://pyzscaler.packet.tech/"
 repository = "https://github.com/mitchos/pyZscaler"
 classifiers = [
     "Environment :: Console",
@@ -36,12 +36,12 @@ python-box = "5.4.1"
 python = "^3.6.1"
 restfly = "1.4.4"
 python-box = "5.4.1"
-Sphinx = "4.3.0"
-furo = "2021.10.9"
+Sphinx = "4.3.1"
+furo = "2021.11.23"
 pytest = "6.2.5"
 requests = "2.26.0"
-pre-commit = "2.15.0"
-responses = "0.15.0"
+pre-commit = "2.16.0"
+responses = "0.16.0"
 toml = "0.10.2"
 
 [build-system]

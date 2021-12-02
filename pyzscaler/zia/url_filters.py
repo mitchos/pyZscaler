@@ -1,3 +1,4 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
@@ -16,12 +17,12 @@ class URLFilteringAPI(APIEndpoint):
         "users",
     ]
 
-    def list_rules(self):
+    def list_rules(self) -> BoxList:
         """
         Returns the list of URL Filtering Policy rules
 
         Returns:
-            :obj:`list` of :obj:`dict`
+            :obj:`BoxList`: The list of URL Filtering Policy rules.
 
         Examples:
             >>> for rule in zia.url_filters.list_rules():
@@ -30,7 +31,7 @@ class URLFilteringAPI(APIEndpoint):
         """
         return self._get("urlFilteringRules")
 
-    def get_rule(self, rule_id: str):
+    def get_rule(self, rule_id: str) -> Box:
         """
         Returns information on the specified URL Filtering Policy rule.
 
@@ -38,7 +39,7 @@ class URLFilteringAPI(APIEndpoint):
             rule_id (str): The unique ID for the URL Filtering Policy rule.
 
         Returns:
-            :obj:`dict`: The URL Filtering Policy rule.
+            :obj:`Box`: The URL Filtering Policy rule.
 
         Examples:
             >>> pprint(zia.url_filters.get_rule('977469'))
@@ -47,7 +48,7 @@ class URLFilteringAPI(APIEndpoint):
 
         return self._get(f"urlFilteringRules/{rule_id}")
 
-    def delete_rule(self, rule_id: str):
+    def delete_rule(self, rule_id: str) -> int:
         """
         Deletes the specified URL Filtering Policy rule.
 
@@ -55,7 +56,7 @@ class URLFilteringAPI(APIEndpoint):
             rule_id (str): The unique ID for the URL Filtering Policy rule.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.url_filters.delete_rule('977463')
@@ -63,7 +64,7 @@ class URLFilteringAPI(APIEndpoint):
         """
         return self._delete(f"urlFilteringRules/{rule_id}", box=False).status_code
 
-    def add_rule(self, rank: str, name: str, action: str, protocols: list, **kwargs):
+    def add_rule(self, rank: str, name: str, action: str, protocols: list, **kwargs) -> Box:
         """
         Adds a new URL Filtering Policy rule.
 
@@ -110,7 +111,7 @@ class URLFilteringAPI(APIEndpoint):
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            :obj:`dict`: The newly created URL Filtering Policy rule.
+            :obj:`Box`: The newly created URL Filtering Policy rule.
 
         Examples:
             Add a rule with the minimum required parameters:
@@ -151,7 +152,7 @@ class URLFilteringAPI(APIEndpoint):
 
         return self._post("urlFilteringRules", json=payload)
 
-    def update_rule(self, rule_id: str, **kwargs):
+    def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
         Updates the specified URL Filtering Policy rule.
 
@@ -198,7 +199,7 @@ class URLFilteringAPI(APIEndpoint):
                 ``enforce_time_validity`` must be set to `True` for this to take effect.
 
         Returns:
-            :obj:`dict`: The updated URL Filtering Policy rule.
+            :obj:`Box`: The updated URL Filtering Policy rule.
 
         Examples:
             Update the name of a URL Filtering Policy rule:

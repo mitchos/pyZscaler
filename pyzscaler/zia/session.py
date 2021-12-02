@@ -1,15 +1,16 @@
+from box import Box
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import obfuscate_api_key
 
 
 class AuthenticatedSessionAPI(APIEndpoint):
-    def status(self):
+    def status(self) -> Box:
         """
         Returns the status of the authentication session if it exists.
 
         Returns:
-            :obj:`dict`: Session authentication information.
+            :obj:`Box`: Session authentication information.
 
         Examples:
             >>> print(zia.session.status())
@@ -17,7 +18,7 @@ class AuthenticatedSessionAPI(APIEndpoint):
         """
         return self._get("authenticatedSession")
 
-    def create(self, api_key: str, username: str, password: str):
+    def create(self, api_key: str, username: str, password: str) -> Box:
         """
         Creates a ZIA authentication session.
 
@@ -27,7 +28,7 @@ class AuthenticatedSessionAPI(APIEndpoint):
             password (str): Password of the admin user for the authentication session.
 
         Returns:
-            :obj:`dict`: The authenticated session information.
+            :obj:`Box`: The authenticated session information.
 
         Examples:
             >>> zia.session.create(api_key='12khsdfh3289',
@@ -47,12 +48,12 @@ class AuthenticatedSessionAPI(APIEndpoint):
 
         return self._post("authenticatedSession", json=payload)
 
-    def delete(self):
+    def delete(self) -> int:
         """
         Ends an authentication session.
 
         Returns:
-            :obj:`str`: The status code of the operation.
+            :obj:`int`: The status code of the operation.
 
         Examples:
             >>> zia.session.delete()

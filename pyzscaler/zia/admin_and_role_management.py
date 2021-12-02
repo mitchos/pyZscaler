@@ -1,11 +1,11 @@
-from box import BoxList
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class AdminAndRoleManagementAPI(APIEndpoint):
-    def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> dict:
+    def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> Box:
         """
         Adds a new admin user to ZIA.
 
@@ -42,7 +42,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
                 be provided if the admin user's scope is set to ``organization``.
 
         Returns:
-            :obj:`dict`: The newly created admin user resource record.
+            :obj:`Box`: The newly created admin user resource record.
 
         Examples:
             Add an admin user with the minimum required params:
@@ -155,7 +155,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
 
         return self._get("adminRoles/lite", params=payload)
 
-    def get_user(self, user_id: str) -> dict:
+    def get_user(self, user_id: str) -> Box:
         """
         Returns information on the specified admin user id.
 
@@ -163,7 +163,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             user_id (str): The unique id of the admin user.
 
         Returns:
-            :obj:`dict`: The admin user resource record.
+            :obj:`Box`: The admin user resource record.
 
         Examples:
             >>> print(zia.admin_and_role_management.get_user('987321202'))

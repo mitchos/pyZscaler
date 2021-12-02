@@ -1,5 +1,6 @@
 import pytest
 import responses
+from box import Box
 from responses import matchers
 
 from tests.conftest import stub_sleep
@@ -36,12 +37,18 @@ def fixture_users():
 
 @pytest.fixture(name="groups")
 def fixture_groups():
-    return [{"id": 1, "name": "Group A"}, {"id": 2, "name": "Group B"}]
+    return [
+        {"id": 1, "name": "Group A"},
+        {"id": 2, "name": "Group B"},
+    ]
 
 
 @pytest.fixture(name="departments")
 def fixture_depts():
-    return [{"id": 1, "name": "Dept A"}, {"id": 2, "name": "Dept B"}]
+    return [
+        {"id": 1, "name": "Dept A"},
+        {"id": 2, "name": "Dept B"},
+    ]
 
 
 @responses.activate
@@ -79,7 +86,7 @@ def test_users_add_user(zia, users):
 
 
 @responses.activate
-def test_users_get_user(users, zia):
+def test_users_get_user_by_id(users, zia):
     responses.add(
         method="GET",
         url="https://zsapi.zscaler.net/api/v1/users/1",
@@ -90,6 +97,32 @@ def test_users_get_user(users, zia):
 
     assert isinstance(resp, dict)
     assert resp.id == 1
+
+
+@responses.activate
+def test_users_get_user_by_email(users, zia):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/users?search=testuserb@example.com&page=1",
+        json=[users[1]],
+        status=200,
+    )
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/users?search=testuserb@example.com&page=2",
+        json=[],
+        status=200,
+    )
+    resp = zia.users.get_user(email="testuserb@example.com")
+
+    assert isinstance(resp, Box)
+    assert resp.id == 2
+
+
+@responses.activate
+def test_users_get_user_error(zia):
+    with pytest.raises(Exception) as e_info:
+        resp = zia.users.get_user("1", email="test@example.com")
 
 
 @responses.activate
@@ -109,22 +142,14 @@ def test_users_update_user(zia, users):
         responses.PUT,
         url="https://zsapi.zscaler.net/api/v1/users/1",
         json=updated_user,
-        match=[
-            matchers.json_params_matcher(
-                {
-                    "name": updated_user["name"],
-                    "email": updated_user["email"],
-                    "groups": updated_user["groups"],
-                    "department": updated_user["department"],
-                    "comments": updated_user["comments"],
-                }
-            )
-        ],
+        match=[matchers.json_params_matcher(updated_user)],
     )
 
     resp = zia.users.update_user("1", name="Test User C", comments="Updated Test")
 
-    assert isinstance(resp, dict)
+    assert isinstance(resp, Box)
+    assert resp.name == updated_user["name"]
+    assert resp.comments == updated_user["comments"]
 
 
 @responses.activate

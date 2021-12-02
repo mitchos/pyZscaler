@@ -3,23 +3,25 @@ import os
 from restfly.session import APISession
 
 from pyzscaler import __version__
-
-from .app_segments import AppSegmentsAPI
-from .certificates import BACertificatesAPI
-from .cloud_connector_groups import CloudConnectorGroupsAPI
-from .connector_groups import ConnectorGroupsAPI
-from .idp import IDPControllerAPI
-from .machine_groups import MachineGroupsAPI
-from .policies import PolicySetsAPI
-from .posture_profiles import PostureProfilesAPI
-from .saml_attributes import SAMLAttributesAPI
-from .scim_attributes import SCIMAttributesAPI
-from .scim_groups import SCIMGroupsAPI
-from .segment_groups import SegmentGroupsAPI
-from .server_groups import ServerGroupsAPI
-from .servers import AppServersAPI
-from .session import AuthenticatedSessionAPI
-from .trusted_networks import TrustedNetworksAPI
+from pyzscaler.zpa.app_segments import AppSegmentsAPI
+from pyzscaler.zpa.certificates import CertificatesAPI
+from pyzscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
+from pyzscaler.zpa.connector_groups import ConnectorGroupsAPI
+from pyzscaler.zpa.connectors import ConnectorsAPI
+from pyzscaler.zpa.idp import IDPControllerAPI
+from pyzscaler.zpa.machine_groups import MachineGroupsAPI
+from pyzscaler.zpa.policies import PolicySetsAPI
+from pyzscaler.zpa.posture_profiles import PostureProfilesAPI
+from pyzscaler.zpa.provisioning import ProvisioningAPI
+from pyzscaler.zpa.saml_attributes import SAMLAttributesAPI
+from pyzscaler.zpa.scim_attributes import SCIMAttributesAPI
+from pyzscaler.zpa.scim_groups import SCIMGroupsAPI
+from pyzscaler.zpa.segment_groups import SegmentGroupsAPI
+from pyzscaler.zpa.server_groups import ServerGroupsAPI
+from pyzscaler.zpa.servers import AppServersAPI
+from pyzscaler.zpa.service_edges import ServiceEdgesAPI
+from pyzscaler.zpa.session import AuthenticatedSessionAPI
+from pyzscaler.zpa.trusted_networks import TrustedNetworksAPI
 
 
 class ZPA(APISession):
@@ -46,6 +48,9 @@ class ZPA(APISession):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
+        # The v2 URL supports additional API endpoints
+        self.v2_url = f"https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/{self._customer_id}"
+        self.user_config_url = f"https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}"
         self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
@@ -56,10 +61,6 @@ class ZPA(APISession):
         self._url = f"https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}"
         self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
         return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
-
-    def _deauthenticate(self, **kwargs):
-        """Ends the ZPA API authenticated session."""
-        return self.session.delete()
 
     @property
     def app_segments(self):
@@ -75,7 +76,7 @@ class ZPA(APISession):
         The interface object for the :ref:`ZPA Browser Access Certificates interface <zpa-certificates>`.
 
         """
-        return BACertificatesAPI(self)
+        return CertificatesAPI(self)
 
     @property
     def cloud_connector_groups(self):
@@ -92,6 +93,14 @@ class ZPA(APISession):
 
         """
         return ConnectorGroupsAPI(self)
+
+    @property
+    def connectors(self):
+        """
+        The interface object for the :ref:`ZPA Connectors interface <zpa-connectors>`.
+
+        """
+        return ConnectorsAPI(self)
 
     @property
     def idp(self):
@@ -124,6 +133,14 @@ class ZPA(APISession):
 
         """
         return PostureProfilesAPI(self)
+
+    @property
+    def provisioning(self):
+        """
+        The interface object for the :ref:`ZPA Provisioning interface <zpa-provisioning>`.
+
+        """
+        return ProvisioningAPI(self)
 
     @property
     def saml_attributes(self):
@@ -173,6 +190,14 @@ class ZPA(APISession):
 
         """
         return AppServersAPI(self)
+
+    @property
+    def service_edges(self):
+        """
+        The interface object for the :ref:`ZPA Service Edges interface <zpa-service_edges>`.
+
+        """
+        return ServiceEdgesAPI(self)
 
     @property
     def session(self):

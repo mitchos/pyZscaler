@@ -1,5 +1,6 @@
 import time
 
+from box import Box, BoxList
 from restfly import APIIterator
 
 
@@ -15,6 +16,22 @@ def snake_to_camel(name):
     }
     ret = edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
     return ret
+
+
+# Recursive function to convert all keys and nested keys from snake case
+# to camel case.
+def convert_keys(data):
+    if isinstance(data, (list, BoxList)):
+        return [convert_keys(inner_dict) for inner_dict in data]
+    elif isinstance(data, (dict, Box)):
+        new_dict = {}
+        for k in data.keys():
+            v = data[k]
+            new_key = snake_to_camel(k)
+            new_dict[new_key] = convert_keys(v) if isinstance(v, (dict, list)) else v
+        return new_dict
+    else:
+        return data
 
 
 # Takes a tuple if id_groups, kwargs and the payload dict; reformat for API call
@@ -34,6 +51,23 @@ def obfuscate_api_key(seed):
         key += seed[int(str(r)[j]) + 2]
 
     return {"timestamp": now, "key": key}
+
+
+def pick_version_profile(kwargs, payload):
+    # Used in ZPA endpoints.
+    # This function is used to convert the name of the version profile to
+    # the version profile id. This means our users don't need to look up the
+    # version profile id mapping themselves.
+
+    version_profile = kwargs.pop("version_profile", None)
+    if version_profile:
+        payload["overrideVersionProfile"] = True
+        if version_profile == "default":
+            payload["versionProfileId"] = 0
+        elif version_profile == "previous_default":
+            payload["versionProfileId"] = 1
+        elif version_profile == "new_release":
+            payload["versionProfileId"] = 2
 
 
 class Iterator(APIIterator):
