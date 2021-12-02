@@ -1,13 +1,14 @@
+from box import Box
 from restfly.endpoint import APIEndpoint
 
 
 class CloudSandboxAPI(APIEndpoint):
-    def get_quota(self):
+    def get_quota(self) -> Box:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
 
         Returns:
-            :obj:`dict`: The Cloud Sandbox quota report.
+            :obj:`Box`: The Cloud Sandbox quota report.
 
         Examples:
             >>> pprint(zia.sandbox.get_quota())
@@ -15,7 +16,7 @@ class CloudSandboxAPI(APIEndpoint):
         """
         return self._get("sandbox/report/quota")[0]
 
-    def get_report(self, md5_hash: str, report_details: str = "summary"):
+    def get_report(self, md5_hash: str, report_details: str = "summary") -> Box:
         """
         Returns the Cloud Sandbox Report for the provided hash.
 
@@ -26,7 +27,7 @@ class CloudSandboxAPI(APIEndpoint):
                 The type of report. Accepted values are 'full' or 'summary'. Defaults to 'summary'.
 
         Returns:
-            :obj:`dict`: The cloud sandbox report.
+            :obj:`Box`: The cloud sandbox report.
 
         Examples:
             Get a summary report:

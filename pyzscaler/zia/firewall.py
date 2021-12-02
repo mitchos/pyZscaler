@@ -1,3 +1,4 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
@@ -21,12 +22,12 @@ class FirewallPolicyAPI(APIEndpoint):
         "users",
     ]
 
-    def list_rules(self):
+    def list_rules(self) -> BoxList:
         """
         Returns a list of all firewall filter rules.
 
         Returns:
-            :obj:`list` of :obj:`dict`: The list of firewall filter rules
+            :obj:`BoxList`: The list of firewall filter rules
 
         Examples:
             >>> for rule in zia.firewall.list_rules():
@@ -35,7 +36,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get("firewallFilteringRules")
 
-    def add_rule(self, name: str, action: str, **kwargs):
+    def add_rule(self, name: str, action: str, **kwargs) -> Box:
         """
         Adds a new firewall filter rule.
 
@@ -71,7 +72,7 @@ class FirewallPolicyAPI(APIEndpoint):
             users (list): The IDs for the users that this rule applies to.
 
         Returns:
-            :obj:`dict`: The new firewall filter rule resource record.
+            :obj:`Box`: The new firewall filter rule resource record.
 
         Examples:
             Add a rule to allow all traffic to Google DNS (admin ranking is enabled):
@@ -109,7 +110,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("firewallFilteringRules", json=payload)
 
-    def get_rule(self, rule_id: str):
+    def get_rule(self, rule_id: str) -> Box:
         """
         Returns information for the specified firewall filter rule.
 
@@ -117,7 +118,7 @@ class FirewallPolicyAPI(APIEndpoint):
             rule_id (str): The unique identifier for the firewall filter rule.
 
         Returns:
-            :obj:`dict`: The resource record for the firewall filter rule.
+            :obj:`Box`: The resource record for the firewall filter rule.
 
         Examples:
             >>> pprint(zia.firewall.get_rule('431233'))
@@ -125,7 +126,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"firewallFilteringRules/{rule_id}")
 
-    def update_rule(self, rule_id: str, **kwargs):
+    def update_rule(self, rule_id: str, **kwargs) -> Box:
         """
         Updates an existing firewall filter rule.
 
@@ -160,7 +161,7 @@ class FirewallPolicyAPI(APIEndpoint):
             users (list): The IDs for the users that this rule applies to.
 
         Returns:
-            :obj:`dict`: The updated firewall filter rule resource record.
+            :obj:`Box`: The updated firewall filter rule resource record.
 
         Examples:
             Update the destination IP addresses for a rule:
@@ -191,7 +192,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._put(f"firewallFilteringRules/{rule_id}", json=payload)
 
-    def delete_rule(self, rule_id: str):
+    def delete_rule(self, rule_id: str) -> int:
         """
         Deletes the specified firewall filter rule.
 
@@ -199,7 +200,7 @@ class FirewallPolicyAPI(APIEndpoint):
             rule_id (str): The unique identifier for the firewall filter rule.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.firewall.delete_rule('278454')
@@ -208,7 +209,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._delete(f"firewallFilteringRules/{rule_id}", box=False).status_code
 
-    def list_ip_destination_groups(self, exclude_type: str = None):
+    def list_ip_destination_groups(self, exclude_type: str = None) -> BoxList:
         """
         Returns a list of IP Destination Groups.
 
@@ -217,7 +218,7 @@ class FirewallPolicyAPI(APIEndpoint):
                 Accepted values are: `DSTN_IP`, `DSTN_FQDN`, `DSTN_DOMAIN` and `DSTN_OTHER`.
 
         Returns:
-            :obj:`list` of :obj:`dict`: List of IP Destination Group records.
+            :obj:`BoxList`: List of IP Destination Group records.
 
         Examples:
             >>> for group in zia.firewall.list_ip_destination_groups():
@@ -229,7 +230,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._get("ipDestinationGroups", params=payload)
 
-    def get_ip_destination_group(self, group_id: str):
+    def get_ip_destination_group(self, group_id: str) -> Box:
         """
         Returns information on the specified IP Destination Group.
 
@@ -237,7 +238,7 @@ class FirewallPolicyAPI(APIEndpoint):
             group_id (str): The unique ID of the IP Destination Group.
 
         Returns:
-            :obj:`dict`: The IP Destination Group resource record.
+            :obj:`Box`: The IP Destination Group resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_ip_destination_group('287342'))
@@ -245,7 +246,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"ipDestinationGroups/{group_id}")
 
-    def delete_ip_destination_group(self, group_id: str):
+    def delete_ip_destination_group(self, group_id: str) -> int:
         """
         Deletes the specified IP Destination Group.
 
@@ -253,7 +254,7 @@ class FirewallPolicyAPI(APIEndpoint):
             group_id (str): The unique ID of the IP Destination Group.
 
         Returns:
-            :obj:`str`: The status code of the operation.
+            :obj:`int`: The status code of the operation.
 
         Examples:
             >>> zia.firewall.delete_ip_destination_group('287342')
@@ -261,7 +262,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"ipDestinationGroups/{group_id}", box=False).status_code
 
-    def add_ip_destination_group(self, name: str, **kwargs):
+    def add_ip_destination_group(self, name: str, **kwargs) -> Box:
         """
         Adds a new IP Destination Group.
 
@@ -277,7 +278,7 @@ class FirewallPolicyAPI(APIEndpoint):
             countries (list): Destination IP address counties.
 
         Returns:
-            :obj:`dict`: The newly created IP Destination Group resource record.
+            :obj:`Box`: The newly created IP Destination Group resource record.
 
         Examples:
             Add a Destination IP Group with IP addresses:
@@ -309,7 +310,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("ipDestinationGroups", json=payload)
 
-    def update_ip_destination_group(self, group_id: str, **kwargs):
+    def update_ip_destination_group(self, group_id: str, **kwargs) -> Box:
         """
         Updates the specified IP Destination Group.
 
@@ -325,7 +326,7 @@ class FirewallPolicyAPI(APIEndpoint):
             countries (list): Destination IP address countries.
 
         Returns:
-            :obj:`dict`: The updated IP Destination Group resource record.
+            :obj:`Box`: The updated IP Destination Group resource record.
 
         Examples:
             Update the name of an IP Destination Group:
@@ -350,7 +351,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._put(f"ipDestinationGroups/{group_id}", json=payload)
 
-    def list_ip_source_groups(self, search: str = None):
+    def list_ip_source_groups(self, search: str = None) -> BoxList:
         """
         Returns a list of IP Source Groups.
 
@@ -358,7 +359,7 @@ class FirewallPolicyAPI(APIEndpoint):
             search (str): The search string used to match against a group's name or description attributes.
 
         Returns:
-            :obj:`list` of :obj:`dict`: List of IP Source Group records.
+            :obj:`BoxList`: List of IP Source Group records.
 
         Examples:
             List all IP Source Groups:
@@ -377,7 +378,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._get("ipSourceGroups", params=payload)
 
-    def get_ip_source_group(self, group_id: str):
+    def get_ip_source_group(self, group_id: str) -> Box:
         """
         Returns information for the specified IP Source Group.
 
@@ -385,7 +386,7 @@ class FirewallPolicyAPI(APIEndpoint):
             group_id (str): The unique ID of the IP Source Group.
 
         Returns:
-            :obj:`dict`: The IP Source Group resource record.
+            :obj:`Box`: The IP Source Group resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_ip_source_group('762398')
@@ -393,7 +394,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"ipSourceGroups/{group_id}")
 
-    def delete_ip_source_group(self, group_id: str):
+    def delete_ip_source_group(self, group_id: str) -> int:
         """
         Deletes an IP Source Group.
 
@@ -401,7 +402,7 @@ class FirewallPolicyAPI(APIEndpoint):
             group_id (str): The unique ID of the IP Source Group to be deleted.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.firewall.delete_ip_source_group('762398')
@@ -409,7 +410,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"ipSourceGroups/{group_id}", box=False).status_code
 
-    def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None):
+    def add_ip_source_group(self, name: str, ip_addresses: list, description: str = None) -> Box:
         """
         Adds a new IP Source Group.
 
@@ -419,7 +420,7 @@ class FirewallPolicyAPI(APIEndpoint):
             description (str): Additional information for the IP Source Group.
 
         Returns:
-            :obj:`dict`: The new IP Source Group resource record.
+            :obj:`Box`: The new IP Source Group resource record.
 
         Examples:
             Add a new IP Source Group:
@@ -438,7 +439,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("ipSourceGroups", json=payload)
 
-    def update_ip_source_group(self, group_id: str, **kwargs):
+    def update_ip_source_group(self, group_id: str, **kwargs) -> Box:
         """
         Update an IP Source Group.
 
@@ -454,7 +455,7 @@ class FirewallPolicyAPI(APIEndpoint):
             description (str): Additional information for the IP Source Group.
 
         Returns:
-            :obj:`dict`: The updated IP Source Group resource record.
+            :obj:`Box`: The updated IP Source Group resource record.
 
         Examples:
             Update the name of an IP Source Group:
@@ -479,12 +480,12 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._put(f"ipSourceGroups/{group_id}", json=payload)
 
-    def list_network_app_groups(self, search: str = None):
+    def list_network_app_groups(self, search: str = None) -> BoxList:
         """
         Returns a list of all Network Application Groups.
 
         Returns:
-            :obj:`list` of :obj:`dict`: The list of Network Application Group resource records.
+            :obj:`BoxList`: The list of Network Application Group resource records.
 
         Examples:
             >>> for group in zia.firewall.list_network_app_groups():
@@ -494,7 +495,7 @@ class FirewallPolicyAPI(APIEndpoint):
         payload = {"search": search}
         return self._get("networkApplicationGroups", params=payload)
 
-    def get_network_app_group(self, group_id: str):
+    def get_network_app_group(self, group_id: str) -> Box:
         """
         Returns information for the specified Network Application Group.
 
@@ -503,7 +504,7 @@ class FirewallPolicyAPI(APIEndpoint):
                 The unique ID for the Network Application Group.
 
         Returns:
-            :obj:`dict`: The Network Application Group resource record.
+            :obj:`Box`: The Network Application Group resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_network_app_group('762398'))
@@ -511,7 +512,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"networkApplicationGroups/{group_id}")
 
-    def list_network_apps(self, search: str = None):
+    def list_network_apps(self, search: str = None) -> BoxList:
         """
         Returns a list of all predefined Network Applications.
 
@@ -519,7 +520,7 @@ class FirewallPolicyAPI(APIEndpoint):
             search (str): The search string used to match against a network application's description attribute.
 
         Returns:
-            :obj:`list` of :obj:`dict`: The list of Network Application resource records.
+            :obj:`BoxList`: The list of Network Application resource records.
 
         Examples:
             >>> for app in zia.firewall.list_network_apps():
@@ -529,7 +530,7 @@ class FirewallPolicyAPI(APIEndpoint):
         payload = {"search": search}
         return self._get("networkApplications", params=payload)
 
-    def get_network_app(self, app_id: str):
+    def get_network_app(self, app_id: str) -> Box:
         """
         Returns information for the specified Network Application.
 
@@ -537,7 +538,7 @@ class FirewallPolicyAPI(APIEndpoint):
             app_id (str): The unique ID for the Network Application.
 
         Returns:
-            :obj:`dict`: The Network Application resource record.
+            :obj:`Box`: The Network Application resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_network_app('762398'))
@@ -545,7 +546,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"networkApplications/{app_id}")
 
-    def list_network_svc_groups(self, search: str = None):
+    def list_network_svc_groups(self, search: str = None) -> BoxList:
         """
         Returns a list of Network Service Groups.
 
@@ -553,7 +554,7 @@ class FirewallPolicyAPI(APIEndpoint):
             search (str):  The search string used to match against a group's name or description attributes.
 
         Returns:
-            :obj:`list` of :obj:`dict`: List of Network Service Group resource records.
+            :obj:`BoxList`: List of Network Service Group resource records.
 
         Examples:
             >>> for group in zia.firewall.list_network_svc_groups():
@@ -565,7 +566,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._get("networkServiceGroups", params=payload)
 
-    def get_network_svc_group(self, group_id: str):
+    def get_network_svc_group(self, group_id: str) -> Box:
         """
         Returns information for the specified Network Service Group.
 
@@ -573,7 +574,7 @@ class FirewallPolicyAPI(APIEndpoint):
             group_id (str): The unique ID for the Network Service Group.
 
         Returns:
-            :obj:`dict`: The Network Service Group resource record.
+            :obj:`Box`: The Network Service Group resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_network_svc_group('762398'))
@@ -581,7 +582,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"networkServiceGroups/{group_id}")
 
-    def delete_network_svc_group(self, group_id: str):
+    def delete_network_svc_group(self, group_id: str) -> int:
         """
         Deletes the specified Network Service Group.
 
@@ -589,7 +590,7 @@ class FirewallPolicyAPI(APIEndpoint):
             group_id (str): The unique identifier for the Network Service Group.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
             >>> zia.firewall.delete_network_svc_group('762398')
@@ -597,7 +598,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"networkServiceGroups/{group_id}", box=False).status_code
 
-    def add_network_svc_group(self, name: str, service_ids: list, description: str = None):
+    def add_network_svc_group(self, name: str, service_ids: list, description: str = None) -> Box:
         """
         Adds a new Network Service Group.
 
@@ -607,7 +608,7 @@ class FirewallPolicyAPI(APIEndpoint):
             description (str): Additional information about the Network Service Group.
 
         Returns:
-            :obj:`dict`: The newly created Network Service Group resource record.
+            :obj:`Box`: The newly created Network Service Group resource record.
 
         Examples:
             Add a new Network Service Group:
@@ -625,7 +626,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("networkServiceGroups", json=payload)
 
-    def list_network_services(self, search: str = None, protocol: str = None):
+    def list_network_services(self, search: str = None, protocol: str = None) -> BoxList:
         """
         Returns a list of all Network Services.
 
@@ -637,7 +638,7 @@ class FirewallPolicyAPI(APIEndpoint):
                 `GRE`, `ESP` and `OTHER`.
 
         Returns:
-            :obj:`list` of :obj:`dict`: The list of Network Service resource records.
+            :obj:`BoxList`: The list of Network Service resource records.
 
         Examples:
             >>> for service in zia.firewall.list_network_services():
@@ -647,7 +648,7 @@ class FirewallPolicyAPI(APIEndpoint):
         payload = {"search": search, "protocol": protocol}
         return self._get("networkServices", params=payload)
 
-    def get_network_service(self, service_id: str):
+    def get_network_service(self, service_id: str) -> Box:
         """
         Returns information for the specified Network Service.
 
@@ -655,7 +656,7 @@ class FirewallPolicyAPI(APIEndpoint):
             service_id (str): The unique ID for the Network Service.
 
         Returns:
-            :obj:`dict`: The Network Service resource record.
+            :obj:`Box`: The Network Service resource record.
 
         Examples:
             >>> pprint(zia.firewall.get_network_service('762398'))
@@ -663,7 +664,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._get(f"networkServices/{service_id}")
 
-    def delete_network_service(self, service_id: str):
+    def delete_network_service(self, service_id: str) -> int:
         """
         Deletes the specified Network Service.
 
@@ -671,7 +672,7 @@ class FirewallPolicyAPI(APIEndpoint):
             service_id (str): The unique ID for the Network Service.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.firewall.delete_network_service('762398')
@@ -679,7 +680,7 @@ class FirewallPolicyAPI(APIEndpoint):
         """
         return self._delete(f"networkServices/{service_id}", box=False).status_code
 
-    def add_network_service(self, name: str, ports: list = None, **kwargs):
+    def add_network_service(self, name: str, ports: list = None, **kwargs) -> Box:
         """
         Adds a new Network Service.
 
@@ -703,7 +704,7 @@ class FirewallPolicyAPI(APIEndpoint):
             description (str): Additional information on the Network Service.
 
         Returns:
-            :obj:`dict`: The newly created Network Service resource record.
+            :obj:`Box`: The newly created Network Service resource record.
 
         Examples:
             Add Network Service for Microsoft Exchange:
@@ -742,7 +743,7 @@ class FirewallPolicyAPI(APIEndpoint):
 
         return self._post("networkServices", json=payload)
 
-    def update_network_service(self, service_id: str, ports: list = None, **kwargs):
+    def update_network_service(self, service_id: str, ports: list = None, **kwargs) -> Box:
         """
         Updates the specified Network Service.
 
@@ -768,7 +769,7 @@ class FirewallPolicyAPI(APIEndpoint):
             description (str): Additional information on the Network Service.
 
         Returns:
-            :obj:`dict`: The newly created Network Service resource record.
+            :obj:`Box`: The newly created Network Service resource record.
 
         Examples:
             Update the name and description for a Network Service:

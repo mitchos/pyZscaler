@@ -1,13 +1,14 @@
+from box import BoxList
 from restfly.endpoint import APIEndpoint
 
 
 class SecurityPolicyAPI(APIEndpoint):
-    def get_whitelist(self):
+    def get_whitelist(self) -> BoxList:
         """
         Returns a list of whitelisted URLs.
 
         Returns:
-            :obj:`list`: A list of whitelisted URLs
+            :obj:`BoxList`: A list of whitelisted URLs
 
         Examples:
             >>> for url in zia.security.get_whitelist():
@@ -20,14 +21,14 @@ class SecurityPolicyAPI(APIEndpoint):
         if "whitelist_urls" in self._get("security"):
             return response.whitelist_urls
         else:
-            return []  # Return empty list so other methods in this class don't break
+            return BoxList()  # Return empty list so other methods in this class don't break
 
-    def get_blacklist(self):
+    def get_blacklist(self) -> BoxList:
         """
         Returns a list of blacklisted URLs.
 
         Returns:
-            :obj:`list`: A list of blacklisted URLs
+            :obj:`BoxList`: A list of blacklisted URLs
 
         Examples:
             >>> for url in zia.security.get_blacklist():
@@ -37,12 +38,12 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._get("security/advanced").blacklistUrls
 
-    def erase_whitelist(self):
+    def erase_whitelist(self) -> int:
         """
         Erases all URLs in the whitelist.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.security.erase_whitelist()
@@ -52,7 +53,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._put("security", json=payload).status_code
 
-    def replace_whitelist(self, url_list: list):
+    def replace_whitelist(self, url_list: list) -> BoxList:
         """
         Replaces the existing whitelist with the URLs provided.
 
@@ -61,7 +62,7 @@ class SecurityPolicyAPI(APIEndpoint):
                 The list of URLs for the new whitelist.
 
         Returns:
-            :obj:`list` of :obj:`str`: The complete and updated whitelist.
+            :obj:`BoxList`: The complete and updated whitelist.
 
         Examples:
             >>> zia.security.replace_whitelist(['example.com'])
@@ -72,7 +73,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._put("security", json=payload).whitelist_urls
 
-    def add_urls_to_whitelist(self, url_list: list):
+    def add_urls_to_whitelist(self, url_list: list) -> BoxList:
         """
         Adds the provided URLs to the whitelist.
 
@@ -81,7 +82,7 @@ class SecurityPolicyAPI(APIEndpoint):
                 The list of URLs to be added.
 
         Returns:
-            :obj:`list` of :obj:`str`: The complete and updated whitelist.
+            :obj:`BoxList`: The complete and updated whitelist.
 
         Examples:
             >>> zia.security.add_urls_to_whitelist(['example.com', 'web.example.com'])
@@ -98,7 +99,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._put("security", json=payload).whitelist_urls
 
-    def delete_urls_from_whitelist(self, url_list: list):
+    def delete_urls_from_whitelist(self, url_list: list) -> BoxList:
         """
         Deletes the provided URLs from the whitelist.
 
@@ -107,7 +108,7 @@ class SecurityPolicyAPI(APIEndpoint):
                 The list of URLs to be deleted.
 
         Returns:
-            :obj:`list` of :obj:`str`: The complete and updated whitelist.
+            :obj:`BoxList`: The complete and updated whitelist.
 
         Examples:
             >>> zia.security.delete_urls_from_whitelist(['example.com', 'web.example.com'])
@@ -123,7 +124,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._put("security", json=payload).whitelist_urls
 
-    def add_urls_to_blacklist(self, url_list: list):
+    def add_urls_to_blacklist(self, url_list: list) -> BoxList:
         """
         Adds the provided URLs to the blacklist.
 
@@ -132,7 +133,7 @@ class SecurityPolicyAPI(APIEndpoint):
                 The list of URLs to be added.
 
         Returns:
-            :obj:`list` of :obj:`str`: The complete and updated blacklist.
+            :obj:`BoxList`: The complete and updated blacklist.
 
         Examples:
             >>> zia.security.add_urls_to_blacklist(['example.com', 'web.example.com'])
@@ -143,7 +144,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._post("security/advanced/blacklistUrls?action=ADD_TO_LIST", json=payload).blacklist_urls
 
-    def replace_blacklist(self, url_list: list):
+    def replace_blacklist(self, url_list: list) -> BoxList:
         """
         Replaces the existing blacklist with the URLs provided.
 
@@ -152,7 +153,7 @@ class SecurityPolicyAPI(APIEndpoint):
                 The list of URLs for the new blacklist.
 
         Returns:
-            :obj:`list` of :obj:`str`: The complete and updated blacklist.
+            :obj:`BoxList`: The complete and updated blacklist.
 
         Examples:
             >>> zia.security.replace_blacklist(['example.com'])
@@ -163,12 +164,12 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._put("security/advanced", json=payload).blacklist_urls
 
-    def erase_blacklist(self):
+    def erase_blacklist(self) -> int:
         """
         Erases all URLs in the blacklist.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.security.erase_blacklist()
@@ -179,7 +180,7 @@ class SecurityPolicyAPI(APIEndpoint):
 
         return self._put("security/advanced", json=payload, box=False).status_code
 
-    def delete_urls_from_blacklist(self, url_list: list):
+    def delete_urls_from_blacklist(self, url_list: list) -> int:
         """
         Deletes the provided URLs from the blacklist.
 
@@ -188,7 +189,7 @@ class SecurityPolicyAPI(APIEndpoint):
                 The list of URLs to be deleted.
 
         Returns:
-            :obj:`list` of :obj:`str`: The complete and updated blacklist.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.security.delete_urls_from_blacklist(['example.com', 'web.example.com'])

@@ -1,8 +1,9 @@
+from box import Box
 from restfly.endpoint import APIEndpoint
 
 
 class SSLInspectionAPI(APIEndpoint):
-    def get_csr(self):
+    def get_csr(self) -> str:
         """
         Downloads a CSR after it has been generated.
 
@@ -17,12 +18,12 @@ class SSLInspectionAPI(APIEndpoint):
         """
         return self._get("sslSettings/downloadcsr").text
 
-    def get_intermediate_ca(self):
+    def get_intermediate_ca(self) -> Box:
         """
         Returns information on the signed Intermediate Root CA certificate.
 
         Returns:
-            :obj:`dict`: The Intermediate Root CA resource record.
+            :obj:`Box`: The Intermediate Root CA resource record.
 
         Examples:
             >>> pprint(zia.ssl.get_intermediate_ca())
@@ -40,7 +41,7 @@ class SSLInspectionAPI(APIEndpoint):
         state: str,
         country: str,
         signature: str,
-    ):
+    ) -> int:
         """
         Generates a Certificate Signing Request.
 
@@ -60,7 +61,7 @@ class SSLInspectionAPI(APIEndpoint):
             signature  (str): Certificate signature algorithm. Accepted values are `SHA_1` and `SHA_256`.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
             >>> zia.ssl.generate_csr(cert_name='Example.com Intermediate CA 2',
@@ -86,7 +87,7 @@ class SSLInspectionAPI(APIEndpoint):
 
         return self._post("sslSettings/generatecsr", json=payload, box=False).status_code
 
-    def upload_int_ca_cert(self, cert):
+    def upload_int_ca_cert(self, cert) -> int:
         """
         Uploads a signed Intermediate Root CA certificate.
 
@@ -97,7 +98,7 @@ class SSLInspectionAPI(APIEndpoint):
                 ('filename.pem', int_ca_pem)
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             Upload an Intermediate Root CA certificate from a file:
@@ -110,7 +111,7 @@ class SSLInspectionAPI(APIEndpoint):
 
         return self._post("sslSettings/uploadcert/text", files=payload, box=False).status_code
 
-    def upload_int_ca_chain(self, cert: tuple):
+    def upload_int_ca_chain(self, cert: tuple) -> int:
         """
         Uploads the Intermediate Root CA certificate chain.
 
@@ -123,7 +124,7 @@ class SSLInspectionAPI(APIEndpoint):
 
 
         Returns:
-            :obj:`str`: The status code for the operation
+            :obj:`int`: The status code for the operation
 
         Examples:
             Upload an Intermediate Root CA chain from a file:
@@ -136,12 +137,12 @@ class SSLInspectionAPI(APIEndpoint):
 
         return self._post("sslSettings/uploadcertchain/text", files=payload, box=False).status_code
 
-    def delete_int_chain(self):
+    def delete_int_chain(self) -> int:
         """
         Deletes the Intermediate Root CA certificate chain.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         """
         return self._delete("sslSettings/certchain", box=False).status_code
