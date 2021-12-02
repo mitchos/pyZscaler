@@ -13,6 +13,10 @@ pyZscaler is an SDK that provides a uniform and easy-to-use interface for each o
 
 This SDK is not affiliated with, nor supported by Zscaler in any way.
 
+## Quick links
+* [pyZscaler API Documentation](https://pyzscaler.readthedocs.io)
+* [pyZscaler User Documentation and Examples (WIP)](https://pyzscaler.packet.tech)
+
 ## Overview
 Each Zscaler product has separate developer documentation and authentication methods. This SDK simplifies
 software development using the Zscaler API.
@@ -49,7 +53,7 @@ you're ready to go.
 ### Quick ZIA Example
 
 ```python
-from pyzscaler.zia import ZIA
+from pyzscaler import ZIA
 from pprint import pprint
 
 zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
@@ -60,13 +64,26 @@ for user in zia.users.list_users():
 ### Quick ZPA Example
 
 ```python
-from pyzscaler.zpa import ZPA
+from pyzscaler import ZPA
 from pprint import pprint
 
 zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
-for app_segment in zpa.app_segments.list():
+for app_segment in zpa.app_segments.list_segments():
     pprint(app_segment)
 ```
+
+## Documentation
+### API Documentation
+pyZscaler's API is fully 100% documented and is hosted at [ReadTheDocs](https://pyzscaler.readthedocs.io). 
+
+This documentation should be used when working with pyZscaler rather than referring to Zscaler's API reference. 
+pyZscaler makes some quality of life improvements to simplify and clarify arguments passed to Zscaler's API.
+
+### User Documentation
+A start has been made on [user documentation](https://pyzscaler.packet.tech) with examples and explanations on how to implement with pyZcaler.
+
+## Is It Tested?
+Yes! pyZscaler has a complete test suite that fully covers all methods within the ZIA and ZPA modules.
 
 ## Contributing
 
