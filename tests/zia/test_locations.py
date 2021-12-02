@@ -239,7 +239,7 @@ def test_add_location(zia, locations):
 
     resp = zia.locations.add_location(name="Test", ip_addresses=["203.0.113.1"])
 
-    assert isinstance(resp, dict)
+    assert isinstance(resp, Box)
     assert resp.id == 1
     assert resp.ip_addresses[0] == "203.0.113.1"
 
