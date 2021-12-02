@@ -1,10 +1,11 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 from pyzscaler.utils import snake_to_camel
 
 
 class DLPAPI(APIEndpoint):
-    def add_dict(self, name, match_type, **kwargs):
+    def add_dict(self, name, match_type, **kwargs) -> Box:
         """
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
@@ -34,7 +35,7 @@ class DLPAPI(APIEndpoint):
                     ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
 
         Returns:
-            :obj:`dict`: The newly created DLP Dictionary resource record.
+            :obj:`Box`: The newly created DLP Dictionary resource record.
 
         Examples:
             Match text found that contains an IPv4 address using patterns:
@@ -110,7 +111,7 @@ class DLPAPI(APIEndpoint):
 
         return self._post("dlpDictionaries", json=payload)
 
-    def update_dict(self, dict_id, **kwargs):
+    def update_dict(self, dict_id, **kwargs) -> Box:
         """
         Updates the specified DLP Dictionary.
 
@@ -141,7 +142,7 @@ class DLPAPI(APIEndpoint):
                     ('unique', '[A-Z]{6}[A-Z0-9]{2,5}')
 
         Returns:
-            :obj:`dict`: The updated DLP Dictionary resource record.
+            :obj:`Box`: The updated DLP Dictionary resource record.
 
         Examples:
             Update the name of a DLP Dictionary:
@@ -200,7 +201,7 @@ class DLPAPI(APIEndpoint):
 
         return self._put(f"dlpDictionaries/{dict_id}", json=payload)
 
-    def list_dicts(self, query: str = None):
+    def list_dicts(self, query: str = None) -> BoxList:
         """
         Returns a list of all custom and predefined ZIA DLP Dictionaries.
 
@@ -208,7 +209,7 @@ class DLPAPI(APIEndpoint):
             query (str): A search string used to match against a DLP dictionary's name or description attributes.
 
         Returns:
-            :obj:`list`: A list containing ZIA DLP Dictionaries.
+            :obj:`BoxList`: A list containing ZIA DLP Dictionaries.
 
         Examples:
             Print all dictionaries
@@ -224,7 +225,7 @@ class DLPAPI(APIEndpoint):
         payload = {"search": query}
         return self._get("dlpDictionaries", params=payload)
 
-    def get_dict(self, dict_id: str):
+    def get_dict(self, dict_id: str) -> Box:
         """
         Returns the DLP Dictionary that matches the specified DLP Dictionary id.
 
@@ -232,7 +233,7 @@ class DLPAPI(APIEndpoint):
             dict_id (str): The unique id for the DLP Dictionary.
 
         Returns:
-            :obj:`dict`: The ZIA DLP Dictionary resource record.
+            :obj:`Box`: The ZIA DLP Dictionary resource record.
 
         Examples:
             >>> pprint(zia.dlp.get_dict('3'))
@@ -241,7 +242,7 @@ class DLPAPI(APIEndpoint):
 
         return self._get(f"dlpDictionaries/{dict_id}")
 
-    def delete_dict(self, dict_id: str):
+    def delete_dict(self, dict_id: str) -> int:
         """
         Deletes the DLP Dictionary that matches the specified DLP Dictionary id.
 
@@ -249,7 +250,7 @@ class DLPAPI(APIEndpoint):
             dict_id (str): The unique id for the DLP Dictionary.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.dlp.delete_dict('8')
@@ -257,7 +258,7 @@ class DLPAPI(APIEndpoint):
         """
         return self._delete(f"dlpDictionaries/{dict_id}", box=False).status_code
 
-    def validate_dict(self, pattern):
+    def validate_dict(self, pattern) -> Box:
         """
         Validates the provided pattern for usage in a DLP Dictionary.
 
@@ -269,9 +270,9 @@ class DLPAPI(APIEndpoint):
             pattern (str): DLP Pattern for evaluation.
 
         Returns:
-            :obj:`dict`: Information on the provided pattern.
+            :obj:`Box`: Information on the provided pattern.
 
         """
         payload = {"data": pattern}
 
-        return self._post("dlpDictionaries/validateDlpPattern", data=payload)
+        return self._post("dlpDictionaries/validateDlpPattern", json=payload)

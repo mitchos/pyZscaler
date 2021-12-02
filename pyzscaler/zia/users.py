@@ -1,6 +1,7 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import Iterator
+from pyzscaler.utils import Iterator, convert_keys, snake_to_camel
 
 
 class UserManagementAPI(APIEndpoint):
@@ -9,7 +10,7 @@ class UserManagementAPI(APIEndpoint):
 
     """
 
-    def list_departments(self, **kwargs):
+    def list_departments(self, **kwargs) -> BoxList:
         """
         Returns the list of departments.
 
@@ -26,7 +27,7 @@ class UserManagementAPI(APIEndpoint):
                 The search string used to match against a department's name or comments attributes.
 
         Returns:
-            :obj:`list`: The list of departments configured in ZIA.
+            :obj:`BoxList`: The list of departments configured in ZIA.
 
         Examples:
             List departments using default settings:
@@ -44,9 +45,9 @@ class UserManagementAPI(APIEndpoint):
             >>> for department in zia.users.list_departments(page_size=200, max_pages=2):
             ...    print(department)
         """
-        return list(Iterator(self._api, "departments", **kwargs))
+        return BoxList(Iterator(self._api, "departments", **kwargs))
 
-    def get_department(self, department_id: str):
+    def get_department(self, department_id: str) -> Box:
         """
         Returns the department details for a given department.
 
@@ -54,15 +55,15 @@ class UserManagementAPI(APIEndpoint):
             department_id (str): The unique identifier for the department.
 
         Returns:
-            :obj:`dict`: The department resource record.
+            :obj:`Box`: The department resource record.
 
         Examples:
-            >>> department = zia.users.get_department('45543434')
+            >>> department = zia.users.get_department('99999')
 
         """
         return self._get(f"departments/{department_id}")
 
-    def list_groups(self, **kwargs):
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns the list of user groups.
 
@@ -77,7 +78,7 @@ class UserManagementAPI(APIEndpoint):
                 The search string used to match against a group's name or comments attributes.
 
         Returns:
-            :obj:`list`: The list of user groups configured in ZIA.
+            :obj:`BoxList`: The list of user groups configured in ZIA.
 
         Examples:
             List groups using default settings:
@@ -96,9 +97,9 @@ class UserManagementAPI(APIEndpoint):
             ...    print(group)
 
         """
-        return list(Iterator(self._api, "groups", **kwargs))
+        return BoxList(Iterator(self._api, "groups", **kwargs))
 
-    def get_group(self, group_id: str):
+    def get_group(self, group_id: str) -> Box:
         """
         Returns the user group details for a given user group.
 
@@ -106,15 +107,15 @@ class UserManagementAPI(APIEndpoint):
             group_id (str): The unique identifier for the user group.
 
         Returns:
-            :obj:`dict`: The user group resource record.
+            :obj:`Box`: The user group resource record.
 
         Examples:
-            >>> user_group = zia.users.get_group('4987453')
+            >>> user_group = zia.users.get_group('99999')
 
         """
         return self._get(f"groups/{group_id}")
 
-    def list_users(self, **kwargs):
+    def list_users(self, **kwargs) -> BoxList:
         """
         Returns the list of users.
 
@@ -133,7 +134,7 @@ class UserManagementAPI(APIEndpoint):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
-            :obj:`list`: The list of users configured in ZIA.
+            :obj:`BoxList`: The list of users configured in ZIA.
 
         Examples:
             List users using default settings:
@@ -152,9 +153,9 @@ class UserManagementAPI(APIEndpoint):
             ...    print(user)
 
         """
-        return list(Iterator(self._api, "users", **kwargs))
+        return BoxList(Iterator(self._api, "users", **kwargs))
 
-    def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs):
+    def add_user(self, name: str, email: str, groups: list, department: dict, **kwargs) -> Box:
         """
         Creates a new ZIA user.
 
@@ -186,7 +187,7 @@ class UserManagementAPI(APIEndpoint):
                 AUDITOR, GUEST, REPORT_USER and UNAUTH_TRAFFIC_DEFAULT.
 
         Returns:
-            :obj:`dict`: The resource record for the new user.
+            :obj:`Box`: The resource record for the new user.
 
         Examples:
             Add a user with the minimum required params:
@@ -212,7 +213,7 @@ class UserManagementAPI(APIEndpoint):
 
         return self._post("users", json=payload)
 
-    def bulk_delete_users(self, user_ids: list):
+    def bulk_delete_users(self, user_ids: list) -> Box:
         """
         Bulk delete ZIA users.
 
@@ -220,10 +221,10 @@ class UserManagementAPI(APIEndpoint):
             user_ids (list): List containing id int of each user that will be deleted.
 
         Returns:
-            :obj:`dict`: Object containing list of users that were deleted
+            :obj:`Box`: Object containing list of users that were deleted.
 
         Examples:
-            >>> bulk_delete_users = zia.users.bulk_delete_users(['49272455', '49272456', '49272457'])
+            >>> bulk_delete_users = zia.users.bulk_delete_users(['99999', '88888', '77777'])
 
         """
 
@@ -231,7 +232,7 @@ class UserManagementAPI(APIEndpoint):
 
         return self._post("users/bulkDelete", json=payload)
 
-    def get_user(self, user_id: str = None, email: str = None):
+    def get_user(self, user_id: str = None, email: str = None) -> Box:
         """
         Returns the user information for the specified ID or email.
 
@@ -240,10 +241,10 @@ class UserManagementAPI(APIEndpoint):
             email (optional, str): The unique email for the requested user.
 
         Returns:
-            :obj:`dict`: The resource record for the requested user.
+            :obj:`Box`: The resource record for the requested user.
 
         Examples
-            >>> user = zia.users.get_user('8312')
+            >>> user = zia.users.get_user('99999')
 
             >>> user = zia.users.get_user(email='jane.doe@example.com')
 
@@ -266,84 +267,65 @@ class UserManagementAPI(APIEndpoint):
         department: dict = None,
         groups: list = None,
         **kwargs,
-    ):
+    ) -> Box:
         """
         Updates the details for the specified user.
 
         Args:
             user_id (str):
                 The unique identifier for the user.
-            name (str, optional):
-                The updated name. Defaults to existing name if not specified.
-            email (str, optional):
-                The updated email. Defaults to existing email if not specified.
-            department (dict, optional):
-                The updated department object. Defaults to existing department if not specified.
-            groups (:obj:`list` of :obj:`dict`, optional):
-                The updated list of groups. Defaults to existing groups if not specified.
             **kwargs:
                 Optional parameters
 
         Keyword Args:
+            **adminUser (bool):
+                True if this user is an Admin user.
             **comments (str):
                 Additional information about this user.
+            **department (dict, optional):
+                The updated department object. Defaults to existing department if not specified.
+            **email (str, optional):
+                The updated email. Defaults to existing email if not specified.
+            **groups (:obj:`list` of :obj:`dict`, optional):
+                The updated list of groups. Defaults to existing groups if not specified.
+            **name (str, optional):
+                The updated name. Defaults to existing name if not specified.
+            **password (str):
+                User's password. Applicable only when authentication type is Hosted DB. Password strength must follow
+                what is defined in the auth settings.
             **tempAuthEmail (str):
                 Temporary Authentication Email. If you enabled one-time tokens or links, enter the email address to
                 which the Zscaler service sends the tokens or links. If this is empty, the service will send the
                 email to the User email.
-            **adminUser (bool):
-                True if this user is an Admin user.
-            **password (str):
-                User's password. Applicable only when authentication type is Hosted DB. Password strength must follow
-                what is defined in the auth settings.
             **type (str):
                 User type. Provided only if this user is not an end user. Accepted values are SUPERADMIN, ADMIN,
                 AUDITOR, GUEST, REPORT_USER and UNAUTH_TRAFFIC_DEFAULT.
 
         Returns:
-            :obj:`dict`: The resource record of the updated user.
+            :obj:`Box`: The resource record of the updated user.
 
         Examples:
             Update the user name:
 
-            >>> zia.users.update_user('49272455',
+            >>> zia.users.update_user('99999',
             ...      name='Joe Bloggs')
 
             Update the email and add a comment:
 
-            >>> zia.users.update_user('47272455',
+            >>> zia.users.update_user('99999',
             ...      name='Joe Bloggs',
             ...      comment='External auditor.')
 
         """
-
-        # Cache the user record to avoid multiple API calls
-        user_record = self.get_user(user_id)
-
-        # Assign existing values to params if we're not changing them
-        if not name:
-            name = user_record.name
-        if not email:
-            email = user_record.email
-        if not department:
-            department = user_record.department
-        if not groups:
-            groups = user_record.groups
-
-        payload = {
-            "name": name,
-            "email": email,
-            "department": department,
-            "groups": groups,
-        }
+        payload = convert_keys(self.get_user(user_id))
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
-            payload[key] = value
+            payload[snake_to_camel(key)] = value
 
         return self._put(f"users/{user_id}", json=payload)
 
-    def delete_user(self, user_id: str):
+    def delete_user(self, user_id: str) -> int:
         """
         Deletes the specified user ID.
 
@@ -351,10 +333,10 @@ class UserManagementAPI(APIEndpoint):
             user_id (str): The unique identifier of the user that will be deleted.
 
         Returns:
-            :obj:`dict`: The response code for the request.
+            :obj:`int`: The response code for the request.
 
         Examples
-            >>> user = zia.users.delete_user('49272455')
+            >>> user = zia.users.delete_user('99999')
 
         """
         return self._delete(f"users/{user_id}", box=False).status_code
