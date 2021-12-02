@@ -1,6 +1,6 @@
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel
+from pyzscaler.utils import convert_keys, snake_to_camel
 
 
 class URLCategoriesAPI(APIEndpoint):
@@ -97,6 +97,8 @@ class URLCategoriesAPI(APIEndpoint):
                 URLs entered will be covered by policies that reference the parent category, in addition to this one.
             description (str):
                 Description of the category.
+            custom_category (bool):
+                Set to true for custom URL category. Up to 48 custom URL categories can be added per organisation.
 
         Returns:
             :obj:`dict`: The newly configured custom URL category resource record.
@@ -201,13 +203,7 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        # Cache existing record for defaulting mandatory fields that may not require updating.
-        category_record = self.get_category(category_id)
-
-        payload = {
-            # configuredName required
-            "configuredName": kwargs.pop("name", category_record.configured_name)
-        }
+        payload = convert_keys(self.get_category(category_id))
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -234,13 +230,8 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        # Cache existing record for defaulting mandatory fields that may not require updating.
-        category_record = self.get_category(category_id)
-
-        payload = {
-            "configuredName": category_record.configured_name,  # configuredName required.
-            "urls": urls,
-        }
+        payload = convert_keys(self.get_category(category_id))
+        payload["urls"] = urls
 
         return self._put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
 
@@ -263,13 +254,8 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        # Cache existing record for defaulting mandatory fields that may not require updating.
-        category_record = self.get_category(category_id)
-
-        payload = {
-            "configuredName": category_record.configured_name,  # configuredName required.
-            "urls": urls,
-        }
+        payload = convert_keys(self.get_category(category_id))
+        payload["urls"] = urls
 
         return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
 
