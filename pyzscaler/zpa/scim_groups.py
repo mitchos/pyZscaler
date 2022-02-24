@@ -5,9 +5,13 @@ from pyzscaler.utils import Iterator
 
 
 class SCIMGroupsAPI(APIEndpoint):
-    def list_groups(self, **kwargs) -> BoxList:
+    def list_groups(self, idp_id: str, **kwargs) -> BoxList:
         """
-        Returns a list of all configured SCIM groups.
+        Returns a list of all configured SCIM groups for the specified IdP.
+
+        Args:
+            idp_id (str):
+                The unique id of the IdP.
 
         Keyword Args:
             **end_time (str):
@@ -36,19 +40,25 @@ class SCIMGroupsAPI(APIEndpoint):
             :obj:`list`: A list of all configured SCIM groups.
 
         Examples:
-            >>> for scim_group in zpa.scim_groups.list_groups():
+            >>> for scim_group in zpa.scim_groups.list_groups("999999"):
             ...    pprint(scim_group)
 
         """
-        return BoxList(Iterator(self._api, "scimgroup", **kwargs))
+        return BoxList(Iterator(self._api, f"scimgroup/idpId/{idp_id}", **kwargs))
 
-    def get_group(self, idp_id: str) -> Box:
+    def get_group(self, group_id: str, **kwargs) -> Box:
         """
         Returns information on the specified SCIM group.
 
         Args:
-            idp_id (str):
-                The unique identifier for the Idp corresponding to the SCIM group.
+            group_id (str):
+                The unique identifier for the SCIM group.
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            all_entries (bool):
+                Return all SCIM groups including the deleted ones if ``True``. Defaults to ``False``.
 
         Returns:
             :obj:`dict`: The resource record for the SCIM group.
@@ -58,4 +68,4 @@ class SCIMGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f"scimgroup/idpId/{idp_id}")
+        return self._get(f"scimgroup/{group_id}")

@@ -17,17 +17,17 @@ def fixture_scim_groups():
 def test_list_scim_groups(zpa, scim_groups):
     responses.add(
         responses.GET,
-        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimgroup?page=1",
+        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimgroup/idpId/1",
         json=scim_groups,
         status=200,
     )
     responses.add(
         responses.GET,
-        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimgroup?page=2",
+        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimgroup/idpId/1",
         json=[],
         status=200,
     )
-    resp = zpa.scim_groups.list_groups()
+    resp = zpa.scim_groups.list_groups("1")
     assert isinstance(resp, BoxList)
     assert len(resp) == 2
     assert resp[0].id == "1"
@@ -37,7 +37,7 @@ def test_list_scim_groups(zpa, scim_groups):
 def test_get_scim_group(zpa, scim_groups):
     responses.add(
         responses.GET,
-        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimgroup/idpId/1",
+        url="https://config.private.zscaler.com/userconfig/v1/customers/1/scimgroup/1",
         json=scim_groups["list"][0],
         status=200,
     )
