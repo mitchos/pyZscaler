@@ -1,10 +1,14 @@
 from box import Box, BoxList
-from restfly.endpoint import APIEndpoint
+from restfly.endpoint import APIEndpoint, APISession
 
 from pyzscaler.utils import Iterator
 
 
 class SCIMGroupsAPI(APIEndpoint):
+    def __init__(self, api: APISession):
+        super().__init__(api)
+        self.user_config_url = api.user_config_url
+
     def list_groups(self, idp_id: str, **kwargs) -> BoxList:
         """
         Returns a list of all configured SCIM groups for the specified IdP.
@@ -44,7 +48,7 @@ class SCIMGroupsAPI(APIEndpoint):
             ...    pprint(scim_group)
 
         """
-        return BoxList(Iterator(self._api, f"scimgroup/idpId/{idp_id}", **kwargs))
+        return BoxList(Iterator(self._api, f"{self.user_config_url}/scimgroup/idpId/{idp_id}", **kwargs))
 
     def get_group(self, group_id: str, **kwargs) -> Box:
         """
@@ -68,4 +72,4 @@ class SCIMGroupsAPI(APIEndpoint):
 
         """
 
-        return self._get(f"scimgroup/{group_id}")
+        return self._get(f"{self.user_config_url}/scimgroup/{group_id}")
