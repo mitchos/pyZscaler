@@ -164,7 +164,6 @@ class ZPA(APISession):
         The interface object for the :ref:`ZPA SCIM Groups interface <zpa-scim_groups>`.
 
         """
-        self._url = f"https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}"
         return SCIMGroupsAPI(self)
 
     @property
