@@ -1,5 +1,6 @@
 import os
 
+from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
@@ -53,7 +54,7 @@ class ZIA(APISession):
         self.conv_box = True
         super(ZIA, self).__init__(**kw)
 
-    def _build_session(self, **kwargs) -> None:
+    def _build_session(self, **kwargs) -> Box:
         """Creates a ZIA API session."""
         super(ZIA, self)._build_session(**kwargs)
         return self.session.create(
@@ -74,7 +75,7 @@ class ZIA(APISession):
     @property
     def admin_and_role_management(self):
         """
-        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+        The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
 
         """
         return AdminAndRoleManagementAPI(self)

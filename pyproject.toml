@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyzscaler"
-version = "1.0.1"
+version = "1.0.2"
 description = "A python SDK for the Zscaler API."
 authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
@@ -16,8 +16,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Security",
     "Topic :: Software Development :: Libraries :: Python Modules", ]
 include = [
@@ -28,20 +30,20 @@ include = [
 "Bug Tracker" = "https://github.com/mitchos/pyZscaler/issues"
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
-restfly = "1.4.4"
+python = "^3.7"
+restfly = "1.4.5"
 python-box = "5.4.1"
 
 [tool.poetry.dev-dependencies]
-python = "^3.6.1"
-restfly = "1.4.4"
+python = "^3.7"
+restfly = "1.4.5"
 python-box = "5.4.1"
-Sphinx = "4.3.1"
-furo = "2021.11.23"
-pytest = "6.2.5"
-requests = "2.26.0"
-pre-commit = "2.16.0"
-responses = "0.16.0"
+Sphinx = "4.4.0"
+furo = "2022.2.23"
+pytest = "7.0.1"
+requests = "2.27.1"
+pre-commit = "2.17.0"
+responses = "0.18.0"
 toml = "0.10.2"
 
 [build-system]
