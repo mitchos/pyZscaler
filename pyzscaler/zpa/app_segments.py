@@ -64,8 +64,8 @@ class AppSegmentsAPI(APIEndpoint):
         domain_names: list,
         segment_group_id: str,
         server_group_ids: list,
-        tcp_ports: str = None,
-        udp_ports: str = None,
+        tcp_ports: list = None,
+        udp_ports: list = None,
         **kwargs,
     ) -> Box:
         """
