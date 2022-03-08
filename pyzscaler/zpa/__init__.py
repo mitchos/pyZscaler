@@ -9,6 +9,7 @@ from pyzscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from pyzscaler.zpa.connector_groups import ConnectorGroupsAPI
 from pyzscaler.zpa.connectors import ConnectorsAPI
 from pyzscaler.zpa.idp import IDPControllerAPI
+from pyzscaler.zpa.lss import LSSConfigControllerAPI
 from pyzscaler.zpa.machine_groups import MachineGroupsAPI
 from pyzscaler.zpa.policies import PolicySetsAPI
 from pyzscaler.zpa.posture_profiles import PostureProfilesAPI
@@ -109,6 +110,14 @@ class ZPA(APISession):
 
         """
         return IDPControllerAPI(self)
+
+    @property
+    def lss(self):
+        """
+        The interface object for the :ref:`ZIA Log Streaming Service Config interface <zpa-lss>`.
+
+        """
+        return LSSConfigControllerAPI(self)
 
     @property
     def machine_groups(self):
