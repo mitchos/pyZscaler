@@ -87,7 +87,7 @@ class SSLInspectionAPI(APIEndpoint):
 
         return self._post("sslSettings/generatecsr", json=payload, box=False).status_code
 
-    def upload_int_ca_cert(self, cert) -> int:
+    def upload_int_ca_cert(self, cert: tuple) -> int:
         """
         Uploads a signed Intermediate Root CA certificate.
 
