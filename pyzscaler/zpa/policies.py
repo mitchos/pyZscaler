@@ -13,7 +13,7 @@ class PolicySetsAPI(APIEndpoint):
     }
 
     @staticmethod
-    def _create_conditions(conditions):
+    def _create_conditions(conditions: list):
         """
         Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
 

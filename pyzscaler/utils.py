@@ -4,7 +4,7 @@ from box import Box, BoxList
 from restfly import APIIterator
 
 
-def snake_to_camel(name):
+def snake_to_camel(name: str):
     """Converts Python Snake Case to Zscaler's lower camelCase."""
     # Edge-cases where camelCase is breaking
     edge_cases = {
@@ -34,7 +34,7 @@ def convert_keys(data):
         return data
 
 
-def keys_exists(element, *keys):
+def keys_exists(element: dict, *keys):
     """
     Check if *keys (nested) exists in `element` (dict).
     """
@@ -53,14 +53,14 @@ def keys_exists(element, *keys):
 
 
 # Takes a tuple if id_groups, kwargs and the payload dict; reformat for API call
-def add_id_groups(id_groups, kwargs, payload):
+def add_id_groups(id_groups: tuple, kwargs: dict, payload: dict):
     for entry in id_groups:
         if kwargs.get(entry[0]):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
     return
 
 
-def obfuscate_api_key(seed):
+def obfuscate_api_key(seed: list):
     now = int(time.time() * 1000)
     n = str(now)[-6:]
     r = str(int(n) >> 1).zfill(6)
@@ -71,7 +71,7 @@ def obfuscate_api_key(seed):
     return {"timestamp": now, "key": key}
 
 
-def pick_version_profile(kwargs, payload):
+def pick_version_profile(kwargs: list, payload: list):
     # Used in ZPA endpoints.
     # This function is used to convert the name of the version profile to
     # the version profile id. This means our users don't need to look up the

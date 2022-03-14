@@ -2,7 +2,7 @@ from restfly.endpoint import APIEndpoint
 
 
 class AuthenticatedSessionAPI(APIEndpoint):
-    def create_token(self, client_id, client_secret):
+    def create_token(self, client_id: str, client_secret: str):
         """
         Creates a ZPA authentication token.
 

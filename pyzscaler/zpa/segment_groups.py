@@ -54,7 +54,7 @@ class SegmentGroupsAPI(APIEndpoint):
         """
         return self._delete(f"segmentGroup/{group_id}").status_code
 
-    def add_group(self, name: str, enabled=False, **kwargs) -> Box:
+    def add_group(self, name: str, enabled: bool = False, **kwargs) -> Box:
         """
         Adds a new segment group.
 
