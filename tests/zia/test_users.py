@@ -1,3 +1,5 @@
+import copy
+
 import pytest
 import responses
 from box import Box
@@ -127,7 +129,7 @@ def test_users_get_user_error(zia):
 
 @responses.activate
 def test_users_update_user(zia, users):
-    updated_user = users[0]
+    updated_user = copy.deepcopy(users[0])
     updated_user["name"] = "Test User C"
     updated_user["comments"] = "Updated Test"
 

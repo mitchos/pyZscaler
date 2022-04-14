@@ -262,10 +262,6 @@ class UserManagementAPI(APIEndpoint):
     def update_user(
         self,
         user_id: str,
-        name: str = None,
-        email: str = None,
-        department: dict = None,
-        groups: list = None,
         **kwargs,
     ) -> Box:
         """
