@@ -10,6 +10,7 @@ from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
+from .labels import RuleLabelsAPI
 from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
@@ -112,6 +113,14 @@ class ZIA(APISession):
 
         """
         return FirewallPolicyAPI(self)
+
+    @property
+    def labels(self):
+        """
+        The interface object for the :ref:`ZIA Rule Labels interface <zia-labels>`.
+
+        """
+        return RuleLabelsAPI(self)
 
     @property
     def locations(self):
