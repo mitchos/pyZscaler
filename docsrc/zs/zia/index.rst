@@ -11,6 +11,7 @@ This package covers the ZIA interface.
     dlp
     firewall
     locations
+    rule_labels
     sandbox
     security
     session
