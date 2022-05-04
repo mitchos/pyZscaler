@@ -18,6 +18,12 @@ def snake_to_camel(name: str):
     return ret
 
 
+def chunker(lst, n):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i : i + n]
+
+
 # Recursive function to convert all keys and nested keys from snake case
 # to camel case.
 def convert_keys(data):

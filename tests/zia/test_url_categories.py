@@ -72,6 +72,15 @@ def fixture_custom_url_categories():
     ]
 
 
+@pytest.fixture(name="url_lookups")
+def fixture_url_lookups():
+    # Generate a list of URLs for the given quantity
+    def _method(num):
+        return [f"www.{x}.com" for x in range(num)]
+
+    return _method
+
+
 @responses.activate
 def test_url_category_lookup(zia):
     lookup_response = [
@@ -94,10 +103,39 @@ def test_url_category_lookup(zia):
 
 
 @responses.activate
+def test_url_category_lookup_chunked(zia, url_lookups):
+    urls = url_lookups(250)
+
+    responses.add(
+        method="POST",
+        url="https://zsapi.zscaler.net/api/v1/urlLookup",
+        json=urls[:101],
+        status=200,
+    )
+
+    responses.add(
+        method="POST",
+        url="https://zsapi.zscaler.net/api/v1/urlLookup",
+        json=urls[101:201],
+        status=200,
+    )
+    responses.add(
+        method="POST",
+        url="https://zsapi.zscaler.net/api/v1/urlLookup",
+        json=urls[201:],
+        status=200,
+    )
+
+    resp = zia.url_categories.lookup(urls)
+    assert isinstance(resp, BoxList)
+    assert len(resp) == 250
+
+
+@responses.activate
 def test_list_categories(zia, url_categories):
     responses.add(
         method="GET",
-        url="https://zsapi.zscaler.net/api/v1/urlCategories?customOnly=False",
+        url="https://zsapi.zscaler.net/api/v1/urlCategories?customOnly=False&includeOnlyUrlKeywordCounts=False",
         json=url_categories,
         status=200,
     )
@@ -190,7 +228,6 @@ def test_update_url_category(zia, custom_categories):
 
 @responses.activate
 def test_add_urls_to_category(zia, custom_categories):
-
     responses.add(
         method="GET",
         url="https://zsapi.zscaler.net/api/v1/urlCategories/CUSTOM_02",

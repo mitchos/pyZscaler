@@ -1,7 +1,9 @@
+import time
+
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import convert_keys, snake_to_camel
+from pyzscaler.utils import chunker, convert_keys, snake_to_camel
 
 
 class URLCategoriesAPI(APIEndpoint):
@@ -20,17 +22,29 @@ class URLCategoriesAPI(APIEndpoint):
             >>> zia.url_categories.lookup(['example.com', 'test.com'])
 
         """
-        payload = urls
 
-        return self._post("urlLookup", json=payload)
+        # ZIA limits each API call to 100 URLs at a rate of 1 API call per second. pyZscaler simplifies this by allowing
+        # users to submit any number of URLs and handle the chunking of the API calls on their behalf.
+        if len(urls) > 100:
+            results = BoxList()
+            for chunk in chunker(urls, 100):
+                results.extend(self._post("urlLookup", json=chunk))
+                time.sleep(1)
+            return results
 
-    def list_categories(self, custom_only: bool = False) -> BoxList:
+        else:
+            payload = urls
+            return self._post("urlLookup", json=payload)
+
+    def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
         """
         Returns information on URL categories.
 
         Args:
             custom_only (bool):
                 Returns only custom categories if True.
+            only_counts (bool):
+                Returns only URL and keyword counts if True.
 
         Returns:
             :obj:`BoxList`: A list of information for all or custom URL categories.
@@ -45,8 +59,12 @@ class URLCategoriesAPI(APIEndpoint):
             >>> zia.url_categories.list_categories(custom_only=True)
 
         """
+        payload = {
+            "customOnly": custom_only,
+            "includeOnlyUrlKeywordCounts": only_counts,
+        }
 
-        return self._get(f"urlCategories?customOnly={custom_only}")
+        return self._get("urlCategories", params=payload)
 
     def get_quota(self) -> Box:
         """
@@ -100,6 +118,14 @@ class URLCategoriesAPI(APIEndpoint):
                 Description of the category.
             custom_category (bool):
                 Set to true for custom URL category. Up to 48 custom URL categories can be added per organisation.
+            ip_ranges (list):
+                Custom IP addpress ranges associated to a URL category. This feature must be enabled on your tenancy.
+            ip_ranges_retaining_parent_category (list):
+                The retaining parent custom IP addess ranges associated to a URL category.
+            keywords (list):
+                Custom keywords associated to a URL category.
+            keywords_retaining_parent_category (list):
+                Retained custom keywords from the parent URL category that are associated with a URL category.
 
         Returns:
             :obj:`Box`: The newly configured custom URL category resource record.
@@ -110,7 +136,15 @@ class URLCategoriesAPI(APIEndpoint):
             >>> zia.url_categories.add_url_category(name='Beer',
             ...    super_category='ALCOHOL_TOBACCO',
             ...    urls=['xxxx.com.au', 'carltondraught.com.au'],
-            ...    description="Beers that don't taste good")
+            ...    description="Beers that don't taste good.")
+
+            Add a new category with IP ranges:
+
+            >>> zia.url_categories.add_url_category(name='Beer',
+            ...    super_category='FINANCE',
+            ...    urls=['finance.google.com'],
+            ...    description="Google Finance.",
+            ...    ip_ranges=['10.0.0.0/24'])
 
         """
 
@@ -124,6 +158,8 @@ class URLCategoriesAPI(APIEndpoint):
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
+
+        print(payload)
 
         return self._post("urlCategories", json=payload)
 
@@ -187,6 +223,14 @@ class URLCategoriesAPI(APIEndpoint):
                 URLs entered will be covered by policies that reference the parent category, in addition to this one.
             description (str):
                 Description of the category.
+            ip_ranges (list):
+                Custom IP addpress ranges associated to a URL category. This feature must be enabled on your tenancy.
+            ip_ranges_retaining_parent_category (list):
+                The retaining parent custom IP addess ranges associated to a URL category.
+            keywords (list):
+                Custom keywords associated to a URL category.
+            keywords_retaining_parent_category (list):
+                Retained custom keywords from the parent URL category that are associated with a URL category.
 
         Returns:
             :obj:`Box`: The updated URL category resource record.
