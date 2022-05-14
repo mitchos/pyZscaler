@@ -1,8 +1,6 @@
 from restfly import APISession
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel
-
 
 class SecretsAPI(APIEndpoint):
     os_map = {
@@ -39,16 +37,28 @@ class SecretsAPI(APIEndpoint):
 
         return self._get("public/v1/getOtp", params=payload)
 
-    def get_passwords(self, username: str, os_type: str = "windows", **kwargs):
+    def get_passwords(self, username: str, os_type: str = "windows"):
         """
         Return passwords for the specified username and device OS type.
 
         Args:
-            username:
-            os_type:
-            **kwargs:
+            username (str): The username that the device belongs to.
+            os_type (str): The OS Type for the device, defaults to `windows`. Valid options are:
+
+                - ios
+                - android
+                - windows
+                - macos
+                - linux
 
         Returns:
+            :obj:`Box`: Dictionary containing passwords for the specified username's device.
+
+        Examples:
+            Print macos device passwords for username test@example.com:
+
+            >>> print(zcc.secrets.get_passwords(username='test@example.com',
+            ...    os_type='macos'))
 
         """
 
@@ -61,10 +71,9 @@ class SecretsAPI(APIEndpoint):
         if not os_type:
             raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
-        params = {"username": username, "osType": os_type}
-
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
+        params = {
+            "username": username,
+            "osType": os_type,
+        }
 
         return self._get("public/v1/getPasswords", data=payload, params=params)

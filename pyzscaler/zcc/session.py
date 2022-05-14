@@ -15,7 +15,7 @@ class AuthenticatedSessionAPI(APIEndpoint):
             :obj:`Box`: The authenticated session information.
 
         Examples:
-            >>> zia.session.create(api_key='12khsdfh3289',
+            >>> zia.session.create(api_key='999999999',
             ...    username='admin@example.com',
             ...    password='MyInsecurePassword')
 
