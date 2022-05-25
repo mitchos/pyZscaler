@@ -2,7 +2,7 @@ from restfly.endpoint import APIEndpoint
 
 
 class AuthenticatedSessionAPI(APIEndpoint):
-    def create_token(self, client_id: str, client_secret: str):
+    def create_token(self, client_id: str, client_secret: str, base_url: str):
         """
         Creates a ZPA authentication token.
 
@@ -24,4 +24,4 @@ class AuthenticatedSessionAPI(APIEndpoint):
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
         }
-        return self._post("https://config.private.zscaler.com/signin", headers=headers, data=payload).access_token
+        return self._post(f"{base_url}/signin", headers=headers, data=payload).access_token

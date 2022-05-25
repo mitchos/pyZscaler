@@ -43,15 +43,23 @@ class ZPA(APISession):
     _box = True
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZPA"
-    _url = "https://config.private.zscaler.com"
+    _default_url = "https://config.private.zscaler.com"
 
     def __init__(self, **kw):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
+
+        # Allow override for beta API endpoint.
+        self.base_url = kw.get("base_url", os.getenv(f"{self._env_base}_URL"))
+        if self.base_url is None:
+            self.base_url = self._default_url
+        elif not self.base_url.startswith("https://"):
+            self.base_url = f"https://{self.base_url}"
+
         # The v2 URL supports additional API endpoints
-        self.v2_url = f"https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/{self._customer_id}"
-        self.user_config_url = f"https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}"
+        self.v2_url = f"{self.base_url}/mgmtconfig/v2/admin/customers/{self._customer_id}"
+        self.user_config_url = f"{self.base_url}/userconfig/v1/customers/{self._customer_id}"
         self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
@@ -59,8 +67,11 @@ class ZPA(APISession):
         """Creates a ZPA API authenticated session."""
         super(ZPA, self)._build_session(**kwargs)
 
-        self._url = f"https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}"
-        self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
+        self._url = f"{self.base_url}/mgmtconfig/v1/admin/customers/{self._customer_id}"
+        self._auth_token = self.session.create_token(
+                client_id=self._client_id,
+                client_secret=self._client_secret,
+                base_url=self.base_url)
         return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
 
     @property

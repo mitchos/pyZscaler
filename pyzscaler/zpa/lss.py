@@ -21,7 +21,7 @@ class LSSConfigControllerAPI(APIEndpoint):
         super().__init__(api)
 
         self.v2_url = api.v2_url
-        self.v2_admin_url = "https://config.private.zscaler.com/mgmtconfig/v2/admin/lssConfig"
+        self.v2_admin_url = f"{api.base_url}/mgmtconfig/v2/admin/lssConfig"
 
     def _create_policy(self, conditions: list) -> list:
         """
