@@ -127,6 +127,17 @@ def test_delete_segment(zpa, app_segments):
 
 
 @responses.activate
+def test_delete_segment_force(zpa, app_segments):
+    responses.add(
+        responses.DELETE,
+        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/application/1?forceDelete=True",
+        status=204,
+    )
+    resp = zpa.app_segments.delete_segment("1", force_delete=True)
+    assert resp == 204
+
+
+@responses.activate
 def test_add_segment(zpa, app_segments):
     responses.add(
         responses.POST,

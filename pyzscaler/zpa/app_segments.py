@@ -41,11 +41,13 @@ class AppSegmentsAPI(APIEndpoint):
         """
         return self._get(f"application/{segment_id}")
 
-    def delete_segment(self, segment_id: str) -> int:
+    def delete_segment(self, segment_id: str, force_delete: bool = False) -> int:
         """
         Delete an application segment.
 
         Args:
+            force_delete (bool):
+                Setting this field to true deletes the mapping between Application Segment and Segment Group.
             segment_id (str):
                 The unique identifier for the application segment.
 
@@ -53,10 +55,18 @@ class AppSegmentsAPI(APIEndpoint):
             :obj:`int`: The operation response code.
 
         Examples:
+            Delete an Application Segment with an id of 99999.
+
             >>> zpa.app_segments.delete('99999')
 
+            Force deletion of an Application Segment with an id of 88888.
+
+            >>> zpa.app_segments.delete('88888', force_delete=True)
+
         """
-        return self._delete(f"application/{segment_id}").status_code
+        payload = {"forceDelete": force_delete}
+
+        return self._delete(f"application/{segment_id}", params=payload).status_code
 
     def add_segment(
         self,

@@ -59,7 +59,7 @@ def keys_exists(element: dict, *keys):
 
 
 # Takes a tuple if id_groups, kwargs and the payload dict; reformat for API call
-def add_id_groups(id_groups: tuple, kwargs: dict, payload: dict):
+def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
         if kwargs.get(entry[0]):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
