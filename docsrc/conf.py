@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "pyZscaler"
-copyright = "2021, Mitch Kelly"
+copyright = "2022, Mitch Kelly"
 author = "Mitch Kelly"
 html_title = ""
 
@@ -66,7 +66,7 @@ master_doc = "index"
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -155,7 +155,7 @@ texinfo_documents = [
         "pyZscaler Documentation",
         author,
         "pyZscaler",
-        "One line description of project.",
+        "An unofficial Python SDK for Zscaler products.",
         "Miscellaneous",
     ),
 ]
