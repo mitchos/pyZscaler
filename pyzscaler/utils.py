@@ -6,6 +6,8 @@ from restfly import APIIterator
 
 def snake_to_camel(name: str):
     """Converts Python Snake Case to Zscaler's lower camelCase."""
+    if "_" not in name:
+        return name
     # Edge-cases where camelCase is breaking
     edge_cases = {
         "routable_ip": "routableIP",
@@ -14,8 +16,7 @@ def snake_to_camel(name: str):
         "surrogate_ip": "surrogateIP",
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
     }
-    ret = edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
-    return ret
+    return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
 
 
 def chunker(lst, n):
