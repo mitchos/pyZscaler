@@ -9,6 +9,7 @@ from pyzscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
 from pyzscaler.zpa.connector_groups import ConnectorGroupsAPI
 from pyzscaler.zpa.connectors import ConnectorsAPI
 from pyzscaler.zpa.idp import IDPControllerAPI
+from pyzscaler.zpa.inspection import InspectionControllerAPI
 from pyzscaler.zpa.lss import LSSConfigControllerAPI
 from pyzscaler.zpa.machine_groups import MachineGroupsAPI
 from pyzscaler.zpa.policies import PolicySetsAPI
@@ -31,9 +32,21 @@ class ZPA(APISession):
     The ZPA object stores the session token and simplifies access to API interfaces within ZPA.
 
     Attributes:
-        _client_id (str): The ZPA API client ID generated from the ZPA console.
-        _client_secret (str): The ZPA API client secret generated from the ZPA console.
-        _customer_id (str): The ZPA tenant ID found in the Administration > Company menu in the ZPA console.
+        client_id (str): The ZPA API client ID generated from the ZPA console.
+        client_secret (str): The ZPA API client secret generated from the ZPA console.
+        customer_id (str): The ZPA tenant ID found in the Administration > Company menu in the ZPA console.
+        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
+
+            * ``production``
+            * ``beta``
+
+            Defaults to ``production``.
+        override_url (str):
+            If supplied, this attribute can be used to override the production URL that is derived
+            from supplying the `cloud` attribute. Use this attribute if you have a non-standard tenant URL
+            (e.g. internal test instance etc). When using this attribute, there is no need to supply the `cloud`
+            attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
+            i.e. http:// or https://.
 
     """
 
@@ -49,9 +62,8 @@ class ZPA(APISession):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
         self._customer_id = kw.get("customer_id", os.getenv(f"{self._env_base}_CUSTOMER_ID"))
-        # The v2 URL supports additional API endpoints
-        self.v2_url = f"https://config.private.zscaler.com/mgmtconfig/v2/admin/customers/{self._customer_id}"
-        self.user_config_url = f"https://config.private.zscaler.com/userconfig/v1/customers/{self._customer_id}"
+        self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
+        self._override_url = kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
         self.conv_box = True
         super(ZPA, self).__init__(**kw)
 
@@ -59,7 +71,22 @@ class ZPA(APISession):
         """Creates a ZPA API authenticated session."""
         super(ZPA, self)._build_session(**kwargs)
 
-        self._url = f"https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/{self._customer_id}"
+        # Configure URL base for this API session
+        if self._override_url:
+            self._url_base = self._override_url
+        elif not self._cloud or self._cloud == "production":
+            self._url_base = "https://config.private.zscaler.com"
+        elif self._cloud == "beta":
+            self._url_base = "https://config.zpabeta.net"
+        else:
+            raise ValueError("Missing Attribute: You must specify either cloud or override_url")
+
+        # Configure URLs for this API session
+        self._url = f"{self._url_base}/mgmtconfig/v1/admin/customers/{self._customer_id}"
+        self.user_config_url = f"{self._url_base}/userconfig/v1/customers/{self._customer_id}"
+        # The v2 URL supports additional API endpoints
+        self.v2_url = f"{self._url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
+
         self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
         return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
 
@@ -110,6 +137,14 @@ class ZPA(APISession):
 
         """
         return IDPControllerAPI(self)
+
+    @property
+    def inspection(self):
+        """
+        The interface object for the :ref:`ZPA Inspection interface <zpa-inspection>`.
+
+        """
+        return InspectionControllerAPI(self)
 
     @property
     def lss(self):
