@@ -29,15 +29,7 @@ class PolicySetsAPI(APIEndpoint):
 
         for condition in conditions:
             if isinstance(condition, tuple) and len(condition) == 3:
-                operand = {
-                    "operands": [
-                        {
-                            "objectType": condition[0].upper(),
-                            "lhs": condition[1],
-                            "rhs": condition[2],
-                        }
-                    ]
-                }
+                operand = {"operands": [{"objectType": condition[0].upper(), "lhs": condition[1], "rhs": condition[2]}]}
                 template.append(operand)
 
         return template
@@ -206,11 +198,7 @@ class PolicySetsAPI(APIEndpoint):
         """
 
         # Initialise the payload
-        payload = {
-            "name": name,
-            "action": action.upper(),
-            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
-        }
+        payload = {"name": name, "action": action.upper(), "conditions": self._create_conditions(kwargs.pop("conditions", []))}
 
         # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("access").id
@@ -263,11 +251,7 @@ class PolicySetsAPI(APIEndpoint):
         """
 
         # Initialise the payload
-        payload = {
-            "name": name,
-            "action": "RE_AUTH",
-            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
-        }
+        payload = {"name": name, "action": "RE_AUTH", "conditions": self._create_conditions(kwargs.pop("conditions", []))}
 
         # Get the policy id of the provided policy type for the URL.
         _policy_id = self.get_policy("timeout").id
@@ -327,11 +311,7 @@ class PolicySetsAPI(APIEndpoint):
         """
 
         # Initialise the payload
-        payload = {
-            "name": name,
-            "action": action.upper(),
-            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
-        }
+        payload = {"name": name, "action": action.upper(), "conditions": self._create_conditions(kwargs.pop("conditions", []))}
 
         # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("client_forwarding").id
@@ -403,6 +383,41 @@ class PolicySetsAPI(APIEndpoint):
                 payload[snake_to_camel(key)] = value
 
         resp = self._put(f"policySet/{policy_id}/rule/{rule_id}", json=payload, box=False).status_code
+
+        if resp == 204:
+            return self.get_rule(policy_type, rule_id)
+
+    def reorder_rule(self, policy_type: str, rule_id: str, order: str) -> Box:
+        """
+        Change the order of an existing policy rule.
+
+        Args:
+            rule_id (str):
+                The unique id of the rule that will be reordered.
+            order (str):
+                The new order for the rule.
+            policy_type (str):
+                The policy type. Accepted values are:
+
+                 |  ``access``
+                 |  ``timeout``
+                 |  ``client_forwarding``
+
+        Returns:
+             :obj:`Box`: The updated policy rule resource record.
+
+        Examples:
+            Updates the order for an existing policy rule:
+
+            >>> zpa.policies.reorder_rule(policy_type='access',
+            ...    rule_id='88888',
+            ...    order='2')
+
+        """
+        # Get policy id for specified policy type
+        policy_id = self.get_policy(policy_type).id
+
+        resp = self._put(f"policySet/{policy_id}/rule/{rule_id}/reorder/{order}").status_code
 
         if resp == 204:
             return self.get_rule(policy_type, rule_id)
