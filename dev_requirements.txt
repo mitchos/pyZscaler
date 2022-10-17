@@ -1,5 +1,5 @@
 sphinx==5.0.2
-restfly==1.4.6
+restfly==1.4.7
 python-box==6.0.2
 furo==2022.6.21
 pre-commit==2.19.0
