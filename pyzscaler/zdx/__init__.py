@@ -4,6 +4,7 @@ from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
+
 from .admin import AdminAPI
 from .apps import AppsAPI
 from .session import SessionAPI
@@ -68,4 +69,8 @@ class ZDX(APISession):
     @property
     def apps(self):
         """The interface object for the :ref:`ZDX Apps interface <zdx-apps>`."""
+<<<<<<< HEAD
+=======
+        print(f"Headers are: {self._session.headers}")
+>>>>>>> ea72812 (feat: Adds initial support for ZDX)
         return AppsAPI(self)
