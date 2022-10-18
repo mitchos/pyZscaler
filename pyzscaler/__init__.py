@@ -7,5 +7,6 @@ __contributors__ = [
 __version__ = "1.4.0"
 
 from pyzscaler.zcc import ZCC  # noqa
+from pyzscaler.zdx import ZDX  # noqa
 from pyzscaler.zia import ZIA  # noqa
 from pyzscaler.zpa import ZPA  # noqa
