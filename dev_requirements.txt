@@ -1,6 +1,6 @@
 sphinx==5.0.2
 restfly==1.4.6
-python-box==6.0.2
+python-box==6.1.0
 furo==2022.6.21
 pre-commit==2.19.0
 pytest==7.1.2
