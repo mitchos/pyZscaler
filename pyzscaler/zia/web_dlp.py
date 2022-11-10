@@ -1,6 +1,6 @@
+import requests
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
-import requests
 
 
 class WebDLP(APIEndpoint):
