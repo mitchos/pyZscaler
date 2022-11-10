@@ -2,7 +2,6 @@ from restfly.endpoint import APIEndpoint
 
 
 class WebDLP(APIEndpoint):
-
     def get_all(self, **kwargs):
         """Gets a list of DLP policy rules, excluding SaaS Security API DLP policy rules."""
         return self._get("webDlpRules")
