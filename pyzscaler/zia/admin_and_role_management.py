@@ -1,4 +1,3 @@
-
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
@@ -9,7 +8,6 @@ class AdminAndRoleManagementAPI(APIEndpoint):
     def add_user(self, name: str, login_name: str, email: str, password: str, **kwargs) -> Box:
         """
         Adds a new admin user to ZIA.
-
         Args:
             name (str): The user's full name.
             login_name (str):
@@ -17,7 +15,6 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             email (str): The email address for the admin user.
             password (str): The password for the admin user.
             **kwargs: Optional keyword args.
-
         Keyword Args:
             admin_scope (str): The scope of the admin's permissions, accepted values are:
                 ``organization``, ``department``, ``location``, ``location_group``
@@ -38,24 +35,18 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             scope_ids (list):
                 A list of entity ids for the admin user's scope. e.g. if the admin user has admin_scope set to
                 ``department`` then you will need to provide a list of department ids.
-
                 **NOTE**: This param doesn't need to
                 be provided if the admin user's scope is set to ``organization``.
-
         Returns:
             :obj:`Box`: The newly created admin user resource record.
-
         Examples:
             Add an admin user with the minimum required params:
-
             >>> admin_user = zia.admin_and_role_management.add_user(
             ...    name="Jim Bob",
             ...    login_name="jim@example.com",
             ...    password="hunter2",
             ...    email="jim@example.com")
-
             Add an admin user with a department admin scope:
-
             >>> admin_user = zia.admin_and_role_management.add_user(
             ...    name="Jane Bob",
             ...    login_name="jane@example.com",
@@ -63,16 +54,13 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             ...    email="jane@example.com,
             ...    admin_scope="department",
             ...    scope_ids = ['376542', '245688'])
-
             Add an auditor user:
-
             >>> auditor_user = zia.admin_and_role_management.add_user(
             ...    name="Head Bob",
             ...    login_name="head@example.com",
             ...    password="hunter4",
             ...    email="head@example.com,
             ...    is_auditor=True)
-
         """
         payload = {
             "userName": name,
@@ -110,7 +98,6 @@ class AdminAndRoleManagementAPI(APIEndpoint):
     def list_users(self, **kwargs) -> BoxList:
         """
         Returns a list of admin users.
-
         Keyword Args:
             **include_auditor_users (bool, optional):
                 Include or exclude auditor user information in the list.
@@ -122,136 +109,26 @@ class AdminAndRoleManagementAPI(APIEndpoint):
                 Specifies the page offset.
             **page_size (int, optional):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
-
-        Returns:
-            :obj:`list`: The admin_users resource record.
-
-        Examples:
-            >>> department = zia.admin_and_role_management.get_admin_users(search='login_name')
-
-        """
-        return list(Iterator(self._api, "adminUsers", **kwargs))
-
-    def get_admin_roles_lite(self, **kwargs):
-        """
-        Gets a name and ID dictionary of all admin roles. The list only includes the name and ID for all admin roles.
-
-        Keyword Args:
-            **include_auditor_users (bool, optional):
-                Include or exclude auditor role information in the list.
-            **include_partner_role (bool, optional):
-                Include or exclude partner admin role information in the list. (default: True)
-
-        Returns:
-            :obj:`list`: The admin_users resource record.
-
-        Example Payload Values:
-            {
-              "id": 0,
-              "loginName": "string",
-              "userName": "string",
-              "email": "string",
-              "role": {
-                "id": 0,
-                "name": "string",
-                "extensions": {
-                  "additionalProp1": "string",
-                  "additionalProp2": "string",
-                  "additionalProp3": "string"
-                }
-              },
-              "comments": "string",
-              "adminScope": {
-                "scopeGroupMemberEntities": [
-                  {
-                    "id": 0,
-                    "name": "string",
-                    "extensions": {
-                      "additionalProp1": "string",
-                      "additionalProp2": "string",
-                      "additionalProp3": "string"
-                    }
-                  }
-                ],
-                "Type": "ORGANIZATION",
-                "ScopeEntities": [
-                  {
-                    "id": 0,
-                    "name": "string",
-                    "extensions": {
-                      "additionalProp1": "string",
-                      "additionalProp2": "string",
-                      "additionalProp3": "string"
-                    }
-                  }
-                ]
-              },
-              "isNonEditable": false,
-              "disabled": true,
-              "isAuditor": false,
-              "password": "string",
-              "isPasswordLoginAllowed": false,
-              "isSecurityReportCommEnabled": false,
-              "isServiceUpdateCommEnabled": false,
-              "isProductUpdateCommEnabled": false,
-              "isPasswordExpired": false,
-              "isExecMobileAppEnabled": false,
-              "execMobileAppTokens": [
-                {
-                  "cloud": "string",
-                  "orgId": 0,
-                  "name": "string",
-                  "tokenId": "string",
-                  "token": "string",
-                  "tokenExpiry": 0,
-                  "createTime": 0,
-                  "deviceId": "string",
-                  "deviceName": "string"
-                }
-              ]
-            }
-
-        Examples:
-            >>> department = zia.admin_and_role_management.get_admin_roles_lite()
-
-        """
-        return list(Iterator(self._api, "adminRoles", **kwargs))
-
-    def create_admin_user(self, **kwargs):
-        """
-        Creates an admin or auditor user.
-
-        Args:
-            **kwargs:
-
         Returns:
             :obj:`BoxList`: The admin_users resource record.
-
         Examples:
             >>> users = zia.admin_and_role_management.list_users(search='login_name')
-
         """
         return BoxList(Iterator(self._api, "adminUsers", **kwargs))
 
     def list_roles(self, **kwargs) -> BoxList:
         """
         Return a list of the configured admin roles in ZIA.
-
         Args:
             **kwargs: Optional keyword args.
-
         Keyword Args:
             include_auditor_role (bool): Set to ``True`` to include auditor role information in the response.
             include_partner_role (bool): Set to ``True`` to include partner admin role information in the response.
-
         Returns:
             :obj:`BoxList`: A list of admin role resource records.
-
         Examples:
             Get a list of all configured admin roles:
-
             >>> roles = zia.admin_and_management_roles.list_roles()
-
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
@@ -260,16 +137,12 @@ class AdminAndRoleManagementAPI(APIEndpoint):
     def get_user(self, user_id: str) -> Box:
         """
         Returns information on the specified admin user id.
-
         Args:
             user_id (str): The unique id of the admin user.
-
         Returns:
             :obj:`Box`: The admin user resource record.
-
         Examples:
             >>> print(zia.admin_and_role_management.get_user('987321202'))
-
         """
         admin_user = next(user for user in self.list_users() if user.id == int(user_id))
 
@@ -278,16 +151,12 @@ class AdminAndRoleManagementAPI(APIEndpoint):
     def delete_user(self, user_id: str) -> int:
         """
         Deletes the specified admin user by id.
-
         Args:
             user_id (str): The unique id of the admin user.
-
         Returns:
             :obj:`int`: The response code for the request.
-
         Examples:
             >>> zia.admin_role_management.delete_admin_user('99272455')
-
         """
 
         return self._delete(f"adminUsers/{user_id}", box=False).status_code
@@ -295,11 +164,9 @@ class AdminAndRoleManagementAPI(APIEndpoint):
     def update_user(self, user_id: str, **kwargs) -> dict:
         """
         Update an admin user.
-
         Args:
             user_id (str): The unique id of the admin user to be updated.
             **kwargs: Optional keyword args.
-
         Keyword Args:
             admin_scope (str): The scope of the admin's permissions, accepted values are:
                 ``organization``, ``department``, ``location``, ``location_group``
@@ -323,25 +190,18 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             scope_ids (list):
                 A list of entity ids for the admin user's scope. e.g. if the admin user has ``admin_scope`` set to
                 ``department`` then you will need to provide a list of department ids.
-
                 **NOTE:** This param doesn't need to
                 be provided if the admin user's scope is set to `organization`.
-
         Returns:
             :obj:`dict`: The updated admin user resource record.
-
         Examples:
             Update the email address for an admin user:
-
             >>> user = zia.admin_and_role_management.update_user('99695301',
             ...    email='jimbob@example.com')
-
             Update the admin scope for an admin user to department:
-
             >>> user = zia.admin_and_role_management.update_user('99695301',
             ...    admin_scope='department',
             ...    scope_ids=['3846532', '3846541'])
-
         """
 
         # Get the resource record for the provided user id
