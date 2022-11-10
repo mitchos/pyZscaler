@@ -1,3 +1,5 @@
+import json
+
 import requests
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
@@ -13,7 +15,7 @@ class WebDLP(APIEndpoint):
         """
         return self._get("webDlpRules")
 
-    def get_item(self, item_id) -> Box:
+    def get_item(self, item_id: str) -> Box:
         """
         Gets a DLP policy rule, excluding SaaS Security API DLP policy rules.
 
@@ -34,7 +36,7 @@ class WebDLP(APIEndpoint):
         """
         return self._get("webDlpRules/lite")
 
-    def post(self, payload) -> Box:
+    def post(self, payload: json) -> Box:
         """Adds a new DLP policy rule.
 
         Args:
@@ -54,7 +56,7 @@ class WebDLP(APIEndpoint):
         """
         return self._post("webDlpRules", json=payload)
 
-    def put(self, item_id, payload) -> Box:
+    def put(self, item_id: str, payload: json) -> Box:
         """
         Updates a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
@@ -67,7 +69,7 @@ class WebDLP(APIEndpoint):
         """
         return self._put(f"webDlpRules/{item_id}", json=payload)
 
-    def delete(self, item_id) -> requests.Response:
+    def delete(self, item_id: str) -> requests.Response:
         """
         Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
