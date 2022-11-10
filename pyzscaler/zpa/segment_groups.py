@@ -1,24 +1,25 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel
+from pyzscaler.utils import Iterator, snake_to_camel
 
 
 class SegmentGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured segment groups.
 
         Returns:
-            :obj:`list`: A list of all configured segment groups.
+            :obj:`BoxList`: A list of all configured segment groups.
 
         Examples:
             >>> for segment_group in zpa.segment_groups.list_groups():
             ...    pprint(segment_group)
 
         """
-        return self._get("segmentGroup").list
+        return BoxList(Iterator(self._api, "segmentGroup", **kwargs))
 
-    def get_group(self, group_id: str):
+    def get_group(self, group_id: str) -> Box:
         """
         Returns information on the specified segment group.
 
@@ -27,16 +28,16 @@ class SegmentGroupsAPI(APIEndpoint):
                 The unique identifier for the segment group.
 
         Returns:
-            :obj:`dict`: The resource record for the segment group.
+            :obj:`Box`: The resource record for the segment group.
 
         Examples:
-            >>> pprint(zpa.segment_groups.get_group('2342342342344433'))
+            >>> pprint(zpa.segment_groups.get_group('99999'))
 
         """
 
         return self._get(f"segmentGroup/{group_id}")
 
-    def delete_group(self, group_id: str):
+    def delete_group(self, group_id: str) -> int:
         """
         Deletes the specified segment group.
 
@@ -45,15 +46,15 @@ class SegmentGroupsAPI(APIEndpoint):
                 The unique identifier for the segment group to be deleted.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> zpa.segment_groups.delete_group('2342342342343')
+            >>> zpa.segment_groups.delete_group('99999')
 
         """
-        return self._delete(f"segmentGroup/{group_id}")
+        return self._delete(f"segmentGroup/{group_id}").status_code
 
-    def add_group(self, name: str, enabled=False, **kwargs):
+    def add_group(self, name: str, enabled: bool = False, **kwargs) -> Box:
         """
         Adds a new segment group.
 
@@ -74,7 +75,7 @@ class SegmentGroupsAPI(APIEndpoint):
             policy_migrated (bool):
 
         Returns:
-            :obj:`dict`: The resource record for the newly created segment group.
+            :obj:`Box`: The resource record for the newly created segment group.
 
         Examples:
             Creating a segment group with the minimum required parameters:
@@ -90,9 +91,7 @@ class SegmentGroupsAPI(APIEndpoint):
         }
 
         if kwargs.get("application_ids"):
-            payload["applications"] = [
-                {"id": app_id} for app_id in kwargs.pop("application_ids")
-            ]
+            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -100,7 +99,7 @@ class SegmentGroupsAPI(APIEndpoint):
 
         return self._post("segmentGroup", json=payload)
 
-    def update_group(self, group_id: str, **kwargs):
+    def update_group(self, group_id: str, **kwargs) -> Box:
         """
         Updates an existing segment group.
 
@@ -123,12 +122,12 @@ class SegmentGroupsAPI(APIEndpoint):
             policy_migrated (bool):
 
         Returns:
-            :obj:`dict`: The resource record for the updated segment group.
+            :obj:`Box`: The resource record for the updated segment group.
 
         Examples:
             Updating the name of a segment group:
 
-            >>> zpa.segment_groups.update_group('23234234324234',
+            >>> zpa.segment_groups.update_group('99999',
             ...    name='updated_name')
 
         """
@@ -136,14 +135,15 @@ class SegmentGroupsAPI(APIEndpoint):
         payload = {snake_to_camel(k): v for k, v in self.get_group(group_id).items()}
 
         if kwargs.get("application_ids"):
-            payload["applications"] = [
-                {"id": app_id} for app_id in kwargs.pop("application_ids")
-            ]
+            payload["applications"] = [{"id": app_id} for app_id in kwargs.pop("application_ids")]
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(
-            f"segmentGroup/{group_id}", json=payload, box=False
-        ).status_code
+        # ZPA doesn't return the updated resource so let's check our response
+        # was okay and then return the resource, else return None.
+        resp = self._put(f"segmentGroup/{group_id}", json=payload, box=False).status_code
+
+        if resp == 204:
+            return self.get_group(group_id)

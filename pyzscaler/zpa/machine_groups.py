@@ -1,10 +1,23 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import Iterator
 
 
 class MachineGroupsAPI(APIEndpoint):
-    def list_groups(self):
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured machine groups.
+
+        Keyword Args:
+            **max_items (int):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int):
+                The maximum number of pages to request before stopping iteration.
+            **pagesize (int):
+                Specifies the page size. The default size is 20, but the maximum size is 500.
+            **search (str, optional):
+                The search string used to match against features and fields.
 
         Returns:
             :obj:`list`: A list of all configured machine groups.
@@ -14,9 +27,9 @@ class MachineGroupsAPI(APIEndpoint):
             ...    pprint(machine_group)
 
         """
-        return self._get("machineGroups").list
+        return BoxList(Iterator(self._api, "machineGroup", **kwargs))
 
-    def get_group(self, group_id: str):
+    def get_group(self, group_id: str) -> Box:
         """
         Returns information on the specified machine group.
 
@@ -25,11 +38,11 @@ class MachineGroupsAPI(APIEndpoint):
                 The unique identifier for the machine group.
 
         Returns:
-            :obj:`dict`: The resource record for the machine group.
+            :obj:`Box`: The resource record for the machine group.
 
         Examples:
-            >>> pprint(zpa.machine_groups.get_group('2342342342344433'))
+            >>> pprint(zpa.machine_groups.get_group('99999'))
 
         """
 
-        return self._get(f"machineGroups/{group_id}")
+        return self._get(f"machineGroup/{group_id}")

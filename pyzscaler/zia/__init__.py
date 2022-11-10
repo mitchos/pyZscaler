@@ -1,12 +1,16 @@
 import os
 
+from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
+
+from .admin_and_role_management import AdminAndRoleManagementAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
+from .labels import RuleLabelsAPI
 from .locations import LocationsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
@@ -17,7 +21,6 @@ from .url_categories import URLCategoriesAPI
 from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
-from .admin_and_role_management import AdminAndRoleManagementAPI
 from .web_dlp import WebDLP
 
 
@@ -31,6 +34,20 @@ class ZIA(APISession):
         api_key (str): The ZIA API key generated from the ZIA console.
         username (str): The ZIA administrator username.
         password (str): The ZIA administrator password.
+        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
+
+            * ``zscaler``
+            * ``zscalerone``
+            * ``zscalertwo``
+            * ``zscalerthree``
+            * ``zscloud``
+            * ``zscalerbeta``
+        override_url (str):
+            If supplied, this attribute can be used to override the production URL that is derived
+            from supplying the `cloud` attribute. Use this attribute if you have a non-standard tenant URL
+            (e.g. internal test instance etc). When using this attribute, there is no need to supply the `cloud`
+            attribute. The override URL will be prepended to the API endpoint suffixes. The protocol must be included
+            i.e. http:// or https://.
 
     """
 
@@ -49,10 +66,14 @@ class ZIA(APISession):
         self._username = kw.get("username", os.getenv(f"{self._env_base}_USERNAME"))
         self._password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
         self._env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
-        self._url = f"https://zsapi.{self._env_cloud}.net/api/v1"
+        self._url = (
+            kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
+            or f"https://zsapi.{self._env_cloud}.net/api/v1"
+        )
+        self.conv_box = True
         super(ZIA, self).__init__(**kw)
 
-    def _build_session(self, **kwargs) -> None:
+    def _build_session(self, **kwargs) -> Box:
         """Creates a ZIA API session."""
         super(ZIA, self)._build_session(**kwargs)
         return self.session.create(
@@ -69,6 +90,14 @@ class ZIA(APISession):
     def session(self):
         """The interface object for the :ref:`ZIA Authenticated Session interface <zia-session>`."""
         return AuthenticatedSessionAPI(self)
+
+    @property
+    def admin_and_role_management(self):
+        """
+        The interface object for the :ref:`ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
+
+        """
+        return AdminAndRoleManagementAPI(self)
 
     @property
     def audit_logs(self):
@@ -102,6 +131,14 @@ class ZIA(APISession):
 
         """
         return FirewallPolicyAPI(self)
+
+    @property
+    def labels(self):
+        """
+        The interface object for the :ref:`ZIA Rule Labels interface <zia-labels>`.
+
+        """
+        return RuleLabelsAPI(self)
 
     @property
     def locations(self):

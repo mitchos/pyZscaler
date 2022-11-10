@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "pyzscaler"
-version = "0.10.0"
+version = "1.3.0"
 description = "A python SDK for the Zscaler API."
 authors = ["Mitch Kelly <me@mkelly.dev>"]
 license = "MIT"
 readme = "README.md"
 documentation = "https://pyzscaler.readthedocs.io/"
-homepage = "https://mitchos.github.io/pyZscaler/"
+homepage = "https://pyzscaler.packet.tech/"
 repository = "https://github.com/mitchos/pyZscaler"
 classifiers = [
     "Environment :: Console",
@@ -16,8 +16,10 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Security",
     "Topic :: Software Development :: Libraries :: Python Modules", ]
 include = [
@@ -28,19 +30,43 @@ include = [
 "Bug Tracker" = "https://github.com/mitchos/pyZscaler/issues"
 
 [tool.poetry.dependencies]
-python = "^3.6"
-restfly = "^1.4.2"
-python-box = "^5.4.1"
+python = "^3.7"
+restfly = "1.4.6"
+python-box = "6.0.2"
 
 [tool.poetry.dev-dependencies]
-restfly = "^1.4.2"
-python-box = "^5.4.1"
-sphinx = "4.2.0"
-pytest = "^6.2.5"
-furo = "2021.10.9"
-responses = "0.14.0"
-requests = "2.26.0"
+python = "^3.7"
+restfly = "1.4.6"
+python-box = "6.0.2"
+Sphinx = "5.0.2"
+furo = "2022.6.21"
+pytest = "7.1.2"
+requests = "2.28.0"
+pre-commit = "2.19.0"
+responses = "0.21.0"
+toml = "0.10.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 127
+
+[tool.pylint.'MESSAGES CONTROL']
+disable=[
+    "format",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-public-methods",
+    "anomalous-backslash-in-string",
+    "import-error",
+    "redefined-outer-name",
+]
+
+[tool.pylint.'FORMAT']
+max-line-length = 127
+
+[tool.isort]
+profile = "black"

@@ -1,6 +1,7 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel, add_id_groups
+from pyzscaler.utils import Iterator, add_id_groups, snake_to_camel
 
 
 class ServerGroupsAPI(APIEndpoint):
@@ -10,21 +11,31 @@ class ServerGroupsAPI(APIEndpoint):
         ("app_connector_group_ids", "appConnectorGroups"),
     ]
 
-    def list_groups(self):
+    def list_groups(self, **kwargs) -> BoxList:
         """
         Returns a list of all configured server groups.
 
+        Keyword Args:
+            **max_items (int):
+                The maximum number of items to request before stopping iteration.
+            **max_pages (int):
+                The maximum number of pages to request before stopping iteration.
+            **pagesize (int):
+                Specifies the page size. The default size is 20, but the maximum size is 500.
+            **search (str, optional):
+                The search string used to match against features and fields.
+
         Returns:
-            :obj:`list`: A list of all configured server groups.
+            :obj:`BoxList`: A list of all configured server groups.
 
         Examples:
             >>> for server_group in zpa.server_groups.list_groups():
             ...    pprint(server_group)
 
         """
-        return self._get("serverGroup").list
+        return BoxList(Iterator(self._api, "serverGroup", **kwargs))
 
-    def get_group(self, group_id: str):
+    def get_group(self, group_id: str) -> Box:
         """
         Provides information on the specified server group.
 
@@ -33,16 +44,16 @@ class ServerGroupsAPI(APIEndpoint):
                 The unique id for the server group.
 
         Returns:
-            :obj:`dict`: The resource record for the server group.
+            :obj:`Box`: The resource record for the server group.
 
         Examples:
-            >>> pprint(zpa.server_groups.get_group('2342342342344433'))
+            >>> pprint(zpa.server_groups.get_group('99999'))
 
         """
 
         return self._get(f"serverGroup/{group_id}")
 
-    def delete_group(self, group_id: str):
+    def delete_group(self, group_id: str) -> int:
         """
         Deletes the specified server group.
 
@@ -51,15 +62,15 @@ class ServerGroupsAPI(APIEndpoint):
                 The unique id for the server group to be deleted.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
-            >>> zpa.server_groups.delete_group('2342342342343')
+            >>> zpa.server_groups.delete_group('99999')
 
         """
-        return self._delete(f"serverGroup/{group_id}")
+        return self._delete(f"serverGroup/{group_id}").status_code
 
-    def add_group(self, app_connector_group_ids: list, name: str, **kwargs):
+    def add_group(self, app_connector_group_ids: list, name: str, **kwargs) -> Box:
         """
         Adds a server group.
 
@@ -83,18 +94,18 @@ class ServerGroupsAPI(APIEndpoint):
                 A list of unique IDs of servers to associate with this server group.
 
         Returns:
-            :obj:`dict`: The resource record for the newly created server group.
+            :obj:`Box`: The resource record for the newly created server group.
 
         Examples:
             Create a server group with the minimum params:
 
             >>> zpa.server_groups.add_group('new_server_group'
-            ...    app_connector_group_ids['916196382959075361'])
+            ...    app_connector_group_ids['99999'])
 
             Create a server group and define a new server on the fly:
 
             >>> zpa.server_groups.add_group('new_server_group',
-            ...    app_connector_group_ids=['916196382959075361'],
+            ...    app_connector_group_ids=['99999'],
             ...    enabled=True,
             ...    servers=[{
             ...      'name': 'new_server',
@@ -105,9 +116,7 @@ class ServerGroupsAPI(APIEndpoint):
         # Initialise payload
         payload = {
             "name": name,
-            "appConnectorGroups": [
-                {"id": group_id} for group_id in app_connector_group_ids
-            ],
+            "appConnectorGroups": [{"id": group_id} for group_id in app_connector_group_ids],
         }
 
         add_id_groups(self.reformat_params, kwargs, payload)
@@ -118,7 +127,7 @@ class ServerGroupsAPI(APIEndpoint):
 
         return self._post("serverGroup", json=payload)
 
-    def update_group(self, group_id: str, **kwargs):
+    def update_group(self, group_id: str, **kwargs) -> Box:
         """
         Updates a server group.
 
@@ -141,7 +150,7 @@ class ServerGroupsAPI(APIEndpoint):
                 A list of unique IDs of servers to associate with this server group
 
         Returns:
-            :obj:`dict`: The resource record for the updated server group.
+            :obj:`Box`: The resource record for the updated server group.
 
         Examples:
             Update the name of a server group:
@@ -164,4 +173,7 @@ class ServerGroupsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"serverGroup/{group_id}", json=payload, box=False).status_code
+        resp = self._put(f"serverGroup/{group_id}", json=payload, box=False).status_code
+
+        if resp == 204:
+            return self.get_group(group_id)

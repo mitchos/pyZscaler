@@ -1,10 +1,13 @@
+import time
+
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
-from pyzscaler.utils import snake_to_camel
-from box import BoxList
+
+from pyzscaler.utils import chunker, convert_keys, snake_to_camel
 
 
 class URLCategoriesAPI(APIEndpoint):
-    def lookup(self, urls: list):
+    def lookup(self, urls: list) -> BoxList:
         """
         Lookup the category for the provided URLs.
 
@@ -13,26 +16,38 @@ class URLCategoriesAPI(APIEndpoint):
                 The list of URLs to perform a category lookup on.
 
         Returns:
-            :obj:`list`: A list of URL category reports.
+            :obj:`BoxList`: A list of URL category reports.
 
         Examples:
             >>> zia.url_categories.lookup(['example.com', 'test.com'])
 
         """
-        payload = urls
 
-        return self._post("urlLookup", json=payload, box=BoxList)
+        # ZIA limits each API call to 100 URLs at a rate of 1 API call per second. pyZscaler simplifies this by allowing
+        # users to submit any number of URLs and handle the chunking of the API calls on their behalf.
+        if len(urls) > 100:
+            results = BoxList()
+            for chunk in chunker(urls, 100):
+                results.extend(self._post("urlLookup", json=chunk))
+                time.sleep(1)
+            return results
 
-    def list_categories(self, custom_only: bool = False):
+        else:
+            payload = urls
+            return self._post("urlLookup", json=payload)
+
+    def list_categories(self, custom_only: bool = False, only_counts: bool = False) -> BoxList:
         """
         Returns information on URL categories.
 
         Args:
             custom_only (bool):
                 Returns only custom categories if True.
+            only_counts (bool):
+                Returns only URL and keyword counts if True.
 
         Returns:
-            :obj:`list`: A list of information for all or custom URL categories.
+            :obj:`BoxList`: A list of information for all or custom URL categories.
 
         Examples:
             List all URL categories:
@@ -44,15 +59,19 @@ class URLCategoriesAPI(APIEndpoint):
             >>> zia.url_categories.list_categories(custom_only=True)
 
         """
+        payload = {
+            "customOnly": custom_only,
+            "includeOnlyUrlKeywordCounts": only_counts,
+        }
 
-        return self._get(f"urlCategories?customOnly={custom_only}", box=BoxList)
+        return self._get("urlCategories", params=payload)
 
-    def get_quota(self):
+    def get_quota(self) -> Box:
         """
         Returns information on URL category quota usage.
 
         Returns:
-            :obj:`dict`: The URL quota statistics.
+            :obj:`Box`: The URL quota statistics.
 
         Examples:
             >>> zia.url_categories.get_quota()
@@ -61,7 +80,7 @@ class URLCategoriesAPI(APIEndpoint):
 
         return self._get("urlCategories/urlQuota")
 
-    def get_category(self, category_id: str):
+    def get_category(self, category_id: str) -> Box:
         """
         Returns URL category information for the provided category.
 
@@ -70,7 +89,7 @@ class URLCategoriesAPI(APIEndpoint):
                 The unique identifier for the category (e.g. 'MUSIC')
 
         Returns:
-            :obj:`dict`: The resource record for the category.
+            :obj:`Box`: The resource record for the category.
 
         Examples:
             >>> zia.url_categories.get_category('ALCOHOL_TOBACCO')
@@ -78,7 +97,7 @@ class URLCategoriesAPI(APIEndpoint):
         """
         return self._get(f"urlCategories/{category_id}")
 
-    def add_url_category(self, name: str, super_category: str, urls: list, **kwargs):
+    def add_url_category(self, name: str, super_category: str, urls: list, **kwargs) -> Box:
         """
         Adds a new custom URL category.
 
@@ -97,9 +116,19 @@ class URLCategoriesAPI(APIEndpoint):
                 URLs entered will be covered by policies that reference the parent category, in addition to this one.
             description (str):
                 Description of the category.
+            custom_category (bool):
+                Set to true for custom URL category. Up to 48 custom URL categories can be added per organisation.
+            ip_ranges (list):
+                Custom IP addpress ranges associated to a URL category. This feature must be enabled on your tenancy.
+            ip_ranges_retaining_parent_category (list):
+                The retaining parent custom IP addess ranges associated to a URL category.
+            keywords (list):
+                Custom keywords associated to a URL category.
+            keywords_retaining_parent_category (list):
+                Retained custom keywords from the parent URL category that are associated with a URL category.
 
         Returns:
-            :obj:`dict`: The newly configured custom URL category resource record.
+            :obj:`Box`: The newly configured custom URL category resource record.
 
         Examples:
             Add a new category for beers that don't taste good:
@@ -107,7 +136,15 @@ class URLCategoriesAPI(APIEndpoint):
             >>> zia.url_categories.add_url_category(name='Beer',
             ...    super_category='ALCOHOL_TOBACCO',
             ...    urls=['xxxx.com.au', 'carltondraught.com.au'],
-            ...    description="Beers that don't taste good")
+            ...    description="Beers that don't taste good.")
+
+            Add a new category with IP ranges:
+
+            >>> zia.url_categories.add_url_category(name='Beer',
+            ...    super_category='FINANCE',
+            ...    urls=['finance.google.com'],
+            ...    description="Google Finance.",
+            ...    ip_ranges=['10.0.0.0/24'])
 
         """
 
@@ -122,9 +159,11 @@ class URLCategoriesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
+        print(payload)
+
         return self._post("urlCategories", json=payload)
 
-    def add_tld_category(self, name: str, tlds: list, **kwargs):
+    def add_tld_category(self, name: str, tlds: list, **kwargs) -> Box:
         """
         Adds a new custom TLD category.
 
@@ -141,7 +180,7 @@ class URLCategoriesAPI(APIEndpoint):
                 Description of the category.
 
         Returns:
-            :obj:`dict`: The newly configured custom TLD category resource record.
+            :obj:`Box`: The newly configured custom TLD category resource record.
 
         Examples:
             Create a category for all 'developer' sites:
@@ -165,7 +204,7 @@ class URLCategoriesAPI(APIEndpoint):
 
         return self._post("urlCategories", json=payload)
 
-    def update_url_category(self, category_id: str, **kwargs):
+    def update_url_category(self, category_id: str, **kwargs) -> Box:
         """
         Updates a URL category.
 
@@ -184,9 +223,17 @@ class URLCategoriesAPI(APIEndpoint):
                 URLs entered will be covered by policies that reference the parent category, in addition to this one.
             description (str):
                 Description of the category.
+            ip_ranges (list):
+                Custom IP addpress ranges associated to a URL category. This feature must be enabled on your tenancy.
+            ip_ranges_retaining_parent_category (list):
+                The retaining parent custom IP addess ranges associated to a URL category.
+            keywords (list):
+                Custom keywords associated to a URL category.
+            keywords_retaining_parent_category (list):
+                Retained custom keywords from the parent URL category that are associated with a URL category.
 
         Returns:
-            :obj:`dict`: The updated URL category resource record.
+            :obj:`Box`: The updated URL category resource record.
 
         Examples:
             Update the name of a category:
@@ -201,13 +248,7 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        # Cache existing record for defaulting mandatory fields that may not require updating.
-        category_record = self.get_category(category_id)
-
-        payload = {
-            # configuredName required
-            "configuredName": kwargs.pop("name", category_record.configured_name)
-        }
+        payload = convert_keys(self.get_category(category_id))
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -215,7 +256,7 @@ class URLCategoriesAPI(APIEndpoint):
 
         return self._put(f"urlCategories/{category_id}", json=payload)
 
-    def add_urls_to_category(self, category_id: str, urls: list):
+    def add_urls_to_category(self, category_id: str, urls: list) -> Box:
         """
         Adds URLS to a URL category.
 
@@ -226,7 +267,7 @@ class URLCategoriesAPI(APIEndpoint):
                 Custom URLs to add to a URL category.
 
         Returns:
-            :obj:`dict`: The updated URL category resource record.
+            :obj:`Box`: The updated URL category resource record.
 
         Examples:
             >>> zia.url_categories.add_urls_to_category('CUSTOM_01',
@@ -234,19 +275,12 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        # Cache existing record for defaulting mandatory fields that may not require updating.
-        category_record = self.get_category(category_id)
+        payload = convert_keys(self.get_category(category_id))
+        payload["urls"] = urls
 
-        payload = {
-            "configuredName": category_record.configured_name,  # configuredName required.
-            "urls": urls,
-        }
+        return self._put(f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload)
 
-        return self._put(
-            f"urlCategories/{category_id}?action=ADD_TO_LIST", json=payload
-        )
-
-    def delete_urls_from_category(self, category_id: str, urls: list):
+    def delete_urls_from_category(self, category_id: str, urls: list) -> Box:
         """
         Adds URLS to a URL category.
 
@@ -257,7 +291,7 @@ class URLCategoriesAPI(APIEndpoint):
                 Custom URLs to delete from a URL category.
 
         Returns:
-            :obj:`dict`: The updated URL category resource record.
+            :obj:`Box`: The updated URL category resource record.
 
         Examples:
             >>> zia.url_categories.delete_urls_from_category('CUSTOM_01',
@@ -265,19 +299,12 @@ class URLCategoriesAPI(APIEndpoint):
 
         """
 
-        # Cache existing record for defaulting mandatory fields that may not require updating.
-        category_record = self.get_category(category_id)
+        payload = convert_keys(self.get_category(category_id))
+        payload["urls"] = urls
 
-        payload = {
-            "configuredName": category_record.configured_name,  # configuredName required.
-            "urls": urls,
-        }
+        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
 
-        return self._put(
-            f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload
-        )
-
-    def delete_category(self, category_id: str):
+    def delete_category(self, category_id: str) -> int:
         """
         Deletes the specified URL category.
 
@@ -286,7 +313,7 @@ class URLCategoriesAPI(APIEndpoint):
                 The unique identifier for the category.
 
         Returns:
-            :obj:`str`: The status code for the operation.
+            :obj:`int`: The status code for the operation.
 
         Examples:
             >>> zia.url_categories.delete_category('CUSTOM_01')

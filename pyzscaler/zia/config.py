@@ -2,7 +2,7 @@ from restfly.endpoint import APIEndpoint
 
 
 class ActivationAPI(APIEndpoint):
-    def status(self):
+    def status(self) -> str:
         """
         Returns the activation status for a configuration change.
 
@@ -16,7 +16,7 @@ class ActivationAPI(APIEndpoint):
         """
         return self._get("status").status
 
-    def activate(self):
+    def activate(self) -> str:
         """
         Activates configuration changes.
 

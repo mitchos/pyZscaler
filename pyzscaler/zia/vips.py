@@ -1,8 +1,9 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 
 class DataCenterVIPSAPI(APIEndpoint):
-    def list_public_se(self, cloud: str, continent: str = None):
+    def list_public_se(self, cloud: str, continent: str = None) -> Box:
         """
         Returns a list of the Zscaler Public Service Edge information for the specified cloud.
 
@@ -12,7 +13,7 @@ class DataCenterVIPSAPI(APIEndpoint):
                 Filter entries by the specified continent. Accepted values are `apac`, `emea` and `amer`.
 
         Returns:
-            :obj:`dict`: The Public Service Edge VIPs
+            :obj:`Box`: The Public Service Edge VIPs
 
         Examples:
             Print all Public Service Edge information for ``zscaler.net``:
@@ -28,16 +29,19 @@ class DataCenterVIPSAPI(APIEndpoint):
 
         if continent is not None:
             if continent == "amer":
-                continent = "_amer"
-            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
-                f"{cloud}.net"
-            ][f"continent : {continent}"]
+                # This return is an edge-case to handle the JSON structure for _americas which is in the format
+                # continent :_americas. All other continents have whitespace, e.g. continent : emea.
+                return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
+                    "continent :_americas"
+                ]
 
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[
-            f"{cloud}.net"
-        ]
+            return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"][
+                f"continent : {continent}"
+            ]
 
-    def list_ca(self, cloud: str):
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/cenr/json")[f"{cloud}.net"]
+
+    def list_ca(self, cloud: str) -> BoxList:
         """
         Returns a list of Zscaler Central Authority server IPs for the specified cloud.
 
@@ -45,7 +49,7 @@ class DataCenterVIPSAPI(APIEndpoint):
             cloud (str):  The ZIA cloud that this request applies to.
 
         Returns:
-            :obj:`list`: A list of CA server IPs.
+            :obj:`BoxList`: A list of CA server IPs.
 
         Examples:
             Print the IP address of Central Authority servers in `zscalertwo.net`:
@@ -54,11 +58,9 @@ class DataCenterVIPSAPI(APIEndpoint):
             ...    print(ip)
 
         """
-        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")[
-            "ranges"
-        ]
+        return self._get(f"https://api.config.zscaler.com/{cloud}.net/ca/json")["ranges"]
 
-    def list_pac(self, cloud: str):
+    def list_pac(self, cloud: str) -> BoxList:
         """
         Returns a list of Proxy Auto-configuration (PAC) server IPs for the specified cloud.
 
@@ -66,7 +68,7 @@ class DataCenterVIPSAPI(APIEndpoint):
             cloud (str): The ZIA cloud that this request applies to.
 
         Returns:
-            :obj:`list`: A list of PAC server IPs.
+            :obj:`BoxList`: A list of PAC server IPs.
 
         Examples:
             Print the IP address of PAC servers in `zscloud.net`:

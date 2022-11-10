@@ -1,11 +1,11 @@
-from box import BoxList
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import Iterator, snake_to_camel
+from pyzscaler.utils import Iterator, convert_keys, snake_to_camel
 
 
 class TrafficForwardingAPI(APIEndpoint):
-    def list_gre_tunnels(self, **kwargs):
+    def list_gre_tunnels(self, **kwargs) -> BoxList:
         """
         Returns the list of all configured GRE tunnels.
 
@@ -18,7 +18,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
-            :obj:`list`: A list of GRE tunnels configured in ZIA.
+            :obj:`BoxList`: A list of GRE tunnels configured in ZIA.
 
         Examples:
             List GRE tunnels with default settings:
@@ -37,9 +37,9 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    print(tunnel)
 
         """
-        return list(Iterator(self._api, "greTunnels", **kwargs))
+        return BoxList(Iterator(self._api, "greTunnels", **kwargs))
 
-    def get_gre_tunnel(self, tunnel_id: str):
+    def get_gre_tunnel(self, tunnel_id: str) -> Box:
         """
         Returns information for the specified GRE tunnel.
 
@@ -48,7 +48,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The unique identifier for the GRE tunnel.
 
         Returns:
-            :obj:`dict`: The GRE tunnel resource record.
+            :obj:`Box`: The GRE tunnel resource record.
 
         Examples:
             >>> gre_tunnel = zia.traffic.get_gre_tunnel('967134')
@@ -56,7 +56,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         return self._get(f"greTunnels/{tunnel_id}")
 
-    def list_gre_ranges(self, **kwargs):
+    def list_gre_ranges(self, **kwargs) -> BoxList:
         """
         Returns a list of available GRE tunnel ranges.
 
@@ -69,7 +69,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The maximum number of GRE tunnel IP ranges that can be added. Defaults to `10`.
 
         Returns:
-            :obj:`list`: A list of available GRE tunnel ranges.
+            :obj:`BoxList`: A list of available GRE tunnel ranges.
 
         Examples:
             >>> gre_tunnel_ranges = zia.traffic.list_gre_ranges()
@@ -77,7 +77,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         payload = {snake_to_camel(key): value for key, value in kwargs.items()}
 
-        return self._get("greTunnels/availableInternalIpRanges", params=payload, box=BoxList)
+        return self._get("greTunnels/availableInternalIpRanges", params=payload)
 
     def add_gre_tunnel(
         self,
@@ -85,7 +85,7 @@ class TrafficForwardingAPI(APIEndpoint):
         primary_dest_vip_id: str = None,
         secondary_dest_vip_id: str = None,
         **kwargs,
-    ):
+    ) -> Box:
         """
         Add a new GRE tunnel.
 
@@ -116,7 +116,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 source IP address.
 
         Returns:
-            :obj:`dict`: The resource record for the newly created GRE tunnel.
+            :obj:`Box`: The resource record for the newly created GRE tunnel.
 
         Examples:
             Add a GRE tunnel with closest recommended VIPs:
@@ -150,7 +150,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._post("greTunnels", json=payload)
 
-    def list_static_ips(self, **kwargs):
+    def list_static_ips(self, **kwargs) -> BoxList:
         """
         Returns the list of all configured static IPs.
 
@@ -168,7 +168,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 Specifies the page size. The default size is 100, but the maximum size is 1000.
 
         Returns:
-            :obj:`list`: A list of the configured static IPs
+            :obj:`BoxList`: A list of the configured static IPs
 
         Examples:
             List static IPs using default settings:
@@ -188,9 +188,9 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
 
-        return list(Iterator(self._api, "staticIP", **kwargs))
+        return BoxList(Iterator(self._api, "staticIP", **kwargs))
 
-    def get_static_ip(self, static_ip_id: str):
+    def get_static_ip(self, static_ip_id: str) -> Box:
         """
         Returns information for the specified static IP.
 
@@ -207,7 +207,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
         return self._get(f"staticIP/{static_ip_id}")
 
-    def add_static_ip(self, ip_address: str, **kwargs):
+    def add_static_ip(self, ip_address: str, **kwargs) -> Box:
         """
         Adds a new static IP.
 
@@ -232,7 +232,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 point, ranges between -180 and 180 degrees.
 
         Returns:
-            :obj:`dict`: The resource record for the newly created static IP.
+            :obj:`Box`: The resource record for the newly created static IP.
 
         Examples:
             Add a new static IP address:
@@ -252,52 +252,28 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._post("staticIP", json=payload)
 
-    def check_static_ip(self, ip_address: str, **kwargs):
+    def check_static_ip(self, ip_address: str) -> int:
         """
         Validates if a static IP object is correct.
 
         Args:
             ip_address (str):
                 The static IP address
-            **kwargs:
-                Optional keyword args.
-
-        Keyword Args:
-            **comment (str):
-                Additional information about this static IP address.
-            **geo_override (bool):
-                If not set, geographic coordinates and city are automatically determined from the IP address.
-                Otherwise, the latitude and longitude coordinates must be provided.
-            **routable_ip (bool):
-                Indicates whether a non-RFC 1918 IP address is publicly routable. This attribute is ignored if there
-                is no ZIA Private Service Edge associated to the organization.
-            **latitude (float):
-                Required only if the geoOverride attribute is set. Latitude with 7 digit precision after
-                decimal point, ranges between -90 and 90 degrees.
-            **longitude (float):
-                Required only if the geoOverride attribute is set. Longitude with 7 digit precision after decimal
-                point, ranges between -180 and 180 degrees.
 
         Returns:
-            :obj:`str`: The operation response code.
+            :obj:`int`: 200 if the static IP provided is valid.
 
         Examples:
-            >>> zia.traffic.check_static_ip(ip_address='203.0.113.11',
-            ...    routable_ip=True,
-            ...    comment='San Francisco Branch Office')
+            >>> zia.traffic.check_static_ip(ip_address='203.0.113.11')
 
         """
         payload = {
             "ipAddress": ip_address,
         }
 
-        # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[snake_to_camel(key)] = value
-
         return self._post("staticIP/validate", json=payload, box=False).status_code
 
-    def update_static_ip(self, static_ip_id: str, **kwargs):
+    def update_static_ip(self, static_ip_id: str, **kwargs) -> Box:
         """
         Updates information relating to the specified static IP.
 
@@ -324,19 +300,14 @@ class TrafficForwardingAPI(APIEndpoint):
                 point, ranges between -180 and 180 degrees.
 
         Returns:
-            :obj:`dict`: The updated static IP resource record.
+            :obj:`Box`: The updated static IP resource record.
 
         Examples:
             >>> zia.traffic.update_static_ip('972494', comment='NY Branch Office')
 
         """
 
-        payload = {
-            "id": static_ip_id,
-            "ipAddress": self.get_static_ip(
-                static_ip_id
-            ),  # ZIA API requires existing IP but can't be modified
-        }
+        payload = convert_keys(self.get_static_ip(static_ip_id))
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
@@ -344,7 +315,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._put(f"staticIP/{static_ip_id}", json=payload)
 
-    def delete_static_ip(self, static_ip_id: str):
+    def delete_static_ip(self, static_ip_id: str) -> int:
         """
         Delete the specified static IP.
 
@@ -353,7 +324,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The unique identifier for the static IP.
 
         Returns:
-            :obj:`str`: The response code for the operation.
+            :obj:`int`: The response code for the operation.
 
         Examples:
             >>> zia.traffic.delete_static_ip('972494')
@@ -362,7 +333,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._delete(f"staticIP/{static_ip_id}", box=False).status_code
 
-    def list_vips(self, **kwargs):
+    def list_vips(self, **kwargs) -> BoxList:
         """
         Returns a list of virtual IP addresses (VIPs) available in the Zscaler cloud.
 
@@ -382,7 +353,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 Filter based on region.
 
         Returns:
-            :obj:`list` of :obj:`dict`: List of VIP resource records.
+            :obj:`BoxList`: List of VIP resource records.
 
         Examples:
             List VIPs using default settings:
@@ -401,13 +372,15 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    print(vip)
 
         """
-        return list(Iterator(self._api, "vips", **kwargs))
+        return BoxList(Iterator(self._api, "vips", **kwargs))
 
-    def list_vips_recommended(self, **kwargs):
+    def list_vips_recommended(self, source_ip: str, **kwargs) -> BoxList:
         """
         Returns a list of recommended virtual IP addresses (VIPs) based on parameters.
 
         Args:
+            source_ip (str):
+                The source IP address.
             **kwargs:
                 Optional keywords args.
 
@@ -420,8 +393,6 @@ class TrafficForwardingAPI(APIEndpoint):
                 Include ZIA Private Service Edge VIPs. Default: True.
             include_current_vips (bool):
                 Include currently assigned VIPs. Default: True.
-            source_ip (str):
-                The source IP address.
             latitude (str):
                 Latitude coordinate of GRE tunnel source.
             longitude (str):
@@ -430,7 +401,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 Override the geographic coordinates. Default: False.
 
         Returns:
-            :obj:`list` of :obj:`dict`: List of VIP resource records.
+            :obj:`BoxList`: List of VIP resource records.
 
         Examples:
             Return recommended VIPs for a given source IP:
@@ -439,11 +410,15 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    pprint(vip)
 
         """
-        payload = {snake_to_camel(key): value for key, value in kwargs.items()}
+        payload = {"sourceIp": source_ip}
 
-        return self._get("vips/recommendedList", params=payload, box=BoxList)
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
 
-    def get_closest_diverse_vip_ids(self, ip_address: str):
+        return self._get("vips/recommendedList", params=payload)
+
+    def get_closest_diverse_vip_ids(self, ip_address: str) -> tuple:
         """
         Returns the closest diverse Zscaler destination VIPs for a given IP address.
 
@@ -452,7 +427,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The IP address used for locating the closest diverse VIPs.
 
         Returns:
-            :obj:`tuple` of :obj:`str`: Tuple containing the preferred and secondary VIP IDs.
+            :obj:`tuple`: Tuple containing the preferred and secondary VIP IDs.
 
         Examples:
             >>> closest_vips = zia.traffic.get_closest_diverse_vip_ids('203.0.113.20')
@@ -462,14 +437,12 @@ class TrafficForwardingAPI(APIEndpoint):
         preferred_vip = vips_list[0]  # First entry is closest vip
 
         # Generator to find the next closest vip not in the same city as our preferred
-        secondary_vip = next(
-            (vip for vip in vips_list if vip.city != preferred_vip.city)
-        )
+        secondary_vip = next((vip for vip in vips_list if vip.city != preferred_vip.city))
         recommended_vips = (preferred_vip.id, secondary_vip.id)
 
         return recommended_vips
 
-    def list_vpn_credentials(self, **kwargs):
+    def list_vpn_credentials(self, **kwargs) -> BoxList:
         """
         Returns the list of all configured VPN credentials.
 
@@ -498,7 +471,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 Only gets VPN credentials for the specified type (CN, IP, UFQDN, XAUTH)
 
         Returns:
-            :obj:`list` of :obj:`dict`: List containing the VPN credential resource records.
+            :obj:`BoxList`: List containing the VPN credential resource records.
 
         Examples:
             List VPN credentials using default settings:
@@ -517,11 +490,9 @@ class TrafficForwardingAPI(APIEndpoint):
             ...    print(credential)
 
         """
-        return list(Iterator(self._api, "vpnCredentials", **kwargs))
+        return BoxList(Iterator(self._api, "vpnCredentials", **kwargs))
 
-    def add_vpn_credential(
-        self, authentication_type: str, pre_shared_key: str, **kwargs
-    ):
+    def add_vpn_credential(self, authentication_type: str, pre_shared_key: str, **kwargs) -> Box:
         """
         Add new VPN credentials.
 
@@ -530,7 +501,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 VPN authentication type (i.e., how the VPN credential is sent to the server). It is not modifiable
                 after VpnCredential is created.
 
-                Only IP and UFQDN supported via API.
+                Only ``IP`` and ``UFQDN`` supported via API.
             pre_shared_key (str):
                 Pre-shared key. This is a required field for UFQDN and IP auth type.
 
@@ -546,7 +517,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 Associate the VPN credential with an existing location.
 
         Returns:
-            :obj:`dict`: The newly created VPN credential resource record.
+            :obj:`Box`: The newly created VPN credential resource record.
 
         Examples:
             Add a VPN credential using IP authentication type before location has been defined:
@@ -581,7 +552,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._post("vpnCredentials", json=payload)
 
-    def bulk_delete_vpn_credentials(self, credential_ids: list):
+    def bulk_delete_vpn_credentials(self, credential_ids: list) -> int:
         """
         Bulk delete VPN credentials.
 
@@ -590,7 +561,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 List of credential IDs that will be deleted.
 
         Returns:
-            :obj:`str`: Response code for operation.
+            :obj:`int`: Response code for operation.
 
         Examples:
             >>> zia.traffic.bulk_delete_vpn_credentials(['94963984', '97679232'])
@@ -599,13 +570,11 @@ class TrafficForwardingAPI(APIEndpoint):
 
         payload = {"ids": credential_ids}
 
-        return self._post(
-            "vpnCredentials/bulkDelete", json=payload, box=False
-        ).status_code
+        return self._post("vpnCredentials/bulkDelete", json=payload, box=False).status_code
 
-    def get_vpn_credential(self, credential_id: str = None, fqdn: str = None):
+    def get_vpn_credential(self, credential_id: str = None, fqdn: str = None) -> Box:
         """
-        Get VPN credentials for the specified ID.
+        Get VPN credentials for the specified ID or fqdn.
 
         Args:
             credential_id (str, optional):
@@ -614,7 +583,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The unique FQDN for the VPN credentials.
 
         Returns:
-            :obj:`dict`: The resource record for the requested VPN credentials.
+            :obj:`Box`: The resource record for the requested VPN credentials.
 
         Examples:
             >>> pprint(zia.traffic.get_vpn_credential('97679391'))
@@ -623,20 +592,14 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
         if credential_id and fqdn:
-            raise ValueError(
-                "TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided."
-            )
+            raise ValueError("TOO MANY ARGUMENTS: Expected either a credential_id or an fqdn. Both were provided.")
         elif fqdn:
-            credential = (
-                record
-                for record in self.list_vpn_credentials(search=fqdn)
-                if record.fqdn == fqdn
-            )
+            credential = (record for record in self.list_vpn_credentials(search=fqdn) if record.fqdn == fqdn)
             return next(credential, None)
 
         return self._get(f"vpnCredentials/{credential_id}")
 
-    def update_vpn_credential(self, credential_id: str, **kwargs):
+    def update_vpn_credential(self, credential_id: str, **kwargs) -> Box:
         """
         Update VPN credentials with the specified ID.
 
@@ -653,7 +616,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The unique identifier for an existing location.
 
         Returns:
-            :obj:`dict`: The newly updated VPN credential resource record.
+            :obj:`Box`: The newly updated VPN credential resource record.
 
         Examples:
             Add a comment:
@@ -670,15 +633,7 @@ class TrafficForwardingAPI(APIEndpoint):
         """
 
         # Cache the credential record
-        credential_record = self.get_vpn_credential(credential_id)
-
-        payload = {"type": credential_record.type}
-
-        # Provide required params depending on the record type
-        if credential_record.type == "IP":
-            payload["ipAddress"] = credential_record.ipAddress
-        elif credential_record.type == "UFQDN":
-            payload["fqdn"] = credential_record.fqdn
+        payload = convert_keys(self.get_vpn_credential(credential_id))
 
         # Add location ID to payload if specified.
         if kwargs.get("location_id"):
@@ -690,7 +645,7 @@ class TrafficForwardingAPI(APIEndpoint):
 
         return self._put(f"vpnCredentials/{credential_id}", json=payload)
 
-    def delete_vpn_credential(self, credential_id: str):
+    def delete_vpn_credential(self, credential_id: str) -> int:
         """
         Delete VPN credentials for the specified ID.
 
@@ -699,7 +654,7 @@ class TrafficForwardingAPI(APIEndpoint):
                 The unique identifier for the VPN credentials that will be deleted.
 
         Returns:
-            :obj:`str`: Response code for the operation.
+            :obj:`int`: Response code for the operation.
 
         Examples:
             >>> zia.traffic.delete_vpn_credential('97679391')

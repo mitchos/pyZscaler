@@ -1,6 +1,7 @@
+from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import snake_to_camel, add_id_groups
+from pyzscaler.utils import Iterator, add_id_groups, convert_keys, snake_to_camel
 
 
 class AppSegmentsAPI(APIEndpoint):
@@ -10,20 +11,20 @@ class AppSegmentsAPI(APIEndpoint):
         ("server_group_ids", "serverGroups"),
     ]
 
-    def list_segments(self):
+    def list_segments(self, **kwargs) -> BoxList:
         """
         Retrieve all configured application segments.
 
         Returns:
-            :obj:`list`: List of application segments.
+            :obj:`BoxList`: List of application segments.
 
         Examples:
             >>> app_segments = zpa.app_segments.list_segments()
 
         """
-        return self._get("application").list
+        return BoxList(Iterator(self._api, "application", **kwargs))
 
-    def get_segment(self, segment_id: str):
+    def get_segment(self, segment_id: str) -> Box:
         """
         Get information for an application segment.
 
@@ -32,30 +33,40 @@ class AppSegmentsAPI(APIEndpoint):
                 The unique identifier for the application segment.
 
         Returns:
-            :obj:`dict`: The application segment resource record.
+            :obj:`Box`: The application segment resource record.
 
         Examples:
-            >>> app_segment = zpa.app_segments.details('234324234324')
+            >>> app_segment = zpa.app_segments.details('99999')
 
         """
         return self._get(f"application/{segment_id}")
 
-    def delete_segment(self, segment_id: str):
+    def delete_segment(self, segment_id: str, force_delete: bool = False) -> int:
         """
         Delete an application segment.
 
         Args:
+            force_delete (bool):
+                Setting this field to true deletes the mapping between Application Segment and Segment Group.
             segment_id (str):
                 The unique identifier for the application segment.
 
         Returns:
-            :obj:`str`: The operation response code.
+            :obj:`int`: The operation response code.
 
         Examples:
-            >>> zpa.app_segments.delete('234324234324')
+            Delete an Application Segment with an id of 99999.
+
+            >>> zpa.app_segments.delete('99999')
+
+            Force deletion of an Application Segment with an id of 88888.
+
+            >>> zpa.app_segments.delete('88888', force_delete=True)
 
         """
-        return self._delete(f"application/{segment_id}")
+        payload = {"forceDelete": force_delete}
+
+        return self._delete(f"application/{segment_id}", params=payload).status_code
 
     def add_segment(
         self,
@@ -63,10 +74,10 @@ class AppSegmentsAPI(APIEndpoint):
         domain_names: list,
         segment_group_id: str,
         server_group_ids: list,
-        tcp_ports: str = None,
-        udp_ports: str = None,
+        tcp_ports: list = None,
+        udp_ports: list = None,
         **kwargs,
-    ):
+    ) -> Box:
         """
         Create an application segment.
 
@@ -115,16 +126,16 @@ class AppSegmentsAPI(APIEndpoint):
                 Enable Passive Health Checks for this Application Segment.
 
         Returns:
-            :obj:`dict`: The newly created application segment resource record.
+            :obj:`Box`: The newly created application segment resource record.
 
         Examples:
             Add a new application segment for example.com, ports 8080-8085.
 
             >>> zpa.app_segments.add_segment('new_app_segment',
             ...    domain_names=['example.com'],
-            ...    segment_group_id='916196382959075421',
+            ...    segment_group_id='99999',
             ...    tcp_ports=['8080', '8085'],
-            ...    server_group_ids=['234234234234324', '23121115151515'])
+            ...    server_group_ids=['99999', '88888'])
 
         """
 
@@ -146,7 +157,7 @@ class AppSegmentsAPI(APIEndpoint):
 
         return self._post("application", json=payload)
 
-    def update_segment(self, segment_id: str, **kwargs):
+    def update_segment(self, segment_id: str, **kwargs) -> Box:
         """
         Update an application segment.
 
@@ -197,25 +208,29 @@ class AppSegmentsAPI(APIEndpoint):
                 List of udp port range pairs, e.g. ['35000', '35000'] for port 35000.
 
         Returns:
-            :obj:`dict`: The updated application segment resource record.
+            :obj:`Box`: The updated application segment resource record.
 
         Examples:
             Rename the application segment for example.com.
 
-            >>> zpa.app_segments.update('2234234123234523',
+            >>> zpa.app_segments.update('99999',
             ...    name='new_app_name',
 
         """
 
-        # Set payload to value of existing record
-        payload = {
-            snake_to_camel(k): v for k, v in self.get_segment(segment_id).items()
-        }
+        # Set payload to value of existing record and recursively convert nested dict keys from snake_case
+        # to camelCase.
+        payload = convert_keys(self.get_segment(segment_id))
 
+        # Reformat keys that we've simplified for our users
         add_id_groups(self.reformat_params, kwargs, payload)
 
         # Add optional parameters to payload
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        return self._put(f"application/{segment_id}", json=payload)
+        resp = self._put(f"application/{segment_id}", json=payload).status_code
+
+        # Return the object if it was updated successfully
+        if resp == 204:
+            return self.get_segment(segment_id)
