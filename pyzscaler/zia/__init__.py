@@ -18,6 +18,7 @@ from .url_filters import URLFilteringAPI
 from .users import UserManagementAPI
 from .vips import DataCenterVIPSAPI
 from .admin_and_role_management import AdminAndRoleManagementAPI
+from .web_dlp import WebDLP
 
 
 class ZIA(APISession):
@@ -181,3 +182,11 @@ class ZIA(APISession):
 
         """
         return AdminAndRoleManagementAPI(self)
+
+    @property
+    def web_dlp(self):
+        """
+        The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
+
+        """
+        return WebDLP(self)
