@@ -225,8 +225,6 @@ class AdminAndRoleManagementAPI(APIEndpoint):
             **kwargs:
 
         Returns:
-
-        """
             :obj:`BoxList`: The admin_users resource record.
 
         Examples:
