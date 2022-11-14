@@ -4,7 +4,7 @@ __contributors__ = [
     "Dax Mickelson",
     "Jacob Gårder",
 ]
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 
 from pyzscaler.zcc import ZCC  # noqa
 from pyzscaler.zia import ZIA  # noqa
