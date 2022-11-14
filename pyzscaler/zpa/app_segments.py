@@ -202,10 +202,12 @@ class AppSegmentsAPI(APIEndpoint):
                 The unique identifer for the segment group this application segment belongs to.
             server_group_ids (:obj:`list` of :obj:`str`):
                 The list of server group IDs that belong to this application segment.
-            tcp_ports (:obj:`list` of :obj:`str`):
-                List of tcp port range pairs, e.g. ['22', '22'] for port 22-22, ['80', '100'] for 80-100.
-            udp_ports (:obj:`list` of :obj:`str`):
-                List of udp port range pairs, e.g. ['35000', '35000'] for port 35000.
+            tcp_ports (:obj:`list` of :obj:`tuple`):
+                List of TCP port ranges specified as a tuple pair, e.g. for ports 21-23, 8080-8085 and 443:
+                     [(21, 23), (8080, 8085), (443, 443)]
+            udp_ports (:obj:`list` of :obj:`tuple`):
+                List of UDP port ranges specified as a tuple pair, e.g. for ports 34000-35000 and 36000:
+                     [(34000, 35000), (36000, 36000)]
 
         Returns:
             :obj:`Box`: The updated application segment resource record.
@@ -221,6 +223,12 @@ class AppSegmentsAPI(APIEndpoint):
         # Set payload to value of existing record and recursively convert nested dict keys from snake_case
         # to camelCase.
         payload = convert_keys(self.get_segment(segment_id))
+
+        if kwargs.get("tcp_ports"):
+            payload["tcpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("tcp_ports")]
+
+        if kwargs.get("udp_ports"):
+            payload["udpPortRange"] = [{"from": ports[0], "to": ports[1]} for ports in kwargs.pop("udp_ports")]
 
         # Reformat keys that we've simplified for our users
         add_id_groups(self.reformat_params, kwargs, payload)

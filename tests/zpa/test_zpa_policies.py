@@ -1,3 +1,5 @@
+import copy
+
 import pytest
 import responses
 from box import Box, BoxList
@@ -8,14 +10,7 @@ from tests.conftest import stub_sleep
 
 @pytest.fixture(name="policies")
 def fixture_policies():
-    return {
-        "totalPages": 1,
-        "list": [
-            {"id": "1"},
-            {"id": "2"},
-            {"id": "3"},
-        ],
-    }
+    return {"totalPages": 1, "list": [{"id": "1"}, {"id": "2"}, {"id": "3"}]}
 
 
 @pytest.fixture(name="policy_rules")
@@ -200,12 +195,7 @@ def test_add_access_policy_rule(zpa, policies, policy_rules):
             )
         ],
     )
-    resp = zpa.policies.add_access_rule(
-        name="Test",
-        action="allow",
-        conditions=[("app_group", "id", "1")],
-        description="Test",
-    )
+    resp = zpa.policies.add_access_rule(name="Test", action="allow", conditions=[("app_group", "id", "1")], description="Test")
 
     assert isinstance(resp, Box)
     assert resp.id == "1"
@@ -232,26 +222,12 @@ def test_add_timeout_policy_rule(zpa, policies, policy_rules):
                     "description": "Test",
                     "reauthTimeout": 172800,
                     "reauthIdleTimeout": 600,
-                    "conditions": [
-                        {
-                            "operands": [
-                                {
-                                    "objectType": "APP_GROUP",
-                                    "lhs": "id",
-                                    "rhs": "1",
-                                }
-                            ]
-                        }
-                    ],
+                    "conditions": [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}]}],
                 }
             )
         ],
     )
-    resp = zpa.policies.add_timeout_rule(
-        name="Test",
-        conditions=[("app_group", "id", "1")],
-        description="Test",
-    )
+    resp = zpa.policies.add_timeout_rule(name="Test", conditions=[("app_group", "id", "1")], description="Test")
 
     assert isinstance(resp, Box)
     assert resp.id == "1"
@@ -277,26 +253,13 @@ def test_add_client_forwarding_policy_rule(zpa, policies, policy_rules):
                     "name": "Test",
                     "action": "INTERCEPT",
                     "description": "Test",
-                    "conditions": [
-                        {
-                            "operands": [
-                                {
-                                    "objectType": "APP_GROUP",
-                                    "lhs": "id",
-                                    "rhs": "1",
-                                }
-                            ]
-                        }
-                    ],
+                    "conditions": [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "1"}]}],
                 }
             )
         ],
     )
     resp = zpa.policies.add_client_forwarding_rule(
-        name="Test",
-        action="intercept",
-        conditions=[("app_group", "id", "1")],
-        description="Test",
+        name="Test", action="intercept", conditions=[("app_group", "id", "1")], description="Test"
     )
 
     assert isinstance(resp, Box)
@@ -307,17 +270,7 @@ def test_add_client_forwarding_policy_rule(zpa, policies, policy_rules):
 def test_update_policy_rule(zpa, policies, policy_rules):
     updated_rule = policy_rules["list"][0]
     updated_rule["description"] = "Updated Test"
-    updated_rule["conditions"] = [
-        {
-            "operands": [
-                {
-                    "objectType": "APP_GROUP",
-                    "lhs": "id",
-                    "rhs": "2",
-                }
-            ]
-        }
-    ]
+    updated_rule["conditions"] = [{"operands": [{"objectType": "APP_GROUP", "lhs": "id", "rhs": "2"}]}]
     responses.add(
         responses.GET,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/policyType/ACCESS_POLICY",
@@ -345,3 +298,29 @@ def test_update_policy_rule(zpa, policies, policy_rules):
     resp = zpa.policies.update_rule("access", "1", description="Updated Test", conditions=[("app_group", "id", "2")])
     assert isinstance(resp, Box)
     assert resp.id == "1"
+
+
+@responses.activate
+def test_reorder_rule(zpa, policies, policy_rules):
+    updated_rule = copy.deepcopy(policy_rules["list"][0])
+    updated_rule["ruleOrder"] = "2"
+    responses.add(
+        responses.GET,
+        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/policyType/ACCESS_POLICY",
+        json=policies["list"][0],
+        status=200,
+    )
+    responses.add(
+        responses.PUT,
+        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/1/rule/1/reorder/2",
+        status=204,
+    )
+    responses.add(
+        responses.GET,
+        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/1/rule/1",
+        json=updated_rule,
+        status=200,
+    )
+    resp = zpa.policies.reorder_rule("access", "1", "2")
+    assert isinstance(resp, Box)
+    assert resp.rule_order == "2"
