@@ -213,14 +213,6 @@ class ZIA(APISession):
         return DataCenterVIPSAPI(self)
 
     @property
-    def admin_and_role_management(self):
-        """
-        The interface object for the :ref: `ZIA Admin and Role Management interface <zia-admin_and_role_management>`.
-
-        """
-        return AdminAndRoleManagementAPI(self)
-
-    @property
     def web_dlp(self):
         """
         The interface object for the :ref: `ZIA Data-Loss-Prevention Web DLP Rules`.
