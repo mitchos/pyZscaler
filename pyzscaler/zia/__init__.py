@@ -70,6 +70,7 @@ class ZIA(APISession):
             or f"https://zsapi.{self._env_cloud}.net/api/v1"
         )
         self.conv_box = True
+        self.sandbox_token = kw.get("sandbox_token", os.getenv(f"{self._env_base}_SANDBOX_TOKEN"))
         super(ZIA, self).__init__(**kw)
 
     def _build_session(self, **kwargs) -> Box:
