@@ -62,7 +62,6 @@ class URLCategoriesAPI(APIEndpoint):
         payload = {
             "customOnly": custom_only,
             "includeOnlyUrlKeywordCounts": only_counts,
-            "type": "TLD_CATEGORY",
         }
 
         return self._get("urlCategories", params=payload)
