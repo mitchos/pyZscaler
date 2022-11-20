@@ -21,6 +21,7 @@ This package covers the ZIA interface.
     url_filters
     users
     vips
+    web_dlp
 
 .. automodule:: pyzscaler.zia
     :members:
