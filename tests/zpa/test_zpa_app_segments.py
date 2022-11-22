@@ -1,3 +1,5 @@
+import copy
+
 import pytest
 import responses
 from box import Box, BoxList
@@ -174,9 +176,11 @@ def test_add_segment(zpa, app_segments):
 
 @responses.activate
 def test_update_segment(zpa, app_segments):
-    updated_segment = app_segments["list"][0]
+    updated_segment = copy.deepcopy(app_segments["list"][0])
     updated_segment["name"] = "Test Updated"
     updated_segment["clientlessApps"] = [{"id": "1"}, {"id": "2"}]
+    updated_segment["tcpPortRange"] = [{"from": "80", "to": "81"}]
+    updated_segment["udpPortRange"] = [{"from": "5000", "to": "5005"}]
 
     responses.add(
         responses.GET,
@@ -198,7 +202,9 @@ def test_update_segment(zpa, app_segments):
         json=updated_segment,
         status=200,
     )
-    resp = zpa.app_segments.update_segment("1", name="Test Updated", clientless_app_ids=["1", "2"])
+    resp = zpa.app_segments.update_segment(
+        "1", name="Test Updated", clientless_app_ids=["1", "2"], tcp_ports=[("80", "81")], udp_ports=[("5000", "5005")]
+    )
 
     assert isinstance(resp, Box)
     assert resp.name == updated_segment["name"]

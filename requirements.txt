@@ -1,2 +1,2 @@
-restfly==1.4.6
-python-box==6.0.2
+restfly==1.4.7
+python-box==6.1.0

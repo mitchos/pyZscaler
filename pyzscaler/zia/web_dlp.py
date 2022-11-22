@@ -36,6 +36,7 @@ class WebDLP(APIEndpoint):
             >>> results = zia.web_dlp.get_rule(rule_id='2671')
             ...   logging.info(results)
 
+
         """
         return self._get(f"webDlpRules/{rule_id}")
 
@@ -90,6 +91,7 @@ class WebDLP(APIEndpoint):
             >>> post_id = results['id']
             >>> logging.info(f"Posted payload result has id: {post_id}.")
 
+
         """
         return self._post("webDlpRules", json=payload)
 
@@ -127,6 +129,7 @@ class WebDLP(APIEndpoint):
             >>> # Delete Web DLP item.
             >>> results = zia.web_dlp.delete_rule(rule_id=post_id)
             >>> logging.info(results)
+
 
         """
         return self._delete(f"webDlpRules/{rule_id}").status_code

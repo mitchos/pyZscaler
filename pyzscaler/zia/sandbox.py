@@ -1,8 +1,41 @@
 from box import Box
+from restfly import APISession
 from restfly.endpoint import APIEndpoint
 
 
 class CloudSandboxAPI(APIEndpoint):
+    def __init__(self, api: APISession):
+        super().__init__(api)
+
+        self.sandbox_token = api.sandbox_token
+
+    def submit_file(self, file: str, force: bool = False) -> Box:
+        """
+        Submits a file to the ZIA Advanced Cloud Sandbox for analysis.
+
+        Args:
+            file (str): The filename that will be submitted for sandbox analysis.
+            force (bool): Force ZIA to analyse the file even if it has been submitted previously.
+
+        Returns:
+            :obj:`Box`: The Cloud Sandbox submission response information.
+
+        Examples:
+            Submit a file in the current directory called malware.exe to the cloud sandbox, forcing analysis.
+
+            >>> zia.sandbox.submit_file('malware.exe', force=True)
+
+        """
+        with open(file, "rb") as f:
+            data = f.read()
+
+        params = {
+            "api_token": self.sandbox_token,
+            "force": int(force),  # convert boolean to int for ZIA
+        }
+
+        return self._post("https://csbapi.zscaler.net/zscsb/submit", params=params, data=data)
+
     def get_quota(self) -> Box:
         """
         Returns the Cloud Sandbox API quota information for the organisation.
