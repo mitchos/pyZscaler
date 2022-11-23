@@ -120,27 +120,27 @@ def test_web_dlp_get_rule(rules, zia):
 
 
 @responses.activate
-def test_web_dlp_get_all_rules(rules, zia):
+def test_web_dlp_list_rules(rules, zia):
     responses.add(
         method="GET",
         url="https://zsapi.zscaler.net/api/v1/webDlpRules",
         json=[rules],
         status=200,
     )
-    resp = zia.web_dlp.get_all_rules()
+    resp = zia.web_dlp.list_rules()
 
     assert isinstance(resp, list)
 
 
 @responses.activate
-def test_web_dlp_get_rules_lite(rules_lite, zia):
+def test_web_dlp_list_rules_lite(rules_lite, zia):
     responses.add(
         method="GET",
         url="https://zsapi.zscaler.net/api/v1/webDlpRules/lite",
         json=[rules_lite],
         status=200,
     )
-    resp = zia.web_dlp.get_rules_lite()
+    resp = zia.web_dlp.list_rules_lite()
 
     assert isinstance(resp, list)
 
@@ -201,7 +201,7 @@ def test_web_dlp_update_rule(zia, rules):
         match=[matchers.json_params_matcher(updated_user)],
     )
 
-    resp = zia.web_dlp.update_rule("2669", name="New Name", comments="Updated Test")
+    resp = zia.web_dlp.update_rule("2669", payload=updated_user)
 
     assert isinstance(resp, Box)
     assert resp.name == updated_user["name"]
@@ -211,5 +211,5 @@ def test_web_dlp_update_rule(zia, rules):
 @responses.activate
 def test_web_dlp_delete_rule(zia):
     responses.add(method="DELETE", url="https://zsapi.zscaler.net/api/v1/webDlpRules/2669", status=204)
-    resp = zia.users.delete_user("2669")
-    assert resp == 204
+    resp = zia.web_dlp.delete_rule("2669")
+    assert resp.status_code == 204

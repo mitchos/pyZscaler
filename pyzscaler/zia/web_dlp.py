@@ -5,131 +5,135 @@ from restfly.endpoint import APIEndpoint
 
 
 class WebDLP(APIEndpoint):
-    def get_all_rules(self, **kwargs) -> BoxList:
+    def list_rules(self, **kwargs) -> BoxList:
         """
-        Gets a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
+        Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
 
         Returns:
             :obj:`BoxList`: List of Web DLP items.
 
         Examples:
-            >>> # Get all Web DLP Items
-            >>> results = zia.web_dlp.get_all_rules()
-            >>> for item in results:
-            ...    logging.info(item)
+            Get a list of all Web DLP Items
+
+            >>> results = zia.web_dlp.list_rules()
+            ... for item in results:
+            ...    print(item)
 
         """
         return self._get("webDlpRules")
 
     def get_rule(self, rule_id: str) -> Box:
         """
-        Gets a DLP policy rule, excluding SaaS Security API DLP policy rules.
+        Returns a DLP policy rule, excluding SaaS Security API DLP policy rules.
 
         Args:
-            rule_id (str): String of ID.
+            rule_id (str): The unique id for the Web DLP rule.
 
         Returns:
-            :obj:`Box`: Box of Web DLP item.
+            :obj:`Box`: The Web DLP Rule resource record.
 
         Examples:
-            >>> # Get Web DLP item by ID
-            >>> results = zia.web_dlp.get_rule(rule_id='2671')
-            ...   logging.info(results)
+            Get information on a Web DLP item by ID
 
+            >>> results = zia.web_dlp.get_rule(rule_id='9999')
+            ... print(results)
 
         """
         return self._get(f"webDlpRules/{rule_id}")
 
-    def get_rules_lite(self) -> BoxList:
+    def list_rules_lite(self) -> BoxList:
         """
-        Gets name and ID dictionary for all DLP policy rules, excluding SaaS Security API DLP policy rules.
+        Returns the name and ID for all DLP policy rules, excluding SaaS Security API DLP policy rules.
 
         Returns:
-            :obj:`BoxList`: BoxList of Web DLP name/ids.
+            :obj:`BoxList`: List of Web DLP name/ids.
 
         Examples:
-            >>> # Get Web DLP Lite results
-            >>> results = zia.web_dlp.get_rules_lite()
-            >>> for item in results:
-            ...    logging.info(item)
+            Get Web DLP Lite results
+
+            >>> results = zia.web_dlp.list_rules_lite()
+            ... for item in results:
+            ...    print(item)
 
         """
         return self._get("webDlpRules/lite")
 
     def add_rule(self, payload: json) -> Box:
-        """Adds a new DLP policy rule.
+        """
+        Adds a new DLP policy rule.
 
         Args:
-            payload (json): JSON of Web DLP Policy to POST.
+            payload (dict): Dictionary containing the Web DLP Policy rule to be added.
 
         Returns:
-            :obj:`Box`: Box item of resulting POST.
+            :obj:`Box`: The newly added Web DLP Policy Rule resource record.
 
-        Minimum items required in payload::
+        Payload:
+            Minimum items required in payload::
 
-            payload = {
-                'order': 1, # A number greater than 0.
-                'rank': 0,
-                'name': "Dax testing pyZscaler post.",
-                'protocols': ["ANY_RULE"],
-                'action': "ALLOW",
-            }
+                payload = {
+                    'order': 1, # A number greater than 0.
+                    'rank': 0,
+                    'name': "Dax testing pyZscaler post.",
+                    'protocols': ["ANY_RULE"],
+                    'action': "ALLOW",
+                }
 
         Examples:
-            >>> # Build minimum info for POST
-            >>> payload = {
-            ...    'order': 1,
-            ...    'rank': 0,
-            ...    'name': "Dax testing pyZscaler post.",
-            ...    'protocols': ["ANY_RULE"],
-            ...    'action': "ALLOW",
-            ...}
-            >>>
-            >>> # Post new Web DLP item
-            >>> results = zia.web_dlp.add_rule(payload=payload)
-            >>> logging.info(results)
-            >>> post_id = results['id']
-            >>> logging.info(f"Posted payload result has id: {post_id}.")
+            Add a Web DLP Policy rule with the minimum required parameters::
 
+                payload = {
+                    'order': 1,
+                    'rank': 0,
+                    'name': "Dax testing pyZscaler post.",
+                    'protocols': ["ANY_RULE"],
+                    'action': "ALLOW",
+                }
+
+                 # Add new Web DLP item
+                 print(zia.web_dlp.add_rule(payload=payload))
 
         """
         return self._post("webDlpRules", json=payload)
 
-    def update_rule(self, rule_id: str, payload: json) -> Box:
+    def update_rule(self, rule_id: str, payload: dict) -> Box:
         """
         Updates a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
         Args:
             rule_id (str): String of ID.
-            payload (json): JSON of Web DLP Policy to PUT.
+            payload (dict): Dictionary containing the updated Web DLP Policy Rule.
 
         Returns:
-            :obj:`Box`: Box item of resulting PUT.
+            :obj:`Box`: The updated Web DLP Policy Rule resource record.
 
         Examples:
-            >>> # Update Web DLP item.
-            >>> payload['name'] = "daxm updated name."
-            >>> results = zia.web_dlp.update_rule(rule_id=post_id, payload=payload)
-            >>>  logging.info(results)
+            Update a Web DLP Policy Rule::
+
+                 payload = zia.web_dlp.get_rule('9999')
+                 payload['name'] = "daxm updated name."
+                 results = zia.web_dlp.update_rule(rule_id=9999, payload=payload)
+                 print(results)
 
         """
         return self._put(f"webDlpRules/{rule_id}", json=payload)
 
-    def delete_rule(self, rule_id: str) -> int:
+    def delete_rule(self, rule_id: str) -> Box:
         """
         Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
         Args:
-            rule_id (str): String of ID.
+            rule_id (str): Unique id of the Web DLP Policy Rule that will be deleted.
 
         Returns:
-            :obj:`int`: Requests.Response status code.
+            :obj:`Box`: Response message from the ZIA API endpoint.
 
         Examples:
-            >>> # Delete Web DLP item.
-            >>> results = zia.web_dlp.delete_rule(rule_id=post_id)
-            >>> logging.info(results)
+            Delete a rule with an id of 9999.
+
+            >>> results = zia.web_dlp.delete_rule(rule_id=9999)
+            ... print(results)
 
 
         """
-        return self._delete(f"webDlpRules/{rule_id}").status_code
+        return self._delete(f"webDlpRules/{rule_id}")
