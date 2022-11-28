@@ -1,7 +1,8 @@
 import pytest
 import responses
 from box import BoxList
-from responses import matchers
+
+from tests.conftest import stub_sleep
 
 
 @pytest.fixture(name="devices")
@@ -10,15 +11,21 @@ def fixture_devices():
 
 
 @responses.activate
+@stub_sleep
 def test_list_devices(devices, zcc):
     responses.add(
         method="GET",
-        url="https://api-mobile.zscaler.net/papi/public/v1/getDevices",
+        url="https://api-mobile.zscaler.net/papi/public/v1/getDevices?osType=3&pageSize=1&page=1",
         json=devices,
-        match=[matchers.json_params_matcher({"companyId": "88888"})],
         status=200,
     )
-    resp = zcc.devices.list_devices()
+    responses.add(
+        method="GET",
+        url="https://api-mobile.zscaler.net/papi/public/v1/getDevices?osType=3&pageSize=1&page=2",
+        json=[],
+        status=200,
+    )
+    resp = zcc.devices.list_devices(os_type="windows", page_size=1)
 
     assert isinstance(resp, BoxList)
     assert resp[0].id == 1
