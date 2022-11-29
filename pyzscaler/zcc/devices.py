@@ -82,9 +82,7 @@ class DevicesAPI(APIEndpoint):
                 if os_type:
                     payload["osTypes"].append(os_type)
                 else:
-                    raise ValueError(
-                        "Invalid os_type specified. Check the pyZscaler documentation for valid os_type " "options."
-                    )
+                    raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
         # Simplify the registration_type argument, raise an error if the user supplies the wrong one.
         if registration_types:
@@ -143,7 +141,7 @@ class DevicesAPI(APIEndpoint):
             if os_type:
                 payload["osType"] = os_type
             else:
-                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type " "options.")
+                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
         return BoxList(Iterator(self._api, "public/v1/getDevices", **payload))
 
@@ -157,8 +155,8 @@ class DevicesAPI(APIEndpoint):
 
         Args:
             force (bool):
-                Setting force to ``True`` removes the enrolled device from the portal. You can only remove devices that are
-                in the `registered` or `device removal pending` state.
+                Setting force to ``True`` removes the enrolled device from the portal. You can only remove devices that
+                are in the `registered` or `device removal pending` state.
             **kwargs:
                 Optional keyword args.
 
@@ -209,7 +207,7 @@ class DevicesAPI(APIEndpoint):
             if os_type:
                 payload["osType"] = os_type
             else:
-                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type " "options.")
+                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
         if force:
             return self._post("public/v1/forceRemoveDevices", json=payload)
