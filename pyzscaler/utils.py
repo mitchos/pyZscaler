@@ -47,7 +47,7 @@ def keys_exists(element: dict, *keys):
     """
     if not isinstance(element, dict):
         raise AttributeError("keys_exists() expects dict as first argument.")
-    if len(keys) == 0:
+    if not keys:
         raise AttributeError("keys_exists() expects at least two arguments, one given.")
 
     _element = element
@@ -72,8 +72,8 @@ def obfuscate_api_key(seed: list):
     n = str(now)[-6:]
     r = str(int(n) >> 1).zfill(6)
     key = "".join(seed[int(str(n)[i])] for i in range(len(str(n))))
-    for j in range(len(str(r))):
-        key += seed[int(str(r)[j]) + 2]
+    for j in range(len(r)):
+        key += seed[int(r[j]) + 2]
 
     return {"timestamp": now, "key": key}
 
