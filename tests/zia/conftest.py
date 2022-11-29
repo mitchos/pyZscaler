@@ -29,6 +29,7 @@ def zia(session):
         password="hunter2",
         cloud="zscaler",
         api_key="123456789abcdef",
+        sandbox_token="SANDBOXTOKEN",
     )
 
 

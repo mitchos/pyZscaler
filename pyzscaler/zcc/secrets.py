@@ -1,20 +1,9 @@
-from restfly import APISession
 from restfly.endpoint import APIEndpoint
+
+from pyzscaler.utils import zcc_param_map
 
 
 class SecretsAPI(APIEndpoint):
-    os_map = {
-        "ios": 1,
-        "android": 2,
-        "windows": 3,
-        "macos": 4,
-        "linux": 5,
-    }
-
-    def __init__(self, api: APISession):
-        super().__init__(api)
-        self.company_id = api.company_id
-
     def get_otp(self, device_id: str):
         """
         Returns the OTP code for the specified device id.
@@ -55,19 +44,15 @@ class SecretsAPI(APIEndpoint):
             :obj:`Box`: Dictionary containing passwords for the specified username's device.
 
         Examples:
-            Print macos device passwords for username test@example.com:
+            Print macOS device passwords for username test@example.com:
 
             >>> print(zcc.secrets.get_passwords(username='test@example.com',
             ...    os_type='macos'))
 
         """
 
-        payload = {
-            "companyId": self.company_id,
-        }
-
         # Simplify the os_type argument, raise an error if the user supplies the wrong one.
-        os_type = self.os_map.get(os_type, None)
+        os_type = zcc_param_map["os"].get(os_type, None)
         if not os_type:
             raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
 
@@ -76,4 +61,4 @@ class SecretsAPI(APIEndpoint):
             "osType": os_type,
         }
 
-        return self._get("public/v1/getPasswords", data=payload, params=params)
+        return self._get("public/v1/getPasswords", params=params)

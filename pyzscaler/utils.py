@@ -47,7 +47,7 @@ def keys_exists(element: dict, *keys):
     """
     if not isinstance(element, dict):
         raise AttributeError("keys_exists() expects dict as first argument.")
-    if len(keys) == 0:
+    if not keys:
         raise AttributeError("keys_exists() expects at least two arguments, one given.")
 
     _element = element
@@ -72,8 +72,8 @@ def obfuscate_api_key(seed: list):
     n = str(now)[-6:]
     r = str(int(n) >> 1).zfill(6)
     key = "".join(seed[int(str(n)[i])] for i in range(len(str(n))))
-    for j in range(len(str(r))):
-        key += seed[int(str(r)[j]) + 2]
+    for j in range(len(r)):
+        key += seed[int(r[j]) + 2]
 
     return {"timestamp": now, "key": key}
 
@@ -131,3 +131,23 @@ class Iterator(APIIterator):
             # standard 1 sec rate limit on the API endpoints with pagination so
             # we are going to include it here.
             time.sleep(1)
+
+
+# Maps ZCC numeric os_type and registration_type arguments to a human-readable string
+zcc_param_map = {
+    "os": {
+        "ios": 1,
+        "android": 2,
+        "windows": 3,
+        "macos": 4,
+        "linux": 5,
+    },
+    "reg_type": {
+        "all": 0,
+        "registered": 1,
+        "removal_pending": 3,
+        "unregistered": 4,
+        "removed": 5,
+        "quarantined": 6,
+    },
+}

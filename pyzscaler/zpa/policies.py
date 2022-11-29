@@ -324,7 +324,9 @@ class PolicySetsAPI(APIEndpoint):
 
     def update_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
         """
-        Update an existing policy rule
+        Update an existing policy rule.
+
+        Ensure you are using the correct arguments for the policy type that you want to update.
 
         Args:
             policy_type (str):
@@ -339,6 +341,14 @@ class PolicySetsAPI(APIEndpoint):
                 Optional keyword args.
 
         Keyword Args:
+            action (str):
+                The action for the policy. Accepted values are:
+
+                |  ``allow``
+                |  ``deny``
+                |  ``intercept``
+                |  ``intercept_accessible``
+                |  ``bypass``
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
                 `RHS value`. If you are adding multiple values for the same object type then you will need
@@ -356,6 +366,10 @@ class PolicySetsAPI(APIEndpoint):
                 A custom message.
             description (str):
                 A description for the rule.
+            re_auth_idle_timeout (int):
+                The re-authentication idle timeout value in seconds.
+            re_auth_timeout (int):
+                The re-authentication timeout value in seconds.
 
         Returns:
             :obj:`Box`: The updated policy-rule resource record.
