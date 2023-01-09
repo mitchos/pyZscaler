@@ -83,7 +83,15 @@ zcc = ZCC(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', company_id='COMP
 for device in zcc.devices.list_devices():
     pprint(device)
 ```
+### Quick CSB Example
 
+```python
+from pyzscaler import CSB
+from pprint import pprint
+
+csb = CSB(cloud='CLOUD', sandbox_token='SANDBOX_TOKEN')
+pprint(csb.sandbox.submit_file("vit.pdf", force = True))
+```
 
 ## Documentation
 ### API Documentation

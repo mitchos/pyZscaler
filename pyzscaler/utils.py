@@ -1,4 +1,5 @@
 import time
+import hashlib
 
 from box import Box, BoxList
 from restfly import APIIterator
@@ -93,6 +94,14 @@ def pick_version_profile(kwargs: list, payload: list):
             payload["versionProfileId"] = 1
         elif version_profile == "new_release":
             payload["versionProfileId"] = 2
+
+
+def compute_md5(file_name):
+    hash_md5 = hashlib.md5()
+    with open(file_name, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
 
 class Iterator(APIIterator):

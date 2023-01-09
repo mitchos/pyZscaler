@@ -1,5 +1,4 @@
 from box import Box
-from restfly import APISession
 from restfly.endpoint import APIEndpoint
 
 
@@ -25,8 +24,7 @@ class CloudSandboxAPI(APIEndpoint):
             data = f.read()
 
         params = {
-            "api_token": self.sandbox_token,
-            "force": int(force),  # convert boolean to int 
+            "force": int(force),
         }
 
         return self._post(params=params, data=data)

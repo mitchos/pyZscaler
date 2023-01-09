@@ -11,7 +11,7 @@ from .sandbox import CloudSandboxAPI
 class CSB(APISession):
     """
     A Controller to access the cloud Sanbox API. CSB has a seperate API for submitting files for analysis.
-    Analysis reports are retrieved via the ZIA API - 
+    Analysis reports are retrieved via the ZIA API
 
     The CSB object stores the session token and simplifies access to CRUD options within the CSB Portal.
 
@@ -46,25 +46,20 @@ class CSB(APISession):
 
     def __init__(self, **kw):
         self._env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
-        self.sandbox_token = kw.get("sandbox_token", os.getenv(f"{self._env_base}_SANDBOX_TOKEN"))
+        self.sandbox_token = kw.get("sandbox_token", os.getenv("SANDBOX_TOKEN"))
         self._url = (
             kw.get("override_sandbox_url", os.getenv(f"{self._env_base}_OVERRIDE_SANDBOX_URL"))
-            or f"https://csbapi{self._env_cloud}.net/zscsb/submit"
+            or f"https://csbapi.{self._env_cloud}.net/zscsb/submit"
         )
         super(CSB, self).__init__(**kw)
 
-    def _build_session(self, **kwargs) -> Box:     
+    def _build_session(self, **kwargs) -> Box:
         super(CSB, self)._build_session(**kwargs)
-        self._session.headers.update({
-            self.sandbox_token,
-        }) 
-    
+        self._session.params = {
+            "api_token": self.sandbox_token,
+        }
+
     @property
     def sandbox(self):
         """The interface object for the :ref:`CSB Authenticated Session interface <csb-session>`."""
-        return CloudSandboxAPI(self)    
-    
-    
-   
-
-    
+        return CloudSandboxAPI(self)
