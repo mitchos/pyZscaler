@@ -13,26 +13,76 @@ class PolicySetsAPI(APIEndpoint):
     }
 
     @staticmethod
-    def _create_conditions(conditions: list):
+    def _create_conditions(conditions: list) -> list:
         """
-        Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
+        Creates a list template for feeding conditions into the ZPA Policies API when adding or updating a policy.
 
         Args:
-            conditions (list): List of condition tuples.
+            conditions (list): List of condition tuples or lists (containing more complex logic statements).
 
         Returns:
-            :obj:`dict`: The conditions template.
+            :obj:`list`: The conditions template.
 
         """
 
-        template = []
-
+        final_template = []
         for condition in conditions:
+            if isinstance(condition, list):
+                template, operator = PolicySetsAPI._parse_condition(condition)
+
+                if operator:
+                    expression = {"operands": template, "operator": operator.upper()}
+                else:
+                    expression = {"operands": template}
+                final_template.append(expression)
+
+            # for backward compatibility:
             if isinstance(condition, tuple) and len(condition) == 3:
-                operand = {"operands": [{"objectType": condition[0].upper(), "lhs": condition[1], "rhs": condition[2]}]}
+                template = PolicySetsAPI._format_tuple_condition(condition)
+                final_template.append({"operands": [template]})
+
+        return final_template
+
+    @staticmethod
+    def _format_tuple_condition(condition: tuple):
+        """Formats a simple tuple condition
+
+        Args:
+            condition (tuple): A condition tuple
+
+        Returns:
+            dict[str, str]: Formatted dict structure for ZIA Policies API
+        """
+        return {
+            "objectType": condition[0].upper(),
+            "lhs": condition[1],
+            "rhs": condition[2],
+        }
+
+    @staticmethod
+    def _parse_condition(condition: list):
+        """
+        Transforms a single statement with operand into a format for a condition template.
+
+        Args:
+            conditions (list): A single list of condition statement
+
+        Returns:
+            :obj:`list`: The conditions template.
+            :obj:`string`: The type of operator within conditon (AND | OR)
+
+        """
+        template = []
+        operator = 0
+
+        for parameter in condition:
+            if isinstance(parameter, str) and (parameter.upper() == "OR" or parameter.upper() == "AND"):
+                operator = parameter
+            if isinstance(parameter, tuple) and len(parameter) == 3:
+                operand = PolicySetsAPI._format_tuple_condition(parameter)
                 template.append(operand)
 
-        return template
+        return template, operator
 
     def get_policy(self, policy_type: str) -> Box:
         """
