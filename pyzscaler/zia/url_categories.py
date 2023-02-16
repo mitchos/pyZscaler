@@ -159,8 +159,6 @@ class URLCategoriesAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
-        print(payload)
-
         return self._post("urlCategories", json=payload)
 
     def add_tld_category(self, name: str, tlds: list, **kwargs) -> Box:
@@ -282,7 +280,7 @@ class URLCategoriesAPI(APIEndpoint):
 
     def delete_urls_from_category(self, category_id: str, urls: list) -> Box:
         """
-        Adds URLS to a URL category.
+        Deletes URLS from a URL category.
 
         Args:
             category_id (str):
@@ -298,9 +296,61 @@ class URLCategoriesAPI(APIEndpoint):
             ...    urls=['example.com'])
 
         """
+        current_config = self.get_category(category_id)
+        payload = {"configuredName": current_config["configured_name"], "urls": urls}  # Required for successful call
 
-        payload = convert_keys(self.get_category(category_id))
-        payload["urls"] = urls
+        return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
+
+    def delete_from_category(self, category_id: str, **kwargs):
+        """
+        Deletes the specified items from a URL category.
+
+        Args:
+            category_id (str):
+                The unique id for the URL category.
+            **kwargs:
+                Optional parameters.
+
+        Keyword Args:
+            keywords (list):
+                A list of keywords that will be deleted.
+            keywords_retaining_parent_category (list):
+                A list of keywords retaining their parent category that will be deleted.
+            urls (list):
+                A list of URLs that will be deleted.
+            db_categorized_urls (list):
+                A list of URLs retaining their parent category that will be deleted
+
+        Returns:
+            :obj:`Box`: The updated URL category resource record.
+
+        Examples:
+            Delete URLs retaining parent category from a custom category:
+
+            >>> zia.url_categories.delete_from_category(
+            ...    category_id="CUSTOM_01",
+            ...    db_categorized_urls=['twitter.com'])
+
+            Delete URLs and URLs retaining parent category from a custom category:
+
+            >>> zia.url_categories.delete_from_category(
+            ...    category_id="CUSTOM_01",
+            ...    urls=['news.com', 'cnn.com'],
+            ...    db_categorized_urls=['google.com, bing.com'])
+
+        """
+        current_config = self.get_category(category_id)
+
+        payload = {
+            "configured_name": current_config["configured_name"],  # Required for successful call
+        }
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[key] = value
+
+        # Convert snake to camelcase
+        payload = convert_keys(payload)
 
         return self._put(f"urlCategories/{category_id}?action=REMOVE_FROM_LIST", json=payload)
 
