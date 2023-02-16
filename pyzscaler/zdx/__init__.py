@@ -4,7 +4,6 @@ from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
-
 from .admin import AdminAPI
 from .apps import AppsAPI
 from .session import SessionAPI
@@ -17,19 +16,12 @@ class ZDX(APISession):
     The ZDX object stores the session token and simplifies access to CRUD options within the ZDX Portal.
 
     Attributes:
-        client_id (str): The ZCC Client ID generated from the ZCC Portal.
-        client_secret (str): The ZCC Client Secret generated from the ZCC Portal.
-        cloud (str): The Zscaler cloud for your tenancy, accepted values are:
+        client_id (str): The ZDX API Client ID generated from the ZSX Portal.
+        client_secret (str): The ZDX API Client Secret generated from the ZDX Portal.
+        cloud (str): The Zscaler cloud for your tenancy, current working values are:
 
-            * ``zscaler``
-            * ``zscalerone``
-            * ``zscalertwo``
-            * ``zscalerthree``
-            * ``zscloud``
-            * ``zscalerbeta``
-        company_id (str):
-            The ZCC Company ID. There seems to be no easy way to obtain this at present. See the note
-            at the top of this page for information on how to retrieve the Company ID.
+            * ``zdxcloud``
+
         override_url (str):
             If supplied, this attribute can be used to override the production URL that is derived
             from supplying the `cloud` attribute. Use this attribute if you have a non-standard tenant URL
@@ -76,5 +68,4 @@ class ZDX(APISession):
     @property
     def apps(self):
         """The interface object for the :ref:`ZDX Apps interface <zdx-apps>`."""
-        print(f"Headers are: {self._session.headers}")
         return AppsAPI(self)
