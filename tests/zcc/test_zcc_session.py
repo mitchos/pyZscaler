@@ -3,7 +3,6 @@ import responses
 
 @responses.activate
 def test_create_token(zcc, session):
-
     responses.add(
         responses.POST,
         url="https://api-mobile.zscaler.net/papi/auth/v1/login",
