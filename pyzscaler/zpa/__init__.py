@@ -73,19 +73,19 @@ class ZPA(APISession):
 
         # Configure URL base for this API session
         if self._override_url:
-            self._url_base = self._override_url
+            self.url_base = self._override_url
         elif not self._cloud or self._cloud == "production":
-            self._url_base = "https://config.private.zscaler.com"
+            self.url_base = "https://config.private.zscaler.com"
         elif self._cloud == "beta":
-            self._url_base = "https://config.zpabeta.net"
+            self.url_base = "https://config.zpabeta.net"
         else:
             raise ValueError("Missing Attribute: You must specify either cloud or override_url")
 
         # Configure URLs for this API session
-        self._url = f"{self._url_base}/mgmtconfig/v1/admin/customers/{self._customer_id}"
-        self.user_config_url = f"{self._url_base}/userconfig/v1/customers/{self._customer_id}"
+        self._url = f"{self.url_base}/mgmtconfig/v1/admin/customers/{self._customer_id}"
+        self.user_config_url = f"{self.url_base}/userconfig/v1/customers/{self._customer_id}"
         # The v2 URL supports additional API endpoints
-        self.v2_url = f"{self._url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
+        self.v2_url = f"{self.url_base}/mgmtconfig/v2/admin/customers/{self._customer_id}"
 
         self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
         return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
