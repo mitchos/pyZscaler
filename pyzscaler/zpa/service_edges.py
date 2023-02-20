@@ -10,7 +10,6 @@ from pyzscaler.utils import (
 
 
 class ServiceEdgesAPI(APIEndpoint):
-
     # Parameter names that will be reformatted to be compatible with ZPAs API
     reformat_params = [
         ("service_edge_ids", "serviceEdges"),
