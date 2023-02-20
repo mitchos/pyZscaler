@@ -109,7 +109,6 @@ def test_delete_urls_from_whitelist(zia, whitelist_urls):
 
 @responses.activate
 def test_add_urls_to_blacklist(zia, blacklist_urls):
-
     blacklist_urls["blacklistUrls"].append("mysite.com")
 
     responses.add(
