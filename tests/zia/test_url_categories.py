@@ -41,7 +41,7 @@ def fixture_custom_url_categories():
             "configuredName": "Test URL",
             "customCategory": True,
             "customUrlsCount": 2,
-            "dbCategorizedUrls": [],
+            "dbCategorizedUrls": ["news.com", "cnn.com"],
             "description": "Test",
             "editable": True,
             "id": "CUSTOM_02",
@@ -271,8 +271,7 @@ def test_delete_urls_from_category(zia, custom_categories):
         json=custom_categories[0],
         status=200,
     )
-    received_response = custom_categories[0]
-    received_response["urls"] = ["example.com"]
+    received_response = {"configuredName": custom_categories[0]["configuredName"], "urls": ["example.com"]}
     responses.add(
         method="PUT",
         url="https://zsapi.zscaler.net/api/v1/urlCategories/CUSTOM_02?action=REMOVE_FROM_LIST",
@@ -298,6 +297,47 @@ def test_delete_urls_from_category(zia, custom_categories):
     resp = zia.url_categories.delete_urls_from_category("CUSTOM_02", urls=["example.com"])
     assert isinstance(resp, Box)
     assert resp.urls[0] == "test.example.com"
+
+
+@responses.activate
+def test_delete_from_category(zia, custom_categories):
+    responses.add(
+        method="GET",
+        url="https://zsapi.zscaler.net/api/v1/urlCategories/CUSTOM_02",
+        json=custom_categories[0],
+        status=200,
+    )
+    received_response = {
+        "configuredName": custom_categories[0]["configuredName"],
+        "urls": ["example.com"],
+        "dbCategorizedUrls": ["news.com"],
+    }
+    responses.add(
+        method="PUT",
+        url="https://zsapi.zscaler.net/api/v1/urlCategories/CUSTOM_02?action=REMOVE_FROM_LIST",
+        json={
+            "configuredName": "Test URL",
+            "customCategory": True,
+            "customUrlsCount": 2,
+            "dbCategorizedUrls": ["cnn.com"],
+            "description": "Test",
+            "editable": True,
+            "id": "CUSTOM_02",
+            "keywords": [],
+            "keywordsRetainingParentCategory": [],
+            "superCategory": "TEST",
+            "type": "URL_CATEGORY",
+            "urls": ["test.example.com"],
+            "urlsRetainingParentCategoryCount": 0,
+            "val": 129,
+        },
+        status=200,
+        match=[matchers.json_params_matcher(received_response)],
+    )
+    resp = zia.url_categories.delete_from_category("CUSTOM_02", urls=["example.com"], db_categorized_urls=["news.com"])
+    assert isinstance(resp, Box)
+    assert resp.urls[0] == "test.example.com"
+    assert resp.db_categorized_urls[0] == "cnn.com"
 
 
 @responses.activate

@@ -3,7 +3,6 @@ import responses
 
 @responses.activate
 def test_create(zia, session):
-
     responses.add(
         responses.POST,
         url="https://zsapi.zscaler.net/api/v1/authenticatedSession",
