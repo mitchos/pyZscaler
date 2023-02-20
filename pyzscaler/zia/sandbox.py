@@ -8,6 +8,7 @@ class CloudSandboxAPI(APIEndpoint):
         super().__init__(api)
 
         self.sandbox_token = api.sandbox_token
+        self.env_cloud = api.env_cloud
 
     def submit_file(self, file: str, force: bool = False) -> Box:
         """
@@ -34,7 +35,7 @@ class CloudSandboxAPI(APIEndpoint):
             "force": int(force),  # convert boolean to int for ZIA
         }
 
-        return self._post("https://csbapi.zscaler.net/zscsb/submit", params=params, data=data)
+        return self._post(f"https://csbapi.{self.env_cloud}.net/zscsb/submit", params=params, data=data)
 
     def get_quota(self) -> Box:
         """

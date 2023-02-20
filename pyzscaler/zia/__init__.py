@@ -58,17 +58,16 @@ class ZIA(APISession):
     _box = True
     _box_attrs = {"camel_killer_box": True}
     _env_base = "ZIA"
-    _env_cloud = "zscaler"
     _url = "https://zsapi.zscaler.net/api/v1"
+    env_cloud = "zscaler"
 
     def __init__(self, **kw):
         self._api_key = kw.get("api_key", os.getenv(f"{self._env_base}_API_KEY"))
         self._username = kw.get("username", os.getenv(f"{self._env_base}_USERNAME"))
         self._password = kw.get("password", os.getenv(f"{self._env_base}_PASSWORD"))
-        self._env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
+        self.env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
         self._url = (
-            kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
-            or f"https://zsapi.{self._env_cloud}.net/api/v1"
+            kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL")) or f"https://zsapi.{self.env_cloud}.net/api/v1"
         )
         self.conv_box = True
         self.sandbox_token = kw.get("sandbox_token", os.getenv(f"{self._env_base}_SANDBOX_TOKEN"))
