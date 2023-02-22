@@ -1,2 +1,2 @@
 restfly==1.4.7
-python-box==7.0.0
+python-box==7.0.1
