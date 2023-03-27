@@ -1,4 +1,4 @@
-furo==2022.12.7
+furo==2023.3.27
 pre-commit==3.0.4
 pytest==7.2.1
 python-box==7.0.0
