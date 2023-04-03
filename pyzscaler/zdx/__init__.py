@@ -7,6 +7,7 @@ from pyzscaler import __version__
 
 from .admin import AdminAPI
 from .apps import AppsAPI
+from .devices import DevicesAPI
 from .session import SessionAPI
 
 
@@ -17,11 +18,12 @@ class ZDX(APISession):
     The ZDX object stores the session token and simplifies access to CRUD options within the ZDX Portal.
 
     Attributes:
-        client_id (str): The ZDX API Client ID generated from the ZSX Portal.
-        client_secret (str): The ZDX API Client Secret generated from the ZDX Portal.
-        cloud (str): The Zscaler cloud for your tenancy, current working values are:
+        client_id (str): The ZDX Client ID generated from the ZDX Portal.
+        client_secret (str): The ZDX Client Secret generated from the ZDX Portal.
+        cloud (str): The Zscaler cloud for your tenancy, accepted values are below. Defaults to ``zdxcloud``.
 
             * ``zdxcloud``
+            * ``zdxbeta``
 
         override_url (str):
             If supplied, this attribute can be used to override the production URL that is derived
@@ -69,8 +71,10 @@ class ZDX(APISession):
     @property
     def apps(self):
         """The interface object for the :ref:`ZDX Apps interface <zdx-apps>`."""
-<<<<<<< HEAD
-=======
         print(f"Headers are: {self._session.headers}")
->>>>>>> ea72812 (feat: Adds initial support for ZDX)
         return AppsAPI(self)
+
+    @property
+    def devices(self):
+        """The interface object for the :ref:`ZDX Devices interface <zdx-devices>`."""
+        return DevicesAPI(self)

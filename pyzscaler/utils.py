@@ -151,3 +151,32 @@ zcc_param_map = {
         "quarantined": 6,
     },
 }
+
+
+def calculate_epoch(hours: int):
+    current_time = int(time.time())
+    past_time = int(current_time - (hours * 3600))
+    return current_time, past_time
+
+
+def zdx_params(func):
+    """
+    Decorator to add custom parameter functionality for ZDX API calls.
+
+    Args:
+        func: The function to decorate.
+
+    Returns:
+        The decorated function.
+
+    """
+
+    def wrapper(self, **kwargs):
+        if kwargs.get("since"):
+            current_time, past_time = calculate_epoch(kwargs.get("since"))
+            kwargs["to"] = current_time
+            kwargs["from"] = past_time
+            del kwargs["since"]
+        return func(self, **kwargs)
+
+    return wrapper
