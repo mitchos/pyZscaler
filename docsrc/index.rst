@@ -9,6 +9,7 @@
    zs/zia/index
    zs/zpa/index
    zs/zcc/index
+   zs/zdx/index
 
 pyZscaler SDK - Library Reference
 =====================================================================
@@ -41,7 +42,7 @@ Products
 - :doc:`Zscaler Private Access (ZPA) <zs/zpa/index>`
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
 - :doc:`Zscaler Mobile Admin Portal <zs/zcc/index>`
-- Cloud Security Posture Management (CSPM) - (work in progress)
+- :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
 
 Installation
 ==============
@@ -96,6 +97,18 @@ Quick ZCC Example
 
     zcc = ZCC(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', company_id='COMPANY_ID)
     for device in zcc.devices.list_devices():
+        pprint(device)
+
+Quick ZDX Example
+^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from pyzscaler import ZDX
+    from pprint import pprint
+
+    zcc = ZDX(client_id='CLIENT_ID', client_secret='CLIENT_SECRET')
+    for device in zdx.devices.list_devices():
         pprint(device)
 
 
