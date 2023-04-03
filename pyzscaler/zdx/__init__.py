@@ -71,7 +71,6 @@ class ZDX(APISession):
     @property
     def apps(self):
         """The interface object for the :ref:`ZDX Apps interface <zdx-apps>`."""
-        print(f"Headers are: {self._session.headers}")
         return AppsAPI(self)
 
     @property
