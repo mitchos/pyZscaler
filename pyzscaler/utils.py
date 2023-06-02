@@ -133,6 +133,51 @@ class Iterator(APIIterator):
             time.sleep(1)
 
 
+class ZDXIterator(APIIterator):
+    """
+    Iterator class for ZDX endpoints.
+
+    """
+
+    def __init__(self, api, endpoint, limit=None, **kwargs):
+        super().__init__(api, **kwargs)
+        self.endpoint = endpoint
+        self.limit = limit
+        self.next_offset = None
+        self.total = 0
+
+        # Load the first page
+        self._get_page()
+
+    def __next__(self):
+        try:
+            item = super().__next__()
+        except StopIteration:
+            if self.next_offset is None:
+                # There is no next page, so we're done iterating
+                raise
+            # There is another page, so get it and continue iterating
+            self._get_page()
+            item = super().__next__()
+        return item
+
+    def _get_page(self):
+        params = {"limit": self.limit, "offset": self.next_offset} if self.next_offset else {}
+
+        # Request the next page
+        response = self._api.get(self.endpoint, params=params)
+
+        # Extract the next offset and the data items from the response
+        self.next_offset = response.get("next_offset")
+        self.page = response["users"]
+
+        # Update the total number of records
+        self.total += len(self.page)
+
+        # Reset page_count for the new page
+        self.page_count = 0
+
+
 # Maps ZCC numeric os_type and registration_type arguments to a human-readable string
 zcc_param_map = {
     "os": {
@@ -151,3 +196,43 @@ zcc_param_map = {
         "quarantined": 6,
     },
 }
+
+
+def calculate_epoch(hours: int):
+    current_time = int(time.time())
+    past_time = int(current_time - (hours * 3600))
+    return current_time, past_time
+
+
+def zdx_params(func):
+    """
+    Decorator to add custom parameter functionality for ZDX API calls.
+
+    Args:
+        func: The function to decorate.
+
+    Returns:
+        The decorated function.
+
+    """
+
+    def wrapper(self, *args, **kwargs):
+        since = kwargs.pop("since", None)
+        search = kwargs.pop("search", None)
+        location_id = kwargs.pop("location_id", None)
+        department_id = kwargs.pop("department_id", None)
+        geo_id = kwargs.pop("geo_id", None)
+
+        if since:
+            current_time, past_time = calculate_epoch(since)
+            kwargs["to"] = current_time
+            kwargs["from"] = past_time
+
+        kwargs["q"] = search or kwargs.get("q")
+        kwargs["loc"] = location_id or kwargs.get("loc")
+        kwargs["dept"] = department_id or kwargs.get("dept")
+        kwargs["geo"] = geo_id or kwargs.get("geo")
+
+        return func(self, *args, **kwargs)
+
+    return wrapper
