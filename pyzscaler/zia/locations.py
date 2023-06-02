@@ -389,6 +389,10 @@ class LocationsAPI(APIEndpoint):
         for key, value in kwargs.items():
             payload[snake_to_camel(key)] = value
 
+        # Fixes edge case where the sublocation object is missing displayTimeUnit, which will result in a 500 error.
+        if not payload.get("displayTimeUnit"):
+            payload["displayTimeUnit"] = "MINUTE"
+
         return self._put(f"locations/{location_id}", json=payload)
 
     def delete_location(self, location_id: str) -> int:
