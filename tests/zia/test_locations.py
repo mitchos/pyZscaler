@@ -248,6 +248,7 @@ def test_add_location(zia, locations):
 def test_update_location(zia, locations):
     updated_location = locations[0]
     updated_location["name"] = "Updated Test"
+    updated_location["displayTimeUnit"] = "MINUTE"
 
     responses.add(
         responses.GET,
