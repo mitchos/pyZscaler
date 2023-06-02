@@ -31,10 +31,30 @@ class SessionAPI(APIEndpoint):
 
         payload = {"key_id": client_id, "key_secret": api_secret_hash, "timestamp": epoch_time}
 
-        return self._post("oauth/token", json=payload).token
+        return self._post("oauth/token", json=payload)
 
     def validate_token(self):
+        """
+        Validates the current ZDX JWT token.
+
+        Returns:
+            :obj:`Box`: The validated session information.
+
+        Examples:
+            >>> validation = zdx.session.validate()
+
+        """
         return self._get("oauth/validate")
 
     def get_jwks(self):
+        """
+        Returns a JSON Web Key Set (JWKS) that contains the public keys that can be used to verify the JWT tokens.
+
+        Returns:
+            :obj:`Box`: The JSON Web Key Set (JWKS).
+
+        Examples:
+            >>> jwks = zdx.session.get_jwks()
+
+        """
         return self._get("oauth/jwks")
