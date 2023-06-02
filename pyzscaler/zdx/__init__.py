@@ -4,11 +4,11 @@ from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
-
 from .admin import AdminAPI
 from .apps import AppsAPI
 from .devices import DevicesAPI
 from .session import SessionAPI
+from .users import UsersAPI
 
 
 class ZDX(APISession):
@@ -55,7 +55,7 @@ class ZDX(APISession):
     def _build_session(self, **kwargs) -> Box:
         """Creates a ZCC API session."""
         super(ZDX, self)._build_session(**kwargs)
-        self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret)
+        self._auth_token = self.session.create_token(client_id=self._client_id, client_secret=self._client_secret).token
         return self._session.headers.update({"Authorization": f"Bearer {self._auth_token}"})
 
     @property
@@ -77,3 +77,8 @@ class ZDX(APISession):
     def devices(self):
         """The interface object for the :ref:`ZDX Devices interface <zdx-devices>`."""
         return DevicesAPI(self)
+
+    @property
+    def users(self):
+        """The interface object for the :ref:`ZDX Users interface <zdx-users>`."""
+        return UsersAPI(self)
