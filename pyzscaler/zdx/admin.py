@@ -28,7 +28,6 @@ class AdminAPI(APIEndpoint):
 
     @zdx_params
     def list_locations(self, **kwargs) -> BoxList:
-        # TODO: Check if the keyword arg is 'search' or 'q'. Docs are potentially wrong or inconsistent
         """
         Returns a list of locations that are configured within ZDX.
 
