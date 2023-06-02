@@ -332,7 +332,8 @@ class DevicesAPI(APIEndpoint):
         payload = {
             "session_name": session_name,
             "app_id": app_id,
-        } | kwargs
+        }
+        payload.update(kwargs)
 
         return self._post(f"devices/{device_id}/deeptraces", json=payload)
 
