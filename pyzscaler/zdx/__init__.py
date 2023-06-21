@@ -4,6 +4,7 @@ from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
+
 from .admin import AdminAPI
 from .apps import AppsAPI
 from .devices import DevicesAPI
