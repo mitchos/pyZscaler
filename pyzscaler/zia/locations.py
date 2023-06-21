@@ -74,7 +74,7 @@ class LocationsAPI(APIEndpoint):
                 IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g., 10.10.33.1-10.10.33.10)).
             ports (list[int], optional):
                 IP ports that are associated with the location.
-            vpn_credentials (dict, optional):
+            vpn_credentials (list, optional):
                 VPN User Credentials that are associated with the location.
             auth_required (bool, optional):
                 Enforce Authentication. Required when ports are enabled, IP Surrogate is enabled, or Kerberos
@@ -150,6 +150,11 @@ class LocationsAPI(APIEndpoint):
 
             >>> zia.locations.add_location(name='new_location',
             ...    ip_addresses=['203.0.113.10'])
+
+            Add a location with VPN credentials.
+
+            >>> zia.locations.add_location(name='new_location',
+            ...    vpn_credentials=[{'id': '99999', 'type': 'UFQDN'}])
 
         """
         payload = {
@@ -301,7 +306,7 @@ class LocationsAPI(APIEndpoint):
                 IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g., 10.10.33.1-10.10.33.10)).
             ports (list[int], optional):
                 IP ports that are associated with the location.
-            vpn_credentials (dict, optional):
+            vpn_credentials (list, optional):
                 VPN User Credentials that are associated with the location.
             auth_required (bool, optional):
                 Enforce Authentication. Required when ports are enabled, IP Surrogate is enabled, or Kerberos
@@ -373,13 +378,18 @@ class LocationsAPI(APIEndpoint):
         Examples:
             Update the name of a location:
 
-            >>> zia.locations.update_location('97456691',
+            >>> zia.locations.update_location('99999',
             ...    name='updated_location_name')
 
             Update the IP address of a location:
 
-            >>> zia.locations.update_location('97456691',
+            >>> zia.locations.update_location('99999',
             ...    ip_addresses=['203.0.113.20'])
+
+            Update the VPN credentials of a location:
+
+            >>> zia.locations.update_location('99999',
+            ...    vpn_credentials=[{'id': '88888', 'type': 'UFQDN'}])
 
         """
         # Set payload to value of existing record
