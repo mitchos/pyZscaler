@@ -1,3 +1,4 @@
+import functools
 import time
 
 from box import Box, BoxList
@@ -216,6 +217,7 @@ def zdx_params(func):
 
     """
 
+    @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
         since = kwargs.pop("since", None)
         search = kwargs.pop("search", None)
