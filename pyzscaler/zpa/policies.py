@@ -12,27 +12,69 @@ class PolicySetsAPI(APIEndpoint):
         "siem": "SIEM_POLICY",
     }
 
-    @staticmethod
-    def _create_conditions(conditions: list):
+    def _create_conditions(self, conditions: list) -> list:
         """
-        Creates a dict template for feeding conditions into the ZPA Policies API when adding or updating a policy.
+        Creates a list template for feeding conditions into the ZPA Policies API when adding or updating a policy.
 
         Args:
-            conditions (list): List of condition tuples.
+            conditions (list): List of condition tuples or lists (containing more complex logic statements).
 
         Returns:
-            :obj:`dict`: The conditions template.
+            list: The conditions template.
 
         """
-
-        template = []
-
+        final_template = []
         for condition in conditions:
-            if isinstance(condition, tuple) and len(condition) == 3:
-                operand = {"operands": [{"objectType": condition[0].upper(), "lhs": condition[1], "rhs": condition[2]}]}
-                template.append(operand)
+            template, operator = self._parse_condition(condition)
+            expression = {"operands": template}
+            if operator:
+                expression["operator"] = operator.upper()
+            final_template.append(expression)
+        return final_template
 
-        return template
+    def _parse_condition(self, condition):
+        """
+        Transforms a single statement with operand into a format for a condition template.
+
+        Args:
+            condition: A single list of condition statements or a tuple.
+
+        Returns:
+            tuple: A tuple containing the formatted condition template (list) and the operator (str, "AND" or "OR")
+            or None.
+
+        """
+        # If this is a tuple condition on its own, process it now
+        if isinstance(condition, tuple) and len(condition) == 3:
+            return [self._format_condition_tuple(condition)], None
+
+        # Otherwise we'd expect a list of tuples and an optional operator at the end
+        template = []
+        operator = None
+        for parameter in condition:
+            if isinstance(parameter, str) and parameter.upper() in ["OR", "AND"]:
+                operator = parameter
+            elif isinstance(parameter, tuple) and len(parameter) == 3:
+                template.append(self._format_condition_tuple(parameter))
+        return template, operator
+
+    @staticmethod
+    def _format_condition_tuple(condition: tuple):
+        """
+        Formats a simple tuple condition.
+
+        Args:
+            condition (tuple): A condition tuple (objectType, lhs, rhs).
+
+        Returns:
+            dict: Formatted dict structure for ZIA Policies API.
+
+        """
+        return {
+            "objectType": condition[0].upper(),
+            "lhs": condition[1],
+            "rhs": condition[2],
+        }
 
     def get_policy(self, policy_type: str) -> Box:
         """
@@ -198,7 +240,11 @@ class PolicySetsAPI(APIEndpoint):
         """
 
         # Initialise the payload
-        payload = {"name": name, "action": action.upper(), "conditions": self._create_conditions(kwargs.pop("conditions", []))}
+        payload = {
+            "name": name,
+            "action": action.upper(),
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
+        }
 
         # Get the policy id of the provided policy type for the URL.
         policy_id = self.get_policy("access").id

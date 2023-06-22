@@ -1,6 +1,6 @@
-ZCC
+ZDX
 ==========
-This package covers the ZCC interface.
+This package covers the ZDX interface.
 
 .. toctree::
     :maxdepth: 1
@@ -9,5 +9,5 @@ This package covers the ZCC interface.
 
     *
 
-.. automodule:: pyzscaler.zcc
+.. automodule:: pyzscaler.zdx
     :members:

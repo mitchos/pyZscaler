@@ -13,6 +13,28 @@ def fixture_policies():
     return {"totalPages": 1, "list": [{"id": "1"}, {"id": "2"}, {"id": "3"}]}
 
 
+@pytest.fixture(name="policy_conditions")
+def fixture_policy_conditions():
+    return [
+        [
+            ("app", "id", "216197915188658453"),
+            ("app", "id", "216197915188658455"),
+            "OR",
+        ],
+        [
+            ("scim", "216197915188658304", "john.doe@foo.bar"),
+            ("scim", "216197915188658304", "foo.bar"),
+            "OR",
+        ],
+        ("scim_group", "216197915188658303", "241874"),  # check backward compatibility
+        [
+            ("posture", "fc92ead2-4046-428d-bf3f-6e534a53194b", "TRUE"),
+            ("posture", "490db9b4-96d8-4035-9b5e-935daa697f45", "TRUE"),
+            "AND",
+        ],
+    ]
+
+
 @pytest.fixture(name="policy_rules")
 def fixture_policy_rules():
     return {
@@ -114,6 +136,34 @@ def test_list_rules(zpa, policy_rules):
 def test_list_policy_rules_error(zpa, policy_rules):
     with pytest.raises(Exception) as e_info:
         resp = zpa.policies.list_rules("test")
+
+
+def test_create_conditions(zpa, policy_conditions):
+    conditions = zpa.policies._create_conditions(policy_conditions)
+    assert conditions == [
+        {
+            "operands": [
+                {"objectType": "APP", "lhs": "id", "rhs": "216197915188658453"},
+                {"objectType": "APP", "lhs": "id", "rhs": "216197915188658455"},
+            ],
+            "operator": "OR",
+        },
+        {
+            "operands": [
+                {"objectType": "SCIM", "lhs": "216197915188658304", "rhs": "john.doe@foo.bar"},
+                {"objectType": "SCIM", "lhs": "216197915188658304", "rhs": "foo.bar"},
+            ],
+            "operator": "OR",
+        },
+        {"operands": [{"objectType": "SCIM_GROUP", "lhs": "216197915188658303", "rhs": "241874"}]},
+        {
+            "operands": [
+                {"objectType": "POSTURE", "lhs": "fc92ead2-4046-428d-bf3f-6e534a53194b", "rhs": "TRUE"},
+                {"objectType": "POSTURE", "lhs": "490db9b4-96d8-4035-9b5e-935daa697f45", "rhs": "TRUE"},
+            ],
+            "operator": "AND",
+        },
+    ]
 
 
 @responses.activate
