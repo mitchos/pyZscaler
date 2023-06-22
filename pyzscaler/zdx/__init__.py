@@ -4,12 +4,11 @@ from box import Box
 from restfly.session import APISession
 
 from pyzscaler import __version__
-
-from .admin import AdminAPI
-from .apps import AppsAPI
-from .devices import DevicesAPI
-from .session import SessionAPI
-from .users import UsersAPI
+from pyzscaler.zdx.admin import AdminAPI
+from pyzscaler.zdx.apps import AppsAPI
+from pyzscaler.zdx.devices import DevicesAPI
+from pyzscaler.zdx.session import SessionAPI
+from pyzscaler.zdx.users import UsersAPI
 
 
 class ZDX(APISession):
