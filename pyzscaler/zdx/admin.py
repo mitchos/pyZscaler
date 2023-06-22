@@ -18,7 +18,8 @@ class AdminAPI(APIEndpoint):
             :obj:`BoxList`: The list of departments in ZDX.
 
         Examples:
-            List all departments in ZDX for the past 2 hours
+            List all departments in ZDX for the past 2 hours:
+
             >>> for department in zdx.admin.list_departments():
             ...     print(department)
 
@@ -39,7 +40,8 @@ class AdminAPI(APIEndpoint):
             :obj:`BoxList`: The list of locations in ZDX.
 
         Examples:
-            List all locations in ZDX for the past 2 hours
+            List all locations in ZDX for the past 2 hours:
+
             >>> for location in zdx.admin.list_locations():
             ...     print(location)
 
@@ -61,7 +63,8 @@ class AdminAPI(APIEndpoint):
             :obj:`BoxList`: The list of geolocations in ZDX.
 
         Examples:
-            List all geolocations in ZDX for the past 2 hours
+            List all geolocations in ZDX for the past 2 hours:
+
             >>> for geolocation in zdx.admin.list_geolocations():
             ...     print(geolocation)
 

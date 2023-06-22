@@ -1,3 +1,4 @@
+import functools
 import time
 
 from box import Box, BoxList
@@ -79,13 +80,7 @@ def obfuscate_api_key(seed: list):
 
 
 def pick_version_profile(kwargs: list, payload: list):
-    # Used in ZPA endpoints.
-    # This function is used to convert the name of the version profile to
-    # the version profile id. This means our users don't need to look up the
-    # version profile id mapping themselves.
-
-    version_profile = kwargs.pop("version_profile", None)
-    if version_profile:
+    if version_profile := kwargs.pop("version_profile", None):
         payload["overrideVersionProfile"] = True
         if version_profile == "default":
             payload["versionProfileId"] = 0
@@ -216,6 +211,7 @@ def zdx_params(func):
 
     """
 
+    @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
         since = kwargs.pop("since", None)
         search = kwargs.pop("search", None)

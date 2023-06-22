@@ -19,10 +19,12 @@ class DevicesAPI(APIEndpoint):
             :obj:`BoxList`: The list of devices in ZDX.
 
         Examples:
-            List all devices in ZDX for the past 2 hours
+            List all devices in ZDX for the past 2 hours:
+
             >>> for device in zdx.devices.list_devices():
 
-            List all devices in ZDX for the past 24 hours
+            List all devices in ZDX for the past 24 hours:
+
             >>> for device in zdx.devices.list_devices(since=24):
 
         """

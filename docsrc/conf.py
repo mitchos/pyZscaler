@@ -25,9 +25,9 @@ author = "Mitch Kelly"
 html_title = ""
 
 # The short X.Y version
-version = '1.4'
+version = '1.5'
 # The full version, including alpha/beta/rc tags
-release = '1.4.1'
+release = '1.5.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -95,7 +95,7 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -182,7 +182,10 @@ epub_exclude_files = ["search.html"]
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/": None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None),
+                       'restfly': ('https://restfly.readthedocs.io/en/latest/', None),
+                       'box': ('https://box.readthedocs.io/en/latest', None),
+                       }
 
 # -- Options for todo extension ----------------------------------------------
 

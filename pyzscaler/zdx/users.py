@@ -20,7 +20,8 @@ class UsersAPI(APIEndpoint):
             :obj:`BoxList`: The list of users in ZDX.
 
         Examples:
-            List all users in ZDX for the past 2 hours
+            List all users in ZDX for the past 2 hours:
+
             >>> for user in zdx.users.list_users():
             ...     print(user)
 
@@ -46,6 +47,7 @@ class UsersAPI(APIEndpoint):
 
         Examples:
             Return information on the user with the ID of 999999999:
+
             >>> zia.users.get_user(user_id='999999999')
 
         """

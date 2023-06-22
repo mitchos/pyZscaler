@@ -150,7 +150,7 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`BoxList`: List of all configured connector groups.
 
         Examples:
-            >>> connector_groups = zpa.connector_groups.list_groups()
+            >>> connector_groups = zpa.connectors.list_connector_groups()
 
         """
         return BoxList(Iterator(self._api, "appConnectorGroup", **kwargs))
@@ -168,7 +168,7 @@ class ConnectorsAPI(APIEndpoint):
                 The connector group resource record.
 
         Examples:
-            >>> connector_group = zpa.connector_groups.get_group('99999')
+            >>> connector_group = zpa.connectors.get_connector_group('99999')
 
         """
         return self._get(f"appConnectorGroup/{group_id}")

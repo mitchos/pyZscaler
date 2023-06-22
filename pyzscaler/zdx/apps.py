@@ -20,7 +20,8 @@ class AppsAPI(APIEndpoint):
             :obj:`BoxList`: The list of applications in ZDX.
 
         Examples:
-            List all applications in ZDX for the past 2 hours
+            List all applications in ZDX for the past 2 hours:
+
             >>> for app in zdx.apps.list_apps():
             ...     print(app)
 
@@ -46,6 +47,7 @@ class AppsAPI(APIEndpoint):
 
         Examples:
             Return information on the application with the ID of 999999999:
+
             >>> zia.apps.get_app(app_id='999999999')
 
         """
@@ -70,6 +72,7 @@ class AppsAPI(APIEndpoint):
 
         Examples:
             Return the ZDX score trend for the application with the ID of 999999999:
+
             >>> zia.apps.get_app_score(app_id='999999999')
 
         """
@@ -98,10 +101,12 @@ class AppsAPI(APIEndpoint):
 
         Examples:
             Return the ZDX metrics for the application with the ID of 999999999:
+
             >>> zia.apps.get_app_metrics(app_id='999999999')
 
             Return the ZDX metrics for the app with an ID of 999999999 for the last 24 hours, including dns matrics,
             geolocation, department and location IDs:
+
             >>> zia.apps.get_app_metrics(app_id='999999999', since=24, metric_name='dns', location_id='888888888',
             ...                          geo_id='777777777', department_id='666666666')
 
@@ -132,6 +137,7 @@ class AppsAPI(APIEndpoint):
 
         Examples:
             Return a list of users and devices who have accessed the application with the ID of 999999999:
+
             >>> for user in zia.apps.get_app_users(app_id='999999999'):
             ...     print(user)
 
@@ -164,6 +170,7 @@ class AppsAPI(APIEndpoint):
         Examples:
             Return information on the user with the ID of 999999999 who has accessed the application with the ID of
             888888888:
+
             >>> zia.apps.get_app_user(app_id='888888888', user_id='999999999')
 
         """
