@@ -7,3 +7,4 @@ requests==2.31.0
 responses==0.23.1
 sphinx==7.0.1
 toml==0.10.2
+urllib3<2
