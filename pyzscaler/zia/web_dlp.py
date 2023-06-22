@@ -4,7 +4,7 @@ from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
 
-class WebDLP(APIEndpoint):
+class WebDLPAPI(APIEndpoint):
     def list_rules(self, **kwargs) -> BoxList:
         """
         Returns a list of DLP policy rules, excluding SaaS Security API DLP policy rules.
