@@ -6,7 +6,6 @@ from pyzscaler import __version__
 from pyzscaler.zpa.app_segments import AppSegmentsAPI
 from pyzscaler.zpa.certificates import CertificatesAPI
 from pyzscaler.zpa.cloud_connector_groups import CloudConnectorGroupsAPI
-from pyzscaler.zpa.connector_groups import ConnectorGroupsAPI
 from pyzscaler.zpa.connectors import ConnectorsAPI
 from pyzscaler.zpa.idp import IDPControllerAPI
 from pyzscaler.zpa.inspection import InspectionControllerAPI
@@ -113,14 +112,6 @@ class ZPA(APISession):
 
         """
         return CloudConnectorGroupsAPI(self)
-
-    @property
-    def connector_groups(self):
-        """
-        The interface object for the :ref:`ZPA Connector Groups interface <zpa-connector_groups>`.
-
-        """
-        return ConnectorGroupsAPI(self)
 
     @property
     def connectors(self):
