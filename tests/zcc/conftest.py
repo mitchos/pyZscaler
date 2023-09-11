@@ -24,5 +24,5 @@ def zcc(session):
     return ZCC(
         client_id="abc123",
         client_secret="999999",
-        company_id="88888",
+        cloud="zscaler",
     )
