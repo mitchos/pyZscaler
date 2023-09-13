@@ -2,13 +2,25 @@ from box import Box
 from restfly import APIEndpoint
 
 
-class ConfigAPI(APIEndpoint):
+class ZCONConfigAPI(APIEndpoint):
     def activate(self, force: bool = False) -> Box:
         """
         Activate the configuration.
 
+        Args:
+            force (bool): If set to True, forces the activation. Default is False.
+
         Returns:
-            :obj:`int`: The status code of the operation.
+            :obj:`Box`: The status code of the operation.
+
+        Examples:
+            Activate the configuration without forcing::
+
+                zcon.config.activate()
+
+            Forcefully activate the configuration::
+
+                zcon.config.activate(force=True)
 
         """
         if force:
@@ -22,6 +34,11 @@ class ConfigAPI(APIEndpoint):
 
         Returns:
             :obj:`Box`: The status of the configuration.
+
+        Examples:
+            Get the status of the configuration::
+
+                print(zcon.config.get_status())
 
         """
         return self._get("ecAdminActivateStatus")
