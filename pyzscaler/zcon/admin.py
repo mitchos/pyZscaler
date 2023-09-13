@@ -4,7 +4,7 @@ from restfly import APIEndpoint
 from pyzscaler.utils import convert_keys
 
 
-class AdminAPI(APIEndpoint):
+class ZCONAdminAPI(APIEndpoint):
     def list_roles(self, **kwargs) -> BoxList:
         """
         List all existing admin roles.
@@ -17,6 +17,21 @@ class AdminAPI(APIEndpoint):
 
         Returns:
             :obj:`BoxList`: The list of roles.
+
+        Examples:
+            Print all roles::
+
+                for role in zcon.admin.list_roles():
+                    print(role)
+
+            Print all roles with additional parameters::
+
+                for role in zcon.admin.list_roles(
+                    include_auditor_role=True,
+                    include_partner_role=True,
+                    include_api_roles=True,
+                ):
+                    print(role)
 
         """
         return self._get("adminRoles")
@@ -32,7 +47,9 @@ class AdminAPI(APIEndpoint):
             :obj:`Box`: The role details.
 
         Examples:
-            >>> print(zcon.admin.get_role("123456789")
+            Print the details of a role::
+
+                print(zcon.admin.get_role("123456789")
 
         """
         return self._get(f"adminRoles/{role_id}")
@@ -57,20 +74,21 @@ class AdminAPI(APIEndpoint):
             dashboard_access (str): The dashboard access level.
 
         Keyword Args:
-            feature_permissions_tuples (List[Tuple[str, str]]): A list of tuple pairs specifying the feature
-                permissions. Each tuple contains the feature name (case-insensitive) and its access level.
+            feature_permissions_tuples (:obj:`List[Tuple[str, str]]`):
+                A list of tuple pairs specifying the feature permissions. Each tuple contains the feature name
+                (case-insensitive) and its access level.
 
                 Accepted feature names (case-insensitive) are:
-                - "APIKEY_MANAGEMENT"
-                - "EDGE_CONNECTOR_CLOUD_PROVISIONING"
-                - "EDGE_CONNECTOR_LOCATION_MANAGEMENT"
-                - "EDGE_CONNECTOR_DASHBOARD"
-                - "EDGE_CONNECTOR_FORWARDING"
-                - "EDGE_CONNECTOR_TEMPLATE"
-                - "REMOTE_ASSISTANCE_MANAGEMENT"
-                - "EDGE_CONNECTOR_ADMIN_MANAGEMENT"
-                - "EDGE_CONNECTOR_NSS_CONFIGURATION"
 
+                - ``APIKEY_MANAGEMENT``
+                - ``EDGE_CONNECTOR_CLOUD_PROVISIONING``
+                - ``EDGE_CONNECTOR_LOCATION_MANAGEMENT``
+                - ``EDGE_CONNECTOR_DASHBOARD``
+                - ``EDGE_CONNECTOR_FORWARDING``
+                - ``EDGE_CONNECTOR_TEMPLATE``
+                - ``REMOTE_ASSISTANCE_MANAGEMENT``
+                - ``EDGE_CONNECTOR_ADMIN_MANAGEMENT``
+                - ``EDGE_CONNECTOR_NSS_CONFIGURATION``
             alerting_access (str): The alerting access level.
             analysis_access (str): The analysis access level.
             admin_acct_access (str): The admin account access level.
@@ -78,28 +96,31 @@ class AdminAPI(APIEndpoint):
 
         Note:
             For access levels, the accepted values are:
-            - "NONE"
-            - "READ_ONLY"
-            - "READ_WRITE"
 
-        Examples:
-            Minimum required arguments:
-            ```python
-            add_role(name="NewRole")
-            ```
+            - ``NONE``
+            - ``READ_ONLY``
+            - ``READ_WRITE``
 
-            Including keyword arguments:
-            ```python
-            add_role(
-                name="AdvancedRole",
-                policy_access="READ_ONLY",
-                feature_permissions_tuples=[("apikey_management", "read_only"), ("EDGE_CONNECTOR_CLOUD_PROVISIONING", "NONE")],
-                alerting_access="READ_WRITE"
-            )
-            ```
 
         Returns:
             :obj:`dict`: The newly created role.
+
+        Examples:
+            Minimum required arguments::
+
+                zcon.admin.add_role(name="NewRole")
+
+            Including keyword arguments::
+
+                zcon.admin.add_role(
+                    name="AdvancedRole",
+                    policy_access="READ_ONLY",
+                    feature_permissions_tuples=[
+                        ("apikey_management", "read_only"),
+                        ("EDGE_CONNECTOR_CLOUD_PROVISIONING", "NONE")
+                    ],
+                    alerting_access="READ_WRITE"
+                )
 
         """
         payload = {
@@ -115,13 +136,82 @@ class AdminAPI(APIEndpoint):
             payload["feature_permissions"] = {k.upper(): v for k, v in feature_permissions_tuples}
 
         # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[key] = value
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
 
         # Convert snake to camelcase
         payload = convert_keys(payload)
 
         return self._post("adminRoles", json=payload)
+
+    def update_role(self, role_id: str, **kwargs) -> Box:
+        """
+        Update an existing admin role.
+
+        Args:
+            role_id (str): The ID of the role to update.
+
+        Keyword Args:
+            name (str): The name of the role.
+            policy_access (str): The policy access level.
+            report_access (str): The report access level.
+            username_access (str): The username access level.
+            dashboard_access (str): The dashboard access level.
+            feature_permissions_tuples (:obj:`List[Tuple[str, str]]`):
+                A list of tuple pairs specifying the feature permissions. Each tuple contains the feature name
+                (case-insensitive) and its access level.
+
+                Accepted feature names (case-insensitive) are:
+
+                - ``APIKEY_MANAGEMENT``
+                - ``EDGE_CONNECTOR_CLOUD_PROVISIONING``
+                - ``EDGE_CONNECTOR_LOCATION_MANAGEMENT``
+                - ``EDGE_CONNECTOR_DASHBOARD``
+                - ``EDGE_CONNECTOR_FORWARDING``
+                - ``EDGE_CONNECTOR_TEMPLATE``
+                - ``REMOTE_ASSISTANCE_MANAGEMENT``
+                - ``EDGE_CONNECTOR_ADMIN_MANAGEMENT``
+                - ``EDGE_CONNECTOR_NSS_CONFIGURATION``
+            alerting_access (str): The alerting access level.
+            analysis_access (str): The analysis access level.
+            admin_acct_access (str): The admin account access level.
+            device_info_access (str): The device info access level.
+
+        Note:
+            For access levels, the accepted values are:
+
+            - ``NONE``
+            - ``READ_ONLY``
+            - ``READ_WRITE``
+
+        Returns:
+            :obj:`Box`: The updated role.
+
+        Examples:
+            Update a role::
+
+                zcon.admin.update_role(
+                    role_id="123456789",
+                    policy_access="READ_ONLY",
+                    feature_permissions_tuples=[
+                        ("apikey_management", "read_only"),
+                        ("EDGE_CONNECTOR_CLOUD_PROVISIONING", "NONE")
+                    ],
+                    alerting_access="READ_WRITE"
+                )
+
+        """
+        payload = self.get_role(role_id)
+
+        if feature_permissions_tuples := kwargs.pop("feature_permissions_tuples", None):
+            payload["feature_permissions"] = {k.upper(): v for k, v in feature_permissions_tuples}
+
+        # Add optional parameters to payload
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
+
+        # Convert snake to camelcase
+        payload = convert_keys(payload)
+
+        return self._put(f"adminRoles/{role_id}", json=payload)
 
     def delete_role(self, role_id: str) -> int:
         """
@@ -134,10 +224,12 @@ class AdminAPI(APIEndpoint):
             :obj:`int`: The status code of the operation.
 
         Examples:
-            >>> zcon.admin.delete_role("123456789")
+            Delete a role::
+
+                zcon.admin.delete_role("123456789")
 
         """
-        return self._delete(f"adminRoles/{role_id}").status
+        return self._delete(f"adminRoles/{role_id}").status_code
 
     def change_password(self, username: str, old_password: str, new_password: str) -> int:
         """
@@ -152,10 +244,10 @@ class AdminAPI(APIEndpoint):
             :obj:`int`: The status code of the operation.
 
         Examples:
-            >>> zcon.admin.change_password(
-            ...     username="admin@example.com",
-            ...     old_password="MyInsecurePassword",
-            ...     new_password="MyNewInsecurePassword")
+            Change a password::
+
+                zcon.admin.change_password("jdoe", "oldpassword123", "newpassword123")
+
         """
         payload = {
             "username": username,
@@ -172,19 +264,6 @@ class AdminAPI(APIEndpoint):
             include_auditor_users (bool): Include / exclude auditor users in the response.
             include_admin_users (bool): Include / exclude admin users in the response.
             include_api_roles (bool): Include / exclude API roles in the response.
-            partner_type (str): The partner type to filter by. Available values are:
-                - ``ANY``
-                - ``ORG_ADMIN``
-                - ``SDWAN``
-                - ``MSFT_VIRTUAL_WAN``
-                - ``PUBLIC_API``
-                - ``EXEC_INSIGHT``
-                - ``EXEC_INSIGHT_AND_ORG_ADMIN``
-                - ``ZDX_ADMIN``
-                - ``EDGE_CONNECTOR_ADMIN``
-                - ``CSPM_ADMIN``
-                - ``ZSCALER_DECEPTION_ADMIN``
-                - ``ZSCALER_DECEPTION_SUPER_ADMIN``
             search (str): The search string to filter by.
             page (int): The page offset to return.
             page_size (int): The number of records to return per page.
@@ -194,8 +273,33 @@ class AdminAPI(APIEndpoint):
         Returns:
             :obj:`BoxList`: The list of admin users.
 
+        Examples:
+            List all admins::
+
+                for admin in zcon.admin.list_admins():
+                    print(admin)
+
+            List all admins with advanced features::
+
+                for admin in zcon.admin.list_admins(
+                    include_auditor_users=True,
+                    include_admin_users=True,
+                    include_api_roles=True,
+                ):
+                    print(admin)
+
         """
-        return self._get("adminUsers")
+        payload = {
+            "partnerType": "EDGE_CONNECTOR_ADMIN",
+        }
+
+        # Update the payload with keyword arguments
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
+
+        # Convert snake to camelcase if needed
+        payload = convert_keys(payload)
+
+        return self._get("adminUsers", params=payload)
 
     def get_admin(self, admin_id: str) -> Box:
         """
@@ -208,7 +312,9 @@ class AdminAPI(APIEndpoint):
             :obj:`Box`: The admin user details.
 
         Examples:
-            >>> print(zcon.admin.get_admin("123456789")
+            Print the details of an admin user::
+
+                print(zcon.admin.get_admin("123456789")
 
         """
         return self._get(f"adminUsers/{admin_id}")
@@ -225,46 +331,53 @@ class AdminAPI(APIEndpoint):
             password (str): The password for the admin user.
 
         Keyword Args:
-            is_default_admin (bool): Indicates whether the admin is the default admin.
             disabled (bool): Indicates whether the admin is disabled.
-            is_password_login_allowed (bool): Indicates whether the admin can log in with a password.
             new_location_create_allowed (bool): Indicates whether the admin can create new locations.
-            admin_scope_type (str):
-                The admin scope type. An admin's scope can be limited to certain resources,
-                policies, or reports. An admin's scope can be limited by:
-                    - ``ORGANIZATION``
-                    - ``DEPARTMENT``
-                    - ``LOCATION``
-                    - ``LOCATION_GROUP``
-                If not specified, the scope defaults to ``ORGANIZATION``.
-            admin_scope_group_member_entity_ids (list):
-                The IDs of the entities to include in the admin's scope. Only applicable if the admin scope type is
-                ``LOCATION_GROUP``.
-            is_deprecated_default_admin (bool):
-                Indicates whether this admin is deletable. If true, this admin is read-only and not deletable.
+            admin_scope_type (str): The admin scope type.
+            admin_scope_group_member_entity_ids (list): Applicable if the admin scope type is `LOCATION_GROUP`.
+            is_default_admin (bool): Indicates whether the admin is the default admin.
+            is_deprecated_default_admin (bool): Indicates whether this admin is deletable.
             is_auditor (bool): Indicates whether the admin is an auditor.
             is_security_report_comm_enabled (bool): Indicates whether the admin can receive security reports.
             is_service_update_comm_enabled (bool): Indicates whether the admin can receive service updates.
+            is_password_login_allowed (bool): Indicates whether the admin can log in with a password.
             is_product_update_comm_enabled (bool): Indicates whether the admin can receive product updates.
             is_exec_mobile_app_enabled (bool): Indicates whether Executive Insights App access is enabled for the admin.
-            send_mobile_app_invite (bool): Indicates whether to send an invitation email to download Executive Insights
-                App to admin.
+            send_mobile_app_invite (bool):
+                Indicates whether to send an invitation email to download Executive Insights App to admin.
             send_zdx_onboard_invite (bool): Indicates whether to send an invitation email for ZDX onboarding to admin.
             comments (str): Comments for the admin user.
-            name (str): Admin user's "friendly" name, e.g., "FirstName LastName" (this field typically matches userName.)
+            name (str):
+                Admin user's "friendly" name, e.g., "FirstName LastName" (this field typically matches userName.)
 
         Returns:
             Box: A Box object representing the newly created admin user.
 
         Examples:
-            >>> # Create a new admin with only the required parameters
-            >>> zcon.admin.add_admin("John Doe", "jdoe", "admin", "jdoe@example.com", "password123")
+            Create a new admin user with only the required parameters::
 
-            >>> # Create a new admin with some additional parameters
-            >>> zcon.admin.add_admin("Jane Smith", "jsmith", "admin", "jsmith@example.com", "password123",
-            ...           is_default_admin=False, disabled=False, comments="New admin user")
+                zcon.admin.add_admin(
+                    name="Jane Smith",
+                    login_name="jsmith",
+                    role="admin",
+                    email="jsmith@example.com",
+                    password="password123",
+                    )
+
+            Create a new admin with some additional parameters::
+
+                zcon.admin.add_admin(
+                    name="Jane Smith",
+                    login_name="jsmith",
+                    role="admin",
+                    email="jsmith@example.com",
+                    password="password123",
+                    is_default_admin=False,
+                    disabled=False,
+                    comments="New admin user"
 
         """
+
         payload = {
             "loginName": login_name,
             "userName": user_name,
@@ -274,8 +387,7 @@ class AdminAPI(APIEndpoint):
         }
 
         # Add optional parameters to payload
-        for key, value in kwargs.items():
-            payload[key] = value
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
 
         # Convert snake to camelcase
         payload = convert_keys(payload)
@@ -293,51 +405,43 @@ class AdminAPI(APIEndpoint):
             role (str): The role of the admin user.
             email (str): The email address of the admin user.
             password (str): The password for the admin user.
-            is_default_admin (bool): Indicates whether the admin is the default admin.
             disabled (bool): Indicates whether the admin is disabled.
-            is_password_login_allowed (bool): Indicates whether the admin can log in with a password.
             new_location_create_allowed (bool): Indicates whether the admin can create new locations.
-            admin_scope_type (str):
-                The admin scope type. An admin's scope can be limited to certain resources,
-                policies, or reports. An admin's scope can be limited by:
-                    - ``ORGANIZATION``
-                    - ``DEPARTMENT``
-                    - ``LOCATION``
-                    - ``LOCATION_GROUP``
-                If not specified, the scope defaults to ``ORGANIZATION``.
-            admin_scope_group_member_entity_ids (list):
-                The IDs of the entities to include in the admin's scope. Only applicable if the admin scope type is
-                ``LOCATION_GROUP``.
-            is_deprecated_default_admin (bool):
-                Indicates whether this admin is deletable. If true, this admin is read-only and not deletable.
+            admin_scope_type (str): The admin scope type.
+            admin_scope_group_member_entity_ids (list): Applicable if the admin scope type is `LOCATION_GROUP`.
+            is_default_admin (bool): Indicates whether the admin is the default admin.
+            is_deprecated_default_admin (bool): Indicates whether this admin is deletable.
             is_auditor (bool): Indicates whether the admin is an auditor.
             is_security_report_comm_enabled (bool): Indicates whether the admin can receive security reports.
             is_service_update_comm_enabled (bool): Indicates whether the admin can receive service updates.
+            is_password_login_allowed (bool): Indicates whether the admin can log in with a password.
             is_product_update_comm_enabled (bool): Indicates whether the admin can receive product updates.
             is_exec_mobile_app_enabled (bool): Indicates whether Executive Insights App access is enabled for the admin.
-            send_mobile_app_invite (bool): Indicates whether to send an invitation email to download Executive Insights
-                App to admin.
+            send_mobile_app_invite (bool):
+                Indicates whether to send an invitation email to download Executive Insights App to admin.
             send_zdx_onboard_invite (bool): Indicates whether to send an invitation email for ZDX onboarding to admin.
             comments (str): Comments for the admin user.
-            name (str): Admin user's "friendly" name, e.g., "FirstName LastName" (this field typically matches userName.)
+            name (str):
+                Admin user's "friendly" name, e.g., "FirstName LastName" (this field typically matches userName.)
 
         Returns:
             Box: A Box object representing the updated admin user.
 
         Examples:
-            >>> # Update an admin user's role
-            >>> update_admin("123", role="super_admin")
+            Update an admin user::
 
-            >>> # Update multiple fields for an admin user
-            >>> update_admin("123", role="super_admin", email="newemail@example.com", comments="Role updated to super admin")
+                zcon.admin.update_admin(
+                    admin_id="123456789",
+                    admin_scope_type="LOCATION_GROUP",
+                    comments="Updated admin user",
+                )
 
         """
+
         payload = self.get_admin(admin_id)
 
         # Add optional parameters to payload
-        for key, value in kwargs.items():
-            if value is not None:
-                payload[key] = value
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
 
         # Convert snake to camelcase
         payload = convert_keys(payload)
@@ -355,7 +459,49 @@ class AdminAPI(APIEndpoint):
             :obj:`int`: The status code of the operation.
 
         Examples:
-            >>> zcon.admin.delete_admin("123456789")
+            Delete an admin user::
+
+                zcon.admin.delete_admin("123456789")
 
         """
         return self._delete(f"adminUsers/{admin_id}").status
+
+    def list_api_keys(self, **kwargs) -> BoxList:
+        """
+        List all existing API keys.
+
+        Keyword Args:
+            include_partner_keys (bool): Include / exclude partner keys in the response.
+
+        Returns:
+            :obj:`BoxList`: The list of API keys.
+
+        Examples:
+            List all API keys::
+
+                for api_key in zcon.admin.list_api_keys():
+                    print(api_key)
+        """
+        params = {}
+        if "include_partner_keys" in kwargs:
+            params["includePartnerKeys"] = kwargs["include_partner_keys"]
+
+        return self._get("apiKeys", params=params)
+
+    def regenerate_api_key(self, api_key_id: str) -> Box:
+        """
+        Regenerate the specified API key.
+
+        Args:
+            api_key_id (str): The ID of the API key to regenerate.
+
+        Returns:
+            :obj:`Box`: The regenerated API key.
+
+        Examples:
+            Regenerate an API key::
+
+                print(zcon.admin.regenerate_api_key("123456789"))
+
+        """
+        return self._post(f"apiKeys/{api_key_id}/regenerate")
