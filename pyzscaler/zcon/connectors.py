@@ -2,7 +2,7 @@ from box import Box, BoxList
 from restfly import APIEndpoint
 
 
-class ConnectorsAPI(APIEndpoint):
+class ZCONConnectorsAPI(APIEndpoint):
     def list_groups(self, **kwargs) -> BoxList:
         """
         List all existing connector groups.
@@ -13,6 +13,17 @@ class ConnectorsAPI(APIEndpoint):
 
         Returns:
             :obj:`BoxList`: The list of cloud and branch connector groups.
+
+        Examples:
+            List all connector groups::
+
+                for group in zcon.connectors.list_groups():
+                    print(group)
+
+            List first page of connector groups with 10 items per page::
+
+                for group in zcon.connectors.list_groups(page=1, page_size=10):
+                    print(group)
 
         """
         return self._get("ecGroup", params=kwargs)
@@ -28,12 +39,13 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`Box`: The connector group details.
 
         Examples:
-            >>> print(zcon.connectors.get_group("123456789")
+            Get details of a specific connector group::
 
+                print(zcon.connectors.get_group("123456789"))
         """
         return self._get(f"ecGroup/{group_id}")
 
-    def get_vm(self, group_id: str, vm_id: str):
+    def get_vm(self, group_id: str, vm_id: str) -> Box:
         """
         Get details for a specific connector VM.
 
@@ -45,8 +57,9 @@ class ConnectorsAPI(APIEndpoint):
             :obj:`Box`: The connector VM details.
 
         Examples:
-            >>> print(zcon.connectors.get_vm("123456789", "123456789")
+            Get details of a specific connector VM::
 
+                print(zcon.connectors.get_vm("123456789", "987654321"))
         """
         return self._get(f"ecGroup/{group_id}/vm/{vm_id}")
 
@@ -61,5 +74,9 @@ class ConnectorsAPI(APIEndpoint):
         Returns:
             :obj:`Box`: The status of the operation.
 
+        Examples:
+            Delete a specific connector VM::
+
+                zcon.connectors.delete_vm("123456789", "987654321")
         """
         return self._delete(f"ecGroup/{group_id}/vm/{vm_id}")
