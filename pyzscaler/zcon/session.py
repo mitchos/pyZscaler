@@ -4,7 +4,7 @@ from restfly import APIEndpoint
 from pyzscaler.utils import obfuscate_api_key
 
 
-class AuthenticationAPI(APIEndpoint):
+class ZCONSessionAPI(APIEndpoint):
     def status(self) -> Box:
         """
         Returns the status of the authentication session if it exists.
@@ -13,8 +13,9 @@ class AuthenticationAPI(APIEndpoint):
             :obj:`Box`: Session authentication information.
 
         Examples:
-            >>> print(zcon.session.status())
+            Check the status of the authentication session::
 
+                print(zcon.session.status())
         """
         return self._get("auth")
 
@@ -28,13 +29,16 @@ class AuthenticationAPI(APIEndpoint):
             password (str): Password of the admin user for the authentication session.
 
         Returns:
-            :obj:`dict`: The authenticated session information.
+            :obj:`Box`: The authenticated session information.
 
         Examples:
-            >>> zia.session.create(api_key='123456789',
-            ...     username='admin@example.com'
-            ...     password='MyInsecurePassword')
+            Create a new authentication session::
 
+                zcon.session.create(
+                    api_key='123456789',
+                    username='admin@example.com',
+                    password='MyInsecurePassword'
+                )
         """
         api_obf = obfuscate_api_key(api_key)
 
@@ -53,5 +57,9 @@ class AuthenticationAPI(APIEndpoint):
         Returns:
             :obj:`int`: The status code of the operation.
 
+        Examples:
+            End the authentication session::
+
+                print(zcon.session.delete())
         """
-        return self._delete("auth").status
+        return self._delete("auth").status_code
