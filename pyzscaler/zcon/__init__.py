@@ -5,9 +5,11 @@ from restfly import APISession
 
 from pyzscaler import __version__
 
-from .admin import AdminAPI
-from .config import ConfigAPI
-from .session import AuthenticationAPI
+from .admin import ZCONAdminAPI
+from .config import ZCONConfigAPI
+from .connectors import ZCONConnectorsAPI
+from .locations import ZCONLocationsAPI
+from .session import ZCONSessionAPI
 
 
 class ZCON(APISession):
@@ -64,34 +66,56 @@ class ZCON(APISession):
         return self.session.delete()
 
     @property
-    def admin(self) -> AdminAPI:
+    def admin(self) -> ZCONAdminAPI:
         """
         The interface object for the :ref:`ZCON Admin interface <zcon-admin>`.
 
         Returns:
-            AdminAPI: The AdminAPI object.
+            ZCONAdminAPI: The AdminAPI object.
 
         """
-        return AdminAPI(self)
+        return ZCONAdminAPI(self)
 
     @property
-    def config(self) -> ConfigAPI:
+    def connectors(self) -> ZCONConnectorsAPI:
+        """
+        The interface object for the :ref:`ZCON Connectors interface <zcon-connectors>`.
+
+        Returns:
+            ZCONConnectorsAPI: The ConnectorsAPI object.
+
+        """
+        return ZCONConnectorsAPI(self)
+
+    @property
+    def config(self) -> ZCONConfigAPI:
         """
         The interface object for the :ref:`ZCON Config interface <zcon-config>`.
 
         Returns:
-            ConfigAPI: The ConfigAPI object.
+            ZCONConfigAPI: The ConfigAPI object.
 
         """
-        return ConfigAPI(self)
+        return ZCONConfigAPI(self)
 
     @property
-    def session(self) -> AuthenticationAPI:
+    def locations(self) -> ZCONLocationsAPI:
         """
-        The interface object for the :ref:`ZCON Authentication interface <zcon-authentication>`.
+        The interface object for the :ref:`ZCON Locations interface <zcon-locations>`.
 
         Returns:
-            AuthenticationAPI: The AuthenticationAPI object.
+            ZCONLocationsAPI: The LocationsAPI object.
 
         """
-        return AuthenticationAPI(self)
+        return ZCONLocationsAPI(self)
+
+    @property
+    def session(self) -> ZCONSessionAPI:
+        """
+        The interface object for the :ref:`ZCON Authentication interface <zcon-session>`.
+
+        Returns:
+            ZCONSessionAPI: The SessionAPI object.
+
+        """
+        return ZCONSessionAPI(self)
