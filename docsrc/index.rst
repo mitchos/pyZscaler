@@ -10,6 +10,7 @@
    zs/zpa/index
    zs/zcc/index
    zs/zdx/index
+   zs/zcon/index
 
 pyZscaler SDK - Library Reference
 =====================================================================
@@ -43,6 +44,7 @@ Products
 - :doc:`Zscaler Internet Access (ZIA) <zs/zia/index>`
 - :doc:`Zscaler Mobile Admin Portal <zs/zcc/index>`
 - :doc:`Zscaler Digital Experience (ZDX) <zs/zdx/index>`
+- :doc:`Zscaler Connector Portal (ZCON) <zs/zcon/index>`
 
 Installation
 ==============
@@ -68,11 +70,10 @@ Quick ZIA Example
 .. code-block:: python
 
     from pyzscaler import ZIA
-    from pprint import pprint
 
     zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
     for user in zia.users.list_users():
-        pprint(user)
+        print(user)
 
 Quick ZPA Example
 ^^^^^^^^^^^^^^^^^^
@@ -80,11 +81,10 @@ Quick ZPA Example
 .. code-block:: python
 
     from pyzscaler import ZPA
-    from pprint import pprint
 
     zpa = ZPA(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', customer_id='CUSTOMER_ID')
     for app_segment in zpa.app_segments.list_segments():
-        pprint(app_segment)
+        print(app_segment)
 
 
 Quick ZCC Example
@@ -93,11 +93,10 @@ Quick ZCC Example
 .. code-block:: python
 
     from pyzscaler import ZCC
-    from pprint import pprint
 
     zcc = ZCC(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', company_id='COMPANY_ID)
     for device in zcc.devices.list_devices():
-        pprint(device)
+        print(device)
 
 Quick ZDX Example
 ^^^^^^^^^^^^^^^^^^^
@@ -105,11 +104,21 @@ Quick ZDX Example
 .. code-block:: python
 
     from pyzscaler import ZDX
-    from pprint import pprint
 
-    zcc = ZDX(client_id='CLIENT_ID', client_secret='CLIENT_SECRET')
+    zdx = ZDX(client_id='CLIENT_ID', client_secret='CLIENT_SECRET')
     for device in zdx.devices.list_devices():
-        pprint(device)
+        print(device)
+
+Quick ZCON Example
+^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from pyzscaler import ZCON
+
+    zcon = ZCON(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
+    for group in zcon.connectors.list_groups():
+        print(group)
 
 
 .. automodule:: pyzscaler
