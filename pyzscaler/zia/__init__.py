@@ -13,6 +13,7 @@ from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
 from .labels import RuleLabelsAPI
 from .locations import LocationsAPI
+from .reports import ReportsAPI
 from .sandbox import CloudSandboxAPI
 from .security import SecurityPolicyAPI
 from .session import AuthenticatedSessionAPI
@@ -156,6 +157,14 @@ class ZIA(APISession):
 
         """
         return LocationsAPI(self)
+
+    @property
+    def reports(self):
+        """
+        The interface object for the :ref:`ZIA Reports interface <zia-reports>`.
+
+        """
+        return ReportsAPI(self)
 
     @property
     def sandbox(self):
