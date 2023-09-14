@@ -87,7 +87,7 @@ class ZCONLocationsAPI(APIEndpoint):
                     print(template)
 
         """
-        return self._get("locationTemplate")
+        return self._get("locationTemplate", params=kwargs)
 
     def get_location_template(self, template_id: str) -> Box:
         """
@@ -242,7 +242,6 @@ class ZCONLocationsAPI(APIEndpoint):
         # Merge all kwargs into payload
         payload.update(convert_keys(kwargs))
 
-        print(payload)
         return self._put(f"locationTemplate/{template_id}", json=payload)
 
     def delete_location_template(self, template_id: str):
