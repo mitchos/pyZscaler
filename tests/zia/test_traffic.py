@@ -215,6 +215,14 @@ def fixture_vpn_credentials():
     ]
 
 
+@pytest.fixture(name="ipv6_prefixes")
+def fixture_ipv64_prefixes():
+    return [
+        {"id": 0, "name": "sample1", "prefixMask": "mask1", "dnsPrefix": True},
+        {"id": 1, "name": "sample2", "prefixMask": "mask2", "dnsPrefix": False},
+    ]
+
+
 @responses.activate
 @stub_sleep
 def test_list_gre_tunnels(zia, gre_tunnels):
@@ -508,8 +516,8 @@ def test_get_vpn_credential_by_fqdn(zia, vpn_credentials):
 
 
 def test_get_vpn_credential_error(zia):
-    with pytest.raises(Exception) as e_info:
-        resp = zia.traffic.get_vpn_credential("1", "test@example.com")
+    with pytest.raises(Exception):
+        zia.traffic.get_vpn_credential("1", "test@example.com")
 
 
 @responses.activate
@@ -575,3 +583,54 @@ def test_list_vips(zia, vips):
     assert isinstance(resp, BoxList)
     assert len(resp) == 2
     assert resp[0].data_center == "TESTA"
+
+
+@responses.activate
+def test_list_dns64_prefixes(zia, ipv6_prefixes):
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/ipv6config/dns64prefix",
+        json=ipv6_prefixes,
+        status=200,
+    )
+    resp = zia.traffic.list_dns64_prefixes()
+    assert isinstance(resp, BoxList)
+    assert len(resp) == 2
+
+
+@stub_sleep
+@responses.activate
+def test_list_nat64_prefixes(zia, ipv6_prefixes):
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/ipv6config/nat64prefix?page=1",
+        json=ipv6_prefixes,
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/ipv6config/nat64prefix?page=2",
+        json=[],
+        status=200,
+    )
+    resp = zia.traffic.list_nat64_prefixes()
+    assert isinstance(resp, BoxList)
+    assert len(resp) == 2
+
+
+@responses.activate
+def test_list_gre_ip_addresses(zia):
+    gre_ip_addresses_data = [
+        {"ipAddress": "192.168.1.1", "greEnabled": True, "greTunnelIP": "10.0.0.1"},
+        {"ipAddress": "192.168.1.2", "greEnabled": False, "greTunnelIP": "10.0.0.2"},
+    ]
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/orgProvisioning/ipGreTunnelInfo",
+        json=gre_ip_addresses_data,
+        status=200,
+    )
+    resp = zia.traffic.list_gre_ip_addresses()
+    assert isinstance(resp, BoxList)
+    assert len(resp) == 2

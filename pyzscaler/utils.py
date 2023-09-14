@@ -18,6 +18,7 @@ def snake_to_camel(name: str):
         "surrogate_ip": "surrogateIP",
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
         "ec_vms": "ecVMs",
+        "ipv6_enabled": "ipV6Enabled",
     }
     return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
 
@@ -31,6 +32,7 @@ def camel_to_snake(name: str):
         "surrogateIP": "surrogate_ip",
         "surrogateIPEnforcedForKnownBrowsers": "surrogate_ip_enforced_for_known_browsers",
         "ecVMs": "ec_vms",
+        "ipV6Enabled": "ipv6_enabled",
     }
     # Check if name is an edge case
     if name in edge_cases:
