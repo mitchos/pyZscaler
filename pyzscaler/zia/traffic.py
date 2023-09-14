@@ -661,3 +661,82 @@ class TrafficForwardingAPI(APIEndpoint):
 
         """
         return self._delete(f"vpnCredentials/{credential_id}", box=False).status_code
+
+    def get_ipv6_config(self) -> Box:
+        """
+        Returns the IPv6 configuration for the organisation.
+
+        Returns:
+            :obj:`Box`: The IPv6 configuration for the organisation.
+
+        Examples:
+            Get the IPv6 configuration for the organisation::
+
+                zia.traffic.get_ipv6_config()
+
+        """
+        # There is an edge case in the camelcase to snake conversion that we're going to handle here. We'll revert
+        # the default camel_killer_box and run it through our conversion function in utils that handles edge-cases.
+        self._box_attrs = {"camel_killer_box": False}
+
+        return convert_keys(self._get("ipv6config"), "to_snake")
+
+    def list_dns64_prefixes(self, **kwargs):
+        """
+        Returns the list of NAT64 prefixes configured as the DNS64 prefix for the organisation
+
+        Keyword Args:
+            search (str): Search string to filter results by. Defaults to None.
+
+        Returns:
+            :obj:`BoxList`: List of NAT64 prefixes configured as the DNS64 prefix for the organisation
+
+        Examples:
+            List DNS64 prefixes using default settings::
+
+                 for prefix in zia.traffic.list_dns64_prefixes():
+                    print(prefix)
+
+        """
+
+        return self._get("ipv6config/dns64prefix", params=kwargs)
+
+    def list_nat64_prefixes(self, **kwargs) -> BoxList:
+        """
+        Returns the list of NAT64 prefixes configured for the organisation
+
+        Keyword Args:
+            page (int): Page number to return. Defaults to 1.
+            page_size (int): Number of results to return per page. Defaults to 100. Max size is 1000.
+            search (str, optional): Search string to filter results by. Defaults to None.
+
+        Returns:
+            :obj:`BoxList`: List of NAT64 prefixes configured for the organisation
+
+        Examples:
+            List NAT64 prefixes using default settings::
+
+                 for prefix in zia.traffic.list_nat64_prefixes():
+                    print(prefix)
+
+        """
+        return BoxList(Iterator(self._api, "ipv6config/nat64prefix", **kwargs))
+
+    def list_gre_ip_addresses(self, **kwargs) -> BoxList:
+        """
+        Returns a list of IP addresses with GRE tunnel details.
+
+        Keyword Args:
+            ip_addresses (list[str]): Filter based on the list of IP addresses provided.
+
+        Returns:
+            :obj:`BoxList`: List of GRE IP addresses configured for the organisation
+
+        Examples:
+            List GRE IP addresses using default settings::
+
+                 for ip_address in zia.traffic.list_gre_ip_addresses():
+                    print(ip_address)
+
+        """
+        return self._get("orgProvisioning/ipGreTunnelInfo", params=convert_keys(kwargs))
