@@ -62,4 +62,4 @@ class ZCONSessionAPI(APIEndpoint):
 
                 print(zcon.session.delete())
         """
-        return self._delete("auth").status_code
+        return self._delete("auth").status
