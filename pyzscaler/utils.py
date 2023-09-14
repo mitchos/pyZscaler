@@ -1,4 +1,5 @@
 import functools
+import re
 import time
 
 from box import Box, BoxList
@@ -16,8 +17,27 @@ def snake_to_camel(name: str):
         "name_l10n_tag": "nameL10nTag",
         "surrogate_ip": "surrogateIP",
         "surrogate_ip_enforced_for_known_browsers": "surrogateIPEnforcedForKnownBrowsers",
+        "ec_vms": "ecVMs",
     }
     return edge_cases.get(name, name[0].lower() + name.title()[1:].replace("_", ""))
+
+
+def camel_to_snake(name: str):
+    """Converts Zscaler's lower camelCase to Python Snake Case."""
+    edge_cases = {
+        "routableIP": "routable_ip",
+        "isNameL10nTag": "is_name_l10n_tag",
+        "nameL10nTag": "name_l10n_tag",
+        "surrogateIP": "surrogate_ip",
+        "surrogateIPEnforcedForKnownBrowsers": "surrogate_ip_enforced_for_known_browsers",
+        "ecVMs": "ec_vms",
+    }
+    # Check if name is an edge case
+    if name in edge_cases:
+        return edge_cases[name]
+
+    name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
+    return name.lower()
 
 
 def chunker(lst, n):
@@ -26,17 +46,17 @@ def chunker(lst, n):
         yield lst[i : i + n]
 
 
-# Recursive function to convert all keys and nested keys from snake case
-# to camel case.
-def convert_keys(data):
+def convert_keys(data, direction="to_camel"):
+    converter = camel_to_snake if direction == "to_snake" else snake_to_camel
+
     if isinstance(data, (list, BoxList)):
-        return [convert_keys(inner_dict) for inner_dict in data]
+        return [convert_keys(inner_dict, direction=direction) for inner_dict in data]
     elif isinstance(data, (dict, Box)):
         new_dict = {}
         for k in data.keys():
             v = data[k]
-            new_key = snake_to_camel(k)
-            new_dict[new_key] = convert_keys(v) if isinstance(v, (dict, list)) else v
+            new_key = converter(k)
+            new_dict[new_key] = convert_keys(v, direction=direction) if isinstance(v, (dict, list)) else v
         return new_dict
     else:
         return data
