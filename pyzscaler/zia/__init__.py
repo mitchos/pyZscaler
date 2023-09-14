@@ -6,6 +6,7 @@ from restfly.session import APISession
 from pyzscaler import __version__
 
 from .admin_and_role_management import AdminAndRoleManagementAPI
+from .apptotal import AppTotalAPI
 from .audit_logs import AuditLogsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
@@ -98,6 +99,14 @@ class ZIA(APISession):
 
         """
         return AdminAndRoleManagementAPI(self)
+
+    @property
+    def apptotal(self):
+        """
+        The interface object for the :ref:`ZIA AppTotal interface <zia-apptotal>`.
+
+        """
+        return AppTotalAPI(self)
 
     @property
     def audit_logs(self):
