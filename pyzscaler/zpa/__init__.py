@@ -11,6 +11,7 @@ from pyzscaler.zpa.idp import IDPControllerAPI
 from pyzscaler.zpa.inspection import InspectionControllerAPI
 from pyzscaler.zpa.lss import LSSConfigControllerAPI
 from pyzscaler.zpa.machine_groups import MachineGroupsAPI
+from pyzscaler.zpa.microtenants import MicrotenantsAPI
 from pyzscaler.zpa.policies import PolicySetsAPI
 from pyzscaler.zpa.posture_profiles import PostureProfilesAPI
 from pyzscaler.zpa.provisioning import ProvisioningAPI
@@ -152,6 +153,14 @@ class ZPA(APISession):
 
         """
         return MachineGroupsAPI(self)
+
+    @property
+    def microtenants(self):
+        """
+        The interface object for the :ref:`ZPA Microtenants interface <zpa-microtenants>`.
+
+        """
+        return MicrotenantsAPI(self)
 
     @property
     def policies(self):
