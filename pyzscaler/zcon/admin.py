@@ -156,7 +156,7 @@ class ZCONAdminAPI(APIEndpoint):
             report_access (str): The report access level.
             username_access (str): The username access level.
             dashboard_access (str): The dashboard access level.
-            feature_permissions_tuples (:obj:`List[Tuple[str, str]]`):
+            feature_permissions (:obj:`List[Tuple[str, str]]`):
                 A list of tuple pairs specifying the feature permissions. Each tuple contains the feature name
                 (case-insensitive) and its access level.
 
@@ -192,7 +192,7 @@ class ZCONAdminAPI(APIEndpoint):
                 zcon.admin.update_role(
                     role_id="123456789",
                     policy_access="READ_ONLY",
-                    feature_permissions_tuples=[
+                    feature_permissions=[
                         ("apikey_management", "read_only"),
                         ("EDGE_CONNECTOR_CLOUD_PROVISIONING", "NONE")
                     ],
@@ -202,14 +202,18 @@ class ZCONAdminAPI(APIEndpoint):
         """
         payload = self.get_role(role_id)
 
-        if feature_permissions_tuples := kwargs.pop("feature_permissions_tuples", None):
-            payload["feature_permissions"] = {k.upper(): v for k, v in feature_permissions_tuples}
+        # Pop the feature permissions out first so that we retain their format
+        feature_permissions = kwargs.pop("feature_permissions", None)
 
         # Add optional parameters to payload
         payload.update({k: v for k, v in kwargs.items() if v is not None})
 
         # Convert snake to camelcase
         payload = convert_keys(payload)
+
+        # Now update the feature permissions
+        if feature_permissions:
+            payload["featurePermissions"] = {k.upper(): v for k, v in feature_permissions}
 
         return self._put(f"adminRoles/{role_id}", json=payload)
 
@@ -250,11 +254,11 @@ class ZCONAdminAPI(APIEndpoint):
 
         """
         payload = {
-            "username": username,
+            "userName": username,
             "oldPassword": old_password,
             "newPassword": new_password,
         }
-        return self._post("admin/passwordChange", json=payload).status
+        return self._post("passwordChange", json=payload).status_code
 
     def list_admins(self, **kwargs) -> BoxList:
         """
@@ -464,7 +468,7 @@ class ZCONAdminAPI(APIEndpoint):
                 zcon.admin.delete_admin("123456789")
 
         """
-        return self._delete(f"adminUsers/{admin_id}").status
+        return self._delete(f"adminUsers/{admin_id}").status_code
 
     def list_api_keys(self, **kwargs) -> BoxList:
         """
