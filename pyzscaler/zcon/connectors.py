@@ -1,6 +1,8 @@
 from box import Box, BoxList
 from restfly import APIEndpoint
 
+from pyzscaler.utils import convert_keys
+
 
 class ZCONConnectorsAPI(APIEndpoint):
     def list_groups(self, **kwargs) -> BoxList:
@@ -26,7 +28,11 @@ class ZCONConnectorsAPI(APIEndpoint):
                     print(group)
 
         """
-        return self._get("ecGroup", params=kwargs)
+        # There is an edge case in the camelcase to snake conversion that we're going to handle here. We'll revert
+        # the default camel_killer_box and run it through our conversion function in utils that handles edge-cases.
+        self._box_attrs = {"camel_killer_box": False}
+
+        return convert_keys(self._get("ecgroup", params=kwargs), "to_snake")
 
     def get_group(self, group_id: str) -> Box:
         """
@@ -43,7 +49,11 @@ class ZCONConnectorsAPI(APIEndpoint):
 
                 print(zcon.connectors.get_group("123456789"))
         """
-        return self._get(f"ecGroup/{group_id}")
+        # There is an edge case in the camelcase to snake conversion that we're going to handle here. We'll revert
+        # the default camel_killer_box and run it through our conversion function in utils that handles edge-cases.
+        self._box_attrs = {"camel_killer_box": False}
+
+        return convert_keys(self._get(f"ecgroup/{group_id}"), "to_snake")
 
     def get_vm(self, group_id: str, vm_id: str) -> Box:
         """
@@ -61,9 +71,9 @@ class ZCONConnectorsAPI(APIEndpoint):
 
                 print(zcon.connectors.get_vm("123456789", "987654321"))
         """
-        return self._get(f"ecGroup/{group_id}/vm/{vm_id}")
+        return self._get(f"ecgroup/{group_id}/vm/{vm_id}")
 
-    def delete_vm(self, group_id: str, vm_id: str) -> Box:
+    def delete_vm(self, group_id: str, vm_id: str) -> int:
         """
         Delete the specified connector VM.
 
@@ -79,4 +89,4 @@ class ZCONConnectorsAPI(APIEndpoint):
 
                 zcon.connectors.delete_vm("123456789", "987654321")
         """
-        return self._delete(f"ecGroup/{group_id}/vm/{vm_id}")
+        return self._delete(f"ecgroup/{group_id}/vm/{vm_id}").status_code
