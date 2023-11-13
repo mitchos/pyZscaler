@@ -8,6 +8,7 @@ from pyzscaler import __version__
 from .admin_and_role_management import AdminAndRoleManagementAPI
 from .apptotal import AppTotalAPI
 from .audit_logs import AuditLogsAPI
+from .cloud_apps import CloudAppsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
@@ -156,6 +157,14 @@ class ZIA(APISession):
 
         """
         return LocationsAPI(self)
+
+    @property
+    def cloud_apps(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Applications interface <zia-cloud_apps>`.
+
+        """
+        return CloudAppsAPI(self)
 
     @property
     def sandbox(self):
