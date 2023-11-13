@@ -34,8 +34,9 @@ by Steve McGrath.
 ## Products
 - Zscaler Private Access (ZPA)
 - Zscaler Internet Access (ZIA)
+- Zscaler Digital Experience (ZDX)
 - Zscaler Mobile Admin Portal for Zscaler Client Connector (ZCC)
-- Cloud Security Posture Management (CSPM) - (work in progress)
+- Zscaler Connector Portal (ZCON)
 
 
 ## Installation
@@ -51,16 +52,33 @@ for each product that you are interfacing with. Once you have the requirements a
 you're ready to go.
 
 
-### Quick ZIA Example
-
+### Quick ZIA Example - Explicitly Activate Changes
+**Note:** Changes will not be activated until you explicitly call the `activate()` method or the admin session is closed.
+It's a best-practice to log out your API session so that logging is sane and you don't have unnecessary sessions open.
 ```python
 from pyzscaler import ZIA
-from pprint import pprint
 
 zia = ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD')
 for user in zia.users.list_users():
-    pprint(user)
+    print(user)
+    
+zia.config.activate() # Explicitly activate changes (if applicable). 
+zia.session.delete()  # Log out of the ZIA API and automatically commit any other changes
 ```
+
+### Quick ZIA Example - Using the Python Context Manager
+
+**Note**: Using the Python Context Manager will automatically log the admin user out and commit/activate any changes 
+made when execution is complete.
+
+```python
+from pyzscaler import ZIA
+with ZIA(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD') as zia:
+    for user in zia.users.list_users():
+        print(user)
+
+```
+
 
 ### Quick ZPA Example
 
@@ -83,6 +101,27 @@ zcc = ZCC(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', company_id='COMP
 for device in zcc.devices.list_devices():
     pprint(device)
 ```
+### Quick ZDX Example
+
+```python
+from pyzscaler import ZDX
+
+zdx = ZDX(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', cloud='CLOUD')
+for device in zdx.devices.list_devices():
+    print(device)
+```
+### Quick ZCON Example
+The Zscaler Connector Portal uses the same authentication methods as ZIA and this will allow us to use the Python Context
+Manager just like we did with ZIA. Of course, you can still use the explicit method if you prefer.
+
+```python
+from pyzscaler import ZCON
+
+with ZCON(api_key='API_KEY', cloud='CLOUD', username='USERNAME', password='PASSWORD') as zcon:
+    for group in zcon.groups.list_groups():
+        print(group)
+```
+
 
 
 ## Documentation
@@ -96,7 +135,7 @@ pyZscaler makes some quality of life improvements to simplify and clarify argume
 A start has been made on [user documentation](https://pyzscaler.packet.tech) with examples and explanations on how to implement with pyZcaler.
 
 ## Is It Tested?
-Yes! pyZscaler has a complete test suite that fully covers all methods within the ZIA and ZPA modules.
+Yes! pyZscaler has a complete test suite that fully covers all methods within all modules.
 
 ## Contributing
 
