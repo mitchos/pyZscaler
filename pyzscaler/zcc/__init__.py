@@ -49,7 +49,7 @@ class ZCC(APISession):
     def __init__(self, **kw):
         self._client_id = kw.get("client_id", os.getenv(f"{self._env_base}_CLIENT_ID"))
         self._client_secret = kw.get("client_secret", os.getenv(f"{self._env_base}_CLIENT_SECRET"))
-        self._cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
+        self._env_cloud = kw.get("cloud", os.getenv(f"{self._env_base}_CLOUD"))
         self._url = (
             kw.get("override_url", os.getenv(f"{self._env_base}_OVERRIDE_URL"))
             or f"https://api-mobile.{self._env_cloud}.net/papi"

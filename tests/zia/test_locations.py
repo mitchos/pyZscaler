@@ -1,6 +1,6 @@
 import pytest
 import responses
-from box import Box
+from box import Box, BoxList
 from responses import matchers
 
 from tests.conftest import stub_sleep
@@ -64,6 +64,22 @@ def fixture_sub_locations():
             "profile": "CORPORATE",
         },
     ]
+
+
+@pytest.fixture(name="geo_locations")
+def geo_location_data():
+    return {
+        "city_geo_id": 5375480,
+        "state_geo_id": 5332921,
+        "latitude": 37.3897,
+        "longitude": -122.0832,
+        "city_name": "Mountain View",
+        "state_name": "California",
+        "country_name": "United States",
+        "country_code": "US",
+        "postal_code": "94041",
+        "continent_code": "NA",
+    }
 
 
 @responses.activate
@@ -183,7 +199,7 @@ def test_get_location_by_id(zia, locations):
 def test_get_location_by_name_and_id(zia):
     # Passing location_id and location_name should result in a ValueError.
     with pytest.raises(ValueError):
-        resp = zia.locations.get_location(location_id="1", location_name="Test A")
+        zia.locations.get_location(location_id="1", location_name="Test A")
 
 
 @responses.activate
@@ -267,7 +283,7 @@ def test_update_location(zia, locations):
 
     resp = zia.locations.update_location("1", name="Updated Test")
 
-    assert isinstance(resp, dict)
+    assert isinstance(resp, Box)
     assert resp.id == 1
     assert resp.name == "Updated Test"
 
@@ -381,3 +397,55 @@ def test_list_sublocations(zia, sub_locations):
     assert isinstance(resp, list)
     assert len(resp) == 2
     assert resp[0].id == 1
+
+
+@responses.activate
+def test_get_geo_by_coordinates(zia, geo_locations):
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/region/byGeoCoordinates",
+        json=geo_locations,
+        status=200,
+    )
+    resp = zia.locations.get_geo_by_coordinates(37, -122)
+    assert isinstance(resp, Box)
+    assert resp.city_name == "Mountain View"
+
+
+@responses.activate
+def test_get_geo_by_ip(zia, geo_locations):
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/region/byIPAddress/8.8.8.8",
+        json=geo_locations,
+        status=200,
+    )
+    resp = zia.locations.get_geo_by_ip("8.8.8.8")
+    assert isinstance(resp, Box)
+    assert resp.city_name == "Mountain View"
+
+
+@stub_sleep
+@responses.activate
+def test_list_cities_by_name(zia):
+    list_cities_data = [
+        {"city": "San Jose", "state": "CA", "country": "US"},
+        {"city": "San Francisco", "state": "CA", "country": "US"},
+    ]
+
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/region/search?prefix=San&page=1",
+        json=list_cities_data,
+        status=200,
+    )
+    responses.add(
+        responses.GET,
+        url="https://zsapi.zscaler.net/api/v1/region/search?prefix=San&page=2",
+        json=[],
+        status=200,
+    )
+    resp = zia.locations.list_cities_by_name(prefix="San")
+    assert isinstance(resp, BoxList)
+    assert len(resp) == 2
+    assert resp[0].city == "San Jose"

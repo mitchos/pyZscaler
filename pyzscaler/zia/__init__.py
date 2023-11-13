@@ -6,7 +6,9 @@ from restfly.session import APISession
 from pyzscaler import __version__
 
 from .admin_and_role_management import AdminAndRoleManagementAPI
+from .apptotal import AppTotalAPI
 from .audit_logs import AuditLogsAPI
+from .cloud_apps import CloudAppsAPI
 from .config import ActivationAPI
 from .dlp import DLPAPI
 from .firewall import FirewallPolicyAPI
@@ -100,6 +102,14 @@ class ZIA(APISession):
         return AdminAndRoleManagementAPI(self)
 
     @property
+    def apptotal(self):
+        """
+        The interface object for the :ref:`ZIA AppTotal interface <zia-apptotal>`.
+
+        """
+        return AppTotalAPI(self)
+
+    @property
     def audit_logs(self):
         """
         The interface object for the :ref:`ZIA Admin Audit Logs interface <zia-audit_logs>`.
@@ -147,6 +157,14 @@ class ZIA(APISession):
 
         """
         return LocationsAPI(self)
+
+    @property
+    def cloud_apps(self):
+        """
+        The interface object for the :ref:`ZIA Cloud Applications interface <zia-cloud_apps>`.
+
+        """
+        return CloudAppsAPI(self)
 
     @property
     def sandbox(self):
