@@ -9,6 +9,7 @@ class CertificatesAPI(APIEndpoint):
         super().__init__(api)
 
         self.v2_url = api.v2_url
+        self.url = api._url
 
     def list_browser_access(self, **kwargs) -> BoxList:
         """
@@ -97,3 +98,14 @@ class CertificatesAPI(APIEndpoint):
 
         """
         return BoxList(Iterator(self._api, f"{self.v2_url}/enrollmentCert", **kwargs))
+
+    def add_certificate(self, name: str, cert_blob: str, description: str =''):
+        
+        # Initialise payload
+        payload = {
+            "certBlob": cert_blob,
+            "description": description,
+            "name": name
+        }
+        
+        return BoxList(Iterator(self._api, self._post(f"{self.url}/certificate", json=payload)))
