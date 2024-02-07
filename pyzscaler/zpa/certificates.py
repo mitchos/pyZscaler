@@ -2,8 +2,6 @@ from box import Box, BoxList
 from restfly.endpoint import APIEndpoint, APISession
 
 from pyzscaler.utils import Iterator
-from OpenSSL import crypto
-import re
 
 
 class CertificatesAPI(APIEndpoint):
