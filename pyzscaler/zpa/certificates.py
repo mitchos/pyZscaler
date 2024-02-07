@@ -124,4 +124,4 @@ class CertificatesAPI(APIEndpoint):
             "name": name
         }
         
-        return self._api, self._post(f"{self.url}/certificate", json=payload)
+        return self._post(f"{self.url}/certificate", json=payload)
