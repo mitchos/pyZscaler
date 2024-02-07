@@ -142,7 +142,7 @@ def test_add_certificate(zpa, certificates):
                 )
             ],
         )
-    resp = zpa.certificates.add_certificatet(
+    resp = zpa.certificates.add_certificate(
         name="Test 1",
         cert_blob="-----BEGIN CERTIFICATE-----\n-----END PRIVATE KEY-----",
         description="Test Certificate 1"
