@@ -9,6 +9,7 @@ class CertificatesAPI(APIEndpoint):
         super().__init__(api)
 
         self.v2_url = api.v2_url
+        self.url = api._url
 
     def list_browser_access(self, **kwargs) -> BoxList:
         """
@@ -97,3 +98,30 @@ class CertificatesAPI(APIEndpoint):
 
         """
         return BoxList(Iterator(self._api, f"{self.v2_url}/enrollmentCert", **kwargs))
+
+    def add_certificate(self, name: str, cert_blob: str, description: str ='') -> Box:
+        """
+        Adds a new certificate to the ZPA.
+
+        Args:
+            name (str):
+                The name of the certificate.
+            cert_blob (str):
+                The certificate blob.
+            description (str, optional):
+                The description of the certificate.
+
+        Returns:
+            :obj:`Box`: The newly created certificate resource record.
+
+        Examples:
+            >>> cert = zpa.certificates.add_certificate('My Certificate', 'cert_blob')
+        """
+        # Initialise payload
+        payload = {
+            "certBlob": cert_blob,
+            "description": description,
+            "name": name
+        }
+        
+        return self._post(f"{self.url}/certificate", json=payload)
