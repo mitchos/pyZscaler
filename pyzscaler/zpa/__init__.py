@@ -23,6 +23,7 @@ from pyzscaler.zpa.servers import AppServersAPI
 from pyzscaler.zpa.service_edges import ServiceEdgesAPI
 from pyzscaler.zpa.session import AuthenticatedSessionAPI
 from pyzscaler.zpa.trusted_networks import TrustedNetworksAPI
+from pyzscaler.zpa.isolation_profiles import IsolationProfilesAPI
 
 
 class ZPA(APISession):
@@ -249,3 +250,11 @@ class ZPA(APISession):
 
         """
         return TrustedNetworksAPI(self)
+
+    @property
+    def isolation_profiles(self):
+        """
+        The interface object for the :ref:`ZPA Isolation Profiles interface <zpa-isolation_profiles>`.
+
+        """
+        return IsolationProfilesAPI(self)
