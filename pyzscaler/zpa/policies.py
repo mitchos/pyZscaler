@@ -10,6 +10,7 @@ class PolicySetsAPI(APIEndpoint):
         "timeout": "TIMEOUT_POLICY",
         "client_forwarding": "CLIENT_FORWARDING_POLICY",
         "siem": "SIEM_POLICY",
+        "isolation": "ISOLATION_POLICY",
     }
 
     def _create_conditions(self, conditions: list) -> list:
@@ -87,6 +88,7 @@ class PolicySetsAPI(APIEndpoint):
                  |  ``timeout`` - returns the Timeout Policy
                  |  ``client_forwarding`` - returns the Client Forwarding Policy
                  |  ``siem`` - returns the SIEM Policy
+                 |  ``isolation`` - returns the Isolation Policy
 
         Returns:
             :obj:`Box`: The resource record of the specified policy type.
@@ -104,7 +106,7 @@ class PolicySetsAPI(APIEndpoint):
         if not mapped_policy_type:
             raise ValueError(
                 f"Incorrect policy type provided: {policy_type}\n "
-                f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
+                f"Policy type must be 'access', 'timeout', 'client_forwarding', 'siem' or 'isolation'."
             )
 
         return self._get(f"policySet/policyType/{mapped_policy_type}")
@@ -120,6 +122,7 @@ class PolicySetsAPI(APIEndpoint):
                  |  ``timeout``
                  |  ``client_forwarding``
                  |  ``siem``
+                 |  ``isolation``
             rule_id (str): The unique identifier for the policy rule.
 
         Returns:
@@ -146,6 +149,7 @@ class PolicySetsAPI(APIEndpoint):
                 |  ``access`` - returns Access Policy rules
                 |  ``timeout`` - returns Timeout Policy rules
                 |  ``client_forwarding`` - returns Client Forwarding Policy rules
+                |  ``isolation`` - returns Isololation Policy rules
 
         Returns:
             :obj:`list`: A list of all policy rules that match the requested type.
@@ -163,7 +167,7 @@ class PolicySetsAPI(APIEndpoint):
         if not mapped_policy_type:
             raise ValueError(
                 f"Incorrect policy type provided: {policy_type}\n "
-                f"Policy type must be 'access', 'timeout', 'client_forwarding' or 'siem'."
+                f"Policy type must be 'access', 'timeout', 'client_forwarding', 'siem' or 'isolation'."
             )
 
         return BoxList(Iterator(self._api, f"policySet/rules/policyType/{mapped_policy_type}", **kwargs))
@@ -180,6 +184,7 @@ class PolicySetsAPI(APIEndpoint):
                  |  ``timeout``
                  |  ``client_forwarding``
                  |  ``siem``
+                 |  ``isolation``
             rule_id (str):
                 The unique identifier for the policy rule.
 
@@ -368,6 +373,67 @@ class PolicySetsAPI(APIEndpoint):
 
         return self._post(f"policySet/{policy_id}/rule", json=payload)
 
+    def add_isolation_rule(self, name: str, action: str, zpn_isolation_profile_id: str, **kwargs) -> Box:
+        """
+        Add a new Isolation Policy rule.
+
+        See the
+        `ZPA Isolation Policy API reference <https://help.zscaler.com/zpa/configuring-isolation-policies-using-api>`_
+        for further detail on optional keyword parameter structures.
+
+        Args:
+            name (str):
+                The name of the new rule.
+            action (str):
+                The action for the policy. Accepted values are:
+
+                |  ``ISOLATION``
+                |  ``BYPASS_ISOLATION``
+            zpn_isolation_profile_id (str):
+                ID of isolation profile.
+            **kwargs:
+                Optional keyword args.
+
+        Keyword Args:
+            conditions (list):
+                A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
+                `RHS value`. If you are adding multiple values for the same object type then you will need
+                a new entry for each value. One condition ('client_type', 'id', 'zpn_client_type_exporter')
+                is mandatory for Isolation policy rules.
+                E.g.
+
+                .. code-block:: python
+
+                    [[('APP', 'id', '288262342519554659'), ('APP', 'id', '288262342519554418'), 'OR'],
+                    ('app_group', 'id', '926196382959075332),
+                    ('client_type', 'id', 'zpn_client_type_exporter'),
+                    ('trusted_network', 'b15e4cad-fa6e-8182-9fc3-8125ee6a65e1', True)]
+            description (str):
+                A description for the rule.
+
+        Returns:
+            :obj:`Box`: The resource record of the newly created Isolation Policy rule.
+
+        """
+
+        # Get the policy id of the provided policy type for the URL.
+        policy_id = self.get_policy("isolation").id
+
+        # Initialise the payload
+        payload = {
+            "name": name,
+            "action": action.upper(),
+            "policySetId": policy_id,
+            "zpnIsolationProfileId": zpn_isolation_profile_id,
+            "conditions": self._create_conditions(kwargs.pop("conditions", [])),
+        }
+
+        # Add optional parameters to payload
+        for key, value in kwargs.items():
+            payload[snake_to_camel(key)] = value
+
+        return self._post(f"policySet/{policy_id}/rule", json=payload)
+
     def update_rule(self, policy_type: str, rule_id: str, **kwargs) -> Box:
         """
         Update an existing policy rule.
@@ -381,6 +447,7 @@ class PolicySetsAPI(APIEndpoint):
                  |  ``access``
                  |  ``timeout``
                  |  ``client_forwarding``
+                 |  ``isolation``
             rule_id (str):
                 The unique identifier for the rule to be updated.
             **kwargs:
@@ -395,6 +462,8 @@ class PolicySetsAPI(APIEndpoint):
                 |  ``intercept``
                 |  ``intercept_accessible``
                 |  ``bypass``
+                |  ``isolation``
+                |  ``bypass_isolation``
             conditions (list):
                 A list of conditional rule tuples. Tuples must follow the convention: `Object Type`, `LHS value`,
                 `RHS value`. If you are adding multiple values for the same object type then you will need
@@ -462,6 +531,7 @@ class PolicySetsAPI(APIEndpoint):
                  |  ``access``
                  |  ``timeout``
                  |  ``client_forwarding``
+                 |  ``isolation``
 
         Returns:
              :obj:`Box`: The updated policy rule resource record.

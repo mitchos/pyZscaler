@@ -10,7 +10,7 @@ from tests.conftest import stub_sleep
 
 @pytest.fixture(name="policies")
 def fixture_policies():
-    return {"totalPages": 1, "list": [{"id": "1"}, {"id": "2"}, {"id": "3"}]}
+    return {"totalPages": 1, "list": [{"id": "1"}, {"id": "2"}, {"id": "3"}, {"id": "4"}]}
 
 
 @pytest.fixture(name="policy_conditions")
@@ -310,6 +310,60 @@ def test_add_client_forwarding_policy_rule(zpa, policies, policy_rules):
     )
     resp = zpa.policies.add_client_forwarding_rule(
         name="Test", action="intercept", conditions=[("app_group", "id", "1")], description="Test"
+    )
+
+    assert isinstance(resp, Box)
+    assert resp.id == "1"
+
+
+@responses.activate
+def test_add_isolation_policy_rule(zpa, policies, policy_rules):
+    responses.add(
+        responses.GET,
+        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/policyType/ISOLATION_POLICY",  # noqa: E501
+        json=policies["list"][3],
+        status=200,
+    )
+
+    responses.add(
+        responses.POST,
+        url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/policySet/4/rule",
+        json=policy_rules["list"][0],
+        status=200,
+        match=[
+            matchers.json_params_matcher(
+                {
+                    "name": "Test",
+                    "action": "BYPASS",
+                    "description": "Test",
+                    "zpnIsolationProfileId": "321",
+                    "policySetId": "4",
+                    "conditions": [
+                        {
+                            "operands": [
+                                {"objectType": "APP", "lhs": "id", "rhs": "1"},
+                                {"objectType": "APP", "lhs": "id", "rhs": "2"},
+                            ],
+                            "operator": "OR",
+                        },
+                        {
+                            "operands": [{"objectType": "CLIENT_TYPE", "lhs": "id", "rhs": "zpn_client_type_exporter"}],
+                            "operator": "OR",
+                        },
+                    ],
+                }
+            )
+        ],
+    )
+    resp = zpa.policies.add_isolation_rule(
+        name="Test",
+        action="bypass",
+        zpn_isolation_profile_id="321",
+        conditions=[
+            [("APP", "id", "1"), ("APP", "id", "2"), "OR"],
+            [("client_type", "id", "zpn_client_type_exporter"), "OR"],
+        ],
+        description="Test",
     )
 
     assert isinstance(resp, Box)
