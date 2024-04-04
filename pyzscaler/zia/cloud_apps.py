@@ -269,7 +269,7 @@ class CloudAppsAPI(APIEndpoint):
 
         """
         payload = {"duration": duration}
-        convert_keys(payload.update(kwargs))
+        payload = convert_keys(payload.update(kwargs))
 
         return self._post("shadowIT/applications/export", json=payload).text
 
