@@ -273,7 +273,7 @@ def test_add_custom_control(zpa, custom_controls):
     responses.add(
         responses.POST,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/inspectionControls/custom",
-        status=204,
+        status=200,
         json=custom_controls[0],
         match=[
             matchers.json_params_matcher(
@@ -508,7 +508,7 @@ def test_add_profile(zpa, inspection_profiles, predefined_controls):
     responses.add(
         responses.POST,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/inspectionProfile",
-        status=204,
+        status=200,
         json=inspection_profiles[0],
         match=[
             matchers.json_params_matcher(

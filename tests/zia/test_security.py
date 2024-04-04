@@ -161,7 +161,7 @@ def test_replace_blacklist(zia):
         responses.PUT,
         url="https://zsapi.zscaler.net/api/v1/security/advanced",
         json=new_urls,
-        status=204,
+        status=200,
         match=[matchers.json_params_matcher(new_urls)],
     )
     resp = zia.security.replace_blacklist(["abc.com", "def.com"])

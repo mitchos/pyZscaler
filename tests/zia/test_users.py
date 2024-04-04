@@ -494,7 +494,7 @@ def test_users_bulk_delete_users(zia):
     responses.add(
         responses.POST,
         url="https://zsapi.zscaler.net/api/v1/users/bulkDelete",
-        status=204,
+        status=200,
         json={"ids": user_ids},
         match=[matchers.json_params_matcher({"ids": user_ids})],
     )

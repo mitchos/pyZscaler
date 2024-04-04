@@ -171,7 +171,6 @@ def test_update_group(zpa, segment_groups):
     responses.add(
         responses.PUT,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/segmentGroup/1",
-        json=updated_group,
         status=204,
         match=[matchers.json_params_matcher(updated_group)],
     )
