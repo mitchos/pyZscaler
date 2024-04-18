@@ -5,6 +5,6 @@ python-box==7.0.1
 restfly==1.4.7
 requests==2.31.0
 responses==0.23.1
-sphinx==7.0.1
+sphinx==7.3.6
 toml==0.10.2
 urllib3<2
