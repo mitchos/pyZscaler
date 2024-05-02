@@ -57,12 +57,21 @@ def test_export_shadow_it_csv_with_id_filters(zia, shadow_it_report):
     location_ids = ["789", "101"]
     department_ids = ["112", "113"]
 
+    expected_json = {
+        "application": application,
+        "duration": duration,
+        "users": [{"id": uid} for uid in user_ids],
+        "locations": [{"id": lid} for lid in location_ids],
+        "departments": [{"id": did} for did in department_ids],
+    }
+
     # Mocking the API response
     responses.add(
         method="POST",
         url=f"https://zsapi.zscaler.net/api/v1/shadowIT/applications/{entity}/exportCsv",
         json=shadow_it_report,
         status=200,
+        match=[matchers.json_params_matcher(expected_json)],
     )
 
     # Calling the method with additional id filters
@@ -77,11 +86,6 @@ def test_export_shadow_it_csv_with_id_filters(zia, shadow_it_report):
 
     # Assertions
     assert isinstance(resp, str)
-    assert (
-        responses.calls[0].request.body.decode("utf-8")
-        == '{"application": "test_app", "duration": "LAST_7_DAYS", "users": [{"id": "123"}, {"id": "456"}], '
-        '"locations": [{"id": "789"}, {"id": "101"}], "departments": [{"id": "112"}, {"id": "113"}]}'
-    )
 
 
 @responses.activate

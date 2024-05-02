@@ -62,7 +62,7 @@ def test_get_vm(zcon, connector_groups_list):
         method="GET",
         url="https://connector.zscaler.net/api/v1/ecgroup/1/vm/10",
         json=connector_groups_list[0]["ec_vms"][0],
-        status=204,
+        status=200,
     )
 
     # Execute the function and get the result

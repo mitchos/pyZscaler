@@ -336,7 +336,7 @@ def test_add_connector_group(zpa, app_connector_groups):
     responses.add(
         responses.POST,
         url="https://config.private.zscaler.com/mgmtconfig/v1/admin/customers/1/appConnectorGroup",
-        status=204,
+        status=200,
         json=app_connector_groups["list"][0],
         match=[
             matchers.json_params_matcher(

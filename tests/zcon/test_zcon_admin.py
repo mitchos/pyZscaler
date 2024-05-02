@@ -385,7 +385,7 @@ def test_change_password(zcon):
         url="https://connector.zscaler.net/api/v1/passwordChange",
         status=200,
         match=[
-            responses.json_params_matcher(
+            json_params_matcher(
                 {
                     "userName": username,
                     "oldPassword": old_password,

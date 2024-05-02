@@ -4,6 +4,7 @@ from datetime import datetime
 from box import BoxList
 from restfly.endpoint import APIEndpoint
 
+from pyzscaler.exceptions import InvalidOSType
 from pyzscaler.utils import Iterator, convert_keys, zcc_param_map
 
 
@@ -82,7 +83,7 @@ class DevicesAPI(APIEndpoint):
                 if os_type:
                     payload["osTypes"].append(os_type)
                 else:
-                    raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
+                    raise InvalidOSType()
 
         # Simplify the registration_type argument, raise an error if the user supplies the wrong one.
         if registration_types:
@@ -141,7 +142,7 @@ class DevicesAPI(APIEndpoint):
             if os_type:
                 payload["osType"] = os_type
             else:
-                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
+                raise InvalidOSType()
 
         return BoxList(Iterator(self._api, "public/v1/getDevices", **payload))
 
@@ -207,7 +208,7 @@ class DevicesAPI(APIEndpoint):
             if os_type:
                 payload["osType"] = os_type
             else:
-                raise ValueError("Invalid os_type specified. Check the pyZscaler documentation for valid os_type options.")
+                raise InvalidOSType()
 
         if force:
             return self._post("public/v1/forceRemoveDevices", json=payload)

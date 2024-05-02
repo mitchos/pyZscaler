@@ -223,11 +223,11 @@ def test_get_location_by_name(zia, locations):
 
 
 @responses.activate
-def test_delete_location(zia, locations):
+def test_delete_location(zia):
     responses.add(
         responses.DELETE,
         url="https://zsapi.zscaler.net/api/v1/locations/1",
-        body="204",
+        body="",
         status=204,
     )
 

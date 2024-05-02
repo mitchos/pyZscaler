@@ -84,12 +84,12 @@ def keys_exists(element: dict, *keys):
     return True
 
 
-# Takes a tuple if id_groups, kwargs and the payload dict; reformat for API call
+# Takes a tuple of id_groups, kwargs and the payload dict; reformat for API call
 def add_id_groups(id_groups: list, kwargs: dict, payload: dict):
     for entry in id_groups:
         if kwargs.get(entry[0]):
             payload[entry[1]] = [{"id": param_id} for param_id in kwargs.pop(entry[0])]
-    return
+    return payload
 
 
 def obfuscate_api_key(seed: list):
@@ -103,7 +103,7 @@ def obfuscate_api_key(seed: list):
     return {"timestamp": now, "key": key}
 
 
-def pick_version_profile(kwargs: list, payload: list):
+def pick_version_profile(kwargs: list, payload: dict):
     if version_profile := kwargs.pop("version_profile", None):
         payload["overrideVersionProfile"] = True
         if version_profile == "default":
