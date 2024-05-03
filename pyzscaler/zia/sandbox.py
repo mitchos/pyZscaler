@@ -75,3 +75,28 @@ class CloudSandboxAPI(APIEndpoint):
         """
 
         return self._get(f"sandbox/report/{md5_hash}?details={report_details}")
+
+    def submit_file_oob(self, filename: str) -> Box:
+        """
+        Submits a file to the ZIA Advanced Cloud Sandbox for out-of-band (oob) analysis.
+
+        Args:
+            filename (str): The filename that will be submitted for sandbox analysis.
+
+        Returns:
+            :obj:`Box`: The Cloud Sandbox submission response information.
+
+        Examples:
+            Submit a file in the current directory called malware.exe to the cloud sandbox for oob analysis.
+
+            >>> zia.sandbox.submit_file_oob('malware.exe')
+
+        """
+        with open(filename, "rb") as f:
+            data = f.read()
+
+        params = {
+            "api_token": self.sandbox_token,
+        }
+
+        return self._post(f"https://csbapi.{self.env_cloud}.net/zscsb/discan", params=params, data=data)
