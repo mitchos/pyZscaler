@@ -72,3 +72,32 @@ def test_sandbox_submit_file(zia):
     os.remove("sandboxtest.txt")
 
     assert resp.code == 200
+
+
+@responses.activate
+def test_sandbox_submit_oob_file(zia):
+    with open("sandboxtest.txt", "w") as f:
+        f.write("Sandbox Test")
+
+    params = {"api_token": "SANDBOXTOKEN"}
+
+    responses.add(
+        method="POST",
+        url="https://csbapi.zscaler.net/zscsb/discan?api_token=SANDBOXTOKEN",
+        json={
+            "code": 200,
+            "message": "/submit response OK",
+            "virus_name": "malicious beha",
+            "virus_type": "Sandbox Malware",
+            "file_type": "exe",
+            "md5": "XYZ",
+            "sandbox_submission": "Sandbox Malware",
+        },
+        match=[matchers.query_param_matcher(params)],
+        status=200,
+    )
+
+    resp = zia.sandbox.submit_file_oob("sandboxtest.txt")
+    os.remove("sandboxtest.txt")
+
+    assert resp.code == 200
