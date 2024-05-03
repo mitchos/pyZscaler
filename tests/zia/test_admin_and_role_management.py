@@ -301,3 +301,25 @@ def test_admin_list_roles(admin_roles, zia):
     resp = zia.admin_and_role_management.list_roles(include_auditor_role=True)
     assert isinstance(resp, BoxList)
     assert resp[0].id == 1
+
+
+@responses.activate
+def test_admin_users_convert_admin_to_user(zia):
+    responses.add(
+        method="POST",
+        url="https://zsapi.zscaler.net/api/v1/adminUsers/1/convertToUser",
+        json={"id": 1},
+        status=200,
+        match=[
+            matchers.json_params_matcher(
+                {
+                    "groups": [{"id": "1"}, {"id": "2"}],
+                }
+            )
+        ],
+    )
+
+    resp = zia.admin_and_role_management.convert_admin_to_user("1", group_ids=["1", "2"])
+
+    assert isinstance(resp, dict)
+    assert resp.id == 1

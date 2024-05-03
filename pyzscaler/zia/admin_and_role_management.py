@@ -1,7 +1,7 @@
 from box import Box, BoxList
 from restfly.endpoint import APIEndpoint
 
-from pyzscaler.utils import Iterator, snake_to_camel
+from pyzscaler.utils import Iterator, convert_keys, snake_to_camel
 
 
 class AdminAndRoleManagementAPI(APIEndpoint):
@@ -57,7 +57,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
                 ...    name="Jane Bob",
                 ...    login_name="jane@example.com",
                 ...    password="hunter3",
-                ...    email="jane@example.com,
+                ...    email="jane@example.com",
                 ...    admin_scope="department",
                 ...    scope_ids = ['376542', '245688'])
 
@@ -66,7 +66,7 @@ class AdminAndRoleManagementAPI(APIEndpoint):
                 ...    name="Head Bob",
                 ...    login_name="head@example.com",
                 ...    password="hunter4",
-                ...    email="head@example.com,
+                ...    email="head@example.com",
                 ...    is_auditor=True)
 
         """
@@ -265,3 +265,31 @@ class AdminAndRoleManagementAPI(APIEndpoint):
                 payload[snake_to_camel(key)] = value
 
         return self._put(f"adminUsers/{user_id}", json=payload)
+
+    def convert_admin_to_user(self, user_id: str, group_ids: list, **kwargs) -> Box:
+        """
+        Convert an admin user to a standard user.
+
+        Args:
+            user_id (str): The unique id of the admin user to be converted.
+            group_ids (list): A list of group ids to assign to the user.
+            **kwargs: Optional keyword args.
+
+        Returns:
+            :obj:`Box`: The converted user resource record.
+
+        Examples:
+            Convert an admin user to a standard user:
+                >>> user = zia.admin_and_role_management.convert_admin_to_user(user_id='99695301',
+                ...     group_ids=['3846532', '3846541'])
+
+        """
+        payload = {"groups": [{"id": group_id} for group_id in group_ids]}
+
+        # Update the payload with keyword arguments
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
+
+        # Convert snake to camelcase if needed
+        payload = convert_keys(payload)
+
+        return self._post(f"adminUsers/{user_id}/convertToUser", json=payload)
