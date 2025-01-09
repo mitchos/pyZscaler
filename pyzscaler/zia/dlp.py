@@ -6,7 +6,7 @@ from pyzscaler.utils import snake_to_camel
 
 class DLPAPI(APIEndpoint):
     def add_dict(self, name: str, match_type: str, **kwargs) -> Box:
-        """
+        r"""
         Add a new Patterns and Phrases DLP Dictionary to ZIA.
 
         Args:
@@ -112,7 +112,7 @@ class DLPAPI(APIEndpoint):
         return self._post("dlpDictionaries", json=payload)
 
     def update_dict(self, dict_id: str, **kwargs) -> Box:
-        """
+        r"""
         Updates the specified DLP Dictionary.
 
         Args:
